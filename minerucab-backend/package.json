@@ -1,0 +1,19 @@
+{
+  "name": "minerucab-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Andrea-Alba-Diego",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "pg": "^7.10.0",
+    "webpack": "^4.29.6",
+    "xml2js": "^0.4.19"
+  }
+}
