@@ -14,7 +14,7 @@ const AppRouter = () => (
       <Switch>
         <Route path="/" component={LoginPage} exact={true} />
         <Route path="/dashboard" component={DashboardPage} />
-        <Route component={NotFoundPage} />
+        
       </Switch>
       <Footer />
     </div>

@@ -1,5 +1,5 @@
 {
-  "name": "minerucab",
+  "name": "minerucab-frontend",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Andrea-Alba-Diego",
@@ -8,10 +8,10 @@
     "build:dev": "webpack",
     "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server",
-    "start": "node server/server.js",
     "heroku-postbuild": "yarn run build:prod"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "7.1.1",
@@ -22,10 +22,10 @@
     "babel-preset-react": "^6.24.1",
     "bootstrap": "^4.3.1",
     "css-loader": "^2.1.1",
+    "dotenv": "^7.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
     "enzyme-to-json": "^3.3.5",
-    "express": "^4.16.4",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "history": "^4.9.0",
     "node-sass": "^4.11.0",
