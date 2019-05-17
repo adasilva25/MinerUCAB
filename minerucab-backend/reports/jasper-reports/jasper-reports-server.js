@@ -10,6 +10,40 @@ let cookie;
 let exportId;
 let requestId;
 
+exports.getDynamicReport = () => {
+    
+    const config = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        auth: {
+            'username': 'jasperadmin',
+            'password': 'jasperadmin'
+        },
+        responseType: 'document',
+        withCredentials: true
+    }
+    
+
+    axios.get('http://localhost:8080/jasperserver/rest_v2/reports/reports/Test/DynamicQuery.html?id=1', config)
+        .then((res) => {
+            cookie = res.headers["set-cookie"][0].split(' ').splice(0, 2);
+            console.log(cookie);
+            cookie = `$Version=0; ${cookie.join(' ')}`;
+            console.log(cookie);
+
+            fs.writeFile(path.join(__dirname, '../outputs/Dynamic_Report.html'), (res.data), (err) => {
+                if (err) throw err;
+                console.log('The file has been saved!');
+            });
+            
+            logout();
+            // console.log(res)
+        }).catch((e) => {
+            console.log('Error en axios')
+        })
+}
+
 exports.getReport = () => {
     // const data = {
     //     "reportUnitUri" : "/reports/Test/First_Report",

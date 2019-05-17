@@ -1,7 +1,11 @@
 import React from 'react';
 
 export const Header = () => (
-    <header>
-        <h1>This is the header</h1>
-    </header>
-)
+    <div align="center">
+        <img
+            src="/images/MinerUCAB-logo.png"
+            alt="Logo"
+            id="center_image"
+        />
+    </div>
+);

@@ -7,6 +7,15 @@ exports.generateReport = (requestType) => {
             // generateReportOutput();
             // logout();
             break;
+        case 'DYNAMIC_REPORT':
+            JasperReports.getDynamicReport().then((data) => {
+                return data;
+            }).catch((e) => {
+                console.log('Error getting the report');
+            })
+            // generateReportOutput();
+            // logout();
+            break;
         default:
             break;
       }

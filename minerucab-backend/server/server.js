@@ -15,10 +15,16 @@ app.get('/', (req, res) => {
   res.send('<h1>Hello Express!</h1>');
 });
 
-app.get('/pepito', (req, response) => {
+app.get('/pepito', (req, res) => {
   
-  JasperReports.generateReport('FIRST_REPORT');
-  res.sendFile(path.join(__dirname, '../reports/outputs/First_Report.html'))
+  JasperReports.generateReport('DYNAMIC_REPORT').then((data) => {
+    if (data === true){
+      res.sendFile(path.join(__dirname, '../reports/outputs/Dynamic_Report.html'));
+    }
+  }).catch((e) => {
+    console.log('Error returning the response')
+  })
+  
 
   // const data = {
   //   "reportUnitUri" : "/reports/Test/First_Report",
@@ -43,6 +49,11 @@ app.get('/pepito', (req, response) => {
   // }
 
   // const JRReportExecution = axios.create(config);
+});
+
+app.get('/pdf', (req, res) => {
+  const pdfReport = window.open(path.join(__dirname, '../reports/jasper-reports/outputs/Dynamic_Report.html'), '_blank');
+  
 });
 
 app.get('/about', (req, res) => {

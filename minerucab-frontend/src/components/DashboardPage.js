@@ -1,3 +1,5 @@
+const path = require('path');
+
 import React from 'react';
 import { history } from '../routers/History';
 
@@ -49,9 +51,13 @@ export default class DashboardPage extends React.Component {
             // accordion: ['Andreita', 'Albita', 'Yeyo']
         }
     }
-    onClickNotFoundPage(){
-        history.push('/jahsdjha');   // Como es NotFoundPage, no importa la dirección que ponga, 
-    }                                // está hecha para agarrar cualquier error en cuanto a la URL
+    onClickNewWindow(){
+        // console.log(path.join(__dirname, '../../../minerucab-backend/reports/outputs/Dynamic_Report.html'))
+        // window.open('file:///Users/andreadasilva/Desktop/bases-de-datos/minerucab-backend/reports/outputs/Dynamic_Report.html');
+        // window.open('file:///Users/andreadasilva/Desktop/bases-de-datos/minerucab-backend/reports/outputs/Dynamic_Report.html');
+        // window.open('http://www.google.com');
+        // history.push('/jahsdjha');   // Como es NotFoundPage, no importa la dirección que ponga, 
+    }                                   // está hecha para agarrar cualquier error en cuanto a la URL
     onClickLoginPage(){
         history.push('/');
     }
@@ -94,8 +100,9 @@ export default class DashboardPage extends React.Component {
         const { openCollapseSecondButtonInsideTab } = this.state;
         return (
             <div>
+                
                 <Button variant="primary" onClick={this.onClickLoginPage}>Go to LoginPage</Button>
-                <Button variant="danger" onClick={this.onClickNotFoundPage}>Go to NotFoundPage</Button>
+                <Button variant="danger" onClick={this.onClickNewWindow}>Open a Window</Button>
 
                 {/*Collapse*/}
                 <Button
