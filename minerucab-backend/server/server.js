@@ -1,19 +1,44 @@
 // https://stackoverflow.com/questions/40844297/what-is-difference-between-axios-and-fetch
 // https://www.thepolyglotdeveloper.com/2015/01/parse-xml-response-nodejs/
 
-require('dotenv').config({ path: '../../.env.jasper-reports' });
+require('dotenv').config({ path: '.env.jasper-reports' });
 const JasperReports = require('../reports/jasper-reports/jasper-reports-generator');
-const axios = require('axios');
+const Empleados = require('../database/model/Empleados');
+const General = require('../database/model/General');
 const express = require('express');
 const app = express();
 const path = require('path');
-let parseString = require('xml2js').parseString;
+const bodyParser = require('body-parser');
 
+app.use(bodyParser.json())
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
 app.use(express.static(__dirname + '/public'));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+})
+
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello Express!</h1>');
 });
+
+app.get('/users', Empleados.getAllEmployees);
+
+app.get('/column_names/:table_name', General.getAllTableColumns);
+
+
+
+
+
+
+
+
 
 app.get('/pepito', (req, res) => {
   

@@ -5,15 +5,17 @@
 // https://mherman.org/blog/postgresql-and-nodejs/ --> localhost connectionString
 
 require('dotenv').config({ path: '../../.env.development' });
-const { Pool, Client } = require('pg');
+const { Client } = require('pg');
 
 // const connectionString = 'postgressql://andreadasilva@localhost:5432/testdb' --> ROOKIE CONNECTION
 
-export const DAOPostgreSQLConnection = () => {
+const DAOPostgreSQLConnection = () => {
     return new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
 }
+
+DAOPostgreSQLConnection();
 
 // client.connect();   // conecta a la bd
 

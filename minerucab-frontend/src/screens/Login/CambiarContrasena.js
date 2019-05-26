@@ -4,11 +4,14 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import {history} from '../routers/History';
+import {history} from '../../routers/History';
 
 export default class CambiarContrasena extends React.Component {
     constructor(props){
         super(props);
+    }
+    getUsers(){
+        
     }
     onClickDashboardPage(){
         history.push('/dashboard');  
@@ -18,7 +21,8 @@ export default class CambiarContrasena extends React.Component {
     }                             
     render(){
         return (
-            <div align="center">
+            <div>
+                <div align="center">
                 <h2>CAMBIAR CONTRASEÑA</h2>
                 <div className="prueba" align="center">
                     <Form>
@@ -55,6 +59,7 @@ export default class CambiarContrasena extends React.Component {
                 <Button variant="light">Guardar</Button>
                 <Button variant="light">Cancelar</Button>
             
+                </div>
             </div>
         )
     }
