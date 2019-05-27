@@ -1,12 +1,16 @@
 import React from 'react';
 import MenuBar from '../../components/MenuBar';
+import {Header} from '../../components/Header';
+import {Footer} from '../../components/Footer';
 
 export default class AgregarEmpleados extends React.Component {
     render(){
         return (
             <div>
-                <MenuBar consultar={"/consultar_empleados"}/>
-                <h1>Agregar Empleados</h1>
+            	<Header />
+	                <MenuBar consultar={"/consultar_empleados"}/>
+	                <h1>Agregar Empleados</h1>
+                <Footer />
             </div>
         )
     }

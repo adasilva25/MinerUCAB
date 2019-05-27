@@ -6,14 +6,13 @@ import ConsultarEmpleados from '../screens/Empleados/ConsultarEmpleados';
 import AgregarEmpleados from '../screens/Empleados/AgregarEmpleados';
 import DashboardPage from '../components/DashboardPage';
 import {NotFoundPage} from '../components/NotFoundPage';
-import LoginPage from '../components/LoginPage';
+import LoginPage from '../screens/Login/LoginPage';
 import {Footer} from '../components/Footer';
 import {history} from './History';
 
 const AppRouter = () => (
   <Router history={history}>
     <div>
-      <Header />
       <Switch>
         {/* ------------------------ LOGIN ------------------------ */}
         <Route path="/" component={LoginPage} exact={true} />
@@ -23,7 +22,6 @@ const AppRouter = () => (
         <Route path="/consultar_empleados" component={ConsultarEmpleados} />
         <Route path="/dashboard" component={DashboardPage} />
       </Switch>
-      <Footer />
     </div>
   </Router>
 );
