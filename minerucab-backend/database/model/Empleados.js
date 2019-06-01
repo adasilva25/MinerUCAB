@@ -23,6 +23,8 @@
 require('dotenv').config({ path: '.env.development' });
 const { Client } = require('pg');
 
+// FORMATO  CONNECTION STRING postgressql://YourUserName:YourPassword@localhost:5432/YourDatabase
+
 const getAllEmployees = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
