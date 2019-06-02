@@ -8,6 +8,7 @@ import ConsultarEmpleados from '../screens/Empleados/ConsultarEmpleados';
 import Ventas from '../screens/Ventas/Ventas';
 import {NotFoundPage} from '../components/NotFoundPage';
 import {history} from './History';
+import HomePage from '../screens/Home/HomePage'
 
 const AppRouter = () => (
   <Router history={history}>
@@ -18,6 +19,7 @@ const AppRouter = () => (
         <Route path="/cambiar_contrasena" component={CambiarContrasena} />
         {/* ------------------------ HOME ------------------------ */}
         <Route path="/dashboard" component={DashboardPage} />
+        <Route path="/home" component={HomePage} />
         {/* ------------------------ EMPLEADOS ------------------------ */}
         <Route path="/agregar_empleados" component={AgregarEmpleados} />
         <Route path="/consultar_empleados" component={ConsultarEmpleados} />
