@@ -6,7 +6,6 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import {Header} from '../../components/Header';
-import {Footer} from '../../components/Footer';
 import {history} from '../../routers/History';
 
 
@@ -70,7 +69,7 @@ export default class CambiarContrasena extends React.Component {
                                 </Col>
                                 <Col md={6}>
                                     <div class="d-flex justify-content-center">
-                                        <Button variant="secondary">Cancelar</Button>
+                                        <Button variant="outline-secondary">Cancelar</Button>
                                     </div>
                                 </Col>
                             </Row>
@@ -78,7 +77,6 @@ export default class CambiarContrasena extends React.Component {
                         <Col md={4}></Col>
                       </Row>
                     </Container>
-                <Footer />
             </div>                 
         )
     }

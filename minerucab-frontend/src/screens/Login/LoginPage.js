@@ -16,7 +16,8 @@ export default class LoginPage extends React.Component {
     }              
     onClickLoginPage(){
         history.push('/');  
-    }                             
+    }   
+    modalClose = () => this.setState({ modalShow: false });                        
     render(){
         return (
             <div className="contain bg">
@@ -35,15 +36,20 @@ export default class LoginPage extends React.Component {
                             <Col md={6} className="vertical-line align-self-center">
                                 <h1 className="text-center">Ingresar</h1>
                                 <Form className="form-signin">
-                                  <Form.Group controlId="formBasicEmail" className="formInput">
+                                <Form.Group controlId="formBasicEmail" className="formInput">
                                     <Form.Label>Usuario</Form.Label>
                                     <Form.Control type="user" placeholder="Usuario" className="fTest" />
-                                  </Form.Group>
-                                  <Form.Group controlId="formBasicPassword" className="formInput">
+                                </Form.Group>
+                                <Form.Group controlId="formBasicPassword" className="formInput">
                                     <Form.Label>Contraseña</Form.Label>
                                     <Form.Control type="password" placeholder="Contraseña" className="fTest" />
-                                  </Form.Group>
-                                  <Button className="purple-btn text-center" size="md" block as="input" type="submit" value="Ingresar" />
+                                </Form.Group>
+                                <Button 
+                                    className="purple-btn text-center" 
+                                    size="md" 
+                                    block as="input" 
+                                    type="submit" 
+                                    value="Ingresar" />
                                 </Form>
                                 <p className="text-center">©2019</p>
                             </Col>

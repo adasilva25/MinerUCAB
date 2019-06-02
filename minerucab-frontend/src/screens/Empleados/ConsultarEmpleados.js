@@ -2,7 +2,6 @@ import React from 'react';
 import MenuBar from '../../components/MenuBar';
 import DataTable from '../../components/DataTable';
 import {Header} from '../../components/Header';
-import {Footer} from '../../components/Footer';
 
 export default class ConsultarEmpleados extends React.Component {
     render(){
@@ -14,7 +13,6 @@ export default class ConsultarEmpleados extends React.Component {
                         columns={'http://localhost:3000/column_names/test_table'} 
                         data={'http://localhost:3000/users'}
                     />
-                <Footer />
             </div>
         )
     }
