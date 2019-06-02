@@ -9,6 +9,7 @@ import {NotFoundPage} from '../components/NotFoundPage';
 import LoginPage from '../screens/Login/LoginPage';
 import {Footer} from '../components/Footer';
 import {history} from './History';
+import HomePage from '../screens/Home/HomePage'
 
 const AppRouter = () => (
   <Router history={history}>
@@ -21,6 +22,8 @@ const AppRouter = () => (
         <Route path="/agregar_empleados" component={AgregarEmpleados} />
         <Route path="/consultar_empleados" component={ConsultarEmpleados} />
         <Route path="/dashboard" component={DashboardPage} />
+        {/* ------------------------ HOME ------------------------ */}
+        <Route path="/home" component={HomePage} />
       </Switch>
     </div>
   </Router>

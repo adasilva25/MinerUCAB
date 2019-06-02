@@ -78,7 +78,6 @@ export default class CambiarContrasena extends React.Component {
                         <Col md={4}></Col>
                       </Row>
                     </Container>
-                <Footer />
             </div>                 
         )
     }
