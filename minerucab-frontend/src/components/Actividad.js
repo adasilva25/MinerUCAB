@@ -17,7 +17,7 @@ export default class Actividad extends React.Component {
         }
         return (
              
-            <Card body className={clase}>{title}</Card>
+            <a href="#link" className="a-actividad"><Card body  className={clase}>{title}</Card></a>
             
         )
     }

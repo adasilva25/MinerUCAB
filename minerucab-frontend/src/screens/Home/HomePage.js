@@ -8,6 +8,7 @@ import Actividad from '../../components/Actividad'
 import CarouselActividad from '../../components/CarouselActividad'
 import BOG from '../../components/BotonOpcionesGlobales'
 import OpcionesLocales from '../../components/OpcionesLocales'
+import OpcionesGlobales from '../../components/OpcionesGlobales'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -37,16 +38,39 @@ export default class HomePage extends React.Component {
             actividad.push(item);
         }
 
+        var opciones = [
+            {
+                nombre: 'Consultar',
+                link:'#45',
+                active:true
+            },
+
+            {
+                nombre: 'Agregar',
+                link:'#link50',
+                active:false
+            },
+
+            {
+                nombre: 'Modificar',
+                link:'#link54',
+                active:false
+            }
+        ];
+
         return ( 
 
-            <div>
-                <Header/>
-                <OpcionesLocales opciones={["Consultar", "Agregar","Modificar"]}/>
-                <Container className="containerHome">
+            <div >
+                <Header /> 
+                <OpcionesGlobales active="Home"/> 
+                <div className="bg">
+                <OpcionesLocales opciones={opciones}/>
+               
+                <Container className="containerHome ">
                     <h1>Home</h1>
                 </Container>
                 <Container fluid={true} className="container-fluid" >
-                    <Carousel interval={0} wrap={false} indicators={true} nextIcon={<span aria-hidden={true} className="carousel-control-next-icon" />} prevIcon= {<span aria-hidden={true} className="carousel-control-prev-icon" />} className="CarouselItem">
+                    <Carousel interval={0} wrap={false} indicators={true} nextIcon={<span aria-hidden={true} className="carousel-control-next-icon" />} prevIcon= {<span aria-hidden={true} className="carousel-control-prev-icon" />} className="CarouselItem ">
                         {actividad.map((act,index)=>{
                             return(
                                 <Carousel.Item >
@@ -56,6 +80,7 @@ export default class HomePage extends React.Component {
                         })}
                     </Carousel>    
                 </Container>
+                </div>
             </div>
         )
     }

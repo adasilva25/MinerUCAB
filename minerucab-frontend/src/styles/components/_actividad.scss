@@ -3,17 +3,23 @@
 	color: white;
 	padding-top: 1%;
 	padding-bottom: 1%;
-	background-image: linear-gradient(to right, #dd99ff, #9900cc);
+	/*background-image: linear-gradient(to right, #dd99ff, #9900cc);*/
+	background: rgb(151,0,231);
+	background: linear-gradient(90deg, rgba(151,0,231,1) 0%, rgba(169,65,243,1) 54%, rgba(196,79,241,1) 100%);
 	border-radius:10px;
-	font-family: 'Baloo';
+	font-family: 'Candal';
+	font-size: 150%;
+	
 
+ 
 
 }
-
+.a-actividad:hover{text-decoration: none;}
 .actividad:hover{
 	
-	background-image: linear-gradient(to right, #9900cc,#dd99ff);
-	
+	background: rgb(164,41,230);
+	text-decoration: none;
+	background: linear-gradient(90deg, rgba(164,41,230,1) 0%, rgba(207,143,255,1) 54%, rgba(237,200,251,1) 100%);
 }
 
 
@@ -34,11 +40,13 @@
 }
 
 .CarouselItem{
-	background-image: linear-gradient(to right, lightblue, lightgreen);
+	/*background-image: linear-gradient(to right, lightblue, lightgreen);*/
 	padding-left:12%;
 	padding-right: 12%;
 	padding-bottom: 6%;
-	padding-top: 6%
+	padding-top: 6%;
+	background: rgba(255, 255, 255, 0.6);
+
 }
 
 .carousel-control-next-icon{
@@ -51,7 +59,7 @@
 }
 
 .carousel-indicators li{
-    background-color: blue;
+    background-color: #262626; 
     
 }
 .carousel-indicators .active{
@@ -67,10 +75,12 @@
 .containerHome{
 	text-align: center;
 	font-size: 200%;
+	color:white;font-family: 'Candal';
+
 }
 
-@media screen and (max-width:992px) {
-	
+
+@media screen and (max-width:1440px) {
 	.card-deck{
 	    display: block ;  
 	    width: 100%  ;
@@ -90,11 +100,17 @@
 		padding-top: 7%;
 		padding-right: 9%;
 	} 
+}
+
+@media screen and (max-width:992px) {
+	
+	
 
 	.NavbarContainer{
 		background-color: #d9d9d9;
 		margin: 0%;
 		padding: 0%;
+
 	
 	}
 	.NavItems:hover{
@@ -102,6 +118,9 @@
 		color: white;
 		
 	}
+
+	
+
 
 	.nav-pills .nav-link.active{
 		background-color: darkgray;
@@ -124,7 +143,7 @@
 	}
 	.CarouselItem{
 	
-		background-image: linear-gradient(to right, lightblue, lightgreen);
+		
 		padding-left:15%;
 		padding-right: 15%;
 		padding-bottom: 10%;
@@ -145,7 +164,9 @@
 }
 
 .NavbarContainer{
-	margin-left: 0%;
+	margin-left: 0%;font-family: 'Candal';
+	font-size: 110%;
+	color: rgba(0,0,0,.5);
 	
 
 }
@@ -189,6 +210,7 @@
     background-color: darkgray;
     width: 100%;
     border-radius:0px;
+    color:white;
 }
 .navbar-light .navbar-nav .nav-link:hover {
 	background-color: darkgray;
