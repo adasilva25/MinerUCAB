@@ -9,7 +9,13 @@ import { Link } from 'react-router';
 export default class Actividad extends React.Component {
     constructor(props){
         super(props);
-    }          
+    }
+    
+    routeTo(link){
+        window.open(link,'_self'); //This will open Google in a new 
+    }
+
+
     render(){
         const {title} = this.props;
         var clase = "actividad";
@@ -25,10 +31,8 @@ export default class Actividad extends React.Component {
             url = '#link';
         }
 
-        return (
-             
-            <a href={url} className="a-actividad"><Card body  className={clase}>{title}</Card></a>
-            
+        return ( 
+            <Card body  className={clase} onClick={()=>this.routeTo(url)}>{title}</Card>            
         )
     }
 }
