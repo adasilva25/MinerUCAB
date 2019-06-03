@@ -43,7 +43,46 @@ export default class DataTable extends React.Component {
                     this.$el = $(this.el);
                     this.$el.DataTable({
                         data: dataSet,
-                        columns: columns
+                        columns: columns,
+                        //Quitar paging
+                            //paging: false
+                        //Quitar searching
+                            //searching: false,
+                        //Scrollbar
+                            scrollY: 390,
+                        //No permitir orden
+                            //ordering:  false
+                        columnDefs: [
+                            {
+                                targets:-0, // Start with the last
+                                render: function ( data, type, row, meta ) {
+                                    if(type === 'display'){
+                                        data = '<a href="consultar_empleado/:' + encodeURIComponent(data) + '">Más información</a>';
+                                    }
+                                    return data;
+                                }
+                            }
+                        ],
+                        "language": {
+                            "paginate": {
+                              "previous": "Anterior",
+                              "next": "Siguiente",
+                            },
+                            "emptyTable": "No existen registros.",
+                            "infoEmpty": "",
+                            "infoFiltered": "",
+                            "zeroRecords": "No existen registros con estas características.",
+                            "lengthMenu": 'Mostrando <select>'+
+                                '<option value="10">10</option>'+
+                                '<option value="25">25</option>'+
+                                '<option value="50">50</option>'+
+                                '<option value="-1">Todos</option>'+
+                                '</select> empleados',
+                            "search": "_INPUT_",
+                            searchPlaceholder: "Buscar empleado",
+                            "info": "_START_-_END_ de _TOTAL_",
+                          },
+
                     })
 
                 }).catch((e) => {
@@ -60,6 +99,7 @@ export default class DataTable extends React.Component {
         .DataTable()
         .destroy(true);
     }
+
     render(){
         return (
             <div>

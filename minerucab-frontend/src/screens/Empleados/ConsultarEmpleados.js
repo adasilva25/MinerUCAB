@@ -4,6 +4,9 @@ import MenuBar from '../../components/MenuBar';
 import DataTable from '../../components/DataTable';
 import {Header} from '../../components/Header';
 import {Footer} from '../../components/Footer';
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 export default class ConsultarEmpleados extends React.Component {
     getColumns = () => {
@@ -52,11 +55,19 @@ export default class ConsultarEmpleados extends React.Component {
             <div>
                 <Header />
                     <MenuBar agregar={"/agregar_empleados"}/>
-                    <DataTable 
-                        columns={'http://localhost:3000/column_names/test_table'} 
-                        data={'http://localhost:3000/users'}
-                    />
-                <Footer />
+                    <Container>
+                        <Row>
+                            <Col sm={0} md={1}></Col>
+                            <Col sm={12} md={10}>
+                                <DataTable
+                                    columns={'http://localhost:3000/column_names/test_table'} 
+                                    data={'http://localhost:3000/users'}
+                                    url={'consultar_empleado/:'}
+                                />
+                            </Col>
+                            <Col sm={0} md={1}></Col>
+                        </Row>
+                    </Container>
             </div>
         )
     }

@@ -20,6 +20,7 @@ const AppRouter = () => (
         {/* ------------------------ EMPLEADOS ------------------------ */}
         <Route path="/agregar_empleados" component={AgregarEmpleados} />
         <Route path="/consultar_empleados" component={ConsultarEmpleados} />
+        //<Route path="/consultar_empleado/:userId" />}
         <Route path="/dashboard" component={DashboardPage} />
       </Switch>
     </div>
