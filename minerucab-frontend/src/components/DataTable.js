@@ -94,9 +94,8 @@ export default class DataTable extends React.Component {
             })
     }
     componentWillUnmount = () => {
-        $(this.el)
-        .find('table')
-        .DataTable()
+        this.$el
+        .DataTable
         .destroy(true);
     }
 

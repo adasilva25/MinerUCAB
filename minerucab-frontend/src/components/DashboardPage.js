@@ -61,10 +61,8 @@ export default class DashboardPage extends React.Component {
     onClickLoginPage(){
         history.push('/');
     }
-    renderTabs = () => (
-        <div>
-        
-        </div>
+    renderTabs = (index) => (
+        console.log(index)
     )
     renderAccordion = () => (
         this.state.accordion.map((option, index) => (
