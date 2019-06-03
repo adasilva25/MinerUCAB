@@ -2,7 +2,6 @@ import React from 'react';
 import MenuBar from '../../components/MenuBar';
 import DataTable from '../../components/DataTable';
 import {Header} from '../../components/Header';
-import {Footer} from '../../components/Footer';
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'

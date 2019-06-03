@@ -1,0 +1,142 @@
+.BotonExit{
+      margin-right: 0px;
+      padding-top: 0px;
+      margin-top: -7px;
+      font-size: 150%;
+      border: none;
+}
+.BotonExit:hover{
+      
+      border: none; 
+      background-color: transparent;
+      color: black;
+}
+
+
+
+
+.list-group-item.CerrarSesion:hover{
+      background-color: DodgerBlue;
+      color:white;
+
+}
+
+.containerImg{
+  background-color: white;
+  padding-bottom: 10%;
+}
+
+
+.list-group-item.ListItem{
+  border-radius: 0px;
+}
+
+.HomeAyudaFont{
+  font-size: 130%;
+  padding-top: 3%;
+}
+
+.list-group-item.ListItem1 {
+   border-radius: 0px;
+}
+
+
+/*.list-group-item.ListItem{
+   border-radius: 0px;
+   background-color: #c6c8ca;
+   color:#1b1e21;
+
+}
+
+.list-group-item-dark.list-group-item-action.active {
+    color: #1b1e21;
+    background-color: #b9bbbe;
+    border-color: rgba(0,0,0,.125);
+}
+
+
+.list-group-item.active.ListItem1 {
+    z-index: 2;
+    color: #1b1e21;
+    border-color: rgba(0,0,0,.125);
+}*/
+
+
+button:focus.FocusLI {
+    outline: 5px auto transparent;
+}
+
+
+.list-group-item.ListItemCerrarsesion{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  border-radius: 0px;
+  font-size: 130%;
+
+}
+
+.list-group-item.active.ActiveLI {
+    color: #1b1e21;
+    background-color: #b9bbbe;
+    border-color:rgba(0,0,0,.125) ;
+}
+
+.ListItemRow{
+      width: 100%;
+      margin-right: 3%;
+}
+
+.ListItemRowTitle{
+      font-size: 120%;
+}
+
+#SideBar{
+      display:none;
+      background-color: white;
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top:0px;
+      z-index:2;
+}  
+#overlay {
+      top:0px;
+      display: none;
+
+      position: fixed;
+      /* full screen */
+      width: 100vw;
+      height: 100vh;
+      /* transparent black */
+      background: rgba(0, 0, 0, 0.7);
+      /* middle layer, i.e. appears below the sidebar */
+      z-index: 1;
+      opacity: 0.8;
+      /* animate the transition */
+      transition: all 2s ease-in-out;
+}
+
+
+
+
+@keyframes slideIn {
+    0%   {left:-500px;}
+    100% {left:0px;}
+}
+
+@keyframes slideOut {
+    0%   {left:0px;}
+    100% {left:-500px;}
+}
+
+@keyframes fadeIn {
+    0%   {background: rgba(0, 0, 0, 0);}
+    100% {background: rgba(0, 0, 0, 0.7);}
+}
+
+@keyframes fadeOut {
+    0%   {background: rgba(0, 0, 0, 0.7);}
+    100% {background: rgba(0, 0, 0, 0);}
+}

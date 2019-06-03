@@ -1,0 +1,222 @@
+.actividad{
+	text-align: center;
+	color: white;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	/*background-image: linear-gradient(to right, #dd99ff, #9900cc);*/
+	background: rgb(151,0,231);
+	background: linear-gradient(90deg, rgba(151,0,231,1) 0%, rgba(169,65,243,1) 54%, rgba(196,79,241,1) 100%);
+	border-radius:10px;
+	font-family: 'Candal';
+	font-size: 150%;
+	
+
+ 
+
+}
+.actividad:hover{
+	
+	background: rgb(164,41,230);
+	text-decoration: none;
+	background: linear-gradient(90deg, rgba(164,41,230,1) 0%, rgba(207,143,255,1) 54%, rgba(237,200,251,1) 100%);
+}
+
+
+.No_visible{
+	visibility: hidden;
+}
+
+
+.CardDeckActividad{
+	margin-bottom: 5%;
+	
+}
+
+.CardDeckActividadEnd{
+	margin-bottom: 0%;
+	
+
+}
+
+.CarouselItem{
+	/*background-image: linear-gradient(to right, lightblue, lightgreen);*/
+	padding-left:12%;
+	padding-right: 12%;
+	padding-bottom: 6%;
+	padding-top: 6%;
+	background: rgba(255, 255, 255, 0.6);
+
+}
+
+.carousel-control-next-icon{
+	background-image: url('/images/Arrow_right.png');
+}
+
+.carousel-control-prev-icon{
+	background-image: url('/images/Arrow_left.png');
+
+}
+
+.carousel-indicators li{
+    background-color: #262626; 
+    
+}
+.carousel-indicators .active{
+  background-color: black;
+}
+ 
+
+.container-fluid{
+	padding-right: 15%;
+	padding-left: 15%;
+}
+
+.containerHome{
+	text-align: center;
+	font-size: 200%;
+	color:white;font-family: 'Candal';
+
+}
+
+
+@media screen and (max-width:1440px) {
+	.card-deck{
+	    display: block ;  
+	    width: 100%  ;
+
+	}
+
+	.card-deck .card {
+	    display: block;
+	    margin-bottom: 10%;
+	    margin-right: 0%;
+	    
+	}
+
+	.CarouselItem{
+	
+		padding-bottom: 7%;
+		padding-top: 7%;
+		padding-right: 9%;
+	} 
+}
+
+@media screen and (max-width:992px) {
+	
+	
+
+	.NavbarContainer{
+		background-color: #d9d9d9;
+		margin: 0%;
+		padding: 0%;
+
+	
+	}
+	.NavItems:hover{
+		background-color: darkgray;
+		color: white;
+		
+	}
+
+	
+
+
+	.nav-pills .nav-link.active{
+		background-color: darkgray;
+		 color: white;
+	}
+
+	.navbar-light .navbar-nav .nav-link:hover {
+	    color: white;
+	}
+
+	.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+	     color: white;
+	} 
+	
+}
+
+@media screen and (max-width:576px) {
+    .CardDeckActividad{
+		margin-bottom: 0%;
+	}
+	.CarouselItem{
+	
+		
+		padding-left:15%;
+		padding-right: 15%;
+		padding-bottom: 10%;
+		padding-top: 10%
+	}
+	
+	.NavbarContainer{
+		margin: 0%;
+		padding: 0%;
+	
+	}
+}
+
+
+.NavbarButton{
+	margin-left: 5%;
+	margin-right: 0%;
+}
+
+.NavbarContainer{
+	margin-left: 0%;font-family: 'Candal';
+	font-size: 110%;
+	color: rgba(0,0,0,.5);
+	
+
+}
+.NavbarCollapse{
+	
+	margin: 0%;
+	padding: 0%; 
+}
+
+.NavItemResponsive{
+	text-align: center;
+	display: block;
+	justify-content: center;
+	margin-left: 0%;
+	margin-right: 0%;
+	padding:1%;
+	border-radius:5px;
+	border: none;
+}
+.NavItemResponsive:hover{
+	background-color: darkgray;
+	color: white; 
+}
+
+
+.NavItems{
+	text-align: center;
+	justify-content: center;
+	margin-left: 0%;
+	margin-right: 0%;
+	padding:0%; 
+	width: 100%;
+}
+
+.NavItems.active{
+	background-color: darkgray;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+ 
+    background-color: darkgray;
+    width: 100%;
+    border-radius:0px;
+    color:white;
+}
+.navbar-light .navbar-nav .nav-link:hover {
+	background-color: darkgray;
+	color: white;
+	border-radius:0px;
+	width: 100%;
+}
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+    color: white;
+}
