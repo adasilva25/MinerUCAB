@@ -74,11 +74,7 @@ export default class HomePage extends React.Component {
                         {actividad.map((act,index)=>{
                             return(
                                 <Carousel.Item key={index}>
-<<<<<<< HEAD
-                                    <CarouselActividad actividades1={act} key="index" className="CarouselItem"/>
-=======
                                     <CarouselActividad actividades1={act} key={index} className="CarouselItem"/>
->>>>>>> 1840f6134957477cb51413cffb1d7bd200744284
                                 </Carousel.Item>
                             );
                         })}
