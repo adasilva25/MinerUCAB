@@ -106,7 +106,13 @@ export default class Ventas extends React.Component {
                                         <Col md={3}>
                                             <Form.Group controlId="formGroupCedula">
                                                 <Form.Label>Cédula</Form.Label>
-                                                <Form.Control type="text" placeholder="Cédula" className="ventas" />
+                                                <InputGroup className="mb-3">
+                                                    <Form.Control as="select" className="ventas container-ci">
+                                                        <option>V</option>
+                                                        <option>E</option>
+                                                    </Form.Control>
+                                                    <Form.Control type="text" placeholder="Cédula" className="ventas"/>
+                                                </InputGroup>
                                             </Form.Group>
                                         </Col>
                                         <Col md={1}></Col>
