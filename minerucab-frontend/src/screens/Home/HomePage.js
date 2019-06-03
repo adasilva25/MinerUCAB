@@ -2,7 +2,6 @@ import React from 'react';
 // https://react-bootstrap.github.io/components/buttons/
 import {history} from '../../routers/History';
 import {Header} from '../../components/Header';
-import {Footer} from '../../components/Footer';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card'
 import Actividad from '../../components/Actividad'
@@ -42,7 +41,7 @@ export default class HomePage extends React.Component {
 
             <div>
                 <Header/>
-                <OpcionesLocales opciones={[/*"Consultar", "Agregar","Modificar"*/]}/>
+                <OpcionesLocales opciones={["Consultar", "Agregar","Modificar"]}/>
                 <Container className="containerHome">
                     <h1>Home</h1>
                 </Container>
