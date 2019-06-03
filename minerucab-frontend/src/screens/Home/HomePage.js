@@ -74,8 +74,8 @@ export default class HomePage extends React.Component {
                     <Carousel interval={0} wrap={false} indicators={true} nextIcon={<span aria-hidden={true} className="carousel-control-next-icon" />} prevIcon= {<span aria-hidden={true} className="carousel-control-prev-icon" />} className="CarouselItem ">
                         {actividad.map((act,index)=>{
                             return(
-                                <Carousel.Item >
-                                    <CarouselActividad actividades1={act} key="index" className="CarouselItem"/>
+                                <Carousel.Item key={index}>
+                                    <CarouselActividad actividades1={act} key={index} className="CarouselItem"/>
                                 </Carousel.Item>
                             );
                         })}
