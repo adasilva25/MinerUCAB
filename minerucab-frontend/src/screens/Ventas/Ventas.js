@@ -24,10 +24,31 @@ export default class Ventas extends React.Component {
     }
     render(){
         const { index, direction } = this.state;
+
+        var opciones = [
+            {
+                nombre: 'Consultar',
+                link:'#45',
+                active:true
+            },
+
+            {
+                nombre: 'Agregar',
+                link:'#link50',
+                active:false
+            },
+
+            {
+                nombre: 'Modificar',
+                link:'#link54',
+                active:false
+            }
+        ];
+
         return (
             <div>
                 <Header />
-                <OpcionesLocales opciones={["Consultar", "Agregar","Modificar"]}/>
+                <OpcionesLocales opciones={opciones}/>
                 <Container className="containerGeneral">
                     <h2>VENTA</h2>
                 </Container>
@@ -108,7 +129,7 @@ export default class Ventas extends React.Component {
                                         <Col md={3}>
                                             <Form.Group controlId="formGroupCiudad">
                                                 <Form.Label>Ciudad</Form.Label>
-                                                <Form.Control placeholder="Ciudad" as="select" className="ventas" disabled="true">
+                                                <Form.Control placeholder="Ciudad" as="select" className="ventas" disabled={true}>
                                                     <option>Amazonas</option>
                                                     <option>Trujillo</option>
                                                     <option>Apure</option>
@@ -122,7 +143,7 @@ export default class Ventas extends React.Component {
                                         <Col md={3}>
                                             <Form.Group controlId="formGroupMunicipio">
                                                 <Form.Label>Municipio</Form.Label>
-                                                <Form.Control placeholder="Municipio" as="select" className="ventas" disabled="true">
+                                                <Form.Control placeholder="Municipio" as="select" className="ventas" disabled={true}>
                                                     <option>Amazonas</option>
                                                     <option>Trujillo</option>
                                                     <option>Apure</option>
