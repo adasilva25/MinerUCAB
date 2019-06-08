@@ -4,6 +4,7 @@
 require('dotenv').config({ path: '.env.jasper-reports' });
 const JasperReports = require('../reports/jasper-reports/jasper-reports-generator');
 const Empleados = require('../database/model/Empleados');
+const Minerales = require('../database/model/Minerales');
 const General = require('../database/model/General');
 const express = require('express');
 const app = express();
@@ -31,6 +32,8 @@ app.get('/', (req, res) => {
 app.get('/users', Empleados.getAllEmployees);
 
 app.get('/column_names/:table_name', General.getAllTableColumns);
+
+app.get('/minerales', Minerales.getMinerales);
 
 
 

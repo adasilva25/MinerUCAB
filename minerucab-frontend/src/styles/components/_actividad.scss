@@ -89,6 +89,26 @@
 		padding-top: 7%;
 		padding-right: 9%;
 	} 
+	color:white;
+	font-family: 'Candal';
+
+}
+
+.colorcon{
+	background-color: lavender;
+	margin-bottom: 20%;
+}
+.ven{
+	background: rgba(255, 255, 255, 0.6);
+
+}
+
+@media screen and (max-width:1440px) {
+	
+
+	.actividad{
+		font-size: 120%;
+	}
 }
 
 @media screen and (max-width:900px) {

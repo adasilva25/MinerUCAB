@@ -3,17 +3,20 @@ import MenuBar from '../../components/MenuBar';
 import {Header} from '../../components/Header';
 import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
-import ModalComponent from '../../components/ModalComponent';
+import ModalBuscarCliente from '../../components/ModalBuscarCliente';
+import ModalYesNo from '../../components/ModalYesNo';
+import OpcionesLocales from '../../components/OpcionesLocales';
 
 export default class AgregarEmpleados extends React.Component {
     state = { 
-        modalShow: false 
+        modalShow: false,
+        modalShow2: false 
     };
-    modalClose = () => this.setState({ modalShow: false });
+    modalClose = () => this.setState({ modalShow2: false });
     render(){
         return (
             <div>
-            	<Header />
+                <OpcionesLocales />
 	                <MenuBar consultar={"/consultar_empleados"}/>
                     <h1>Agregar Empleados</h1>
                     <ButtonToolbar>
@@ -22,12 +25,19 @@ export default class AgregarEmpleados extends React.Component {
                             size="md" 
                             block as="input" 
                             type="submit" 
-                            onClick={() => this.setState({ modalShow: true })}
+                            onClick={() => this.setState({ modalShow2: true })}
                             value="Ingresar" />
-                        <ModalComponent
+                        <ModalBuscarCliente
                             show={this.state.modalShow}
                             onHide={this.modalClose}
-                            title={'Advertencia'}
+                            content=
+                                {
+                                    'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beerlabore wes anderson cred nesciunt sapiente ea proident.'
+                                }
+                        />
+                        <ModalYesNo
+                            show={this.state.modalShow2}
+                            onHide={this.modalClose}
                             content=
                                 {
                                     'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beerlabore wes anderson cred nesciunt sapiente ea proident.'

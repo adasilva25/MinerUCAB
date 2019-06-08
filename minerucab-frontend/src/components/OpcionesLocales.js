@@ -44,12 +44,18 @@ export default class OpcionesLocales extends React.Component {
           
           <div>
              
-            <Navbar className='NavbarContainer' expand="lg" variant="light" bg="light" >
+            <Navbar className='NavbarContainer' expand="lg" variant="light" bg="light" > 
                
+            MINERUCAB
+
               <Navbar.Brand className='NavbarButton' href="" onClick={this.handleOpenSideBar}><BOG /></Navbar.Brand> 
               
+              
+
               <Navbar.Toggle aria-controls="responsive-navbar-nav"  className = { ( (opciones) && (opciones.length != 0) ) ? "NavItemResponsive" : "No_visible"}> Opciones </Navbar.Toggle >
+              
               <Container className='NavbarContainer' fluid={true}>
+                
                 <Navbar.Collapse id="responsive-navbar-nav" className="NavbarCollapse">
                   {
                     ( (opciones) && (opciones.length != 0) ) ? (
@@ -64,6 +70,7 @@ export default class OpcionesLocales extends React.Component {
                     (<span className="No_visible"/>)
                   }
                 </Navbar.Collapse>
+                ANDREA DA SILVA
               </Container>
             </Navbar>
           </div>

@@ -1,0 +1,79 @@
+.horizontal-line-title{
+    padding-bottom: 15px;
+    padding-top: 15px;    
+    border-bottom: 1px solid grey;
+}
+
+.cliente-title{
+    color: rgba(90, 34, 112, 0.8);
+    font-weight: 800;
+}
+
+.form-control.form-input{
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+    background-color: transparent;
+    font-style: italic;
+    font-weight: 100;
+    font-size: smaller;
+}
+
+.form-control.form-input:focus{
+    border-color: rgba(90, 34, 112, 1);
+    box-shadow: inset 0 1px 1px white, 0 0 8px white;
+}
+
+.div-content-form{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.form-control.form-date{
+    width: 20%;
+}
+
+.div-content-date{
+    padding-left: 15px;
+}
+
+.form-control.form-ci-type{
+    width: 20%;
+}
+
+.form-control.form-ci-number{
+    width: 75%;
+}
+
+.btn-primary.cliente-btn{
+    border: 1px solid rgba(90, 34, 112, 0.8);
+    border-radius: 1.50rem;
+    background-color: #fff;
+    color: rgba(90, 34, 112, 0.8);
+    width: 40%;
+}
+
+.btn-primary.cliente-btn:focus{
+    box-shadow: inset 0 1px 1px rgba(90, 34, 112, 1), 0 0 8px rgba(90, 34, 112, 1);
+}
+
+.btn.btn-primary.cliente-btn:hover{
+  border: 1px solid purple;
+  background-color: rgba(90, 34, 112, 1);
+  color: #fff;
+}
+
+.cliente-description-fields{
+    text-align: center;
+}
+
+.cliente-description-fields-text{
+    color: rgb(63, 62, 62);
+    font-weight: 250;
+}
+
+.btn-link.cliente-reset {
+    font-weight: 100;
+    color: rgb(63, 62, 62);
+    text-decoration: none;
+}

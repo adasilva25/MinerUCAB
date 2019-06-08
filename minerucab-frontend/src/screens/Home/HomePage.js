@@ -60,35 +60,24 @@ export default class HomePage extends React.Component {
 
         return ( 
             <div>
-                <Header /> 
                 <OpcionesGlobales active="Home"/> 
-                <OpcionesLocales opciones={opciones}/>
                 <div className="bg">
+                    <OpcionesLocales/>
+                   
                     <Container className="containerHome ">
-                        <Row>
-                            <Col md={4}></Col>
-                            <Col className="containerHome" md={4}>
-                                <div className="titlestyle">Inicio</div>
-                            </Col>
-                            <Col md={4}></Col>
-                        </Row>
+                        <h1>Home</h1>
                     </Container>
-                    <Row className="contain containhome">
-                        <Col md={1}></Col>
-                        <Col md={10} className="login-bg">
-                                <Carousel interval={0} wrap={false} indicators={true} nextIcon={<span aria-hidden={true} className="carousel-control-next-icon" />} prevIcon= {<span aria-hidden={true} className="carousel-control-prev-icon" />} className="CarouselItem ">
-                                    {actividad.map((act,index)=>{
-                                        return(
-                                            <Carousel.Item key={index}>
-                                                <CarouselActividad actividades1={act} key={index} className="CarouselItem"/>
-                                            </Carousel.Item>
-                                        );
-                                    })}
-                                </Carousel>  
-                        </Col>
-                        <Col md={1}></Col>
-                            
-                    </Row>
+                    <Container fluid={true} className="container-fluid" >
+                        <Carousel interval={0} wrap={false} indicators={true} nextIcon={<span aria-hidden={true} className="carousel-control-next-icon" />} prevIcon= {<span aria-hidden={true} className="carousel-control-prev-icon" />} className="CarouselItem ">
+                            {actividad.map((act,index)=>{
+                                return(
+                                    <Carousel.Item key={index}>
+                                        <CarouselActividad actividades1={act} key={index} className="CarouselItem"/>
+                                    </Carousel.Item>
+                                );
+                            })}
+                        </Carousel>    
+                    </Container>
                 </div>
             </div>
         )

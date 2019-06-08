@@ -1,0 +1,101 @@
+.modal-bc-title-bg{
+    background-color: rgba(90, 34, 112, 1);
+    color: #fff;
+    align-content: center;
+}
+
+.modal-bc-close-btn{
+    padding: 1rem 1rem;
+    margin: -1rem -1rem -1rem auto;
+    background-color: transparent;
+    border: 0;
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
+
+.modal-bc-close-btn:hover{
+    color: #000;
+    text-decoration: none;
+}
+
+.close{
+    color: rgba(230, 226, 236, 100);
+}
+.close:hover,
+.close:active{
+    color: #fff;
+}
+
+.close:focus{
+    border-color: red;
+    box-shadow: inset 0 1px 1px rgba(90, 34, 112, 1), 0 0 8px rgba(90, 34, 112, 1);
+}
+
+.modal-bc-title-text{
+    font: #fff;
+}
+
+.modal-bc-description{
+    text-align: center;
+}
+
+.modal-bc-description-text{
+    color: rgb(63, 62, 62);
+    font-weight: 250;
+}
+
+.btn-primary.modal-bc-button{
+    border: 1px solid rgba(90, 34, 112, 0.8);
+    border-radius: 1.50rem;
+    background-color: #fff;
+    color: rgba(90, 34, 112, 0.8);
+}
+
+.btn-primary.modal-bc-button:focus{
+    box-shadow: inset 0 1px 1px rgba(90, 34, 112, 1), 0 0 8px rgba(90, 34, 112, 1);
+}
+
+.form-control.modal-bc-input{
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+    background-color: transparent;
+    font-style: italic;
+}
+
+.form-control.modal-bc-input:focus{
+    border-color: rgba(90, 34, 112, 1);
+    box-shadow: inset 0 1px 1px white, 0 0 8px white;
+}
+
+.btn.btn-primary.modal-bc-button:hover,
+.btn.btn-primary.purple-btn:active{
+  border: 1px solid purple;
+  background-color: rgba(90, 34, 112, 1);
+  color: #fff;
+}
+
+.modal-bc-error-mg{
+    text-align: center;
+    color: rgb(196, 41, 41);
+    font-weight: 100;
+    font-size: smaller;
+    margin-bottom: 0px;
+}
+
+.modal-bc-link-create{
+    color: rgba(90, 34, 112, 1);
+}
+
+.btn.bc-link-create-btn{
+    font-size: 0.8rem;
+}
+
+.btn.bc-link-create-btn:hover{
+    color: rgba(90, 34, 112, 1);
+}

@@ -1,0 +1,51 @@
+.div-ventas-row{
+    border: 0.5px solid rgba(212, 212, 212, 100);
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-radius: 1.5rem;
+}
+
+.div-ventas-pedido-form{
+    margin-bottom: 1.5rem;
+}
+
+.div-screen-resize{
+    margin-bottom: 4rem;
+}
+
+.horizontal-line-ventas-form{
+    padding-bottom: 2px;
+    padding-top: 2px;    
+    border-bottom: 1px solid rgb(214, 213, 213);
+}
+
+.horizontal-line-title-ventas-form{
+    padding-bottom: 15px;
+    padding-top: 15px;    
+    border-bottom: 1px solid rgb(214, 213, 213);
+}
+
+.btn-primary.ventas-form-btn{
+    border: 1px solid rgb(50, 111, 180);
+    border-radius: 1.50rem;
+    background-color: #fff;
+    color: rgb(50, 111, 180);
+    width: 40%;
+}
+
+.btn-primary.ventas-form-btn:focus{
+    box-shadow: inset 0 1px 1px rgb(50, 111, 180), 0 0 8px rgb(50, 111, 180);
+}
+
+.btn.btn-primary.ventas-form-btn:hover{
+  border: 1.5px solid rgb(50, 111, 180);
+  background-color: rgb(50, 111, 180);
+  color: #fff;
+}
+
+.input-group-text.input-append-ventas-form{
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    font-style: italic;
+}
