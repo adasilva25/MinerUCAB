@@ -5,7 +5,9 @@ import CambiarContrasena from '../screens/Login/CambiarContrasena';
 import DashboardPage from '../components/DashboardPage';
 import AgregarEmpleados from '../screens/Empleados/AgregarEmpleados';
 import ConsultarEmpleados from '../screens/Empleados/ConsultarEmpleados';
-import Ventas from '../screens/Ventas/Ventas';
+import RegistrarCliente from '../screens/Clientes/RegistrarCliente';
+import VentasForm from '../screens/Ventas/VentasForm';
+import RegistrarCargo from '../screens/Cargos/RegistrarCargo';
 import {NotFoundPage} from '../components/NotFoundPage';
 import {history} from './History';
 import HomePage from '../screens/Home/HomePage'
@@ -23,8 +25,12 @@ const AppRouter = () => (
         {/* ------------------------ EMPLEADOS ------------------------ */}
         <Route path="/agregar_empleados" component={AgregarEmpleados} />
         <Route path="/consultar_empleados" component={ConsultarEmpleados} />
+        {/* ------------------------ CLIENTES ------------------------ */}
+        <Route path="/registrar_cliente" component={RegistrarCliente} />
         {/* ------------------------ VENTAS ------------------------ */}
-        <Route path="/ventas" component={Ventas} />
+        <Route path="/ventas" component={VentasForm} />
+        {/* ------------------------ CARGOS ------------------------ */}
+        <Route path="/registrar_cargo" component={RegistrarCargo} />
       </Switch>
     </div>
   </Router>

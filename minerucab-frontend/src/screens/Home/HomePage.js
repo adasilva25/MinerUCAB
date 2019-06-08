@@ -60,11 +60,11 @@ export default class HomePage extends React.Component {
 
         return ( 
 
-            <div >
+            <div>
                 <Header /> 
                 <OpcionesGlobales active="Home"/> 
                 <div className="bg">
-                <OpcionesLocales opciones={opciones}/>
+                <OpcionesLocales/>
                
                 <Container className="containerHome ">
                     <h1>Home</h1>

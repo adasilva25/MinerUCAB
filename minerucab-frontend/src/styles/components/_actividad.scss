@@ -74,31 +74,26 @@
 .containerHome{
 	text-align: center;
 	font-size: 200%;
-	color:white;font-family: 'Candal';
+	color:white;
+	font-family: 'Candal';
 
 }
 
+.colorcon{
+	background-color: lavender;
+	margin-bottom: 20%;
+}
+.ven{
+	background: rgba(255, 255, 255, 0.6);
+
+}
 
 @media screen and (max-width:1440px) {
-	.card-deck{
-	    display: block ;  
-	    width: 100%  ;
-
-	}
-
-	.card-deck .card {
-	    display: block;
-	    margin-bottom: 10%;
-	    margin-right: 0%;
-	    
-	}
-
-	.CarouselItem{
 	
-		padding-bottom: 7%;
-		padding-top: 7%;
-		padding-right: 9%;
-	} 
+
+	.actividad{
+		font-size: 120%;
+	}
 }
 
 @media screen and (max-width:992px) {
