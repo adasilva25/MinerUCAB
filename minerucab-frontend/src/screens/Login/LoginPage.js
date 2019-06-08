@@ -20,7 +20,7 @@ export default class LoginPage extends React.Component {
     modalClose = () => this.setState({ modalShow: false });                        
     render(){
         return (
-            <div className="contain bg">
+            <div className="contain containlogin bg">
                 <Row>
                     <Col md={1}></Col>
                     <Col md={10} className="login-bg">

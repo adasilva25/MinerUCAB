@@ -52,7 +52,7 @@ export default class DataTable extends React.Component {
                             scrollY: 390,
                         //No permitir orden
                             //ordering:  false
-                        columnDefs: [
+                        /*columnDefs: [
                             {
                                 targets:-0, // Start with the last
                                 render: function ( data, type, row, meta ) {
@@ -62,7 +62,7 @@ export default class DataTable extends React.Component {
                                     return data;
                                 }
                             }
-                        ],
+                        ],*/
                         "language": {
                             "paginate": {
                               "previous": "Anterior",
@@ -83,6 +83,21 @@ export default class DataTable extends React.Component {
                             "info": "_START_-_END_ de _TOTAL_",
                           },
 
+                    columnDefs: [{
+                        targets: 0,
+                        render: function ( data, type, row, meta ) {
+                                    if(type === 'display'){
+                                        /*data = '<button class="btn btn-primary purple-btn">A</button> <form style="display: inline" action="consultar_empleado/:' + encodeURIComponent(data) +'" method="get"><button class="btn btn-primary purple-btn">Detalle</button></form> <button class="btn btn-primary purple-btn">C</button>';*/
+                                        data = '<a href="#"><i class="fas fa-edit icons iconedit"></i></a> <a href="consultar_empleado/:' + encodeURIComponent(data) + '"><i class="fas fa-search icons iconsearch"></i></a> <a href="#"><i class="far fa-trash-alt icons icondelete"></i></a>';
+                                    }
+                                    return data;
+                                }
+                    }]
+                    /*"columnDefs": [ {
+                        "targets": 0,
+                        "data": null,
+                        "defaultContent":'<i class="far fa-trash-alt"></i><form style="display: inline" action="consultar_empleado/:" method="get"><button>B</button></form><button>C</button>',
+                    } ],*/
                     })
 
                 }).catch((e) => {

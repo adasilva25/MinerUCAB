@@ -22,7 +22,11 @@ export default class ConsultarEmpleados extends React.Component {
                                     url={'consultar_empleado/:'}
                                 />
                             </Col>
-                            <Col sm={0} md={1}></Col>
+                            <Col sm={0} md={1}>      
+                                <div class="addbtn">
+                                    <a href="agregar_empleados"><i class="fas fa-plus-circle iconadd"></i></a>
+                                </div>
+                            </Col>
                         </Row>
                     </Container>
             </div>

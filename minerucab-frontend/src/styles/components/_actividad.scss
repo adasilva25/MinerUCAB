@@ -9,43 +9,38 @@
 	border-radius:10px;
 	font-family: 'Candal';
 	font-size: 150%;
-	
-
- 
-
 }
 .actividad:hover{
-	
 	background: rgb(164,41,230);
 	text-decoration: none;
 	background: linear-gradient(90deg, rgba(164,41,230,1) 0%, rgba(207,143,255,1) 54%, rgba(237,200,251,1) 100%);
 }
+.containhome{
+  padding-bottom:5%;
+}
 
+.titlestyle{
+	    font-size: -webkit-xxx-large;
+	    margin: 0.4em 0;
+}
 
 .No_visible{
 	visibility: hidden;
 }
 
-
 .CardDeckActividad{
 	margin-bottom: 5%;
-	
 }
 
 .CardDeckActividadEnd{
 	margin-bottom: 0%;
-	
-
 }
 
 .CarouselItem{
 	/*background-image: linear-gradient(to right, lightblue, lightgreen);*/
-	padding-left:12%;
-	padding-right: 12%;
-	padding-bottom: 6%;
-	padding-top: 6%;
-	background: rgba(255, 255, 255, 0.6);
-
+	padding-left:12px;
+	padding-right: 12px;
+	padding-bottom: 4px;
 }
 
 .carousel-control-next-icon{
@@ -75,62 +70,45 @@
 	text-align: center;
 	font-size: 200%;
 	color:white;font-family: 'Candal';
-
 }
 
-
-@media screen and (max-width:1440px) {
+@media screen and (max-width:1000px) {
 	.card-deck{
 	    display: block ;  
-	    width: 100%  ;
-
+	    width: 100%  
 	}
 
 	.card-deck .card {
 	    display: block;
 	    margin-bottom: 10%;
 	    margin-right: 0%;
-	    
 	}
 
 	.CarouselItem{
-	
 		padding-bottom: 7%;
 		padding-top: 7%;
 		padding-right: 9%;
 	} 
 }
 
-@media screen and (max-width:992px) {
-	
-	
-
+@media screen and (max-width:900px) {
 	.NavbarContainer{
 		background-color: #d9d9d9;
 		margin: 0%;
 		padding: 0%;
-
-	
 	}
 	.NavItems:hover{
 		background-color: darkgray;
 		color: white;
-		
 	}
-
-	
-
-
 	.nav-pills .nav-link.active{
 		background-color: darkgray;
 		 color: white;
 	}
-
 	.navbar-light .navbar-nav .nav-link:hover {
 	    color: white;
 	}
-
-	.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+	.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link .nav-pills.navstyle .nav-link.active.navstyle {
 	     color: white;
 	} 
 	
@@ -140,9 +118,7 @@
     .CardDeckActividad{
 		margin-bottom: 0%;
 	}
-	.CarouselItem{
-	
-		
+	.CarouselItem{	
 		padding-left:15%;
 		padding-right: 15%;
 		padding-bottom: 10%;
@@ -152,7 +128,6 @@
 	.NavbarContainer{
 		margin: 0%;
 		padding: 0%;
-	
 	}
 }
 
@@ -166,11 +141,8 @@
 	margin-left: 0%;font-family: 'Candal';
 	font-size: 110%;
 	color: rgba(0,0,0,.5);
-	
-
 }
 .NavbarCollapse{
-	
 	margin: 0%;
 	padding: 0%; 
 }
