@@ -45,8 +45,7 @@ export default class OpcionesLocales extends React.Component {
        var {Usuario} = this.props;
 
         return (
-          <div>
-            <Navbar fixed="top" className='NavbarContainer' expand="lg" variant="light" bg="light" >
+            <Navbar fixed="top" className='NavbarContainer' expand="lg" variant="light">
               <div>
                 <Image src="/images/MinerUCAB-logo.png" alt="LogoMinerUCAB" fluid className="NavbarLogo"/>
               </div>
@@ -57,8 +56,6 @@ export default class OpcionesLocales extends React.Component {
                 {Usuario}
               </Nav>
             </Navbar>
-          </div>
-            
         ) 
     }
 }

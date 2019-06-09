@@ -10,7 +10,7 @@ export default class MenuBar extends React.Component {
                         <Nav.Link href={this.props.consultar}>Consultar</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href={this.props.agregar}>Agregar</Nav.Link>
+                        <Nav.Link className="navstyle" href={this.props.agregar}>Agregar</Nav.Link>
                     </Nav.Item>
                 </Nav>
             </div>

@@ -163,7 +163,6 @@ export default class HomePage extends React.Component {
         var opciones = "Diego Gutiérrez";
 
         return ( 
-
             <div>
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario={opciones}/>

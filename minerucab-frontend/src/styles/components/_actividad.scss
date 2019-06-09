@@ -1,4 +1,3 @@
-
 /*-----------------------------------------CLASES--------------------------------------------*/
 
 /*------------------Tarjetas de actividades (Privilegios)--------------------*/
@@ -65,8 +64,10 @@
 	-webkit-box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.19);
 	-moz-box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.19);
 	box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.19);
-	background: 
+	background:
 	linear-gradient(90deg, rgba(82,90,96,1) 0%, rgba(82,90,96,1) 100%);
+	/* azul oscuro #224d71*/
+	/*linear-gradient(90deg, rgba(159,0,4,1) 0%, rgba(159,0,4,1) 100%);*/
 
 	/*background: linear-gradient(90deg, rgba(210,217,223,1) 0%, rgba(248,249,250,1) 100%);*/
 
@@ -161,7 +162,6 @@ button:focus.FocusLI {
 
 /*--------Side Bar--------*/
 #SideBar{
-      
     height: 100%; 
 	width: 250px;
 	position: fixed;
@@ -268,4 +268,3 @@ button:focus.FocusLI {
   	padding-left:  10%;
   }
 }
-

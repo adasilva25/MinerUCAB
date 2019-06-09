@@ -25,6 +25,7 @@ const AppRouter = () => (
         {/* ------------------------ EMPLEADOS ------------------------ */}
         <Route path="/agregar_empleados" component={AgregarEmpleados} />
         <Route path="/consultar_empleados" component={ConsultarEmpleados} />
+        //<Route path="/consultar_empleado/:userId" />}
         {/* ------------------------ CLIENTES ------------------------ */}
         <Route path="/registrar_cliente" component={RegistrarCliente} />
         {/* ------------------------ VENTAS ------------------------ */}
