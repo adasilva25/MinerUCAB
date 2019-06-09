@@ -5,7 +5,8 @@ import CambiarContrasena from '../screens/Login/CambiarContrasena';
 import DashboardPage from '../components/DashboardPage';
 import AgregarEmpleados from '../screens/Empleados/AgregarEmpleados';
 import ConsultarEmpleados from '../screens/Empleados/ConsultarEmpleados';
-import RegistrarCliente from '../screens/Clientes/RegistrarCliente';
+import RegistrarClienteNatural from '../screens/Clientes/RegistrarClienteNatural';
+import RegistrarClienteJuridico from '../screens/Clientes/RegistrarClienteJuridico';
 import VentasForm from '../screens/Ventas/VentasForm';
 import RegistrarCargo from '../screens/Cargos/RegistrarCargo';
 import {NotFoundPage} from '../components/NotFoundPage';
@@ -26,7 +27,8 @@ const AppRouter = () => (
         <Route path="/agregar_empleados" component={AgregarEmpleados} />
         <Route path="/consultar_empleados" component={ConsultarEmpleados} />
         {/* ------------------------ CLIENTES ------------------------ */}
-        <Route path="/registrar_cliente" component={RegistrarCliente} />
+        <Route path="/registrar_cliente_natural" component={RegistrarClienteNatural} />
+        <Route path="/registrar_cliente_juridico" component={RegistrarClienteJuridico} />
         {/* ------------------------ VENTAS ------------------------ */}
         <Route path="/ventas" component={VentasForm} />
         {/* ------------------------ CARGOS ------------------------ */}
