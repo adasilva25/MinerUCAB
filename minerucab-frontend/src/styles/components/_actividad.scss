@@ -1,3 +1,9 @@
+
+/*-----------------------------------------CLASES--------------------------------------------*/
+
+/*------------------Tarjetas de actividades (Privilegios)--------------------*/
+/*------------------Tarjetas--------------------*/
+
 .actividad{
 	text-align: center;
 	color: white;
@@ -9,24 +15,64 @@
 	border-radius:10px;
 	font-family: 'Candal';
 	font-size: 150%;
+	-webkit-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.42);
+	-moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.42);
+	box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.42);
+
+	/*-webkit-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.14);
+	-moz-box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.14);
+	box-shadow: 10px 10px 10px 0px rgba(0,0,0,0.14);*/
+
+	transition: all .2s ease-in-out;
 }
+
 .actividad:hover{
 	background: rgb(164,41,230);
 	text-decoration: none;
 	background: linear-gradient(90deg, rgba(164,41,230,1) 0%, rgba(207,143,255,1) 54%, rgba(237,200,251,1) 100%);
+	-webkit-box-shadow: 0px 0px 25px 1px rgba(0,0,0,0.42);
+	-moz-box-shadow: 0px 0px 25px 1px rgba(0,0,0,0.42);
+	box-shadow: 0px 0px 25px 1px rgba(0,0,0,0.42);
+
+
+	/*-webkit-box-shadow: 25px 25px 26px 0px rgba(0,0,0,0.14);
+	-moz-box-shadow: 25px 25px 26px 0px rgba(0,0,0,0.14);
+	box-shadow: 25px 25px 26px 0px rgba(0,0,0,0.14);*/
+	
+	transform: scale(1.06);
 }
 .containhome{
   padding-bottom:5%;
 }
 
+
 .titlestyle{
 	    font-size: -webkit-xxx-large;
 	    margin: 0.4em 0;
 }
+/*------------------Card Deck espacio de separación entre tarjetas--------------------*/
+.CardDeckActividad{
+	margin-bottom: 5%;
+}
+/*------------------Style of fluid containers--------------------*/
+.container-fluid{
+	padding-right: 15%;
+	padding-left: 15%;
+}
+/*------------------Container de efectos de fondo de Actividades--------------------*/
+.containerSetActividades{
+	padding-left: 7%;
+	padding-right: 7%;
+	padding-top: 10rem;
+	padding-bottom: 5%;
+	background: linear-gradient(90deg, rgba(225,230,234,1) 0%, rgba(248,249,250,1) 100%);
+}
 
+/*------------------Tarjeta no visible--------------------*/
 .No_visible{
 	visibility: hidden;
 }
+
 
 .CardDeckActividad{
 	margin-bottom: 5%;
@@ -43,27 +89,100 @@
 	padding-bottom: 4px;
 }
 
-.carousel-control-next-icon{
-	background-image: url('/images/Arrow_right.png');
+/*------------------NavBar--------------------*/
+/*------------------Navbar Style--------------------*/
+.NavbarContainer{
+	margin-left: 0%;
+	font-size: 110%;
+	font-weight: 700; 
+	color: white;
+	z-index: 2;
+	-webkit-box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.19);
+	-moz-box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.19);
+	box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.19);
+	background: 
+	linear-gradient(90deg, rgba(82,90,96,1) 0%, rgba(82,90,96,1) 100%);
+
+	/*background: linear-gradient(90deg, rgba(210,217,223,1) 0%, rgba(248,249,250,1) 100%);*/
+
+	/*Este es el gris*/
+	/*background: linear-gradient(90deg, rgba(225,230,234,1) 0%, rgba(248,249,250,1) 100%);
+	*/
+
+	/*Azules
+	background: linear-gradient(90deg, rgba(0,151,255,1) 0%, rgba(112,227,255,1) 100%);
+	background: linear-gradient(90deg, rgba(0,151,255,1) 0%, rgba(112,201,255,1) 37%, rgba(112,227,255,1) 100%);*/
+} 
+
+/*------------------Navbar Logo MinerUCAB--------------------*/
+.NavbarLogo{
+	width: 14rem;
+	height: 10%;
 }
 
-.carousel-control-prev-icon{
-	background-image: url('/images/Arrow_left.png');
-
+/*------------------Nav Bar Toggle--------------------*/
+.ToggleNav{
+	padding-left: 2%;
 }
 
-.carousel-indicators li{
-    background-color: #262626; 
-    
-}
-.carousel-indicators .active{
-  background-color: black;
-}
- 
 
-.container-fluid{
-	padding-right: 15%;
-	padding-left: 15%;
+
+/*--------------------------Opciones GLobales----------------------------*/
+/*------------------Side Bar Item Rows Hover--------------------*/
+.list-group-item.Items:hover{
+    background-color: #b9bbbe;
+    color:white;
+    border-color: transparent;
+     
+	/*box-shadow: inset 0px -7px 9px -5px rgba(0,0,0,0.35), inset 0px 7px 9px -4px rgba(0,0,0,0.35);*/
+}
+
+/*------------------Side Bar Cerrar Sesión--------------------*/
+.list-group-item.CerrarSesion{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  border-radius: 0px;
+  font-size: 130%;
+}
+.list-group-item.active.CerrarSesion {
+    z-index: 2;
+    color: #fff;
+    background-color:#b9bbbe;
+    border-color: transparent;
+}
+.list-group-item.CerrarSesion:hover{
+    background-color: #b9bbbe;
+    color:white;
+}
+
+/*------------------Side Bar Focus Option--------------------*/
+button:focus.FocusLI {
+    outline: 5px auto transparent;
+}
+
+/*------------------Side Bar Active Option--------------------*/
+.list-group-item.active.ActiveLI {
+    color: #1b1e21;
+    background-color: #b9bbbe;
+    border-color:rgba(0,0,0,.125) ;
+ 	/*box-shadow: inset 0px -7px 9px -5px rgba(0,0,0,0.27), inset 0px 7px 9px -4px rgba(0,0,0,0.27);*/
+}
+
+/*------------------Side Bar Item Rows--------------------*/
+.ListItem1{
+	background-color: transparent;
+	border:none;
+	color: white;
+	word-break: keep-all;
+	padding-top: 10%;
+}
+/*------------------Iconos del Side Bar--------------------*/
+.SideBarIcons{
+      margin-right: 3%;
+      width: 30px;
+      height: 30px;
 }
 
 .containerHome{
@@ -91,24 +210,42 @@
 	} 
 	color:white;
 	font-family: 'Candal';
+}
+/*-----------------------------------------ID's--------------------------------------------*/
 
+/*------------------Opciones GLobales--------------------*/
+/*--------Parte de la página debajo del navbar--------*/
+#Content {
+    transition: margin-left .5s;
 }
 
-.colorcon{
-	background-color: lavender;
-	margin-bottom: 20%;
+/*--------Side Bar--------*/
+#SideBar{
+      
+    height: 100%; 
+	width: 250px;
+	position: fixed;
+	z-index: 1;
+	top: 0px;
+	left: 0px;
+	display:none;
+	overflow-x: hidden;
+	transition: all 0.5s;
+	padding-top: 50px;
+	-webkit-box-shadow: 10px 0px 10px -4px rgba(0,0,0,0.14);
+	-moz-box-shadow: 10px 0px 10px -4px rgba(0,0,0,0.14);
+	box-shadow: 10px 0px 10px -4px rgba(0,0,0,0.14);
+	background-color: #525a60;
 }
-.ven{
-	background: rgba(255, 255, 255, 0.6);
 
-}
 
-@media screen and (max-width:1440px) {
-	
+/*-----------------------------------------Efectos/Animaciones (Key Frames)--------------------------------------------*/
 
-	.actividad{
-		font-size: 120%;
-	}
+/*------------------Opciones GLobales--------------------*/
+/*--------Animación de entrada del Side Bar--------*/
+@keyframes slideIn {
+    0%   {left:-250px;}
+    100% {left:0px;}
 }
 
 @media screen and (max-width:900px) {
@@ -148,13 +285,40 @@
 	.NavbarContainer{
 		margin: 0%;
 		padding: 0%;
-	}
+}
+}
+/*--------Animación de salida del Side Bar--------*/
+@keyframes slideOut {
+    0%   {left:0px;}
+    100% {left:-250px;}
+}
+
+/*--------Ventas Andreita--------*/
+.colorcon{
+	background-color: lavender;
+	margin-bottom: 20%;
+}
+.ven{
+	background: rgba(255, 255, 255, 0.6);
 }
 
 
-.NavbarButton{
-	margin-left: 5%;
-	margin-right: 0%;
+
+/*-----------------------------------------Responsive stuff--------------------------------------------*/
+
+
+@media screen and (max-width:1440px) {
+	.card-deck{
+	    display: block ;  
+	    width: 100%  ;
+	}
+	.card-deck .card {
+	    display: block;
+	    margin-bottom: 10%;
+	    margin-right: 0%;
+	    
+	}
+
 }
 
 .NavbarContainer{
@@ -166,49 +330,47 @@
 	margin: 0%;
 	padding: 0%; 
 }
-
-.NavItemResponsive{
-	text-align: center;
-	display: block;
-	justify-content: center;
-	margin-left: 0%;
-	margin-right: 0%;
-	padding:1%;
-	border-radius:5px;
-	border: none;
-}
-.NavItemResponsive:hover{
-	background-color: darkgray;
-	color: white; 
-}
-
-
-.NavItems{
-	text-align: center;
-	justify-content: center;
-	margin-left: 0%;
-	margin-right: 0%;
-	padding:0%; 
-	width: 100%;
-}
-
-.NavItems.active{
-	background-color: darkgray;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
- 
-    background-color: darkgray;
+@media screen and (min-width: 992px){
+	.card-img-top {
     width: 100%;
-    border-radius:0px;
-    color:white;
+    height: 15vw;
+    object-fit: cover;
+   }
+   .card-deck{
+  	display: flex;
+  }
 }
-.navbar-light .navbar-nav .nav-link:hover {
-	background-color: darkgray;
-	color: white;
-	border-radius:0px;
-	width: 100%;
+
+@media screen and (max-width: 992px) {
+   .card-deck{
+  	display: block;
+  }
+  .containerSetActividades{
+  	align-content: center;
+  	justify-content: center;
+  	padding-left: 27%;
+  }
 }
-.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
-    color: white;
+
+@media screen and (max-width: 768px) {
+   .card-deck{
+  	display: block;
+  }
+  .containerSetActividades{
+  	align-content: center;
+  	justify-content: center;
+  	padding-left:  20%;
+  }
+}
+
+@media screen and (max-width:576px) {
+	.NavbarLogo{
+		width: 11rem;
+		height: 10%;
+	}
+	.containerSetActividades{
+  	align-content: center;
+  	justify-content: center;
+  	padding-left:  10%;
+  }
 }

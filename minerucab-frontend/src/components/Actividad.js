@@ -12,27 +12,29 @@ export default class Actividad extends React.Component {
     }
     
     routeTo(link){
-        window.open(link,'_self'); //This will open Google in a new 
+        window.open(link,'_self');
     }
 
 
     render(){
-        const {title} = this.props;
+        const {act} = this.props;
         var clase = "actividad";
-        let url;
-        if ( title == "" ){
+        if ( act== "" ){
         	clase = "No_visible"
         }
-
-        if (title === "Ventas"){
-            url = '/ventas';
-        }
-        else{
-            url = '#link';
-        }
-
-        return ( 
-            <Card body  className={clase} onClick={()=>this.routeTo(url)}>{title}</Card>            
+        return (
+             
+           <Card  style={{ width: '18rem' }} className={clase}>
+              <Card.Img variant="top" src={act.image} />
+              <Card.Body>
+                <Card.Title>{act.titulo}</Card.Title>
+                <Card.Text>
+                  Some quick example text to build on the card title and make up the bulk of
+                  the card's content.{/*act.descripcion*/}
+                </Card.Text>
+                <Button variant="primary" onClick={()=>this.routeTo("#link")}>Go somewhere</Button>
+              </Card.Body>
+            </Card>
         )
     }
 }

@@ -1,12 +1,9 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import BOG from './BotonOpcionesGlobales'
-
-import OpcionesGlobales from './OpcionesGlobales'
+import Image from 'react-bootstrap/Image';
 
 
 
@@ -18,19 +15,26 @@ export default class OpcionesLocales extends React.Component {
 
     handleOpenSideBar = (event) =>{
         var SB = document.getElementById('SideBar');
-        SB.style.display = "block";
-        SB.style.animationName = "slideIn";
-        SB.style.animationDuration = "1s";
-        var Overlay = document.getElementById('overlay');
-        Overlay.style.display = "block";
-        Overlay.style.animationName = "fadeIn";
-        Overlay.style.animationDuration = "1s";
-        var SBHome = document.getElementById('SBHome');
-        var SBInformacionPersonal = document.getElementById('SBInformacionPersonal');
-        var SBCambiarContraseña = document.getElementById('SBCambiarContraseña');
-        var SBAyuda = document.getElementById('SBAyuda');
-        var SBCambiarContraseña = document.getElementById('SBCambiarContraseña');
+        var Content = document.getElementById('Content');
 
+        if(SB.style.display == "none"){
+
+          SB.style.display="block";
+          SB.style.animationName = "slideIn";
+          SB.style.animationDuration = ".5s";
+          Content.style.marginLeft= "250px";
+        }
+        else{
+
+          SB.style.animationName = "slideOut";
+          SB.style.animationDuration = ".5s";
+
+          setTimeout(function() {
+            SB.style.display = "none";
+          }, 500);
+
+          Content.style.marginLeft= "0px";
+        }
     }
 
 
@@ -38,43 +42,23 @@ export default class OpcionesLocales extends React.Component {
 
     render(){
        
-       var {opciones} = this.props;
+       var {Usuario} = this.props;
 
         return (
-          
           <div>
-             
-            <Navbar className='NavbarContainer' expand="lg" variant="light" bg="light" > 
-               
-            MINERUCAB
-
-              <Navbar.Brand className='NavbarButton' href="" onClick={this.handleOpenSideBar}><BOG /></Navbar.Brand> 
-              
-              
-
-              <Navbar.Toggle aria-controls="responsive-navbar-nav"  className = { ( (opciones) && (opciones.length != 0) ) ? "NavItemResponsive" : "No_visible"}> Opciones </Navbar.Toggle >
-              
-              <Container className='NavbarContainer' fluid={true}>
-                
-                <Navbar.Collapse id="responsive-navbar-nav" className="NavbarCollapse">
-                  {
-                    ( (opciones) && (opciones.length != 0) ) ? (
-                        opciones.map((opcion,index)=>{
-                          return(
-                              <Nav className={ ( (opcion) && (opcion.length != 0) ) ? (index === 0 ? "NavItems vertical-line vertical-line-r" : "NavItems vertical-line-r") : ""} variant="pills"  fill={true} key={index}>
-                                <Nav.Link href={opcion.link} active={opcion.active}>{opcion.nombre}</Nav.Link>
-                              </Nav> 
-                            );
-                          })
-                    ):
-                    (<span className="No_visible"/>)
-                  }
-                </Navbar.Collapse>
-                ANDREA DA SILVA
-              </Container>
+            <Navbar fixed="top" className='NavbarContainer' expand="lg" variant="light" bg="light" >
+              <div>
+                <Image src="/images/MinerUCAB-logo.png" alt="LogoMinerUCAB" fluid className="NavbarLogo"/>
+              </div>
+              <div onClick={this.handleOpenSideBar} className="ToggleNav">
+                <BOG/>
+              </div>
+              <Nav className="ml-auto">
+                {Usuario}
+              </Nav>
             </Navbar>
           </div>
             
-        )
+        ) 
     }
 }
