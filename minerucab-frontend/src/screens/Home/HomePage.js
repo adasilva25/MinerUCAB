@@ -32,7 +32,7 @@ export default class HomePage extends React.Component {
 
             {
                 titulo: 'Cargos',
-                link:'#45',
+                link:'/registrar_cargo',
                 image:'/images/Cargos.png',
                 descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },
@@ -53,7 +53,7 @@ export default class HomePage extends React.Component {
 
             {
                 titulo: 'Ventas',
-                link:'#45',
+                link:'/ventas',
                 image:'/images/Ventas.png',
                 descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },
@@ -66,8 +66,8 @@ export default class HomePage extends React.Component {
             },
 
             {
-                titulo: 'Yacimientos1',
-                link:'#45',
+                titulo: 'Empleados',
+                link:'/consultar_empleados',
                 image:'/images/Yacimientos.jpg',
                 descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },

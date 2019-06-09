@@ -14,8 +14,6 @@ export default class SetActividades extends React.Component {
         var {actividades1} = this.props;
         var Actividadeslength = actividades1.length;
         var act = [];
-        var NumCards= 4;
-        var k = -1;
         act[0]=actividades1;
 
         return (

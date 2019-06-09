@@ -32,7 +32,7 @@ export default class Actividad extends React.Component {
                   Some quick example text to build on the card title and make up the bulk of
                   the card's content.{/*act.descripcion*/}
                 </Card.Text>
-                <Button variant="primary" onClick={()=>this.routeTo("#link")}>Go somewhere</Button>
+                <Button variant="primary" onClick={()=>this.routeTo(act.link)}>Go somewhere</Button>
               </Card.Body>
             </Card>
         )
