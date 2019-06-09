@@ -11,12 +11,10 @@ body {
 }
 
 .contain {
-	height: 100%;
-	width: inherit;
-}
-.containlogin{
-  padding-top:8%;
-  padding-bottom:8%;
+  height: 100%;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 .responsive {
@@ -37,7 +35,7 @@ body {
 .login-bg{
   background: rgba(255, 255, 255, 0.6);
   padding: 40px;
-  position: absolute;
+  margin-top: 15vh;
 }
 
 .horizontal-line{
@@ -52,30 +50,20 @@ body {
 }
 
 .logform{
-	margin: 10px;
-	padding-left: 50px;
-	padding-right: 50px;
+  margin: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .btn.btn-primary.purple-btn {
   background-color: rgba(90, 34, 112, 0.8);
   border-radius: .50rem;
-  border: 1px solid rgba(90, 34, 112, 1);
+  border: 1px solid purple;
 }
 .btn.btn-primary.purple-btn:hover,
-.btn.btn-primary.purple-btn:active,
-.btn.btn-primary.purple-btn:focus,
-.btn.btn-primary.purple-btn:visited,
-.btn.btn-primary.purple-btn.active,
-.btn.btn-primary.purple-btn:focus:active,
-.btn-primary.purple-btn:not(:disabled):not(.disabled):active,
-.btn-primary.purple-btn:not(:disabled):not(.disabled):hover,
-.btn-primary.purple-btn:not(:disabled):not(.disabled):focus,
-.btn-primary.purple-btn:not(:disabled):not(.disabled):visited{
-  outline: 0;
+.btn.btn-primary.purple-btn:active{
   border: 1px solid purple;
   background-color: rgba(90, 34, 112, 1);
-  box-shadow: inset 0 1px 1px rgba(90, 34, 112, 1), 0 0 8px rgba(90, 34, 112, 1);
 }
 
 .form-signin {
@@ -85,8 +73,8 @@ body {
   margin: auto;
 }
 .form-control.fTest {
-	border: 1px solid rgba(90, 34, 112, 1);
-	border-radius: .50rem;
+  border: 1px solid rgba(90, 34, 112, 1);
+  border-radius: .50rem;
 }
 .form-control.fTest:focus{
   border-color: rgba(213, 152, 248, 1);
@@ -94,13 +82,10 @@ body {
 }
 
 .font-desc {
-  font-size: 2.5rem;
+  font-size: x-large;
   font-family: 'Roboto';
 }
 
-.wepa{
-  background-color: red;
-}
-#holi{
-  background-color: black;
+.pagecontent{
+  margin-top: 90px;
 }

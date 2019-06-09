@@ -1,20 +1,9 @@
-
 /*-----------------------------------------CLASES--------------------------------------------*/
 
 /*------------------Tarjetas de actividades (Privilegios)--------------------*/
 /*------------------Tarjetas--------------------*/
 
 .actividad{
-	text-align: center;
-	color: white;
-	padding-top: 1%;
-	padding-bottom: 1%;
-	/*background-image: linear-gradient(to right, #dd99ff, #9900cc);*/
-	background: rgb(151,0,231);
-	background: linear-gradient(90deg, rgba(151,0,231,1) 0%, rgba(169,65,243,1) 54%, rgba(196,79,241,1) 100%);
-	border-radius:10px;
-	font-family: 'Candal';
-	font-size: 150%;
 	-webkit-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.42);
 	-moz-box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.42);
 	box-shadow: 0px 0px 11px 1px rgba(0,0,0,0.42);
@@ -27,9 +16,6 @@
 }
 
 .actividad:hover{
-	background: rgb(164,41,230);
-	text-decoration: none;
-	background: linear-gradient(90deg, rgba(164,41,230,1) 0%, rgba(207,143,255,1) 54%, rgba(237,200,251,1) 100%);
 	-webkit-box-shadow: 0px 0px 25px 1px rgba(0,0,0,0.42);
 	-moz-box-shadow: 0px 0px 25px 1px rgba(0,0,0,0.42);
 	box-shadow: 0px 0px 25px 1px rgba(0,0,0,0.42);
@@ -41,15 +27,7 @@
 	
 	transform: scale(1.06);
 }
-.containhome{
-  padding-bottom:5%;
-}
 
-
-.titlestyle{
-	    font-size: -webkit-xxx-large;
-	    margin: 0.4em 0;
-}
 /*------------------Card Deck espacio de separación entre tarjetas--------------------*/
 .CardDeckActividad{
 	margin-bottom: 5%;
@@ -74,20 +52,6 @@
 }
 
 
-.CardDeckActividad{
-	margin-bottom: 5%;
-}
-
-.CardDeckActividadEnd{
-	margin-bottom: 0%;
-}
-
-.CarouselItem{
-	/*background-image: linear-gradient(to right, lightblue, lightgreen);*/
-	padding-left:12px;
-	padding-right: 12px;
-	padding-bottom: 4px;
-}
 
 /*------------------NavBar--------------------*/
 /*------------------Navbar Style--------------------*/
@@ -100,8 +64,10 @@
 	-webkit-box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.19);
 	-moz-box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.19);
 	box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.19);
-	background: 
+	background:
 	linear-gradient(90deg, rgba(82,90,96,1) 0%, rgba(82,90,96,1) 100%);
+	/* azul oscuro #224d71*/
+	/*linear-gradient(90deg, rgba(159,0,4,1) 0%, rgba(159,0,4,1) 100%);*/
 
 	/*background: linear-gradient(90deg, rgba(210,217,223,1) 0%, rgba(248,249,250,1) 100%);*/
 
@@ -185,32 +151,7 @@ button:focus.FocusLI {
       height: 30px;
 }
 
-.containerHome{
-	text-align: center;
-	font-size: 200%;
-	color:white;font-family: 'Candal';
-}
 
-@media screen and (max-width:1000px) {
-	.card-deck{
-	    display: block ;  
-	    width: 100%  
-	}
-
-	.card-deck .card {
-	    display: block;
-	    margin-bottom: 10%;
-	    margin-right: 0%;
-	}
-
-	.CarouselItem{
-		padding-bottom: 7%;
-		padding-top: 7%;
-		padding-right: 9%;
-	} 
-	color:white;
-	font-family: 'Candal';
-}
 /*-----------------------------------------ID's--------------------------------------------*/
 
 /*------------------Opciones GLobales--------------------*/
@@ -221,7 +162,6 @@ button:focus.FocusLI {
 
 /*--------Side Bar--------*/
 #SideBar{
-      
     height: 100%; 
 	width: 250px;
 	position: fixed;
@@ -248,45 +188,7 @@ button:focus.FocusLI {
     100% {left:0px;}
 }
 
-@media screen and (max-width:900px) {
-	.NavbarContainer{
-		background-color: #d9d9d9;
-		margin: 0%;
-		padding: 0%;
-	}
-	.NavItems:hover{
-		background-color: darkgray;
-		color: white;
-	}
-	.nav-pills .nav-link.active{
-		background-color: darkgray;
-		 color: white;
-	}
-	.navbar-light .navbar-nav .nav-link:hover {
-	    color: white;
-	}
-	.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link .nav-pills.navstyle .nav-link.active.navstyle {
-	     color: white;
-	} 
-	
-}
 
-@media screen and (max-width:576px) {
-    .CardDeckActividad{
-		margin-bottom: 0%;
-	}
-	.CarouselItem{	
-		padding-left:15%;
-		padding-right: 15%;
-		padding-bottom: 10%;
-		padding-top: 10%
-	}
-	
-	.NavbarContainer{
-		margin: 0%;
-		padding: 0%;
-}
-}
 /*--------Animación de salida del Side Bar--------*/
 @keyframes slideOut {
     0%   {left:0px;}
@@ -321,15 +223,7 @@ button:focus.FocusLI {
 
 }
 
-.NavbarContainer{
-	margin-left: 0%;font-family: 'Candal';
-	font-size: 110%;
-	color: rgba(0,0,0,.5);
-}
-.NavbarCollapse{
-	margin: 0%;
-	padding: 0%; 
-}
+
 @media screen and (min-width: 992px){
 	.card-img-top {
     width: 100%;
