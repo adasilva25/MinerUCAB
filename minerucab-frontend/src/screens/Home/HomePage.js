@@ -1,86 +1,182 @@
 import React from 'react';
 // https://react-bootstrap.github.io/components/buttons/
 import {history} from '../../routers/History';
-import {Header} from '../../components/Header';
-import {Footer} from '../../components/Footer';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card'
-import Actividad from '../../components/Actividad'
-import CarouselActividad from '../../components/CarouselActividad'
-import BOG from '../../components/BotonOpcionesGlobales'
+import SetActividades from '../../components/SetActividades'
 import OpcionesLocales from '../../components/OpcionesLocales'
 import OpcionesGlobales from '../../components/OpcionesGlobales'
 import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import CardDeck from 'react-bootstrap/CardDeck'
-import Carousel from 'react-bootstrap/Carousel'
-import Navbar from 'react-bootstrap/Navbar'
+
 
 export default class HomePage extends React.Component {
     constructor(props){
         super(props);
     }
+
     onClickDashboardPage(){
         history.push('/dashboard');  
-    }              
+    }       
+
     onClickLoginPage(){
         history.push('/');  
-    }                             
+    }  
+
     render(){
 
-        let actividades = ["Yacimientos", "Cargos", "Minerales", "Explotaciones", "Ventas", "Solicitudes de compra","Yacimientos1", "Cargos1", "Minerales1", "Explotaciones1", "Ventas1", "Solicitudes de compra1","Yacimientos2", "Cargos2", "Minerales2", "Explotaciones2", "Ventas2", "Solicitudes de compra2"];
-        let Actlength= actividades.length;
-        let actividad=[];
-
-        for (var i = 0; i < Actlength; i=i+6) {
-            var item =[];
-            item = actividades.splice(0,6);
-            actividad.push(item);
-        }
-
-        var opciones = [
+        let actividades = [
             {
-                nombre: 'Consultar',
+                titulo: 'Yacimientos',
                 link:'#45',
-                active:true
+                image:'/images/Yacimientos.jpg',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },
 
             {
-                nombre: 'Agregar',
-                link:'#link50',
-                active:false
+                titulo: 'Cargos',
+                link:'#45',
+                image:'/images/Cargos.png',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },
 
             {
-                nombre: 'Modificar',
-                link:'#link54',
-                active:false
+                titulo: 'Minerales',
+                link:'#45',
+                image:'/images/Minerales.jpg',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+
+            {
+                titulo: 'Explotaciones',
+                link:'#45',
+                image:'/images/Explotaciones.jpg',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+
+            {
+                titulo: 'Ventas',
+                link:'#45',
+                image:'/images/Ventas.png',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+
+            {
+                titulo: 'Solicitudes de compra',
+                link:'#45',
+                image:'/images/Compras.jpg',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+
+            {
+                titulo: 'Yacimientos1',
+                link:'#45',
+                image:'/images/Yacimientos.jpg',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+
+            {
+                titulo: 'Cargos1',
+                link:'#45',
+                image:'/images/Cargos.png',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+
+            {
+                titulo: 'Minerales1',
+                link:'#45',
+                image:'/images/Minerales.jpg',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+            {
+                titulo: 'Explotaciones1',
+                link:'#45',
+                image:'/images/Explotaciones.jpg',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+
+            {
+                titulo: 'Ventas1',
+                link:'#45',
+                image:'/images/Ventas.png',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+
+            {
+                titulo: 'Solicitudes de compra1',
+                link:'#45',
+                image:'/images/Compras.jpg',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+
+            {
+                titulo: 'Yacimientos2',
+                link:'#45',
+                image:'/images/Yacimientos.jpg',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+
+            {
+                titulo: 'Cargos2',
+                link:'#45',
+                image:'/images/Cargos.png',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+
+            {
+                titulo: 'Minerales2',
+                link:'#45',
+                image:'/images/Minerales.jpg',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+
+            {
+                titulo: 'Explotaciones2',
+                link:'#45',
+                image:'/images/Explotaciones.jpg',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
+            },
+
+            {
+                titulo: 'Ventas2',
+                link:'#45',
+                image:'/images/Ventas.png',
+                descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             }
         ];
 
+        let Actlength= actividades.length;
+        let actividad=[];
+        var NumCards= 3;
+        var k = -1;
+
+        for (var i = 0; i < Actlength; i=i+NumCards) {
+            var item =[];
+            item = actividades.splice(0,NumCards);
+            actividad.push(item);
+            k++;
+        }
+        Actlength= actividad[k].length;
+        if( ( actividad[k].length % NumCards ) != 0){
+            for( var j=0; j<( NumCards-Actlength); j++ ){
+                actividad[k].push([""]);
+            }
+        }
+
+        var opciones = "Diego Gutiérrez";
+
         return ( 
 
-            <div >
-                <Header /> 
-                <OpcionesGlobales active="Home"/> 
-                <div className="bg">
-                <OpcionesLocales opciones={opciones}/>
-               
-                <Container className="containerHome ">
-                    <h1>Home</h1>
-                </Container>
-                <Container fluid={true} className="container-fluid" >
-                    <Carousel interval={0} wrap={false} indicators={true} nextIcon={<span aria-hidden={true} className="carousel-control-next-icon" />} prevIcon= {<span aria-hidden={true} className="carousel-control-prev-icon" />} className="CarouselItem ">
-                        {actividad.map((act,index)=>{
-                            return(
-                                <Carousel.Item key={index}>
-                                    <CarouselActividad actividades1={act} key={index} className="CarouselItem"/>
-                                </Carousel.Item>
-                            );
-                        })}
-                    </Carousel>    
-                </Container>
+            <div>
+                <OpcionesGlobales active="Home"/>
+                <OpcionesLocales Usuario={opciones}/>
+                <div id="Content">
+                    <Container fluid={true}>
+                        <Container fluid={true} className="containerSetActividades">
+                            {actividad.map((act,index)=>{
+                                return(
+                                    <SetActividades actividades1={act} key={index} />
+                                );
+                            })}
+                        </Container>
+                    </Container>
                 </div>
             </div>
         )
