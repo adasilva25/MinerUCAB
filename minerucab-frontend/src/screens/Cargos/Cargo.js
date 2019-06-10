@@ -7,15 +7,13 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-export default class ConsultarEmpleados extends React.Component {
+export default class Cargo extends React.Component {
     render(){
         return (
             <div>
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales />
                 <Container className="pagecontent">
-                    <h3>Consultar Empleados</h3>
-                    {this.props.match.params.userId}
                     <Row>
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>

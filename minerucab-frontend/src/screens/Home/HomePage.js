@@ -5,6 +5,7 @@ import SetActividades from '../../components/SetActividades'
 import OpcionesLocales from '../../components/OpcionesLocales'
 import OpcionesGlobales from '../../components/OpcionesGlobales'
 import Container from 'react-bootstrap/Container'
+import ModalBuscarCliente from '../../components/ModalBuscarCliente';
 
 
 export default class HomePage extends React.Component {
@@ -32,7 +33,7 @@ export default class HomePage extends React.Component {
 
             {
                 titulo: 'Cargos',
-                link:'#45',
+                link:'/cargo',
                 image:'/images/Cargos.png',
                 descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },
@@ -53,7 +54,7 @@ export default class HomePage extends React.Component {
 
             {
                 titulo: 'Ventas',
-                link:'#45',
+                link:'/buscar_cliente',
                 image:'/images/Ventas.png',
                 descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },
@@ -66,8 +67,8 @@ export default class HomePage extends React.Component {
             },
 
             {
-                titulo: 'Yacimientos1',
-                link:'#45',
+                titulo: 'Clientes',
+                link:'/cliente',
                 image:'/images/Yacimientos.jpg',
                 descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },
@@ -160,7 +161,7 @@ export default class HomePage extends React.Component {
             }
         }
 
-        var opciones = "Diego Gutiérrez";
+        var opciones = "Andrea Da Silva";
 
         return ( 
             <div>
