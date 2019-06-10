@@ -13,7 +13,7 @@ import OpcionesGlobales from '../../components/OpcionesGlobales';
 export default class RegistrarClienteNatural extends React.Component {             
     render(){
         return (
-            <div className="contain">
+            <div className="contain pagecontent">
                 <OpcionesLocales />
                 <Container>
                     <Row>

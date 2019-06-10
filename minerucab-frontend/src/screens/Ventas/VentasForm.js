@@ -508,7 +508,7 @@ export default class VentasForm extends React.Component {
         return (
             <div className="div-screen-resize">
                 <OpcionesLocales />
-                <Container>
+                <Container className="pagecontent">
                     <Row>
                         <Col md={2}></Col>
                         <Col md={10}>

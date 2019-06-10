@@ -1,6 +1,5 @@
 import React from 'react';
 import MenuBar from '../../components/MenuBar';
-import {Header} from '../../components/Header';
 import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import ModalBuscarCliente from '../../components/ModalBuscarCliente';
@@ -14,7 +13,7 @@ export default class AgregarEmpleados extends React.Component {
         modalShow2: false,
         modalShow3: false 
     };
-    modalClose = () => this.setState({ modalShow2: false });
+    modalClose = () => this.setState({ modalShow3: false });
     render(){
         return (
             <div>

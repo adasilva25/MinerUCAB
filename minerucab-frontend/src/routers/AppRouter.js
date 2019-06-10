@@ -8,6 +8,7 @@ import ConsultarEmpleados from '../screens/Empleados/ConsultarEmpleados';
 import RegistrarClienteNatural from '../screens/Clientes/RegistrarClienteNatural';
 import RegistrarClienteJuridico from '../screens/Clientes/RegistrarClienteJuridico';
 import VentasForm from '../screens/Ventas/VentasForm';
+import ModalYesNo from '../components/ModalYesNo';
 import RegistrarCargo from '../screens/Cargos/RegistrarCargo';
 import {NotFoundPage} from '../components/NotFoundPage';
 import {history} from './History';
@@ -26,9 +27,11 @@ const AppRouter = () => (
         {/* ------------------------ EMPLEADOS ------------------------ */}
         <Route path="/agregar_empleados" component={AgregarEmpleados} />
         <Route path="/consultar_empleados" component={ConsultarEmpleados} />
+        //<Route path="/consultar_empleado/:userId" />}
         {/* ------------------------ CLIENTES ------------------------ */}
         <Route path="/registrar_cliente_natural" component={RegistrarClienteNatural} />
         <Route path="/registrar_cliente_juridico" component={RegistrarClienteJuridico} />
+        <Route path="/borar_cliente" component={ModalYesNo} />
         {/* ------------------------ VENTAS ------------------------ */}
         <Route path="/ventas" component={VentasForm} />
         {/* ------------------------ CARGOS ------------------------ */}

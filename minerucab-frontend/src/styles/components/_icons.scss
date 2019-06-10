@@ -1,0 +1,38 @@
+﻿.icons{
+	font-size: 1em;
+	padding: 5px;
+	/*color:white;*/
+}
+.icons:hover{
+	color: white;
+}
+
+.icondelete{
+	color: Tomato;
+	border: 1px solid tomato;
+	border-radius: 25%;
+	/*background-color: tomato;*/
+}
+.icondelete:hover{
+	background-color: tomato;
+}
+
+.iconsearch{
+	color: gray;
+	border: 1px solid gray;
+	/*background-color: gray;*/
+	border-radius: 25%;
+}
+.iconsearch:hover{
+	background-color: gray;
+}
+
+.iconedit{
+	color: rgba(1,70,186,1);
+	border: 1px solid rgba(1,70,186,1);
+	border-radius: 25%;
+	/*background-color: rgba(1,70,186,1);*/
+}
+.iconedit:hover{
+	background-color: rgba(1,70,186,1);
+}

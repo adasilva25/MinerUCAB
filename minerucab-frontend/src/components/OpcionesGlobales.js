@@ -1,15 +1,9 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
-import BOG from './BotonOpcionesGlobales';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
 import Image from 'react-bootstrap/Image';
 import ListGroup from 'react-bootstrap/ListGroup';
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 
 
 
@@ -18,23 +12,6 @@ export default class OpcionesLocales extends React.Component {
         super(props);
     }
     
-    handleCloseSideBar = (event) =>{
-        var SB = document.getElementById('SideBar');
-        
-        SB.style.animationName = "slideOut";
-        SB.style.animationDuration = "1s";
-
-        var Overlay = document.getElementById('overlay');
-        Overlay.style.animationName = "fadeOut";
-        Overlay.style.animationDuration = "1s";
-
-        setTimeout(function() {
-          Overlay.style.display = "none";
-          SB.style.display = "none";
-        }, 1000);
-    }
-
-
     render(){
        
        var {active}= this.props;
@@ -43,48 +20,36 @@ export default class OpcionesLocales extends React.Component {
                 src: '/images/Home-96.png',
                 alt: 'Home',
                 nombre:'Home',
-                class:'ListItem FocusLI ActiveLI',
-                class2:'HomeAyudaFont',
+                class:'ListItem1 FocusLI ActiveLI Items',
                 link:'/home',
-                id:'SBHome',
-                active: false,
-                variant:''
+                active: false
             },
 
             {
-                src: '/images/User-100.png',
+                src: '/images/User-52.png',
                 alt: 'User',
                 nombre:'Información Personal',
-                class:'ListItem1 FocusLI ActiveLI',
-                class2:'',
+                class:'ListItem1 FocusLI ActiveLI Items',
                 link:'#link2',
-                id:'SBInformacionPersonal',
-                active: false,
-                variant:''
+                active: false
             },
 
             {
-                src: '/images/Pencil-96.png',
+                src: '/images/Edit-96.png',
                 alt: 'Lapiz',
                 nombre:'Cambiar Contraseña',
-                class:'ListItem1 FocusLI ActiveLI',
-                class2:'',
+                class:'ListItem1 FocusLI ActiveLI Items',
                 link:'/cambiar_contrasena',
-                id:'SBCambiarContraseña',
-                active: false,
-                variant:''
+                active: false
             },
 
             {
-                src: '/images/Search-96.png',
+                src: '/images/Lupa-50.png',
                 alt: 'Lupa',
                 nombre:'Ayuda',
-                class:'ListItem1 FocusLI ActiveLI',
-                class2:'HomeAyudaFont',
+                class:'ListItem1 FocusLI ActiveLI Items',
                 link:'#link4',
-                id:'SBAyuda',
-                active: false,
-                variant:''
+                active: false
             }
         ];
 
@@ -107,48 +72,30 @@ export default class OpcionesLocales extends React.Component {
 
         return (
 
-          <div>   
-          <div id= "overlay" onClick={this.handleCloseSideBar}>
-            </div>
-          <div id="SideBar">
-            
-            
-              
-              <Button variant="outline-secondary" type="button" className="BotonExit float-right " onClick={this.handleCloseSideBar}>&times;</Button>
-              
-              
-              <Container className = "containerImg">
-                <Image src="/images/MinerUCAB-logo.png" alt="LogoMinerUCAB" fluid />
-              </Container>
-              <ListGroup>
-                {opciones.map((opcion,index)=>{
-                    return(
-                      <ListGroup.Item action id={opcion.id} href={opcion.link} className={opcion.class} variant={opcion.variant} key={index} active={opcion.active}>
-                       <Row>
-                          <Col xs={4}> 
-                            <Image src={opcion.src} alt={opcion.alt} className="ListItemRow" fluid/>
-                          </Col>
-                          <Col xs={8} className={opcion.class2}>
-                            <span className="ListItemRowTitle">
-                              <strong >{opcion.nombre}</strong>
-                            </span>
-                          </Col>
-                        </Row>
-                      </ListGroup.Item>
-                    );
-                })}
-
-
-
-
-
-                <ListGroup.Item action id="SBCerrarSesion" href="#link5" className="ListItemCerrarsesion CerrarSesion" variant=''>
-                  <span className="ListItemRowTitle">
-                    <strong >Cerrar sesión</strong>
-                  </span>
-                </ListGroup.Item>
-              </ListGroup>
-            </div>
+          <div id="SideBar">   
+            <ListGroup>
+              {opciones.map((opcion,index)=>{
+                return(
+                  <ListGroup.Item action  href={opcion.link} className={opcion.class}  key={index} active={opcion.active} >
+                    <Row>
+                        <Col sm={2}>
+                          <Image src={opcion.src} alt={opcion.alt} className="SideBarIcons" />
+                        </Col>
+                        <Col sm={10}>
+                          <span>
+                            <strong >{opcion.nombre}</strong>
+                          </span>
+                        </Col>
+                    </Row>
+                  </ListGroup.Item>
+                );
+              })}
+              <ListGroup.Item actionhref="#link5" className="CerrarSesion">
+                <span>
+                  <strong>Cerrar sesión</strong>
+                </span>
+              </ListGroup.Item>
+            </ListGroup> 
           </div>
         )
     }
