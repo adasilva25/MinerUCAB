@@ -117,16 +117,28 @@ table.dataTable.no-footer{
 	margin-left: 20px;
 	font-size: 15px;
 }
+.dataTables_wrapper .dataTables_length{
+	float:left;
+	padding: 5px;
+	margin-left: 20px;
+	font-size: 15px;
+}
 /*Search*/
 .dataTables_wrapper .dataTables_filter{
 	float:right;
 	text-align:right;
 	margin-right: 20px;
+	border:none;
 }
 .dataTables_wrapper .dataTables_filter input{
 	margin-left:0.5em;
-	font-size: 15px;
+	font-size: 17px;
 	font-style: italic;
+	border: none;
+	border-bottom: 1px solid rgba(158,70,208,1);
+}
+.dataTables_wrapper .dataTables_filter input:active{
+	box-shadow: none;
 }
 /*Entries info*/
 .dataTables_wrapper .dataTables_info{

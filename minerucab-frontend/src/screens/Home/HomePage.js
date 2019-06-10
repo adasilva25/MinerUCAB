@@ -166,7 +166,7 @@ export default class HomePage extends React.Component {
             <div>
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario={opciones}/>
-                <div id="Content">
+                <div classname="contain pagecontent">
                     <Container fluid={true}>
                         <Container fluid={true} className="containerSetActividades">
                             {actividad.map((act,index)=>{

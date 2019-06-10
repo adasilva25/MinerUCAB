@@ -27,7 +27,7 @@ export default class LoginPage extends React.Component {
                         <Col md={10} className="login-bg">
                             <Row>
                                 <Col md={6}>
-                                      <Image className="img-fluid" src="/images/MinerUCAB-logo.png" />
+                                      <Image className="img-fluid imgbg" src="/images/MinerUCAB-logo.png" />
                                       <hr className="horizontal-line"></hr>
                                       <h1 className="responsive text-center">¡Bienvenido a MinerUCAB!</h1>
                                       <p className="font-desc text-center lead">
@@ -50,7 +50,8 @@ export default class LoginPage extends React.Component {
                                         size="md" 
                                         block as="input" 
                                         type="submit" 
-                                        value="Ingresar" />
+                                        value="Ingresar"
+                                     />
                                     </Form>
                                     <p className="text-center">©2019</p>
                                 </Col>
