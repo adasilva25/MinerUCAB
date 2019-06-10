@@ -13,10 +13,9 @@ export default class ConsultarEmpleados extends React.Component {
             <div>
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales />
-                <div className="pagecontent">
-                    <Container fluid={true}>
+                <div className="pagecontent" id="dt">
+                    <Container>
                         <Row>
-                            <Col sm={0} md={0}></Col>
                             <Col sm={12} md={12}>
                                 <DataTable
                                     columns={'http://localhost:3000/column_names/test_table'} 
@@ -24,7 +23,6 @@ export default class ConsultarEmpleados extends React.Component {
                                     url={'consultar_empleado/:'}
                                 />
                             </Col>
-                            <Col sm={0} md={0}></Col>
                         </Row>
                     </Container>
                 </div>
