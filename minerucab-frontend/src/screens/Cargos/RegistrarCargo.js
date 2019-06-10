@@ -13,9 +13,9 @@ import OpcionesGlobales from '../../components/OpcionesGlobales';
 export default class RegistrarCargo extends React.Component {             
     render(){
         return (
-            <div>
+            <div className="pagecontent">
               <OpcionesLocales />
-              <Container className="container-ccargo-separator">
+              <Container className="container-ccargo-separator pagecontent">
                 <Row>
                     <Col md={3}></Col>
                     <Col md={6}>

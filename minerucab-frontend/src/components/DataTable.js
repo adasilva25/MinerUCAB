@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import '../styles/css/jquery.dataTables.css'
+import '../styles/css/jquery.dataTables.css';
 
 const $ = require('jquery');
 $.DataTable = require('datatables.net');
@@ -21,6 +21,10 @@ export default class DataTable extends React.Component {
                     columns.push({
                         title: element.column_name
                     })
+                    console.log(element.column_name)
+                })
+                columns.push({
+                    title: 'Acciones'
                 })
                 axios.get(`${this.props.data}`, config)
                 .then((res) => {
@@ -29,6 +33,7 @@ export default class DataTable extends React.Component {
                         const keys = Object.keys(item);
 
                         for (let key of keys) {
+
                             if (typeof item[key] === 'number'){
                                 values.push(item[key].toString());
                             }
@@ -36,7 +41,7 @@ export default class DataTable extends React.Component {
                                 values.push(item[key]);
                             }
                         }
-
+                        values.push('Acciones')
                         dataSet.push(values)
                     })
 
@@ -84,11 +89,12 @@ export default class DataTable extends React.Component {
                           },
 
                     columnDefs: [{
-                        targets: 0,
+                        targets: -1,
                         render: function ( data, type, row, meta ) {
                                     if(type === 'display'){
                                         /*data = '<button class="btn btn-primary purple-btn">A</button> <form style="display: inline" action="consultar_empleado/:' + encodeURIComponent(data) +'" method="get"><button class="btn btn-primary purple-btn">Detalle</button></form> <button class="btn btn-primary purple-btn">C</button>';*/
-                                        data = '<a href="#"><i class="fas fa-edit icons iconedit"></i></a> <a href="consultar_empleado/:' + encodeURIComponent(data) + '"><i class="fas fa-search icons iconsearch"></i></a> <a href="#"><i class="far fa-trash-alt icons icondelete"></i></a>';
+                                        // data = '<a href="/registrar_cliente_juridico"><FontAwesomeIcon icon="check-square" /></a>'
+                                        data = '<a href="/registrar_cliente_juridico"><i class="fas fa-edit icons iconedit"></i></a> <a href=""' + encodeURIComponent(data) + '"><i class="fas fa-search icons iconsearch"></i></a> <a href="#"><i class="far fa-trash-alt icons icondelete"></i></a>';
                                     }
                                     return data;
                                 }
