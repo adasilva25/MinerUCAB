@@ -13,8 +13,9 @@ import OpcionesGlobales from '../../components/OpcionesGlobales';
 export default class RegistrarCliente extends React.Component {             
     render(){
         return (
-            <div className="contain">
-                <OpcionesLocales />
+            <div className="contain pagecontent" id="Content">
+                <OpcionesGlobales active="Home"/>
+                <OpcionesLocales Usuario="Diego Gutiérrez"/>
                 <Container>
                     <Row>
                         <Col md={2}></Col>

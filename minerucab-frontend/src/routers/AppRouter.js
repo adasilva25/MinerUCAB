@@ -8,6 +8,7 @@ import ConsultarEmpleados from '../screens/Empleados/ConsultarEmpleados';
 import RegistrarCliente from '../screens/Clientes/RegistrarCliente';
 import VentasForm from '../screens/Ventas/VentasForm';
 import RegistrarCargo from '../screens/Cargos/RegistrarCargo';
+import RegistrarYacimiento from '../screens/Yacimientos/RegistrarYacimiento';
 import {NotFoundPage} from '../components/NotFoundPage';
 import {history} from './History';
 import HomePage from '../screens/Home/HomePage'
@@ -32,6 +33,8 @@ const AppRouter = () => (
         <Route path="/ventas" component={VentasForm} />
         {/* ------------------------ CARGOS ------------------------ */}
         <Route path="/registrar_cargo" component={RegistrarCargo} />
+        {/* ------------------------ YACIMIENTOS ------------------------ */}
+        <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />
       </Switch>
     </div>
   </Router>
