@@ -111,6 +111,9 @@ export default class DataTable extends React.Component {
                                         if (eliminar === true){
                                             data += '<a href="' + urlEliminar + '"><i class="far fa-trash-alt icons icondelete"></i></a>'
                                         }
+                                        if ((eliminar === false) && (modificar === false) && (consultar === false)){
+                                            data = 'No posee acciones disponibles'
+                                        }
                                         //  ORIGINAL --> data = '<a href="/registrar_cliente_juridico"><i class="fas fa-edit icons iconedit"></i></a> <a href=""' + encodeURIComponent(data) + '"><i class="fas fa-search icons iconsearch"></i></a> <a href="#"><i class="far fa-trash-alt icons icondelete"></i></a>';
                                         
                                     }

@@ -90,10 +90,12 @@ export default class OpcionesLocales extends React.Component {
                   </ListGroup.Item>
                 );
               })}
-              <ListGroup.Item actionhref="#link5" className="CerrarSesion">
+              <ListGroup.Item className="CerrarSesion">
+                <a href="/">
                 <span>
                   <strong>Cerrar sesión</strong>
                 </span>
+                </a>
               </ListGroup.Item>
             </ListGroup> 
           </div>

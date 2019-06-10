@@ -47,7 +47,7 @@ export default class OpcionesLocales extends React.Component {
         return (
             <Navbar fixed="top" className='NavbarContainer' expand="lg" variant="light">
               <div>
-                <h3>MinerUCAB</h3>
+                <Image src="/images/MinerUCAB-logo.png" alt="LogoMinerUCAB" fluid className="NavbarLogo"/>
               </div>
               <div onClick={this.handleOpenSideBar} className="ToggleNav">
                 <BOG/>
