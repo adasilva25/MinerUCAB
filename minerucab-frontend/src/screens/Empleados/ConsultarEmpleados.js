@@ -13,8 +13,10 @@ export default class ConsultarEmpleados extends React.Component {
             <div>
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales />
-                <div className="pagecontent" id="dt">
+                <div className="pagecontent">
                     <Container>
+                        <h3>Consultar Empleados</h3>
+                        {this.props.match.params.userId}
                         <Row>
                             <Col sm={12} md={12}>
                                 <DataTable

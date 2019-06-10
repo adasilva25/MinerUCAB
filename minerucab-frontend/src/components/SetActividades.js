@@ -26,7 +26,7 @@ export default class SetActividades extends React.Component {
                         <CardDeck className="CardDeckActividad" key={index}>
                             {actividad.map((actividad1,index1)=>{
                                 return(
-                                    <Actividad act={actividad1} key={index1} />
+                                    <Actividad act={actividad1} key={index1}/>
                                 );
                             })}
                         </CardDeck>
