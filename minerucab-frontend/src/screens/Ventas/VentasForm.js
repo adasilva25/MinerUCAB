@@ -51,18 +51,22 @@ export default class VentasForm extends React.Component {
     dropdownChange = (e) => {
         const nombreMineral = this.state.minerales[e.target.value].nombre;
         // console.log(nombreMineral)
+        
         let optionNumber = 0;
+        const cantidad = parseFloat(document.getElementsByClassName("form-input-text-cantidad")[e.target.id].value);
+        console.log('cantidad', cantidad);
 
         console.log(document.getElementsByClassName('form-input-dropdown-presentacion-venta'))
         
 
         const precioMineralAnterior = document.getElementsByClassName('form-input-text-precio-unitario')[e.target.id].value;
+        console.log('precioMineralAnterior', precioMineralAnterior)
         const precioTotalAnterior = parseInt(document.getElementsByClassName("form-input-total-venta")[0].value);
-        
+        console.log('precioTotalAnterior', precioTotalAnterior)
 
-        // console.log(e.target)
-        // console.log(e.target.id);
-        // console.log(e.target.value);
+        console.log(e.target)
+        console.log('e.target.id', e.target.id);
+        console.log('e.target.value', e.target.value);
         // console.log(document.getElementsByClassName("form-input-dropdown-presentacion-venta")[e.target.id].length);
         while (document.getElementsByClassName("form-input-dropdown-presentacion-venta")[e.target.id].length) {
             document.getElementsByClassName("form-input-dropdown-presentacion-venta")[e.target.id].remove(0);
@@ -99,9 +103,15 @@ export default class VentasForm extends React.Component {
 
         const total = 
             this.state.minerales[document.getElementsByClassName("form-input-dropdown-presentacion-venta")[e.target.id].value].precio
-                
+             
+        // const precioNuevoMineral = document.getElementsByClassName('form-input-text-precio-unitario')[e.target.id].value;
+        
         const precioNuevoMineral = this.state.minerales[document.getElementsByClassName("form-input-dropdown-presentacion-venta")[e.target.id].value].precio;
-        const nuevoTotal = precioTotalAnterior - precioMineralAnterior + precioNuevoMineral;
+        console.log('precioNuevoMineral', precioNuevoMineral)
+        const nuevoTotal = precioTotalAnterior - (precioMineralAnterior * cantidad) + (precioNuevoMineral * cantidad);
+        console.log('precioMineralAnterior * cantidad', precioMineralAnterior * cantidad);
+        console.log('(precioNuevoMineral * cantidad)', (precioNuevoMineral * cantidad));
+        console.log('nuevoTotal', nuevoTotal)
         document.getElementsByClassName("form-input-total-venta")[0].value = nuevoTotal;
 
                 // this.setState({total: this.state.total+total})
@@ -215,7 +225,7 @@ export default class VentasForm extends React.Component {
             console.log('e', e.target.id)
             const precio = this.state.minerales[e.target.value].precio;
 
-            const cantidad = parseFloat(document.getElementsByClassName("form-input-text-cantidad")[0].value);
+            const cantidad = parseFloat(document.getElementsByClassName("form-input-text-cantidad")[e.target.id].value);
             console.log('cantidad', cantidad);
 
             const precioMineralAnterior = parseFloat(document.getElementsByClassName('form-input-text-precio-unitario')[e.target.id].value);
@@ -507,7 +517,6 @@ export default class VentasForm extends React.Component {
 
         return (
             <div className="div-screen-resize">
-                <OpcionesGlobales active="Home"/>
                 <OpcionesLocales />
                 <Container className="pagecontent">
                     <Row>
