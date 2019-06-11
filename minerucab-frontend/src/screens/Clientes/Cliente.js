@@ -13,7 +13,8 @@ export default class Cliente extends React.Component {
             <div>
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales />
-                <Container className="pagecontent">
+                <div className="pagecontent">
+                <Container>
                     <Row>
                         <Col md={2}></Col>
                         <Col md={10}>
@@ -25,6 +26,7 @@ export default class Cliente extends React.Component {
                             </Row>
                         </Col>
                     </Row>
+                    </Container>
                     <Container>
                         <Row>
                             <Col sm={0} md={2}></Col>
@@ -43,7 +45,7 @@ export default class Cliente extends React.Component {
                             <Col sm={0} md={1}></Col>
                         </Row>
                     </Container>
-                </Container>
+                </div>
             </div>
         )
     }
