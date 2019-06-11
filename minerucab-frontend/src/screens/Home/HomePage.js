@@ -17,7 +17,6 @@ export default class HomePage extends React.Component {
     }
     modalClose = () => this.setState({ modalShow: false });
     modalOpen = () => {
-        console.log('entro');
         this.setState({ modalShow: true });
     }
     onClickDashboardPage(){
