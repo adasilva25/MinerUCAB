@@ -6,6 +6,8 @@ const JasperReports = require('../reports/jasper-reports/jasper-reports-generato
 const Empleados = require('../database/model/Empleados');
 const Minerales = require('../database/model/Minerales');
 const General = require('../database/model/General');
+const Cargos = require('../database/model/Cargos');
+const Roles = require('../database/model/Roles');
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -35,10 +37,17 @@ app.get('/column_names/:table_name', General.getAllTableColumns);
 
 app.get('/minerales', Minerales.getMinerales);
 
+app.get('/getAllCargos', Cargos.getAllCargos);
 
+app.get('/getCargoById/:id', Cargos.getCargoById);
 
+app.get('/getAllRoles', Roles.getAllRoles);
 
+app.get('/getRolById/:id', Roles.getRolById);
 
+app.get('/getEmpleadoByCedula/:cedula', Empleados.getEmpleadoByCedula);
+
+app.get('/getEmpleadoById/:id', Empleados.getEmpleadoById);
 
 
 

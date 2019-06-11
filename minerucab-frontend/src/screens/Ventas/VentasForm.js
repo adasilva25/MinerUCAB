@@ -13,6 +13,8 @@ import axios from 'axios';
 
 export default class VentasForm extends React.Component {
     state = {
+        nombre: '',
+        ci: '',
         total: 0,
         minerales: [],
         pedido: [{
@@ -29,6 +31,7 @@ export default class VentasForm extends React.Component {
         }
         axios.get('http://localhost:3000/minerales', config)
             .then((res) => {
+                console.log(res)
                 res.data.forEach(element => {
                     let mineralInfo = {
                         nombre: '',
@@ -43,6 +46,17 @@ export default class VentasForm extends React.Component {
                         minerales: prevState.minerales.concat(mineralInfo)
                     }));
                 })
+            }).catch((e) => {
+                console.log('Error en axios')
+            })
+            
+            axios.get(`http://localhost:3000/getEmpleadoById/${this.props.match.params.id}`, config)
+            .then((res) => {
+                console.log(res)
+                this.setState(() => ({
+                    nombre: res.data[0].nombre + ' ' + res.data[0].apellido,
+                    ci: res.data[0].ci
+                }));
             }).catch((e) => {
                 console.log('Error en axios')
             })
@@ -549,14 +563,14 @@ export default class VentasForm extends React.Component {
                                     <Col md={5}>
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label className="cliente-description-fields-text">Cédula de Identidad o RIF</Form.Label>
-                                            <Form.Control type="text" className="form-input" value="V-26.435.741" disabled={true} placeholder="Introduzca su primer nombre" />
+                                            <Form.Control type="text" className="form-input" value={this.state.ci} disabled={true} placeholder="Introduzca su primer nombre" />
                                         </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
                                     <Col md={5}>
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label className="cliente-description-fields-text">Nombre del Cliente</Form.Label>
-                                            <Form.Control type="text" className="form-input" value="Andrea Da Silva" disabled={true} placeholder="Introduzca su primer apellido" />
+                                            <Form.Control type="text" className="form-input" value={this.state.nombre} disabled={true} placeholder="Introduzca su primer apellido" />
                                         </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
