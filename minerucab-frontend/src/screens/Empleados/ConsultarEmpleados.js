@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/Col';
 export default class ConsultarEmpleados extends React.Component {
     render(){
         return (
-            <div>
+            <div  className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales />
                 <div className="pagecontent">

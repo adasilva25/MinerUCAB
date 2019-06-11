@@ -10,6 +10,7 @@ import RegistrarClienteJuridico from '../screens/Clientes/RegistrarClienteJuridi
 import VentasForm from '../screens/Ventas/VentasForm';
 import ModalYesNo from '../components/ModalYesNo';
 import GestionarCargos from '../screens/Cargos/GestionarCargos';
+import RegistrarYacimiento from '../screens/Yacimientos/RegistrarYacimiento';
 import {NotFoundPage} from '../components/NotFoundPage';
 import {history} from './History';
 import HomePage from '../screens/Home/HomePage'
@@ -48,6 +49,7 @@ const AppRouter = () => (
         <Route path="/gestionar_cargos/:id/:accion" component={GestionarCargos} />
         {/* ------------------------ YACIMIENTO ------------------------ */}
         <Route path="/yacimiento" component={Yacimiento} />
+        <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />
       </Switch>
     </div>
   </Router>

@@ -152,6 +152,30 @@ button:focus.FocusLI {
 }
 
 
+/*------------------Forms Diego--------------------*/
+.FormContainer{
+	padding-left: 10%;
+	padding-right: 10%;
+	margin-bottom: 10%;
+}
+.input-group.MyInputGroup{
+	    flex-direction: unset;
+	    margin-bottom: 0%;
+}
+
+.form-row>.col, .form-row>[class*=col-].inputsPaddingRight{
+	padding-right: 2%;
+}
+.form-row>.col, .form-row>[class*=col-].inputsPaddingLeft{
+	padding-left: 2%;
+}
+.formMargins{
+	margin-top: 5%;
+}
+.formTitulo:hover{
+	background-color: lavender;
+
+}
 /*-----------------------------------------ID's--------------------------------------------*/
 
 /*------------------Opciones GLobales--------------------*/
