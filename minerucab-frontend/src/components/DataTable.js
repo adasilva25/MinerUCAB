@@ -60,7 +60,7 @@ export default class DataTable extends React.Component {
                         //Quitar searching
                             //searching: false,
                         //Scrollbar
-                            scrollY: 390,
+                            scrollY: 300,
                         //No permitir orden
                             //ordering:  false
                         /*columnDefs: [
@@ -84,6 +84,7 @@ export default class DataTable extends React.Component {
                             "infoFiltered": "",
                             "zeroRecords": "No existen registros con estas características.",
                             "lengthMenu": 'Mostrando <select>'+
+                                '<option value="5">5</option>'+
                                 '<option value="10">10</option>'+
                                 '<option value="25">25</option>'+
                                 '<option value="50">50</option>'+
@@ -150,6 +151,7 @@ export default class DataTable extends React.Component {
             </Button>
                 <table className="display" width="100%" ref={el => this.el = el}>
                 </table>
+                <i class="fas fa-plus-circle iconadd"></i>
             </div>
         )
     }

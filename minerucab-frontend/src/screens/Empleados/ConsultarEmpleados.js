@@ -14,11 +14,10 @@ export default class ConsultarEmpleados extends React.Component {
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales />
                 <div className="pagecontent">
-                    <Container fluid={true}>
+                    <Container>
                         <h3>Consultar Empleados</h3>
                         {console.log(this.props.match.params)}
                         <Row>
-                            <Col sm={0} md={0}></Col>
                             <Col sm={12} md={12}>
                                 <DataTable
                                     columns={'http://localhost:3000/column_names/test_table'} 
@@ -27,7 +26,6 @@ export default class ConsultarEmpleados extends React.Component {
                                     textoPlural={'pruebas'}
                                 />
                             </Col>
-                            <Col sm={0} md={0}></Col>
                         </Row>
                     </Container>
                 </div>
