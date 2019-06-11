@@ -9,7 +9,6 @@ export default class SetActividades extends React.Component {
     constructor(props){
         super(props)
     }
-    
     render(){
         var {actividades1} = this.props;
         var Actividadeslength = actividades1.length;
@@ -26,7 +25,12 @@ export default class SetActividades extends React.Component {
                         <CardDeck className="CardDeckActividad" key={index}>
                             {actividad.map((actividad1,index1)=>{
                                 return(
-                                    <Actividad act={actividad1} key={index1} />
+                                    <Actividad 
+                                        act={actividad1} 
+                                        key={index1}
+                                        showModal={this.props.showModal}
+                                        closeModal={this.props.closeModal} 
+                                    />
                                 );
                             })}
                         </CardDeck>

@@ -49,15 +49,33 @@
     font-weight: 250;
 }
 
-.btn-primary.modal-bc-button{
-    border: 1px solid rgba(90, 34, 112, 0.8);
+.btn-primary.cc-btn{
+    border: 1px solid rgb(50, 111, 180);
     border-radius: 1.50rem;
     background-color: #fff;
-    color: rgba(90, 34, 112, 0.8);
+    color: rgb(50, 111, 180);
+    width: 40%;
+}
+
+.btn-primary.cc-btn:focus{
+    box-shadow: inset 0 1px 1px rgb(50, 111, 180), 0 0 8px rgb(50, 111, 180);
+}
+
+.btn.btn-primary.cc-btn:hover{
+  border: 1.5px solid rgb(50, 111, 180);
+  background-color: rgb(50, 111, 180);
+  color: #fff;
+}
+
+.btn-primary.modal-bc-button{
+    border: 1px solid rgb(50, 111, 180);
+    border-radius: 1.50rem;
+    background-color: #fff;
+    color: rgb(50, 111, 180);
 }
 
 .btn-primary.modal-bc-button:focus{
-    box-shadow: inset 0 1px 1px rgba(90, 34, 112, 1), 0 0 8px rgba(90, 34, 112, 1);
+    box-shadow: inset 0 1px 1px rgb(50, 111, 180), 0 0 8px rgb(50, 111, 180);
 }
 
 .form-control.modal-bc-input{
@@ -75,8 +93,8 @@
 
 .btn.btn-primary.modal-bc-button:hover,
 .btn.btn-primary.purple-btn:active{
-  border: 1px solid purple;
-  background-color: rgba(90, 34, 112, 1);
+  border: 1px solid rgb(50, 111, 180);
+  background-color: rgb(50, 111, 180);
   color: #fff;
 }
 
@@ -89,7 +107,7 @@
 }
 
 .modal-bc-link-create{
-    color: rgba(90, 34, 112, 1);
+    color: rgb(50, 111, 180);
 }
 
 .btn.bc-link-create-btn{
@@ -97,5 +115,5 @@
 }
 
 .btn.bc-link-create-btn:hover{
-    color: rgba(90, 34, 112, 1);
+    color: rgb(50, 111, 180);
 }

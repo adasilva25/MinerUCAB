@@ -13,6 +13,8 @@ import axios from 'axios';
 
 export default class VentasForm extends React.Component {
     state = {
+        nombre: '',
+        ci: '',
         total: 0,
         minerales: [],
         pedido: [{
@@ -29,6 +31,7 @@ export default class VentasForm extends React.Component {
         }
         axios.get('http://localhost:3000/minerales', config)
             .then((res) => {
+                console.log(res)
                 res.data.forEach(element => {
                     let mineralInfo = {
                         nombre: '',
@@ -46,23 +49,38 @@ export default class VentasForm extends React.Component {
             }).catch((e) => {
                 console.log('Error en axios')
             })
+            
+            axios.get(`http://localhost:3000/getEmpleadoById/${this.props.match.params.id}`, config)
+            .then((res) => {
+                console.log(res)
+                this.setState(() => ({
+                    nombre: res.data[0].nombre + ' ' + res.data[0].apellido,
+                    ci: res.data[0].ci
+                }));
+            }).catch((e) => {
+                console.log('Error en axios')
+            })
         // console.log(this.state.minerales)
     }
     dropdownChange = (e) => {
         const nombreMineral = this.state.minerales[e.target.value].nombre;
         // console.log(nombreMineral)
+        
         let optionNumber = 0;
+        const cantidad = parseFloat(document.getElementsByClassName("form-input-text-cantidad")[e.target.id].value);
+        console.log('cantidad', cantidad);
 
         console.log(document.getElementsByClassName('form-input-dropdown-presentacion-venta'))
         
 
         const precioMineralAnterior = document.getElementsByClassName('form-input-text-precio-unitario')[e.target.id].value;
+        console.log('precioMineralAnterior', precioMineralAnterior)
         const precioTotalAnterior = parseInt(document.getElementsByClassName("form-input-total-venta")[0].value);
-        
+        console.log('precioTotalAnterior', precioTotalAnterior)
 
-        // console.log(e.target)
-        // console.log(e.target.id);
-        // console.log(e.target.value);
+        console.log(e.target)
+        console.log('e.target.id', e.target.id);
+        console.log('e.target.value', e.target.value);
         // console.log(document.getElementsByClassName("form-input-dropdown-presentacion-venta")[e.target.id].length);
         while (document.getElementsByClassName("form-input-dropdown-presentacion-venta")[e.target.id].length) {
             document.getElementsByClassName("form-input-dropdown-presentacion-venta")[e.target.id].remove(0);
@@ -99,9 +117,15 @@ export default class VentasForm extends React.Component {
 
         const total = 
             this.state.minerales[document.getElementsByClassName("form-input-dropdown-presentacion-venta")[e.target.id].value].precio
-                
+             
+        // const precioNuevoMineral = document.getElementsByClassName('form-input-text-precio-unitario')[e.target.id].value;
+        
         const precioNuevoMineral = this.state.minerales[document.getElementsByClassName("form-input-dropdown-presentacion-venta")[e.target.id].value].precio;
-        const nuevoTotal = precioTotalAnterior - precioMineralAnterior + precioNuevoMineral;
+        console.log('precioNuevoMineral', precioNuevoMineral)
+        const nuevoTotal = precioTotalAnterior - (precioMineralAnterior * cantidad) + (precioNuevoMineral * cantidad);
+        console.log('precioMineralAnterior * cantidad', precioMineralAnterior * cantidad);
+        console.log('(precioNuevoMineral * cantidad)', (precioNuevoMineral * cantidad));
+        console.log('nuevoTotal', nuevoTotal)
         document.getElementsByClassName("form-input-total-venta")[0].value = nuevoTotal;
 
                 // this.setState({total: this.state.total+total})
@@ -215,7 +239,7 @@ export default class VentasForm extends React.Component {
             console.log('e', e.target.id)
             const precio = this.state.minerales[e.target.value].precio;
 
-            const cantidad = parseFloat(document.getElementsByClassName("form-input-text-cantidad")[0].value);
+            const cantidad = parseFloat(document.getElementsByClassName("form-input-text-cantidad")[e.target.id].value);
             console.log('cantidad', cantidad);
 
             const precioMineralAnterior = parseFloat(document.getElementsByClassName('form-input-text-precio-unitario')[e.target.id].value);
@@ -539,14 +563,14 @@ export default class VentasForm extends React.Component {
                                     <Col md={5}>
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label className="cliente-description-fields-text">Cédula de Identidad o RIF</Form.Label>
-                                            <Form.Control type="text" className="form-input" value="V-26.435.741" disabled={true} placeholder="Introduzca su primer nombre" />
+                                            <Form.Control type="text" className="form-input" value={this.state.ci} disabled={true} placeholder="Introduzca su primer nombre" />
                                         </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
                                     <Col md={5}>
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label className="cliente-description-fields-text">Nombre del Cliente</Form.Label>
-                                            <Form.Control type="text" className="form-input" value="Andrea Da Silva" disabled={true} placeholder="Introduzca su primer apellido" />
+                                            <Form.Control type="text" className="form-input" value={this.state.nombre} disabled={true} placeholder="Introduzca su primer apellido" />
                                         </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
