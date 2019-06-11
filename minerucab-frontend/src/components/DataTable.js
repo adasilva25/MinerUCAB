@@ -151,7 +151,7 @@ export default class DataTable extends React.Component {
             </Button>
                 <table className="display" width="100%" ref={el => this.el = el}>
                 </table>
-                <i class="fas fa-plus-circle iconadd"></i>
+                <i className="fas fa-plus-circle iconadd"></i>
             </div>
         )
     }
