@@ -1,5 +1,4 @@
 import React from 'react';
-import MenuBar from '../../components/MenuBar';
 import DataTable from '../../components/DataTable';
 import OpcionesLocales from '../../components/OpcionesLocales';
 import OpcionesGlobales from '../../components/OpcionesGlobales';
@@ -37,7 +36,9 @@ export default class Cliente extends React.Component {
                                     urlEliminar={'/home'}
                                     modificar={true}
                                     consultar={true}
-                                    eliminar={false}
+                                    eliminar={true}
+                                    textoSingular={'empleado'}
+                                    textoPlural={'empleados'}
                                 />
                             </Col>
                             <Col sm={0} md={1}></Col>

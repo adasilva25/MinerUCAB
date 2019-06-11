@@ -16,14 +16,15 @@ export default class ConsultarEmpleados extends React.Component {
                 <div className="pagecontent">
                     <Container fluid={true}>
                         <h3>Consultar Empleados</h3>
-                        {this.props.match.params.userId}
+                        {console.log(this.props.match.params)}
                         <Row>
                             <Col sm={0} md={0}></Col>
                             <Col sm={12} md={12}>
                                 <DataTable
                                     columns={'http://localhost:3000/column_names/test_table'} 
                                     data={'http://localhost:3000/users'}
-                                    url={'consultar_empleado/:'}
+                                    textoSingular={'prueba'}
+                                    textoPlural={'pruebas'}
                                 />
                             </Col>
                             <Col sm={0} md={0}></Col>

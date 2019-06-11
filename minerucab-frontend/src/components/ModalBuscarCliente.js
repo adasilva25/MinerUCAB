@@ -5,6 +5,8 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import {history} from '../routers/History';
+import axios from 'axios';
 
 export default class ModalBuscarCliente extends React.Component {
   state = {
@@ -13,17 +15,31 @@ export default class ModalBuscarCliente extends React.Component {
   }
   onCIChange = (e) => {
     const ci = e.target.value;
-    this.setState(() => ({ ci }));
+
+    if (!ci || ci.match(/^[0-9\b]+$/)) {
+      this.setState(() => ({ ci }));
+    }
   }
   onSubmit = (e) => {
     e.preventDefault();
     console.log(this.state.ci);
-    if (this.state.ci === '26435741'){
-      this.setState({ showMessage: false })
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      responseType: 'json'
     }
-    else{
-      this.setState({ showMessage: true })
-    }
+    axios.get(`http://localhost:3000/getEmpleadoByCedula/${this.state.ci}`, config)
+      .then((res) => {
+          console.log(res)
+          if (res.status === 200 && res.data.length === 1){
+            history.push(`/ventas/${res.data[0].id}`);
+          } 
+      }).catch((e) => {
+          console.log('Error en axios')
+          this.setState({ showMessage: true })
+      })
   }
   renderError = () => {
     return (
@@ -67,7 +83,7 @@ export default class ModalBuscarCliente extends React.Component {
                 <Col md={2}></Col>
                 <Col md={2}>
                     <Form.Group controlId="formGridState">
-                        <Form.Control as="select" size="sm" className="modal-bc-input">
+                        <Form.Control as="select" size="sm" className="modal-bc-input modal-bc-dropdown-cirif">
                             <option>V</option>
                             <option>E</option>
                             <option>J</option>
@@ -76,7 +92,12 @@ export default class ModalBuscarCliente extends React.Component {
                 </Col>
                 <Col md={6}>
                     <Form.Group controlId="formGridZip">
-                        <Form.Control size="sm" className="modal-bc-input" onChange={this.onCIChange}/>
+                        <Form.Control 
+                          size="sm" 
+                          className="modal-bc-input" 
+                          onChange={this.onCIChange}
+                          value={this.state.ci}
+                        />
                     </Form.Group>
                 </Col>
                 <Col md={2}></Col>
@@ -86,8 +107,20 @@ export default class ModalBuscarCliente extends React.Component {
                 }
           </Container>
           <div className="modal-bc-description">
-            <Button variant="link" className="modal-bc-link-create bc-link-create-btn">Registrar un nuevo cliente natural</Button>
-            <Button variant="link" className="modal-bc-link-create bc-link-create-btn">Registrar un nuevo cliente jurídico</Button>
+            <Button 
+              variant="link" 
+              className="modal-bc-link-create bc-link-create-btn"
+              onClick={()=>history.push('/registrar_cliente_natural')}
+            >
+              Registrar un nuevo cliente natural
+            </Button>
+            <Button 
+              variant="link" 
+              className="modal-bc-link-create bc-link-create-btn"
+              onClick={()=>history.push('/registrar_cliente_juridico')}
+            >
+              Registrar un nuevo cliente jurídico
+            </Button>
           </div>
         </Modal.Body>
         <Modal.Footer className="button">

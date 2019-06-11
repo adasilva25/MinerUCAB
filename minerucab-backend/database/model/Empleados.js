@@ -43,7 +43,47 @@ const getAllEmployees = (req, res) => {
     })
 }
 
+const getEmpleadoByCedula = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'SELECT * FROM empleado WHERE ci = ($1);';
+    const values = [req.params.cedula];
+    client.query(text, values)
+    .then((response) => {
+        console.log('Completed!', response.rows[0])
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+    })
+}
+
+const getEmpleadoById = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'SELECT * FROM empleado WHERE id = ($1);';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        console.log('Completed!', response.rows[0])
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+    })
+}
+
 module.exports = {
-    getAllEmployees
+    getAllEmployees,
+    getEmpleadoByCedula,
+    getEmpleadoById
     // ,[siguientes funciones]
 }

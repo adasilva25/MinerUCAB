@@ -9,18 +9,23 @@ import ModalBuscarCliente from '../../components/ModalBuscarCliente';
 
 
 export default class HomePage extends React.Component {
+    state = { 
+        modalShow: false
+    };
     constructor(props){
         super(props);
     }
-
+    modalClose = () => this.setState({ modalShow: false });
+    modalOpen = () => {
+        console.log('entro');
+        this.setState({ modalShow: true });
+    }
     onClickDashboardPage(){
         history.push('/dashboard');  
-    }       
-
+    }  
     onClickLoginPage(){
         history.push('/');  
     }  
-
     render(){
 
         let actividades = [
@@ -68,7 +73,7 @@ export default class HomePage extends React.Component {
 
             {
                 titulo: 'Clientes',
-                link:'/cliente',
+                link:'/clientes',
                 image:'/images/Yacimientos.jpg',
                 descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },
@@ -167,12 +172,23 @@ export default class HomePage extends React.Component {
             <div>
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario={opciones}/>
-                <div id="Content" classname="contain pagecontent">
+                <ModalBuscarCliente
+                    show={this.state.modalShow}
+                    onHide={this.modalClose}
+                    content=
+                        {
+                            'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beerlabore wes anderson cred nesciunt sapiente ea proident.'
+                        }
+                />
+                <div id="Content" className="contain pagecontent">
                     <Container fluid={true}>
                         <Container fluid={true} className="containerSetActividades">
                             {actividad.map((act,index)=>{
                                 return(
-                                    <SetActividades actividades1={act} key={index} />
+                                    <SetActividades actividades1={act} key={index} 
+                                        showModal={this.modalOpen}
+                                        closeModal={this.modalClose}    
+                                    />
                                 );
                             })}
                         </Container>

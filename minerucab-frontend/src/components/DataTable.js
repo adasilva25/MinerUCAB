@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import '../styles/css/jquery.dataTables.css';
+import Button from 'react-bootstrap/Button';
 
 const $ = require('jquery');
 $.DataTable = require('datatables.net');
@@ -87,9 +88,9 @@ export default class DataTable extends React.Component {
                                 '<option value="25">25</option>'+
                                 '<option value="50">50</option>'+
                                 '<option value="-1">Todos</option>'+
-                                '</select> empleados',
+                                `</select> ${this.props.textoPlural}`,
                             "search": "_INPUT_",
-                            searchPlaceholder: "Buscar empleado",
+                            searchPlaceholder: `Buscar ${this.props.textoSingular}`,
                             "info": "_START_-_END_ de _TOTAL_",
                           },
 
@@ -103,10 +104,10 @@ export default class DataTable extends React.Component {
                                         /*data = '<button class="btn btn-primary purple-btn">A</button> <form style="display: inline" action="consultar_empleado/:' + encodeURIComponent(data) +'" method="get"><button class="btn btn-primary purple-btn">Detalle</button></form> <button class="btn btn-primary purple-btn">C</button>';*/
                                         // data = '<a href="/registrar_cliente_juridico"><FontAwesomeIcon icon="check-square" /></a>'
                                         if (modificar === true){
-                                            data = '<a href="/registrar_cliente_juridico"><i class="fas fa-edit icons iconedit"></i></a>'
+                                            data = '<a href="' + urlModificar + '/' + encodeURIComponent(row[0]) + '/M"><i class="fas fa-edit icons iconedit"></i></a>'
                                         }
                                         if (consultar === true){
-                                            data += '<a href="' + urlConsultar + '/' + encodeURIComponent(row[0]) + '"><i class="fas fa-search icons iconsearch"></i></a>'
+                                            data += '<a href="' + urlConsultar + '/' + encodeURIComponent(row[0]) + '/CO"><i class="fas fa-search icons iconsearch"></i></a>'
                                         }
                                         if (eliminar === true){
                                             data += '<a href="' + urlEliminar + '"><i class="far fa-trash-alt icons icondelete"></i></a>'
@@ -144,6 +145,9 @@ export default class DataTable extends React.Component {
     render(){
         return (
             <div>
+            <Button className="dt-btn btn-block" onClick={this.onSubmit}>
+            Agregar
+            </Button>
                 <table className="display" width="100%" ref={el => this.el = el}>
                 </table>
             </div>
