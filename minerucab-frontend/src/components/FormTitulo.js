@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col'
 
 
 
-export default class TituloForm extends React.Component {
+export default class FormTitulo extends React.Component {
     constructor(props){
         super(props);
         this.titleText = this.titleText.bind(this);
@@ -23,14 +23,13 @@ export default class TituloForm extends React.Component {
  
 	titleText(titulo,Size){
 		if (Size == "BIG"){
-			return(<h4 className="horizontal-line-title cliente-title">{titulo}</h4>);
+			return(<h4 className="horizontal-line-title cliente-title formTitulo">{titulo}</h4>);
 		}
 		else{
-			return(<h6 className="horizontal-line-title cliente-title">{titulo}</h6>);
+			return(<h6 className="horizontal-line-title cliente-title formTitulo">{titulo}</h6>);
 		}
 	}
 	
-
 
     render(){
 
@@ -38,18 +37,9 @@ export default class TituloForm extends React.Component {
     	var {tamaño}=this.props;
 
         return ( 
-            <Row>
-                <Col md={2}></Col>
-                <Col md={9}>
-	                <Row>
-	                    <Col md={11}>
-	                        {this.titleText(titulo,tamaño)}
-	                    </Col>
-	                    <Col md={1}></Col>
-	                </Row>
-                </Col>
-                <Col md={1}></Col>
-            </Row>           
+            
+            this.titleText(titulo,tamaño)
+	                    
         ) 
     }
 }
