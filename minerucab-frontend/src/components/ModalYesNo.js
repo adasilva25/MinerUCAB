@@ -22,7 +22,7 @@ export default class ModalComponent extends React.Component {
           <Modal.Body>
             <Container className="modal-yesno-description">
                 <p className="modal-yesno-description-text">
-                    ¿Está seguro que desea realizar esta acción?
+                    {this.props.mensaje}
                 </p>
             </Container>
           </Modal.Body>

@@ -192,70 +192,56 @@ export default class RegistrarClienteNatural extends React.Component {
                         <Row className="div-content-form div-content-form-end-rc">
                             <Col md={2}></Col>
                             <Col md={9}>
-                                <Form.Row>
-                                    <Col md={6}>
-                                        <Form.Row className="div-ventas-pedido-form">
-                                            <Col md={5}>
-                                                <Form.Label className="cliente-description-fields-text">Estado</Form.Label>
-                                                <Form.Control 
-                                                    as="select" 
-                                                    className="form-input"
-                                                >
-                                                    <option>Sucre</option>
-                                                    <option>Distrito Capital</option>
-                                                    <option>Amazonas</option>
-                                                    <option>Apure</option>
-                                                    <option>Barinas</option>
-                                                </Form.Control>
-                                            </Col>
-                                            <Col md={5}>
-                                                <Form.Label className="cliente-description-fields-text">Ciudad</Form.Label>
-                                                <Form.Control 
-                                                    as="select"
-                                                    className="form-input"
-                                                >
-                                                    <option>Caracas</option>
-                                                    <option>Cumaná</option>
-                                                    <option>San Fernando de Apure</option>
-                                                    <option>Tucupita</option>
-                                                    <option>Portuguesa</option>
-                                                    <option>Guanare</option>
-                                                    <option>Barinas</option>
-                                                    <option>La Guaira</option>
-                                                    <option>Barquisimeto</option>
-                                                </Form.Control>
-                                            </Col>
-                                            <Col md={2}></Col>
-                                        </Form.Row>
+                            <Form.Row>
+                            <Col md={12}>
+                                <Form.Row className="div-ventas-pedido-form">
+                                    <Col md={3}>
+                                        <Form.Label className="cliente-description-fields-text">Estado</Form.Label>
+                                        <Form.Control 
+                                            as="select" 
+                                            className="form-input"
+                                        >
+                                            <option>Sucre</option>
+                                            <option>Distrito Capital</option>
+                                            <option>Amazonas</option>
+                                            <option>Apure</option>
+                                            <option>Barinas</option>
+                                        </Form.Control>
                                     </Col>
-                                    <Col md={6}> 
-                                        <Form.Row className="div-ventas-pedido-form">
-                                            <Col md={5}>
-                                                <Form.Label className="cliente-description-fields-text">Municipio</Form.Label>
-                                                <Form.Control 
-                                                    as="select" 
-                                                    className="form-input"
-                                                >
-                                                    <option>Sucre</option>
-                                                    <option>Baruta</option>
-                                                    <option>Chacao</option>
-                                                    <option>Libertador</option>
-                                                    <option>Guaicaipuro</option>
-                                                </Form.Control>
-                                            </Col>
-                                            <Col md={5}>
-                                                <Form.Label className="cliente-description-fields-text">Parroquia</Form.Label>
-                                                <Form.Control 
-                                                    as="select"
-                                                    className="form-input"
-                                                >
-                                                    <option>Santa Mónica</option>
-                                                    <option>Coche</option>
-                                                    <option>El Valle</option>
-                                                </Form.Control>
-                                            </Col>
-                                            <Col md={2}></Col>
-                                        </Form.Row>
+                                    <Col md={1}></Col>
+                                    <Col md={3}>
+                                        <Form.Label className="cliente-description-fields-text">Municipio</Form.Label>
+                                        <Form.Control 
+                                            as="select"
+                                            className="form-input"
+                                        >
+                                            <option>Caracas</option>
+                                            <option>Cumaná</option>
+                                            <option>San Fernando de Apure</option>
+                                            <option>Tucupita</option>
+                                            <option>Portuguesa</option>
+                                            <option>Guanare</option>
+                                            <option>Barinas</option>
+                                            <option>La Guaira</option>
+                                            <option>Barquisimeto</option>
+                                        </Form.Control>
+                                    </Col>
+                                    <Col md={1}></Col>
+                                    <Col md={3}>
+                                        <Form.Label className="cliente-description-fields-text">Parroquia</Form.Label>
+                                        <Form.Control 
+                                            as="select" 
+                                            className="form-input"
+                                        >
+                                            <option>Sucre</option>
+                                            <option>Baruta</option>
+                                            <option>Chacao</option>
+                                            <option>Libertador</option>
+                                            <option>Guaicaipuro</option>
+                                        </Form.Control>
+                                    </Col>
+                                </Form.Row>
+
                                     </Col>
                                 </Form.Row>
                             </Col>

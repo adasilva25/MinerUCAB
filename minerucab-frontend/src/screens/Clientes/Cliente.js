@@ -5,13 +5,32 @@ import OpcionesGlobales from '../../components/OpcionesGlobales';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import ModalRegistrarCliente from '../../components/ModalRegistrarCliente';
 
 export default class Cliente extends React.Component {
+    state = { 
+        modalShowEliminar: false,
+        modalShowCrearCliente: false
+    };
+    modalClose = () => this.setState({ modalShow: false });
+    modalOpen = () => {
+        console.log('entro')
+        this.setState({ modalShow: true })
+    };
+    modalCrearClienteClose = () => this.setState({ modalShowCrearCliente: false });
+    modalCrearClienteOpen = () => {
+        this.setState({ modalShowCrearCliente: true })
+    }
     render(){
         return (
             <div>
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales />
+                <ModalRegistrarCliente
+                    show={this.state.modalShowCrearCliente}
+                    onHide={this.modalCrearClienteClose}
+                    mensaje={'Existen empleados asociados al cargo Dibujante, reasigne los empleados a otro cargo para poder continuar'}
+                />
                 <Container className="pagecontent">
                     <Row>
                         <Col md={2}></Col>
@@ -39,6 +58,8 @@ export default class Cliente extends React.Component {
                                     eliminar={true}
                                     textoSingular={'empleado'}
                                     textoPlural={'empleados'}
+                                    modal={this.modalOpen}
+                                    modalCrear={this.modalCrearClienteOpen}
                                 />
                             </Col>
                             <Col sm={0} md={1}></Col>

@@ -1,13 +1,27 @@
 import React from 'react';
 import axios from 'axios';
 import '../styles/css/jquery.dataTables.css';
-import Button from 'react-bootstrap/Button';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
+import ReactDOMServer from 'react-dom/server';
+import {history} from '../routers/History';
 
 const $ = require('jquery');
 $.DataTable = require('datatables.net');
 
 export default class DataTable extends React.Component {
+    state = {
+        datatable: null
+    }
+    openModal = () => {
+        this.props.modal;
+        console.log('entro')
+    };
     componentDidMount = () => {
+        const modalOpen = this.props.modal;
+        const iconoConsultar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconsearch" icon={Icons.faSearch}/>);
+        const iconoModificar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconedit" icon={Icons.faEdit} />);
+        const iconoEliminar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons icondelete" icon={Icons.faTrashAlt}/>);
         let modificar = this.props.modificar === true;
         let consultar = this.props.consultar === true;
         let eliminar = this.props.eliminar === true;
@@ -47,12 +61,12 @@ export default class DataTable extends React.Component {
                                 values.push(item[key]);
                             }
                         }
-                        values.push(item.id.toString())
+                        values.push('')
                         dataSet.push(values)
                     })
 
                     this.$el = $(this.el);
-                    this.$el.DataTable({
+                    const datatableCreation = this.$el.DataTable({
                         data: dataSet,
                         columns: columns,
                         //Quitar paging
@@ -105,13 +119,15 @@ export default class DataTable extends React.Component {
                                         /*data = '<button class="btn btn-primary purple-btn">A</button> <form style="display: inline" action="consultar_empleado/:' + encodeURIComponent(data) +'" method="get"><button class="btn btn-primary purple-btn">Detalle</button></form> <button class="btn btn-primary purple-btn">C</button>';*/
                                         // data = '<a href="/registrar_cliente_juridico"><FontAwesomeIcon icon="check-square" /></a>'
                                         if (modificar === true){
-                                            data = '<a href="' + urlModificar + '/' + encodeURIComponent(row[0]) + '/M"><i class="fas fa-edit icons iconedit"></i></a>'
+                                            data += `<a href="${urlModificar}/${encodeURIComponent(row[0])}/M">${iconoModificar}</a>`
                                         }
                                         if (consultar === true){
-                                            data += '<a href="' + urlConsultar + '/' + encodeURIComponent(row[0]) + '/CO"><i class="fas fa-search icons iconsearch"></i></a>'
+                                            data += `<a href="${urlConsultar}/${encodeURIComponent(row[0])}/CO">${iconoConsultar}</a>`
+                                            // data += '<a href="' + urlConsultar + '/' + encodeURIComponent(row[0]) + '/CO">' + iconoConsultar + '</a>'
                                         }
                                         if (eliminar === true){
-                                            data += '<a href="' + urlEliminar + '"><i class="far fa-trash-alt icons icondelete"></i></a>'
+                                            // data += '<a href="' + urlEliminar + '"><i class="far fa-trash-alt icons icondelete"></i></a>'
+                                            data += `<span onclick="${modalOpen()}">${iconoEliminar}</span>`
                                         }
                                         if ((eliminar === false) && (modificar === false) && (consultar === false)){
                                             data = 'No posee acciones disponibles'
@@ -119,15 +135,18 @@ export default class DataTable extends React.Component {
                                         //  ORIGINAL --> data = '<a href="/registrar_cliente_juridico"><i class="fas fa-edit icons iconedit"></i></a> <a href=""' + encodeURIComponent(data) + '"><i class="fas fa-search icons iconsearch"></i></a> <a href="#"><i class="far fa-trash-alt icons icondelete"></i></a>';
                                         
                                     }
+                                    
                                     return data;
                                 }
                     }]
+                    
                     /*"columnDefs": [ {
                         "targets": 0,
                         "data": null,
                         "defaultContent":'<i class="far fa-trash-alt"></i><form style="display: inline" action="consultar_empleado/:" method="get"><button>B</button></form><button>C</button>',
                     } ],*/
                     })
+                    this.setState({ datatable: datatableCreation });
 
                 }).catch((e) => {
                     console.log('Error en axios')
@@ -136,22 +155,31 @@ export default class DataTable extends React.Component {
             }).catch((e) => {
                 console.log('Error en axios')
             })
+
     }
     componentWillUnmount = () => {
-        this.$el
-        .DataTable
-        .destroy(true);
+        const datatable = this.state.datatable;
+        datatable.destroy(true)
+        // this.$el
+        // .DataTable
+        // .destroy(true);
     }
-
+    createElement = () => {
+        if (this.props.modalCrear){
+            this.props.modalCrear()
+        }
+        else {
+            history.push(this.props.urlCrear);
+        }
+    }
     render(){
         return (
             <div>
-            <Button className="dt-btn btn-block" onClick={this.onSubmit}>
-            Agregar
-            </Button>
                 <table className="display" width="100%" ref={el => this.el = el}>
                 </table>
-                <i className="fas fa-plus-circle iconadd"></i>
+                <span onClick={() => this.createElement()}>
+                    <FontAwesomeIcon className="iconadd" icon={Icons.faPlusCircle}/>
+                </span>
             </div>
         )
     }

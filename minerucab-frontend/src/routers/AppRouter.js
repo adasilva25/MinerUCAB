@@ -17,6 +17,7 @@ import Cargo from '../screens/Cargos/Cargo';
 import Cliente from '../screens/Clientes/Cliente';
 import Yacimiento from '../screens/Yacimientos/Yacimiento';
 import ModalBuscarCliente from '../components/ModalBuscarCliente';
+import RegistrarCargo from '../screens/Cargos/RegistrarCargo';
 
 // history back --> https://stackoverflow.com/questions/19051212/add-a-parameter-with-js-function-window-history-back
 // history props --> https://stackoverflow.com/questions/44121069/how-to-pass-params-with-history-push-link-redirect-in-react-router-v4/45263164#45263164
@@ -45,6 +46,7 @@ const AppRouter = () => (
         <Route path="/ventas/:id" component={VentasForm} />
         {/* ------------------------ CARGOS ------------------------ */}
         <Route path="/cargo" component={Cargo} />
+        <Route path="/registrar_cargo" component={RegistrarCargo} />
         <Route path="/gestionar_cargos/:id/:accion" component={GestionarCargos} />
         {/* ------------------------ YACIMIENTO ------------------------ */}
         <Route path="/yacimiento" component={Yacimiento} />
