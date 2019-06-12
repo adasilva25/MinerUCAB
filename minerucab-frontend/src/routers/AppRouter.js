@@ -34,7 +34,7 @@ const AppRouter = () => (
         <Route path="/home" component={HomePage} />
         {/* ------------------------ EMPLEADOS ------------------------ */}
         <Route path="/agregar_empleados" component={AgregarEmpleados} />
-        {/*<Route path="/consultar_empleados" component={ConsultarEmpleados} />*/}
+        <Route path="/consultar_empleados" component={ConsultarEmpleados} />
         <Route path="/consultar_empleado/:userId/:option" component={ConsultarEmpleados}/>}
         {/* ------------------------ CLIENTES ------------------------ */}
         <Route path="/clientes" component={Cliente} />

@@ -105,13 +105,13 @@ export default class DataTable extends React.Component {
                                         /*data = '<button class="btn btn-primary purple-btn">A</button> <form style="display: inline" action="consultar_empleado/:' + encodeURIComponent(data) +'" method="get"><button class="btn btn-primary purple-btn">Detalle</button></form> <button class="btn btn-primary purple-btn">C</button>';*/
                                         // data = '<a href="/registrar_cliente_juridico"><FontAwesomeIcon icon="check-square" /></a>'
                                         if (modificar === true){
-                                            data = '<a href="' + urlModificar + '/' + encodeURIComponent(row[0]) + '/M"><i class="fas fa-edit icons iconedit"></i></a>'
+                                            data = '<a href="' + urlModificar + '/' + encodeURIComponent(row[0]) + '/M"><i className="fas fa-edit icons iconedit"></i></a>'
                                         }
                                         if (consultar === true){
-                                            data += '<a href="' + urlConsultar + '/' + encodeURIComponent(row[0]) + '/CO"><i class="fas fa-search icons iconsearch"></i></a>'
+                                            data += '<a href="' + urlConsultar + '/' + encodeURIComponent(row[0]) + '/CO"><i className="fas fa-search icons iconsearch"></i></a>'
                                         }
                                         if (eliminar === true){
-                                            data += '<a href="' + urlEliminar + '"><i class="far fa-trash-alt icons icondelete"></i></a>'
+                                            data += '<a href="' + urlEliminar + '"><i className="far fa-trash-alt icons icondelete"></i></a>'
                                         }
                                         if ((eliminar === false) && (modificar === false) && (consultar === false)){
                                             data = 'No posee acciones disponibles'
@@ -146,12 +146,9 @@ export default class DataTable extends React.Component {
     render(){
         return (
             <div>
-            <Button className="dt-btn btn-block" onClick={this.onSubmit}>
-            Agregar
-            </Button>
+            
                 <table className="display" width="100%" ref={el => this.el = el}>
                 </table>
-                <i className="fas fa-plus-circle iconadd"></i>
             </div>
         )
     }
