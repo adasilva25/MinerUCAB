@@ -15,8 +15,8 @@ export default class Cargo extends React.Component {
                 <OpcionesLocales />
                 <Container className="pagecontent">
                     <Row>
-                        <Col md={2}></Col>
-                        <Col md={10}>
+                        <Col md={1}></Col>
+                        <Col md={11}>
                             <Row>
                                 <Col md={11}>
                                     <h4 className="horizontal-line-title-ventas-form cliente-title">Cargos</h4>
