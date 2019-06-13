@@ -152,6 +152,69 @@ button:focus.FocusLI {
 }
 
 
+/*------------------Forms Diego--------------------*/
+.FormContainer{
+	padding-left: 10%;
+	padding-right: 10%;
+	margin-bottom: 10%;
+}
+.input-group.MyInputGroup{
+	    flex-direction: unset;
+	    margin-bottom: 0%;
+}
+
+.form-row>.col, .form-row>[class*=col-].inputsPaddingRight{
+	padding-right: 2%;
+}
+.form-row>.col, .form-row>[class*=col-].inputsPaddingLeft{
+	padding-left: 2%;
+}
+.formMargins{
+	margin-top: 5%;
+}
+.formTitulo:hover{
+	background-color: lavender;
+}
+
+/*------------------Registrar Yacimiento--------------------*/
+
+.btn-eliminar{
+  	margin-left: 83%;
+  	margin-top: 3%;
+}
+.btn-agregar{
+	margin-top: 3%;
+	margin-bottom: 3%;
+}
+@media screen and (max-width: 768px) {
+   .btn-eliminar{
+	  	margin-left: 78%;
+	  	margin-top: 3%;
+	}
+}
+
+/*------------------Accordion--------------------*/
+.accordion{
+	padding:0%;
+	background-color: transparent;
+}
+.card.CardAcc{
+	border-color: transparent;
+	border:none;
+}
+.card-header.borderacc{
+	border-bottom: none;
+}
+.card-body.BodyAcc{
+	padding: 1%;
+	margin:1%;
+}
+.BodyAcc:hover{
+	-webkit-box-shadow: 0px 0px 11px -1px rgba(0,0,0,0.2);
+-moz-box-shadow: 0px 0px 11px -1px rgba(0,0,0,0.2);
+box-shadow: 0px 0px 11px -1px rgba(0,0,0,0.2);
+}
+
 /*-----------------------------------------ID's--------------------------------------------*/
 
 /*------------------Opciones GLobales--------------------*/

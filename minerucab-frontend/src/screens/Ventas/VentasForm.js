@@ -477,23 +477,25 @@ export default class VentasForm extends React.Component {
                             <Col md={5}>
                                 <Form.Label className="cliente-description-fields-text">Cantidad</Form.Label>
                                 <Row>
-                                    <Col md={10}>
-                                    <Form.Control type="text" 
-                                        className="form-input form-input-text-cantidad" 
-                                        key={index} 
-                                        defaultValue={1}
-                                        id={''+index}
-                                        onChange={this.onChangeCantidad}
-                                        alt={1}
-                                    />
-                                    {
-                                        this.createAttribute(index)
-                                    }
-                                    </Col>
-                                    <Col md={2}>
-                                        <InputGroup.Append>
-                                            <InputGroup.Text className="input-append-ventas-form" key={index}>kg</InputGroup.Text>
-                                        </InputGroup.Append>
+                                    <Col md={12}>
+                                        <Form.Group controlId="formBasicEmail">
+                                            <InputGroup className="MyInputGroup">
+                                                <Form.Control type="text" 
+                                                    className="form-input form-input-text-cantidad" 
+                                                    key={index} 
+                                                    defaultValue={1}
+                                                    id={''+index}
+                                                    onChange={this.onChangeCantidad}
+                                                    alt={1}
+                                                />
+                                                {
+                                                    this.createAttribute(index)
+                                                }
+                                                <InputGroup.Append>
+                                                    <InputGroup.Text className="input-append-ventas-form" key={index}>kg</InputGroup.Text>
+                                                </InputGroup.Append>
+                                            </InputGroup>
+                                        </Form.Group>
                                     </Col>
                                 </Row>
                                 <Form.Text className="text-muted">

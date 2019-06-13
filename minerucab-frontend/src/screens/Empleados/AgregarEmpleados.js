@@ -50,6 +50,7 @@ export default class AgregarEmpleados extends React.Component {
                         />
                     </ButtonToolbar>
             </div>
+      
         )
     }
 }
