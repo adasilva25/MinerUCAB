@@ -191,7 +191,6 @@ export default class DataTable extends React.Component {
     render(){
         return (
             <div>
-<<<<<<< HEAD
             <form name="frm-dt" id="frm-dt">
                 <table  className="display" width="100%" ref={el => this.el = el}>
                 </table>
@@ -209,11 +208,6 @@ export default class DataTable extends React.Component {
                     )
                 )
             }
-=======
-            
-                <table className="display" width="100%" ref={el => this.el = el}>
-                </table>
->>>>>>> cebadc14f625ef952d2a448bc3608ad2a748d77b
             </div>
         )
     }
