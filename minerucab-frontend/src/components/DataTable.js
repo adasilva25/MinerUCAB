@@ -5,6 +5,9 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import ReactDOMServer from 'react-dom/server';
 import {history} from '../routers/History';
+import Button from 'react-bootstrap/Button';
+import '../styles/css/dataTables.checkboxes.min';
+import '../styles/css/dataTables.checkboxes.css';
 
 const $ = require('jquery');
 $.DataTable = require('datatables.net');
@@ -19,6 +22,7 @@ export default class DataTable extends React.Component {
         let modificar = this.props.modificar === true;
         let consultar = this.props.consultar === true;
         let eliminar = this.props.eliminar === true;
+        let checktable = this.props.checktable === true;
         let urlConsultar = this.props.urlConsultar;
         let urlModificar = this.props.urlModificar;
         let dataSet = [];
@@ -37,6 +41,11 @@ export default class DataTable extends React.Component {
                         title: element.column_name
                     })
                 })
+                /*DROPDOWN ESTATUS*/
+                /*columns.push(
+                {
+                    title: 'Estatus'
+                })*/
                 columns.push({
                     title: 'Acciones'
                 })
@@ -59,8 +68,9 @@ export default class DataTable extends React.Component {
                         dataSet.push(values)
                     })
 
-                    this.$el = $(this.el);
-                    const datatableCreation = this.$el.DataTable({
+                    
+                        this.$el = $(this.el);
+                        var table = this.$el.DataTable({
                         data: dataSet,
                         columns: columns,
                         //Quitar paging
@@ -68,24 +78,13 @@ export default class DataTable extends React.Component {
                         //Quitar searching
                             //searching: false,
                         //Scrollbar
-                            scrollY: 300,
+                            scrollY: 270,
                         //No permitir orden
                             //ordering:  false
-                        /*columnDefs: [
-                            {
-                                targets:-0, // Start with the last
-                                render: function ( data, type, row, meta ) {
-                                    if(type === 'display'){
-                                        data = '<a href="consultar_empleado/:' + encodeURIComponent(data) + '">Más información</a>';
-                                    }
-                                    return data;
-                                }
-                            }
-                        ],*/
                         "language": {
                             "paginate": {
-                              "previous": "Anterior",
-                              "next": "Siguiente",
+                                "previous": "Anterior",
+                                "next": "Siguiente",
                             },
                             "emptyTable": "No existen registros.",
                             "infoEmpty": "",
@@ -101,11 +100,21 @@ export default class DataTable extends React.Component {
                             "search": "_INPUT_",
                             searchPlaceholder: `Buscar ${this.props.textoSingular}`,
                             "info": "_START_-_END_ de _TOTAL_",
-                          },
+                        },
 
-                    columnDefs: [{
-                        targets: -1,
-                        render: function ( data, type, row, meta ) {
+                        columnDefs: [
+                        {
+                            'targets': 0,
+                            'checkboxes': {
+                               'selectRow': true
+                            },
+                            name: 'dtcheckbox'
+                        }, 
+                        {
+                            targets: -1,
+                            orderable: false,
+                            name: 'crudoptions',
+                            render: function ( data, type, row, meta ) {
                                     if(type === 'display'){
                                         if (modificar === true){
                                             data += `<a href="${urlModificar}/${encodeURIComponent(row[0])}/M">${iconoModificar}</a>`
@@ -119,30 +128,49 @@ export default class DataTable extends React.Component {
                                         }
                                         if ((eliminar === false) && (modificar === false) && (consultar === false)){
                                             data = 'No posee acciones disponibles'
-                                        }                                        
+                                        }
                                     }
                                     return data;
-                                }
-                    }]
-                    
-                    /*"columnDefs": [ {
-                        "targets": 0,
-                        "data": null,
-                        "defaultContent":'<i class="far fa-trash-alt"></i><form style="display: inline" action="consultar_empleado/:" method="get"><button>B</button></form><button>C</button>',
-                    } ],*/
-                    })
-                    this.setState({ datatable: datatableCreation });
+                                }   
+                        }],
+                            'select': {
+                                'style': 'multi'
+                            }
+                        })
 
-                }).catch((e) => {
-                    console.log('Error en axios')
-                })
-                
+                        $('select[name=dt-dropdown]').on('change', function () {   
+                            var selectedid = $(this).children(":selected").attr("id");
+                            var rowdata = table.row( $(this).parents('tr') ).data()[0];
+                                //console.log("Row:",rowdata);
+                                //console.log("Estatus:",selectedid);
+                              return false;
+                        });
+                        $('#frm-dt').on('submit', function(e){
+                            var form = this;
+                            var rows_selected = table.column(0).checkboxes.selected();
+                                //console.log(rows_selected)
+                                //debugger;
+                              /*Iterate over all selected checkboxes
+                              $.each(rows_selected, function(index, rowId){
+                              });*/
+                        });
+                        if(checktable === false){
+                            table.column('dtcheckbox:name').visible(false);
+                        }else{
+                            table.column('crudoptions:name').visible(false);
+                        }
+
+                    }).catch((e) => {
+                        console.log('Error en axios')
+                    })
+                    this.setState({ datatable: table });
+
             }).catch((e) => {
                 console.log('Error en axios')
             })
-            
 
     }
+
     componentWillUnmount = () => {
         const datatable = this.state.datatable;
         datatable.destroy(true)
@@ -171,14 +199,29 @@ export default class DataTable extends React.Component {
     render(){
         return (
             <div>
-                <table className="display" width="100%" ref={el => this.el = el}>
+            <form name="frm-dt" id="frm-dt">
+                <table  className="display" width="100%" ref={el => this.el = el}>
                 </table>
                 {
                     this.setUpOnClickFunction()
                 }
-                <span onClick={() => this.createElement()}>
-                    <FontAwesomeIcon className="iconadd" icon={Icons.faPlusCircle}/>
-                </span>
+                {
+                  (this.props.checktable === true && 
+                <p className="form-group">
+                   <button type="submit" className="btn btn-primary btn-subcheckbox">Submit</button>
+                </p>)
+                }  
+            </form>
+            {
+                (this.props.agregar === true && 
+                    (this.props.checktable === false &&
+                        
+                    <span onClick={() => this.createElement()}>
+                        <FontAwesomeIcon className="iconadd" icon={Icons.faPlusCircle}/>
+                    </span>
+                    )
+                )
+            }
             </div>
         )
     }

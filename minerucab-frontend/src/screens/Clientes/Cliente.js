@@ -67,42 +67,48 @@ export default class Cliente extends React.Component {
                     urleliminar={`http://localhost:3000/deleteClienteById/${this.state.idEliminar}`}
                 />
                 <Container className="pagecontent">
-                    <Row>
-                        <Col md={2}></Col>
-                        <Col md={10}>
+                    <div className="pagecontent">
+                        <Container>
                             <Row>
-                                <Col md={11}>
-                                    <h4 className="horizontal-line-title-ventas-form cliente-title">Clientes</h4>
-                                </Col>
                                 <Col md={1}></Col>
+                                <Col md={11}>
+                                    <Row>
+                                        <Col md={11}>
+                                            <h4 className="horizontal-line-title-ventas-form cliente-title">Clientes</h4>
+                                        </Col>
+                                        <Col md={1}></Col>
+                                    </Row>
+                                </Col>
                             </Row>
-                        </Col>
-                    </Row>
-                    <Container>
-                        <Row>
-                            <Col sm={0} md={2}></Col>
-                            <Col sm={12} md={9}>
-                                <DataTable
-                                    columns={'http://localhost:3000/column_names/cliente'} 
-                                    data={'http://localhost:3000/getAllClientes'}
-                                    urlModificar={'/agregar_empleado'}
-                                    urlConsultar={'/consultar_empleado'}
-                                    urlEliminar={'/home'}
-                                    modificar={true}
-                                    consultar={true}
-                                    eliminar={true}
-                                    textoSingular={'empleado'}
-                                    textoPlural={'empleados'}
-                                    modalEliminar={this.modalEliminarOpen}
-                                    modalCrear={this.modalCrearClienteOpen}
-                                    reload={this.state.reload}
-                                />
-                            </Col>
-                            <Col sm={0} md={1}></Col>
-                        </Row>
+                        </Container>
+                            <Container>
+                                <Row>
+                                    <Col sm={0} md={1}></Col>
+                                    <Col sm={12} md={10}>
+                                        <DataTable
+                                            columns={'http://localhost:3000/column_names/cliente'} 
+                                            data={'http://localhost:3000/getAllClientes'}
+                                            urlModificar={'/agregar_empleado'}
+                                            urlConsultar={'/consultar_empleado'}
+                                            urlEliminar={'/home'}
+                                            agregar={true}
+                                            modificar={true}
+                                            consultar={true}
+                                            eliminar={true}
+                                            modalEliminar={this.modalEliminarOpen}
+                                            modalCrear={this.modalCrearClienteOpen}
+                                            reload={this.state.reload}
+                                            checktable={false}
+                                            textoSingular={'cliente'}
+                                            textoPlural={'clientes'}
+                                        />
+                                    </Col>
+                                    <Col sm={0} md={1}></Col>
+                                </Row>
+                            </Container>
+                        </div>
                     </Container>
-                </Container>
-            </div>
+                </div>
         )
     }
 }

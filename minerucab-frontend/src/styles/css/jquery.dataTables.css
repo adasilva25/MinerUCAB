@@ -248,3 +248,29 @@ table.dataTable.no-footer{
 	margin-top:0.5em;
 	}
 }
+
+table.dataTable.hover tbody tr:hover.selected, table.dataTable.display tbody tr:hover.selected {
+    background-color: #aab7d1;
+}
+
+table.dataTable.hover tbody>tr.selected:hover, table.dataTable.hover tbody>tr>.selected:hover, table.dataTable.display tbody>tr.selected:hover, table.dataTable.display tbody>tr>.selected:hover {
+    background-color: #aab7d1;
+}
+table.dataTable.hover tbody tr:hover.selected, table.dataTable.display tbody tr:hover.selected {
+    background-color: #aab7d1;
+}
+
+.btn.btn-primary.btn-subcheckbox {
+  background-color: rgba(90, 34, 112, 0.8);
+  border-radius: .50rem;
+  border: 1px solid rgba(90, 34, 112, 1);
+  display: inline-block;
+  position: absolute;
+  /* bottom: -5rem; */
+  right: 0;
+}
+.btn.btn-primary.btn-subcheckbox:hover,
+.btn.btn-primary.btn-subcheckbox:active{
+  border: 1px solid rgba(90, 34, 112, 1);
+  background-color: rgba(90, 34, 112, 1);
+}
