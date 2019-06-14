@@ -11,6 +11,47 @@ import OpcionesGlobales from '../../components/OpcionesGlobales';
 
 
 export default class RegistrarClienteNatural extends React.Component {             
+    state = {
+        primerNombre: '',
+        segundoNombre: '',
+        primerApellido: '',
+        segundoApellido: '',
+        dia: undefined,
+        mes: undefined,
+        ano: undefined,
+        tlf: undefined
+    }
+    onSubmit = () => {
+
+    }
+    onChangeText = (e) => {
+        const text = e.target.value;
+        
+        if (!text || text.match(/^[A-Za-z]+$/)) {
+            if (e.target.id === 'primerNombre'){
+                this.setState({ primerNombre: e.target.value });
+            }
+            if (e.target.id === 'segundoNombre'){
+                this.setState({ segundoNombre: e.target.value });
+            }
+            if (e.target.id === 'primerApellido'){
+                this.setState({ primerApellido: e.target.value });
+            }
+            if (e.target.id === 'segundoApellido'){
+                this.setState({ segundoApellido: e.target.value });
+            }
+        }
+    }
+    onChangeNumber = (e) => {
+        const number = e.target.value;
+
+        if ((!number) || number.match(/^\d*$/)){
+            console.log('e')
+            if (e.target.id === 'dia-cliente'){
+                this.setState({ dia: e.target.value });
+            }
+        }
+    }
     render(){
         return (
             <div className="contain pagecontent">
@@ -45,9 +86,17 @@ export default class RegistrarClienteNatural extends React.Component {
                             <Col md={9}>
                                 <Form.Row>
                                     <Col md={5}>
-                                        <Form.Group controlId="formBasicEmail">
+                                        <Form.Group>
                                             <Form.Label className="cliente-description-fields-text">Primer Nombre</Form.Label>
-                                            <Form.Control type="text" className="form-input" placeholder="Introduzca su primer nombre" />
+                                            <Form.Control 
+                                                type="text" 
+                                                className="form-input" 
+                                                id="primerNombre"
+                                                value={this.state.primerNombre} 
+                                                placeholder="Introduzca su primer nombre"
+                                                autoFocus
+                                                onChange={this.onChangeText} 
+                                            />
                                             <Form.Text className="text-muted">
                                                 Este campo es obligatorio
                                             </Form.Text>
@@ -57,7 +106,13 @@ export default class RegistrarClienteNatural extends React.Component {
                                     <Col md={5}>
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label className="cliente-description-fields-text">Segundo Nombre</Form.Label>
-                                            <Form.Control type="text" className="form-input" placeholder="Introduzca su segundo nombre" />
+                                            <Form.Control 
+                                                type="text" 
+                                                className="form-input" 
+                                                value={this.state.segundoNombre} 
+                                                onChange={this.onChangeText} 
+                                                placeholder="Introduzca su segundo nombre" 
+                                            />
                                         </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
@@ -74,7 +129,13 @@ export default class RegistrarClienteNatural extends React.Component {
                                     <Col md={5}>
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label className="cliente-description-fields-text">Primer Apellido</Form.Label>
-                                            <Form.Control type="text" className="form-input" placeholder="Introduzca su primer apellido" />
+                                            <Form.Control 
+                                                type="text" 
+                                                className="form-input" 
+                                                value={this.state.primerApellido} 
+                                                placeholder="Introduzca su primer apellido" 
+                                                onChange={this.onChangeText} 
+                                            />
                                         </Form.Group>
                                         <Form.Text className="text-muted">
                                             Este campo es obligatorio
@@ -84,7 +145,13 @@ export default class RegistrarClienteNatural extends React.Component {
                                     <Col md={5}>
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label className="cliente-description-fields-text">Segundo Apellido</Form.Label>
-                                            <Form.Control type="text" className="form-input" placeholder="Introduzca su segundo apellido" />
+                                            <Form.Control 
+                                                type="text" 
+                                                className="form-input" 
+                                                value={this.state.segundoApellido} 
+                                                placeholder="Introduzca su segundo apellido" 
+                                                onChange={this.onChangeText} 
+                                            />
                                         </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
@@ -99,7 +166,7 @@ export default class RegistrarClienteNatural extends React.Component {
                             <Col md={9}>
                                 <Form.Row>
                                     <Col md={5}>
-                                        <Form.Group controlId="formBasicEmail">
+                                        <Form.Group>
                                             <Form.Label className="cliente-description-fields-text">Cédula de Identidad</Form.Label>
                                             <Row className="div-content-date">
                                                 <Form.Control as="select" className="form-input form-ci-type">
@@ -107,7 +174,13 @@ export default class RegistrarClienteNatural extends React.Component {
                                                     <option>E</option>
                                                     <option>J</option>
                                                 </Form.Control>   
-                                                <Form.Control type="text" className="form-input form-ci-number" placeholder="Introduzca su cédula de identidad"/>                                       
+                                                <Form.Control 
+                                                    type="text" 
+                                                    className="form-input form-ci-number" 
+                                                    placeholder="Introduzca su cédula de identidad"
+                                                    
+                                                    onChange={this.onChangeNumber}
+                                                />                                       
                                             </Row>  
                                             <Form.Text className="text-muted">
                                                 Este campo es obligatorio
@@ -116,18 +189,39 @@ export default class RegistrarClienteNatural extends React.Component {
                                     </Col>
                                     <Col md={1}></Col>
                                     <Col md={6}>
-                                        <Form.Group controlId="formBasicEmail">
+                                        <Form.Group>
                                             <Form.Label className="cliente-description-fields-text">Fecha de Nacimiento</Form.Label>
                                                 <Row className="div-content-date">
-                                                    <Form.Control type="text" className="form-date form-input form-input-day" placeholder="DD" />                                                    
+                                                    <Form.Control 
+                                                        type="text" 
+                                                        id="dia-cliente"
+                                                        className="form-date form-input form-input-day" 
+                                                        placeholder="DD"
+                                                        onChange={this.onChangeNumber} 
+                                                        value={this.state.dia}
+                                                    />                                                    
                                                         <Form.Text className="text-muted">
                                                             _
                                                         </Form.Text>
-                                                    <Form.Control type="text" className="form-date form-input" placeholder="MM" />                                                    
+                                                    <Form.Control 
+                                                        type="text" 
+                                                        className="form-date form-input" 
+                                                        placeholder="MM" 
+                                                        id="mes-cliente"
+                                                        onChange={this.onChangeNumber} 
+                                                        value={this.state.mes}
+                                                    />                                                    
                                                         <Form.Text className="text-muted">
                                                             _
                                                         </Form.Text>
-                                                    <Form.Control type="text" className="form-date form-input" placeholder="YYYY" />                                            
+                                                    <Form.Control 
+                                                        type="text" 
+                                                        id="ano-cliente"
+                                                        className="form-date form-input" 
+                                                        onChange={this.onChangeNumber} 
+                                                        placeholder="YYYY" 
+                                                        value={this.state.ano}
+                                                    />                                            
                                                 </Row>
                                                 <Form.Text className="text-muted">
                                                     Este campo es obligatorio
@@ -158,7 +252,11 @@ export default class RegistrarClienteNatural extends React.Component {
                                     <Col md={5}>
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label className="cliente-description-fields-text">Correo Electrónico</Form.Label>
-                                            <Form.Control type="email" className="form-input" placeholder="Introduzca su correo electrónico" />
+                                            <Form.Control 
+                                                type="email" 
+                                                className="form-input" 
+                                                placeholder="Introduzca su correo electrónico" 
+                                            />
                                             <Form.Text className="text-muted">
                                                 Este campo es obligatorio
                                             </Form.Text>
@@ -168,7 +266,13 @@ export default class RegistrarClienteNatural extends React.Component {
                                     <Col md={5}> 
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label className="cliente-description-fields-text">Número Telefónico</Form.Label>
-                                            <Form.Control type="text" className="form-input" placeholder="Introduzca un teléfono de contacto" />
+                                            <Form.Control 
+                                                type="text" 
+                                                className="form-input" 
+                                                placeholder="Introduzca un teléfono de contacto" 
+                                                onChange={this.onChangeNumber}
+                                                value={this.state.tlf}
+                                            />
                                         </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
@@ -259,6 +363,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                     <Col md={5}>
                                         <Button 
                                             className="ccargo-btn btn-block"
+                                            onClick={this.onSubmit}
                                         >
                                             Enviar
                                         </Button>

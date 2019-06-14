@@ -10,7 +10,6 @@ const getAllTableColumns = (req, res) => {
     const values = [req.params.table_name];
     client.query(text, values)
     .then((response) => {
-        console.log('Completed!', response.rows[0])
         client.end();
         res.status(200).json(response.rows)
     })

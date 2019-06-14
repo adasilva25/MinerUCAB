@@ -13,21 +13,14 @@ export default class DataTable extends React.Component {
     state = {
         datatable: null
     }
-    openModal = () => {
-        this.props.modal;
-        console.log('entro')
-    };
     componentDidMount = () => {
-        const modalOpen = this.props.modal;
         const iconoConsultar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconsearch" icon={Icons.faSearch}/>);
         const iconoModificar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconedit" icon={Icons.faEdit} />);
-        const iconoEliminar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons icondelete" icon={Icons.faTrashAlt}/>);
         let modificar = this.props.modificar === true;
         let consultar = this.props.consultar === true;
         let eliminar = this.props.eliminar === true;
         let urlConsultar = this.props.urlConsultar;
         let urlModificar = this.props.urlModificar;
-        let urlEliminar = this.props.urlEliminar;
         let dataSet = [];
         let columns = [];
         const config = {
@@ -36,6 +29,7 @@ export default class DataTable extends React.Component {
             },
             responseType: 'json'
         }
+
         axios.get(`${this.props.columns}`, config)
             .then((res) => {
                 res.data.forEach(element => {
@@ -112,30 +106,21 @@ export default class DataTable extends React.Component {
                     columnDefs: [{
                         targets: -1,
                         render: function ( data, type, row, meta ) {
-                                    // console.log(this.props.modificar)
                                     if(type === 'display'){
-                                        // data = '<a href="/registrar_cliente_juridico"><i class="fas fa-edit icons iconedit"></i></a> <a href=""' + encodeURIComponent(data) + '"><i class="fas fa-search icons iconsearch"></i></a> <a href="#"><i class="far fa-trash-alt icons icondelete"></i></a>';
-                                        
-                                        /*data = '<button class="btn btn-primary purple-btn">A</button> <form style="display: inline" action="consultar_empleado/:' + encodeURIComponent(data) +'" method="get"><button class="btn btn-primary purple-btn">Detalle</button></form> <button class="btn btn-primary purple-btn">C</button>';*/
-                                        // data = '<a href="/registrar_cliente_juridico"><FontAwesomeIcon icon="check-square" /></a>'
                                         if (modificar === true){
                                             data += `<a href="${urlModificar}/${encodeURIComponent(row[0])}/M">${iconoModificar}</a>`
                                         }
                                         if (consultar === true){
                                             data += `<a href="${urlConsultar}/${encodeURIComponent(row[0])}/CO">${iconoConsultar}</a>`
-                                            // data += '<a href="' + urlConsultar + '/' + encodeURIComponent(row[0]) + '/CO">' + iconoConsultar + '</a>'
                                         }
                                         if (eliminar === true){
-                                            // data += '<a href="' + urlEliminar + '"><i class="far fa-trash-alt icons icondelete"></i></a>'
-                                            data += `<span onclick="${modalOpen()}">${iconoEliminar}</span>`
+                                            const iconoEliminar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon id={row[0]} className="icons icondelete" icon={Icons.faTrashAlt}/>)
+                                            data += `${iconoEliminar}`
                                         }
                                         if ((eliminar === false) && (modificar === false) && (consultar === false)){
                                             data = 'No posee acciones disponibles'
-                                        }
-                                        //  ORIGINAL --> data = '<a href="/registrar_cliente_juridico"><i class="fas fa-edit icons iconedit"></i></a> <a href=""' + encodeURIComponent(data) + '"><i class="fas fa-search icons iconsearch"></i></a> <a href="#"><i class="far fa-trash-alt icons icondelete"></i></a>';
-                                        
+                                        }                                        
                                     }
-                                    
                                     return data;
                                 }
                     }]
@@ -155,6 +140,7 @@ export default class DataTable extends React.Component {
             }).catch((e) => {
                 console.log('Error en axios')
             })
+            
 
     }
     componentWillUnmount = () => {
@@ -172,11 +158,24 @@ export default class DataTable extends React.Component {
             history.push(this.props.urlCrear);
         }
     }
+    setUpOnClickFunction = () => {
+        const botonesEliminar = document.getElementsByClassName('icondelete');
+        if (botonesEliminar.length > 0){
+            for (let i = 0; i < botonesEliminar.length; i++){
+                botonesEliminar[i].onclick = function() {
+                    this.props.modalEliminar(botonesEliminar[i].id)
+                }.bind(this)
+            }
+        }
+    }
     render(){
         return (
             <div>
                 <table className="display" width="100%" ref={el => this.el = el}>
                 </table>
+                {
+                    this.setUpOnClickFunction()
+                }
                 <span onClick={() => this.createElement()}>
                     <FontAwesomeIcon className="iconadd" icon={Icons.faPlusCircle}/>
                 </span>

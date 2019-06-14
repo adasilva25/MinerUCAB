@@ -7,6 +7,7 @@ const Empleados = require('../database/model/Empleados');
 const Minerales = require('../database/model/Minerales');
 const General = require('../database/model/General');
 const Cargos = require('../database/model/Cargos');
+const Clientes = require('../database/model/Clientes');
 const Roles = require('../database/model/Roles');
 const express = require('express');
 const app = express();
@@ -22,10 +23,12 @@ app.use(
 app.use(express.static(__dirname + '/public'));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 })
 
+/* ------------------------------ GET ------------------------------ */
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello Express!</h1>');
@@ -49,6 +52,18 @@ app.get('/getEmpleadoByCedula/:cedula', Empleados.getEmpleadoByCedula);
 
 app.get('/getEmpleadoById/:id', Empleados.getEmpleadoById);
 
+app.get('/getClienteNombreApellidoById/:id', Clientes.getClienteNombreApellidoById);
+
+app.get('/getAllClientes', Clientes.getAllClientes);
+
+app.get('/getClienteByCedula/:cedula', Clientes.getClienteByCedula);
+
+app.get('/getClienteById/:id', Clientes.getClienteById);
+
+
+/* ------------------------------ DELETE ------------------------------ */
+
+app.delete('/deleteClienteById/:id', Clientes.deleteClienteById)
 
 
 
