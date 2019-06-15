@@ -11,14 +11,7 @@ export default class Actividad extends React.Component {
       super(props);
   }
   routeTo(link){
-    
-    if (this.props.act.titulo === 'Ventas'){
-      this.props.showModal()
-    }
-    else {
-      window.open(link,'_self');
-    }
-    
+    window.open(link,'_self');
   }
   render(){
       const {act} = this.props;

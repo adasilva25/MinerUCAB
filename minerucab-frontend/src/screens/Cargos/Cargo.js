@@ -22,9 +22,9 @@ export default class Cargo extends React.Component {
     };
     render(){
         return (
-            <div className="pagecontent">
+            <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
-                <OpcionesLocales />
+                <OpcionesLocales Usuario={'Andrea Da Silva'}/>
                 <ModalYesNo
                     show={this.state.modalShow}
                     onHide={this.modalClose}
@@ -51,6 +51,7 @@ export default class Cargo extends React.Component {
                                 modificar={true}
                                 consultar={true}
                                 eliminar={true}
+                                agregar={true}
                                 urlCrear={'/registrar_cargo'}
                                 urlModificar={'/gestionar_cargos'}
                                 urlConsultar={'/gestionar_cargos'}
@@ -58,6 +59,7 @@ export default class Cargo extends React.Component {
                                 textoSingular={'cargo'}
                                 textoPlural={'cargos'}
                                 modal={this.modalOpen}
+                                checktable={false}
                             />
                         </Col>
                         <Col sm={0} md={1}></Col>

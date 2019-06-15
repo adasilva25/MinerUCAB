@@ -14,8 +14,9 @@ export default class CambiarContrasena extends React.Component {
     }                          
     render(){
         return (
-            <div>
-              <OpcionesLocales />
+          <div className="contain pagecontent" id="Content">
+            <OpcionesGlobales active="Home"/>
+            <OpcionesLocales Usuario={'Andrea Da Silva'}/>
               <Container className="container-cc-separator pagecontent">
                 <Row>
                     <Col md={3}></Col>

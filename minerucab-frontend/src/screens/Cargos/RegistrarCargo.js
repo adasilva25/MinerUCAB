@@ -14,8 +14,9 @@ import DataTable from '../../components/DataTable'
 export default class RegistrarCargo extends React.Component {             
     render(){
         return (
-            <div className="pagecontent">
-              <OpcionesLocales />
+          <div className="contain pagecontent" id="Content">
+            <OpcionesGlobales active="Home"/>
+            <OpcionesLocales Usuario={'Andrea Da Silva'}/>
               <Container className="container-ccargo-separator pagecontent">
                 <Row>
                     <Col md={3}></Col>

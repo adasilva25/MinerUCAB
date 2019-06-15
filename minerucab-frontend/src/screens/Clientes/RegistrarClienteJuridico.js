@@ -11,8 +11,9 @@ import OpcionesLocales from '../../components/OpcionesLocales';
 export default class RegistrarClienteJuridico extends React.Component {             
     render(){
         return (
-            <div className="contain pagecontent">
-                <OpcionesLocales />
+            <div className="contain pagecontent" id="Content">
+                <OpcionesGlobales active="Home"/>
+                <OpcionesLocales Usuario={'Andrea Da Silva'}/>
                 <Container>
                     <Row>
                         <Col md={2}></Col>

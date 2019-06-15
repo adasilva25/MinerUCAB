@@ -26,8 +26,6 @@ export default class SetActividades extends React.Component {
                                     <Actividad 
                                         act={actividad1} 
                                         key={index1}
-                                        showModal={this.props.showModal}
-                                        closeModal={this.props.closeModal} 
                                     />
                                 );
                             })}

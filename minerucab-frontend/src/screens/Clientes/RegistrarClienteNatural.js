@@ -8,6 +8,7 @@ import Container from 'react-bootstrap/Container'
 import {history} from '../../routers/History';
 import OpcionesLocales from '../../components/OpcionesLocales';
 import OpcionesGlobales from '../../components/OpcionesGlobales';
+import axios from 'axios';
 
 
 export default class RegistrarClienteNatural extends React.Component {             
@@ -16,46 +17,143 @@ export default class RegistrarClienteNatural extends React.Component {
         segundoNombre: '',
         primerApellido: '',
         segundoApellido: '',
-        dia: undefined,
-        mes: undefined,
-        ano: undefined,
-        tlf: undefined
+        dia: '',
+        mes: '',
+        ano: '',
+        tlf: '',
+        ci: '',
+        correo: ''
     }
-    onSubmit = () => {
+    componentDidMount = () => {
+        if (this.props.match.params.accion !== 'CR'){
+            const config = {
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                responseType: 'json'
+            }
+            
+            axios.get(`http://localhost:3000/getClienteById/${this.props.match.params.id}`, config)
+                .then((res) => {
+                    console.log(res);
+                    this.setState({ primerNombre: res.data[0].nombre });
+                    this.setState({ primerApellido: res.data[0].apellido });
+                    this.setState({ ci: res.data[0].ci });
+                    this.setState({ tlf: res.data[0].tlf });
+                }).catch((e) => {
+                    console.log('Error en axios')
+                })
+        }
+    }
+    onSubmit = (e) => {
+        const info = {
+            primerNombre: '',
+            segundoNombre: '',
+            primerApellido: '',
+            segundoApellido: '',
+            ci: '',
+            fecha: '',
+            correo: '',
+            tlf: '',
+            estado: '',
+            municipio: '',
+            parroquia: ''
+        };
 
+        // info.primerNombre = document.getElementById('primerNombre-cliente-natural').value;
+        // info.segundoNombre = document.getElementById('segundoNombre-cliente-natural').value;
+        // info.primerApellido = document.getElementById('primerApellido-cliente-natural').value;
+        // info.segundoApellido = document.getElementById('segundoApellido-cliente-natural').value;
+        // info.ci = document.getElementById('ci-cliente-natural').value;
+        // info.fecha = document.getElementById('dia-cliente-natural').value + '-' + document.getElementById('mes-cliente-natural').value + '-' + document.getElementById('ano-cliente-natural').value;
+        // info.correo = document.getElementById('correo-cliente-natural').value;
+        // info.tlf = document.getElementById('tlf-cliente-natural').value;
+        // info.estado = document.getElementById('estado-cliente-natural').value;
+        // info.municipio = document.getElementById('municipio-cliente-natural').value;
+        // info.parroquia = document.getElementById('parroquia-cliente-natural').value;
+
+        console.log('info', info);
+
+        if ((this.state.primerNombre.length > 0) || (this.state.segundoNombre.length > 0) || 
+            (this.state.primerApellido.length > 0) || (this.state.segundoApellido.length > 0) ||
+            (this.state.ci.length > 0) || (this.state.dia.length > 0) || (this.state.mes.length > 0) ||
+            (this.state.ano.length > 0) || (this.state.correo.length > 0) || (this.state.tlf > 0)){
+                
+                info.primerNombre = this.state.primerNombre;
+                info.segundoNombre = this.state.segundoNombre;
+                info.primerApellido = this.state.primerApellido;
+                info.segundoApellido = this.state.segundoApellido;
+                info.ci = this.state.ci;
+                info.fecha = this.state.dia + '-' + this.state.mes + '-' + this.state.ano;
+                info.correo = this.state.correo;
+                info.tlf = this.state.tlf;
+                info.estado = document.getElementById('estado-cliente-natural').value;
+                info.municipio = document.getElementById('municipio-cliente-natural').value;
+                info.parroquia = document.getElementById('parroquia-cliente-natural').value;
+
+                console.log('info', info);
+
+                // const config = {
+                //     headers: {
+                //       'Content-Type': 'application/x-www-form-urlencoded'
+                //     },
+                //     responseType: 'json',
+                //     data: info
+                // }
+                
+                // axios.post('http://localhost:3000/createClienteNatural', config)
+                //     .then((res) => {
+                //         console.log(res)
+                //     }).catch((e) => {
+                //         console.log('Error en axios')
+                //     })
+            }
     }
     onChangeText = (e) => {
         const text = e.target.value;
         
-        if (!text || text.match(/^[A-Za-z]+$/)) {
-            if (e.target.id === 'primerNombre'){
-                this.setState({ primerNombre: e.target.value });
+        if (!text || text.match(/^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/)) {
+            if (e.target.id === 'primerNombre-cliente-natural'){
+                this.setState({ primerNombre: e.target.value.trim() });
             }
-            if (e.target.id === 'segundoNombre'){
-                this.setState({ segundoNombre: e.target.value });
+            if (e.target.id === 'segundoNombre-cliente-natural'){
+                this.setState({ segundoNombre: e.target.value.trim() });
             }
-            if (e.target.id === 'primerApellido'){
-                this.setState({ primerApellido: e.target.value });
+            if (e.target.id === 'primerApellido-cliente-natural'){
+                this.setState({ primerApellido: e.target.value.trim() });
             }
-            if (e.target.id === 'segundoApellido'){
-                this.setState({ segundoApellido: e.target.value });
+            if (e.target.id === 'segundoApellido-cliente-natural'){
+                this.setState({ segundoApellido: e.target.value.trim() });
             }
         }
     }
     onChangeNumber = (e) => {
         const number = e.target.value;
 
-        if ((!number) || number.match(/^\d*$/)){
-            console.log('e')
-            if (e.target.id === 'dia-cliente'){
+        if ((!number) || number.match(/^[0-9\b]+$/)){
+            console.log('number', number)
+            if (e.target.id === 'dia-cliente-natural'){
                 this.setState({ dia: e.target.value });
+            }
+            else if (e.target.id === 'mes-cliente-natural'){
+                this.setState({ mes: e.target.value });
+            }
+            else if (e.target.id === 'ano-cliente-natural'){
+                this.setState({ ano: e.target.value });
+            }
+            else if (e.target.id === 'ci-cliente-natural'){
+                this.setState({ ci: e.target.value });
+            }
+            else {
+                this.setState({ tlf: e.target.value });
             }
         }
     }
     render(){
         return (
-            <div className="contain pagecontent">
-                <OpcionesLocales />
+            <div className="contain pagecontent" id="Content">
+                <OpcionesGlobales active="Home"/>
+                <OpcionesLocales Usuario='Andrea Da Silva'/>
                 <Container>
                     <Row>
                         <Col md={2}></Col>
@@ -91,7 +189,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                             <Form.Control 
                                                 type="text" 
                                                 className="form-input" 
-                                                id="primerNombre"
+                                                id="primerNombre-cliente-natural"
                                                 value={this.state.primerNombre} 
                                                 placeholder="Introduzca su primer nombre"
                                                 autoFocus
@@ -104,10 +202,11 @@ export default class RegistrarClienteNatural extends React.Component {
                                     </Col>
                                     <Col md={1}></Col>
                                     <Col md={5}>
-                                        <Form.Group controlId="formBasicEmail">
+                                        <Form.Group >
                                             <Form.Label className="cliente-description-fields-text">Segundo Nombre</Form.Label>
                                             <Form.Control 
                                                 type="text" 
+                                                id="segundoNombre-cliente-natural"
                                                 className="form-input" 
                                                 value={this.state.segundoNombre} 
                                                 onChange={this.onChangeText} 
@@ -127,10 +226,11 @@ export default class RegistrarClienteNatural extends React.Component {
                             <Col md={9}>
                                 <Form.Row>
                                     <Col md={5}>
-                                        <Form.Group controlId="formBasicEmail">
+                                        <Form.Group>
                                             <Form.Label className="cliente-description-fields-text">Primer Apellido</Form.Label>
                                             <Form.Control 
                                                 type="text" 
+                                                id="primerApellido-cliente-natural"
                                                 className="form-input" 
                                                 value={this.state.primerApellido} 
                                                 placeholder="Introduzca su primer apellido" 
@@ -143,10 +243,11 @@ export default class RegistrarClienteNatural extends React.Component {
                                     </Col>
                                     <Col md={1}></Col>
                                     <Col md={5}>
-                                        <Form.Group controlId="formBasicEmail">
+                                        <Form.Group>
                                             <Form.Label className="cliente-description-fields-text">Segundo Apellido</Form.Label>
                                             <Form.Control 
                                                 type="text" 
+                                                id="segundoApellido-cliente-natural"
                                                 className="form-input" 
                                                 value={this.state.segundoApellido} 
                                                 placeholder="Introduzca su segundo apellido" 
@@ -177,8 +278,9 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 <Form.Control 
                                                     type="text" 
                                                     className="form-input form-ci-number" 
+                                                    id='ci-cliente-natural'
                                                     placeholder="Introduzca su cédula de identidad"
-                                                    
+                                                    value={this.state.ci}
                                                     onChange={this.onChangeNumber}
                                                 />                                       
                                             </Row>  
@@ -194,7 +296,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 <Row className="div-content-date">
                                                     <Form.Control 
                                                         type="text" 
-                                                        id="dia-cliente"
+                                                        id="dia-cliente-natural"
                                                         className="form-date form-input form-input-day" 
                                                         placeholder="DD"
                                                         onChange={this.onChangeNumber} 
@@ -207,7 +309,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                         type="text" 
                                                         className="form-date form-input" 
                                                         placeholder="MM" 
-                                                        id="mes-cliente"
+                                                        id="mes-cliente-natural"
                                                         onChange={this.onChangeNumber} 
                                                         value={this.state.mes}
                                                     />                                                    
@@ -216,7 +318,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                         </Form.Text>
                                                     <Form.Control 
                                                         type="text" 
-                                                        id="ano-cliente"
+                                                        id="ano-cliente-natural"
                                                         className="form-date form-input" 
                                                         onChange={this.onChangeNumber} 
                                                         placeholder="YYYY" 
@@ -250,12 +352,15 @@ export default class RegistrarClienteNatural extends React.Component {
                             <Col md={9}>
                                 <Form.Row>
                                     <Col md={5}>
-                                        <Form.Group controlId="formBasicEmail">
+                                        <Form.Group >
                                             <Form.Label className="cliente-description-fields-text">Correo Electrónico</Form.Label>
                                             <Form.Control 
                                                 type="email" 
                                                 className="form-input" 
+                                                id='correo-cliente-natural'
                                                 placeholder="Introduzca su correo electrónico" 
+                                                value={this.state.correo}
+                                                onChange={this.onChangeText}
                                             />
                                             <Form.Text className="text-muted">
                                                 Este campo es obligatorio
@@ -264,10 +369,11 @@ export default class RegistrarClienteNatural extends React.Component {
                                     </Col>
                                     <Col md={1}></Col>
                                     <Col md={5}> 
-                                        <Form.Group controlId="formBasicEmail">
+                                        <Form.Group >
                                             <Form.Label className="cliente-description-fields-text">Número Telefónico</Form.Label>
                                             <Form.Control 
-                                                type="text" 
+                                                type="text"
+                                                id='tlf-cliente-natural' 
                                                 className="form-input" 
                                                 placeholder="Introduzca un teléfono de contacto" 
                                                 onChange={this.onChangeNumber}
@@ -304,6 +410,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                         <Form.Control 
                                             as="select" 
                                             className="form-input"
+                                            id='estado-cliente-natural'
                                         >
                                             <option>Sucre</option>
                                             <option>Distrito Capital</option>
@@ -318,6 +425,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                         <Form.Control 
                                             as="select"
                                             className="form-input"
+                                            id='municipio-cliente-natural'
                                         >
                                             <option>Caracas</option>
                                             <option>Cumaná</option>
@@ -336,6 +444,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                         <Form.Control 
                                             as="select" 
                                             className="form-input"
+                                            id='parroquia-cliente-natural'
                                         >
                                             <option>Sucre</option>
                                             <option>Baruta</option>

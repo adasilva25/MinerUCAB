@@ -9,10 +9,9 @@ import ModalRegistrarCliente from '../../components/ModalRegistrarCliente';
 import ModalYesNo from '../../components/ModalYesNo';
 import axios from 'axios';
 
-export default class Cliente extends React.Component {
+export default class Maquinaria extends React.Component {
     state = { 
         modalShowEliminar: false,
-        modalShowCrearCliente: false,
         infoEliminar: '',
         idEliminar: 0,
         reload: false
@@ -23,46 +22,37 @@ export default class Cliente extends React.Component {
     modalEliminarOpen = (i) => {
         // console.log(i)
         
-        const config = {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            responseType: 'json'
-        }
+        // const config = {
+        //     headers: {
+        //       'Content-Type': 'application/x-www-form-urlencoded'
+        //     },
+        //     responseType: 'json'
+        // }
         
-        axios.get(`http://localhost:3000/getClienteNombreApellidoById/${i}`, config)
-            .then((res) => {
-                this.setState({ infoEliminar: `${res.data[0].nombre} ${res.data[0].apellido}` })
-                this.setState
-                this.setState(
-                    { 
-                        modalShowEliminar: true, 
-                        idEliminar: i
-                    }
-                )
-            })
-            .catch((e) => {
-                console.log('Error con el nombre - apellido por el id cliente');
-            })
+        // axios.get(`http://localhost:3000/getClienteNombreApellidoById/${i}`, config)
+        //     .then((res) => {
+        //         this.setState({ infoEliminar: `${res.data[0].nombre} ${res.data[0].apellido}` })
+        //         this.setState
+        //         this.setState(
+        //             { 
+        //                 modalShowEliminar: true, 
+        //                 idEliminar: i
+        //             }
+        //         )
+        //     })
+        //     .catch((e) => {
+        //         console.log('Error con el nombre - apellido por el id cliente');
+        //     })
     };
-    modalCrearClienteClose = () => this.setState({ modalShowCrearCliente: false });
-    modalCrearClienteOpen = () => {
-        this.setState({ modalShowCrearCliente: true })
-    }
     render(){
         return (
-            <div>
+            <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
-                <OpcionesLocales />
-                <ModalRegistrarCliente
-                    show={this.state.modalShowCrearCliente}
-                    onHide={this.modalCrearClienteClose}
-                    mensaje={'Existen empleados asociados al cargo Dibujante, reasigne los empleados a otro cargo para poder continuar'}
-                />
+                <OpcionesLocales Usuario={'Andrea Da Silva'}/>
                 <ModalYesNo
                     show={this.state.modalShowEliminar}
                     onHide={this.modalEliminarClose}
-                    mensaje={'¿Está seguro que desea eliminar el cliente'}
+                    mensaje={'¿Está seguro que desea eliminar la maquinaria'}
                     infoeliminar={this.state.infoEliminar}
                     urleliminar={`http://localhost:3000/deleteClienteById/${this.state.idEliminar}`}
                 />
@@ -74,7 +64,7 @@ export default class Cliente extends React.Component {
                                 <Col md={11}>
                                     <Row>
                                         <Col md={11}>
-                                            <h4 className="horizontal-line-title-ventas-form cliente-title">Clientes</h4>
+                                            <h4 className="horizontal-line-title-ventas-form cliente-title">Maquinarias</h4>
                                         </Col>
                                         <Col md={1}></Col>
                                     </Row>
@@ -90,17 +80,16 @@ export default class Cliente extends React.Component {
                                             data={'http://localhost:3000/getAllClientes'}
                                             urlModificar={'/registrar_cliente_natural'}
                                             urlConsultar={'/registrar_cliente_natural'}
-                                            urlEliminar={'/home'}
+                                            urlCrear={'/gestionar_maquinaria/CR'}
                                             agregar={true}
                                             modificar={true}
                                             consultar={true}
                                             eliminar={true}
                                             modalEliminar={this.modalEliminarOpen}
-                                            modalCrear={this.modalCrearClienteOpen}
                                             reload={this.state.reload}
                                             checktable={false}
-                                            textoSingular={'cliente'}
-                                            textoPlural={'clientes'}
+                                            textoSingular={'maquinaria'}
+                                            textoPlural={'maquinarias'}
                                         />
                                     </Col>
                                     <Col sm={0} md={1}></Col>

@@ -25,6 +25,17 @@ const { Client } = require('pg');
 
 // FORMATO  CONNECTION STRING postgressql://YourUserName:YourPassword@localhost:5432/YourDatabase
 
+/* ------------------------------ CREATE ------------------------------ */
+
+const createClienteNatural = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
+    });
+    console.log(req.body.data);
+}
+
+/* ------------------------------ READ ------------------------------ */
+
 const getAllClientes = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
@@ -115,6 +126,7 @@ const deleteClienteById = (req, res) => {
 }
 
 module.exports = {
+    createClienteNatural,
     getAllClientes,
     getClienteByCedula,
     getClienteById,

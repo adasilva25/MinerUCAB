@@ -34,7 +34,7 @@ export default class ModalBuscarCliente extends React.Component {
       .then((res) => {
           console.log(res)
           if (res.status === 200 && res.data.length === 1){
-            history.push(`/ventas/${res.data[0].id}`);
+            history.push(`/gestionar_ventas/${res.data[0].id}`);
           } 
       }).catch((e) => {
           console.log('Error en axios')

@@ -28,6 +28,10 @@ app.use(function(req, res, next) {
   next();
 })
 
+/* ------------------------------ POST ------------------------------ */
+
+app.post('/createClienteNatural', Clientes.createClienteNatural);
+
 /* ------------------------------ GET ------------------------------ */
 
 app.get('/', (req, res) => {
@@ -60,10 +64,16 @@ app.get('/getClienteByCedula/:cedula', Clientes.getClienteByCedula);
 
 app.get('/getClienteById/:id', Clientes.getClienteById);
 
-
 /* ------------------------------ DELETE ------------------------------ */
 
-app.delete('/deleteClienteById/:id', Clientes.deleteClienteById)
+app.delete('/deleteClienteById/:id', Clientes.deleteClienteById);
+
+/* -------------------------------------------------------------------- */
+
+
+
+
+
 
 
 

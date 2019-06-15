@@ -5,7 +5,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import ReactDOMServer from 'react-dom/server';
 import {history} from '../routers/History';
-import Button from 'react-bootstrap/Button';
 import '../styles/css/dataTables.checkboxes.min';
 import '../styles/css/dataTables.checkboxes.css';
 
@@ -73,6 +72,7 @@ export default class DataTable extends React.Component {
                         var table = this.$el.DataTable({
                         data: dataSet,
                         columns: columns,
+                        "bDestroy": true,
                         //Quitar paging
                             //paging: false
                         //Quitar searching
@@ -101,7 +101,6 @@ export default class DataTable extends React.Component {
                             searchPlaceholder: `Buscar ${this.props.textoSingular}`,
                             "info": "_START_-_END_ de _TOTAL_",
                         },
-
                         columnDefs: [
                         {
                             'targets': 0,
@@ -117,10 +116,10 @@ export default class DataTable extends React.Component {
                             render: function ( data, type, row, meta ) {
                                     if(type === 'display'){
                                         if (modificar === true){
-                                            data += `<a href="${urlModificar}/${encodeURIComponent(row[0])}/M">${iconoModificar}</a>`
+                                            data += `<a href="${urlModificar}/M/${encodeURIComponent(row[0])}">${iconoModificar}</a>`
                                         }
                                         if (consultar === true){
-                                            data += `<a href="${urlConsultar}/${encodeURIComponent(row[0])}/CO">${iconoConsultar}</a>`
+                                            data += `<a href="${urlConsultar}/CO/${encodeURIComponent(row[0])}">${iconoConsultar}</a>`
                                         }
                                         if (eliminar === true){
                                             const iconoEliminar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon id={row[0]} className="icons icondelete" icon={Icons.faTrashAlt}/>)
@@ -163,7 +162,7 @@ export default class DataTable extends React.Component {
                     }).catch((e) => {
                         console.log('Error en axios')
                     })
-                    this.setState({ datatable: table });
+                    // this.setState({ datatable: table });
 
             }).catch((e) => {
                 console.log('Error en axios')
@@ -172,8 +171,8 @@ export default class DataTable extends React.Component {
     }
 
     componentWillUnmount = () => {
-        const datatable = this.state.datatable;
-        datatable.destroy(true)
+        const datatable = $(this.el);
+        datatable.DataTable().destroy()
         // this.$el
         // .DataTable
         // .destroy(true);

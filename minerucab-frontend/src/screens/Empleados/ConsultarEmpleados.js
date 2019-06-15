@@ -7,12 +7,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-export default class Yacimiento extends React.Component {
+export default class ConsultarEmpleados extends React.Component {
     render(){
         return (
-            <div className="contain pagecontent" id="Content">
+            <div>
                 <OpcionesGlobales active="Home"/>
-                <OpcionesLocales Usuario={'Andrea Da Silva'}/>
+                <OpcionesLocales />
                 <Container className="pagecontent">
                     <Row>
                         <Col sm={0} md={1}></Col>
@@ -21,8 +21,6 @@ export default class Yacimiento extends React.Component {
                                 columns={'http://localhost:3000/column_names/test_table'} 
                                 data={'http://localhost:3000/users'}
                                 url={'consultar_empleado/:'}
-                                textoSingular={'prueba'}
-                                textoPlural={'pruebas'}
                             />
                         </Col>
                         <Col sm={0} md={1}></Col>
