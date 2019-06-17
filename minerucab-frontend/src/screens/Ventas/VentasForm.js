@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import OpcionesLocales from '../../components/OpcionesLocales';
 import InputGroup from 'react-bootstrap/InputGroup';
+import OpcionesGlobales from '../../components/OpcionesGlobales';
 import axios from 'axios';
 
 // https://stackoverflow.com/questions/469357/html-text-input-allow-only-numeric-input
@@ -478,16 +479,18 @@ export default class VentasForm extends React.Component {
                                 <Form.Label className="cliente-description-fields-text">Cantidad</Form.Label>
                                 <Row>
                                     <Col md={12}>
-                                        <Form.Group controlId="formBasicEmail">
+                                        <Form.Group>
                                             <InputGroup className="MyInputGroup">
-                                                <Form.Control type="text" 
+                                                <Form.Control type="number" 
                                                     className="form-input form-input-text-cantidad" 
                                                     key={index} 
                                                     defaultValue={1}
                                                     id={''+index}
                                                     onChange={this.onChangeCantidad}
                                                     alt={1}
+                                                    min="0"
                                                 />
+                                                
                                                 {
                                                     this.createAttribute(index)
                                                 }
@@ -532,8 +535,9 @@ export default class VentasForm extends React.Component {
     render(){
 
         return (
-            <div className="div-screen-resize">
-                <OpcionesLocales />
+            <div className="contain pagecontent" id="Content">
+                <OpcionesGlobales active="Home"/>
+                <OpcionesLocales Usuario={'Andrea Da Silva'}/>
                 <Container className="pagecontent">
                     <Row>
                         <Col md={2}></Col>
@@ -563,7 +567,7 @@ export default class VentasForm extends React.Component {
                             <Col md={10}>
                                 <Form.Row>
                                     <Col md={5}>
-                                        <Form.Group controlId="formBasicEmail">
+                                        <Form.Group>
                                             <Form.Label className="cliente-description-fields-text">Cédula de Identidad o RIF</Form.Label>
                                             <Form.Control type="text" className="form-input" value={this.state.ci} disabled={true} placeholder="Introduzca su primer nombre" />
                                         </Form.Group>
@@ -644,7 +648,7 @@ export default class VentasForm extends React.Component {
                                     </Col>
                                     <Col md={1}></Col>
                                     <Col md={5}>
-                                        <Form.Group controlId="formBasicEmail">
+                                        <Form.Group>
                                             <Row>
                                                 <Col md={4}>
                                                     <Form.Label className="cliente-description-fields-text">Total US $</Form.Label>

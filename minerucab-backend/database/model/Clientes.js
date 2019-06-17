@@ -25,12 +25,23 @@ const { Client } = require('pg');
 
 // FORMATO  CONNECTION STRING postgressql://YourUserName:YourPassword@localhost:5432/YourDatabase
 
-const getAllEmployees = (req, res) => {
+/* ------------------------------ CREATE ------------------------------ */
+
+const createClienteNatural = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
+    });
+    console.log(req.body.data);
+}
+
+/* ------------------------------ READ ------------------------------ */
+
+const getAllClientes = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
-    client.query('SELECT * FROM empleado;')
+    client.query('SELECT * FROM cliente;')
     .then((response) => {
         client.end();
         // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
@@ -42,12 +53,12 @@ const getAllEmployees = (req, res) => {
     })
 }
 
-const getEmpleadoByCedula = (req, res) => {
+const getClienteByCedula = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT * FROM empleado WHERE ci = ($1);';
+    const text = 'SELECT * FROM cliente WHERE ci = ($1);';
     const values = [req.params.cedula];
     client.query(text, values)
     .then((response) => {
@@ -60,12 +71,48 @@ const getEmpleadoByCedula = (req, res) => {
     })
 }
 
-const getEmpleadoById = (req, res) => {
+const getClienteById = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT * FROM empleado WHERE id = ($1);';
+    const text = 'SELECT * FROM cliente WHERE id = ($1);';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+    })
+}
+
+const getClienteNombreApellidoById = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'SELECT nombre, apellido FROM cliente WHERE id = ($1);';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+    })
+}
+
+const deleteClienteById = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'DELETE FROM cliente WHERE id = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -79,8 +126,11 @@ const getEmpleadoById = (req, res) => {
 }
 
 module.exports = {
-    getAllEmployees,
-    getEmpleadoByCedula,
-    getEmpleadoById
+    createClienteNatural,
+    getAllClientes,
+    getClienteByCedula,
+    getClienteById,
+    deleteClienteById,
+    getClienteNombreApellidoById
     // ,[siguientes funciones]
 }

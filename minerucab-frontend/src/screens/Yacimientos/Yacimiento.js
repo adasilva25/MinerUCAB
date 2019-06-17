@@ -10,9 +10,9 @@ import Col from 'react-bootstrap/Col';
 export default class Yacimiento extends React.Component {
     render(){
         return (
-            <div>
+            <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
-                <OpcionesLocales />
+                <OpcionesLocales Usuario={'Andrea Da Silva'}/>
                 <Container className="pagecontent">
                     <Row>
                         <Col sm={0} md={1}></Col>

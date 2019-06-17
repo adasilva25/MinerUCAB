@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import {history} from '../routers/History';
 
 export default class ModalRegistrarCliente extends React.Component {
     render() {
@@ -32,7 +33,7 @@ export default class ModalRegistrarCliente extends React.Component {
                 <Col md={1}></Col>
                 <Col md={5}>
                   <Button 
-                      onClick={this.onSubmit} 
+                      onClick={() => history.push('/registrar_cliente_natural/C')} 
                       className="modal-rcnatural-button btn-block"
                   >
                       Cliente Natural
@@ -40,7 +41,7 @@ export default class ModalRegistrarCliente extends React.Component {
                 </Col>
                 <Col md={5}>
                   <Button 
-                    onClick={this.onSubmit} 
+                  onClick={() => history.push('/registrar_cliente_juridico/C')} 
                     className="modal-rcjuridico-button btn-block"
                   >
                     Cliente Jurídico

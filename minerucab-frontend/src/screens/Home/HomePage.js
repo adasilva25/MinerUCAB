@@ -37,7 +37,7 @@ export default class HomePage extends React.Component {
 
             {
                 titulo: 'Cargos',
-                link:'/registrar_cargo',
+                link:'/cargo',
                 image:'/images/Cargos.png',
                 descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },
@@ -58,7 +58,7 @@ export default class HomePage extends React.Component {
 
             {
                 titulo: 'Ventas',
-                link:'/ventas',
+                link:'/venta',
                 image:'/images/Ventas.png',
                 descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },
@@ -72,21 +72,21 @@ export default class HomePage extends React.Component {
 
             {
                 titulo: 'Empleados',
-                link:'/consultar_empleados',
+                link:'/empleado',
                 image:'/images/Empleados.jpg',
                 descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },
 
             {
                 titulo: 'Clientes',
-                link:'#45',
+                link:'/cliente',
                 image:'/images/Clientes.jpg',
                 descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },
 
             {
                 titulo: 'Maquinarias',
-                link:'#45',
+                link:'/maquinaria',
                 image:'/images/Maquinarias.jpg',
                 descripcion:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac tortor dui. Nulla facilisi. Quisque et commodo nisl. Phasellus nibh libero, vehicula quis euismod nec, accumsan vitae enim. Etiam eu malesuada quam, vel ullamcorper diam. Morbi euismod sapien id nisl rhoncus porta. Integer venenatis sapien vel neque condimentum euismod. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
             },
@@ -122,22 +122,12 @@ export default class HomePage extends React.Component {
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario={opciones}/>
-                <ModalBuscarCliente
-                    show={this.state.modalShow}
-                    onHide={this.modalClose}
-                    content=
-                        {
-                            'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beerlabore wes anderson cred nesciunt sapiente ea proident.'
-                        }
-                />
                 <div id="Content" className="contain pagecontent">
                     <Container fluid={true}>
                         <Container fluid={true} className="containerSetActividades">
                             {actividad.map((act,index)=>{
                                 return(
                                     <SetActividades actividades1={act} key={index} 
-                                        showModal={this.modalOpen}
-                                        closeModal={this.modalClose}    
                                     />
                                 );
                             })}

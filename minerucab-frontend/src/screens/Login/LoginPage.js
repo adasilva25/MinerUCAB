@@ -51,7 +51,7 @@ export default class LoginPage extends React.Component {
                                         block as="input" 
                                         type="submit" 
                                         value="Ingresar"
-                                        formaction="/home"
+                                        formAction="/home"
                                      />
                                     </Form>
                                     <p className="text-center">©2019</p>

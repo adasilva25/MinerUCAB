@@ -10,25 +10,22 @@ import Col from 'react-bootstrap/Col';
 export default class ConsultarEmpleados extends React.Component {
     render(){
         return (
-            <div  className="contain pagecontent" id="Content">
+            <div>
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales />
-                <div className="pagecontent">
-                    <Container>
-                        <h3>Consultar Empleados</h3>
-                        {console.log(this.props.match.params)}
-                        <Row>
-                            <Col sm={12} md={12}>
-                                <DataTable
-                                    columns={'http://localhost:3000/column_names/test_table'} 
-                                    data={'http://localhost:3000/users'}
-                                    textoSingular={'prueba'}
-                                    textoPlural={'pruebas'}
-                                />
-                            </Col>
-                        </Row>
-                    </Container>
-                </div>
+                <Container className="pagecontent">
+                    <Row>
+                        <Col sm={0} md={1}></Col>
+                        <Col sm={12} md={10}>
+                            <DataTable
+                                columns={'http://localhost:3000/column_names/test_table'} 
+                                data={'http://localhost:3000/users'}
+                                url={'consultar_empleado/:'}
+                            />
+                        </Col>
+                        <Col sm={0} md={1}></Col>
+                    </Row>
+                </Container>
             </div>
         )
     }
