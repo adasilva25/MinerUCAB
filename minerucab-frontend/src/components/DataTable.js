@@ -150,13 +150,13 @@ export default class DataTable extends React.Component {
                             },
                         })
 
-                        $('select[name=dt-dropdown]').on('change', function () {   
+                        /*$('select[name=dt-dropdown]').on('change', function () {   
                             var selectedid = $(this).children(":selected").attr("id");
                             var rowdata = table.row( $(this).parents('tr') ).data()[0];
                                 //console.log("Row:",rowdata);
                                 //console.log("Estatus:",selectedid);
                               return false;
-                        });
+                        });*/
                         $('#frm-dt').on('submit', function(e){
                             var form = this;
                             var rows_selected = table.column(0).checkboxes.selected();
