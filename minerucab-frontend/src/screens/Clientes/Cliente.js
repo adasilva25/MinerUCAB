@@ -22,7 +22,6 @@ export default class Cliente extends React.Component {
     }
     modalEliminarOpen = (i) => {
         // console.log(i)
-        
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'

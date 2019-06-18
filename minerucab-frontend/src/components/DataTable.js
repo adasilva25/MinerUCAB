@@ -147,6 +147,7 @@ export default class DataTable extends React.Component {
                         $('#frm-dt').on('submit', function(e){
                             var form = this;
                             var rows_selected = table.column(0).checkboxes.selected();
+                            console.log(rows_selected);
                                 //console.log(rows_selected)
                                 //debugger;
                               /*Iterate over all selected checkboxes
@@ -159,6 +160,15 @@ export default class DataTable extends React.Component {
                             table.column('crudoptions:name').visible(false);
                         }
 
+                        const botonesEliminar = document.getElementsByClassName('icondelete');
+                        if (botonesEliminar.length > 0){
+                            for (let i = 0; i < botonesEliminar.length; i++){
+                                botonesEliminar[i].onclick = function() {
+                                    this.props.modalEliminar(botonesEliminar[i].id)
+                                }.bind(this)
+                            }
+                        }
+
                     }).catch((e) => {
                         console.log('Error en axios')
                     })
@@ -168,8 +178,8 @@ export default class DataTable extends React.Component {
                 console.log('Error en axios')
             })
 
-    }
 
+    }
     componentWillUnmount = () => {
         const datatable = $(this.el);
         datatable.DataTable().destroy()
@@ -185,25 +195,12 @@ export default class DataTable extends React.Component {
             history.push(this.props.urlCrear);
         }
     }
-    setUpOnClickFunction = () => {
-        const botonesEliminar = document.getElementsByClassName('icondelete');
-        if (botonesEliminar.length > 0){
-            for (let i = 0; i < botonesEliminar.length; i++){
-                botonesEliminar[i].onclick = function() {
-                    this.props.modalEliminar(botonesEliminar[i].id)
-                }.bind(this)
-            }
-        }
-    }
     render(){
         return (
             <div>
             <form name="frm-dt" id="frm-dt">
                 <table  className="display" width="100%" ref={el => this.el = el}>
                 </table>
-                {
-                    this.setUpOnClickFunction()
-                }
                 {
                   (this.props.checktable === true && 
                 <p className="form-group">
