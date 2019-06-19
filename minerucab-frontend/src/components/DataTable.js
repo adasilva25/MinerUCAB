@@ -102,13 +102,21 @@ export default class DataTable extends React.Component {
                             "info": "_START_-_END_ de _TOTAL_",
                         },
                         columnDefs: [
+                        // {
+                        //     'targets': 0,
+                        //     'checkboxes': {
+                        //        'selectRow': true
+                        //     },
+                        //     name: 'dtcheckbox'
+                        // }, 
                         {
                             'targets': 0,
-                            'checkboxes': {
-                               'selectRow': true
-                            },
-                            name: 'dtcheckbox'
-                        }, 
+                            'orderable': false,
+                            // 'className': 'dt-body-center',
+                            render: function (data, type, row, meta){
+                                return '<input type="checkbox" name="id[]" value="' + row[0] + '" class="checkbox-dt">';
+                            }
+                        },
                         {
                             targets: -1,
                             orderable: false,
@@ -165,6 +173,16 @@ export default class DataTable extends React.Component {
                             for (let i = 0; i < botonesEliminar.length; i++){
                                 botonesEliminar[i].onclick = function() {
                                     this.props.modalEliminar(botonesEliminar[i].id)
+                                }.bind(this)
+                            }
+                        }
+
+                        const checks = document.getElementsByClassName('checkbox-dt');
+                        if (checks.length > 0){
+                            console.log(checks)
+                            for (let i = 0; i < checks.length; i++){
+                                checks[i].onclick = function() {
+                                    this.props.selectCheck(checks[i])
                                 }.bind(this)
                             }
                         }

@@ -48,6 +48,9 @@ export default class Cliente extends React.Component {
     modalCrearClienteOpen = () => {
         this.setState({ modalShowCrearCliente: true })
     }
+    selectCheck = (i) => {
+        console.log('entro', i);
+    }
     render(){
         return (
             <div>
@@ -97,9 +100,10 @@ export default class Cliente extends React.Component {
                                             modalEliminar={this.modalEliminarOpen}
                                             modalCrear={this.modalCrearClienteOpen}
                                             reload={this.state.reload}
-                                            checktable={false}
+                                            checktable={true}
                                             textoSingular={'cliente'}
                                             textoPlural={'clientes'}
+                                            selectCheck={this.selectCheck}
                                         />
                                     </Col>
                                     <Col sm={0} md={1}></Col>
