@@ -1,6 +1,6 @@
 CREATE TABLE MU_LUGAR (
 	Clave SERIAL,
-	Nombre VARCHAR(15) NOT NULL,
+	Nombre VARCHAR(30) NOT NULL,
 	Tipo VARCHAR(10) NOT NULL,
 	fk_lugar INTEGER,
 	CONSTRAINT pk_clave_lugar PRIMARY KEY (Clave),
@@ -79,22 +79,22 @@ CREATE TABLE MU_MINERAL_NO_METALICO (
 CREATE TABLE MU_TIPO_PAGO_CHEQUE (
 	Clave SERIAL,
 	Banco VARCHAR(15) NOT NULL,
-	Numero_cheque VARCHAR(30) NOT NULL,
-	Numero_cuenta VARCHAR(30) NOT NULL,
+	Numero_cheque VARCHAR(30) NOT NULL UNIQUE,
+	Numero_cuenta VARCHAR(30) NOT NULL UNIQUE,
 	CONSTRAINT pk_clave_tipo_pago_cheque PRIMARY KEY (Clave)
 );
 
 CREATE TABLE MU_TIPO_PAGO_TARJETA_DEBITO (
 	Clave SERIAL,
 	Banco VARCHAR(15) NOT NULL,
-	Numero_tarjeta VARCHAR(30) NOT NULL,
+	Numero_tarjeta VARCHAR(30) NOT NULL UNIQUE,
 	CONSTRAINT pk_clave_tipo_pago_tarjeta_debito PRIMARY KEY (Clave)
 );
 
 CREATE TABLE MU_TIPO_PAGO_TARJETA_CREDITO (
 	Clave SERIAL,
 	Banco VARCHAR(15) NOT NULL,
-	Numero_tarjeta VARCHAR(30) NOT NULL,
+	Numero_tarjeta VARCHAR(30) NOT NULL UNIQUE CHECK('Master Card', 'Visa', 'Otro'),
 	Tipo VARCHAR(20) NOT NULL,
 	CONSTRAINT pk_clave_tipo_pago_tarjeta_credito PRIMARY KEY (Clave)
 );
@@ -110,8 +110,8 @@ CREATE TABLE MU_TIPO_PAGO_TRANSFERENCIA (
 CREATE TABLE MU_CLIENTE_NATURAL (
 	Clave SERIAL,
 	Telefono VARCHAR(20) NOT NULL,
-	Email VARCHAR(40) NOT NULL,
-	CI VARCHAR(15) NOT NULL,
+	Email VARCHAR(40) NOT NULL UNIQUE,
+	CI VARCHAR(15) NOT NULL UNIQUE,
 	P_nombre VARCHAR(15) NOT NULL,
 	S_nombre VARCHAR(15),
 	P_apellido VARCHAR(15) NOT NULL,
@@ -126,8 +126,8 @@ CREATE TABLE MU_CLIENTE_NATURAL (
 CREATE TABLE MU_CLIENTE_JURIDICO (
 	Clave SERIAL,
 	Telefono VARCHAR(20) NOT NULL,
-	Email VARCHAR(40) NOT NULL,
-	RIF VARCHAR(15) NOT NULL,
+	Email VARCHAR(40) NOT NULL UNIQUE,
+	RIF VARCHAR(15) NOT NULL UNIQUE,
 	Nombre VARCHAR(15) NOT NULL,
 	fk_lugar INTEGER NOT NULL,
 	CONSTRAINT pk_clave_cliente_juridico PRIMARY KEY (Clave),
@@ -138,9 +138,12 @@ CREATE TABLE MU_CLIENTE_JURIDICO (
 CREATE TABLE MU_PRESENTACION_MINERAL (
 	Clave SERIAL,
 	Precio DECIMAL NOT NULL,
+	fk_presentacion INTEGER NOT NULL,
 	fk_mineral_metalico INTEGER,
 	fk_mineral_no_metalico INTEGER,
 	CONSTRAINT pk_presentacion_mineral PRIMARY KEY (Clave),
+	CONSTRAINT fk_presentacion_presentacion_mineral FOREIGN KEY (fk_presentacion) 
+		REFERENCES MU_PRESENTACION (Clave),
 	CONSTRAINT fk_mineral_metalico_presentacion_mineral FOREIGN KEY (fk_mineral_metalico) 
 		REFERENCES MU_MINERAL_METALICO (Clave),
 	CONSTRAINT fk_mineral_no_metalico_presentacion_mineral FOREIGN KEY (fk_mineral_no_metalico) 
@@ -352,13 +355,10 @@ CREATE TABLE MU_FASE (
 	Fecha_fin DATE,
 	Fecha_fin_real DATE,
 	fk_estatus INTEGER NOT NULL,
-	fk_explotacion INTEGER NOT NULL,
 	fk_etapa INTEGER NOT NULL,
 	CONSTRAINT pk_etapa_fase PRIMARY KEY (Clave),
 	CONSTRAINT fk_estatus_fase FOREIGN KEY (fk_estatus) 
 		REFERENCES MU_ESTATUS (Clave),
-	CONSTRAINT fk_explotacion_fase FOREIGN KEY (fk_explotacion)
-		REFERENCES MU_EXPLOTACION (Clave),
 	CONSTRAINT fk_etapa_fase FOREIGN KEY (fk_etapa)
 		REFERENCES MU_ETAPA (Clave)
 );
@@ -418,8 +418,6 @@ CREATE TABLE MU_CARGO_FASE (
 	CONSTRAINT pk_cargo_fase PRIMARY KEY (Clave),
 	CONSTRAINT fk_cargo_cargo_fase FOREIGN KEY (fk_cargo) 
 		REFERENCES MU_CARGO (Clave),
-	CONSTRAINT fk_etapa_cargo_fase FOREIGN KEY (fk_etapa) 
-		REFERENCES MU_ETAPA (Clave),
 	CONSTRAINT fk_explotacion_cargo_fase FOREIGN KEY (fk_explotacion) 
 		REFERENCES MU_EXPLOTACION (Clave),
 	CONSTRAINT fk_fase_cargo_fase FOREIGN KEY (fk_fase) REFERENCES MU_FASE (Clave)
@@ -436,20 +434,12 @@ CREATE TABLE MU_EMPLEADO_CARGO_FASE (
 	fk_fase INTEGER NOT NULL,
 	fk_explotacion INTEGER NOT NULL,
 	CONSTRAINT pk_empleado_cargo_fase PRIMARY KEY (Clave),
-	CONSTRAINT fk_cargo_empleado_cargo_fase FOREIGN KEY (fk_cargo) 
-		REFERENCES MU_CARGO (Clave),
 	CONSTRAINT fk_cargo_fase_empleado_cargo_fase FOREIGN KEY (fk_cargo_fase) 
 		REFERENCES MU_CARGO_FASE (Clave),
 	CONSTRAINT fk_empleado_empleado_cargo_fase FOREIGN KEY (fk_empleado) 
 		REFERENCES MU_EMPLEADO (Clave),
 	CONSTRAINT fk_estatus_empleado_cargo_fase FOREIGN KEY (fk_estatus) 
-		REFERENCES MU_ESTATUS (Clave),
-	CONSTRAINT fk_etapa_empleado_cargo_fase FOREIGN KEY (fk_etapa) 
-		REFERENCES MU_ETAPA (Clave),
-	CONSTRAINT fk_explotacion_empleado_cargo_fase FOREIGN KEY (fk_explotacion) 
-		REFERENCES MU_EXPLOTACION (Clave),
-	CONSTRAINT fk_fase_empleado_cargo_fase FOREIGN KEY (fk_fase) 
-		REFERENCES MU_FASE (Clave)
+		REFERENCES MU_ESTATUS (Clave)
 );
 
 CREATE TABLE MU_HORARIO_EMPLEADO (
@@ -463,20 +453,8 @@ CREATE TABLE MU_HORARIO_EMPLEADO (
 	fk_fase INTEGER NOT NULL,
 	fk_horario INTEGER NOT NULL,
 	CONSTRAINT pk_horario_empleado PRIMARY KEY (Clave),
-	CONSTRAINT fk_cargo_horario_empleado FOREIGN KEY (fk_cargo) 
-		REFERENCES MU_CARGO (Clave),
-	CONSTRAINT fk_cargo_fase_horario_empleado FOREIGN KEY (fk_cargo_fase) 
-		REFERENCES MU_CARGO_FASE (Clave),
-	CONSTRAINT fk_empleado_horario_empleado FOREIGN KEY (fk_empleado) 
-		REFERENCES MU_EMPLEADO (Clave),
 	CONSTRAINT fk_empleado_cargo_fase_horario_empleado FOREIGN KEY (fk_empleado_cargo_fase) 
-		REFERENCES MU_EMPLEADO_CARGO_FASE (Clave),
-	CONSTRAINT fk_etapa_horario_empleado FOREIGN KEY (fk_etapa) 
-		REFERENCES MU_ETAPA (Clave),
-	CONSTRAINT fk_explotacion_horario_empleado FOREIGN KEY (fk_explotacion) 
-		REFERENCES MU_EXPLOTACION (Clave),
-	CONSTRAINT fk_fase_horario_empleado FOREIGN KEY (fk_fase) 
-		REFERENCES MU_FASE (Clave),
+		REFERENCES MU_EMPLEADO_CARGO_FASE (Clave)
 	CONSTRAINT fk_horario_horario_empleado FOREIGN KEY (fk_horario) 
 		REFERENCES MU_HORARIO (Clave)
 );
@@ -490,10 +468,6 @@ CREATE TABLE MU_TIPO_MAQUINARIA_FASE (
 	fk_fase INTEGER NOT NULL,
 	fk_tipo_maquinaria INTEGER NOT NULL,
 	CONSTRAINT pk_tipo_maquinaria_fase PRIMARY KEY (Clave),
-	CONSTRAINT fk_etapa_tipo_maquinaria_fase FOREIGN KEY (fk_etapa) 
-		REFERENCES MU_ETAPA (Clave),
-	CONSTRAINT fk_explotacion_tipo_maquinaria_fase FOREIGN KEY (fk_explotacion) 
-		REFERENCES MU_EXPLOTACION (Clave),
 	CONSTRAINT fk_fase_tipo_maquinaria_fase FOREIGN KEY (fk_fase) 
 		REFERENCES MU_FASE (Clave),
 	CONSTRAINT fk_tipo_maquinaria_tipo_maquinaria_fase FOREIGN KEY (fk_tipo_maquinaria) 
@@ -509,16 +483,8 @@ CREATE TABLE MU_MAQUINARIA_TIPO_MAQUINARIA_FASE (
 	fk_tipo_maquinaria INTEGER NOT NULL,
 	fk_tipo_maquinaria_fase INTEGER NOT NULL,
 	CONSTRAINT pk_maquinaria_tipo_maquinaria_fase PRIMARY KEY (Clave),
-	CONSTRAINT fk_etapa_maquinaria_tipo_maquinaria_fase FOREIGN KEY (fk_etapa) 
-		REFERENCES MU_ETAPA (Clave),
-	CONSTRAINT fk_explotacion_maquinaria_tipo_maquinaria_fase FOREIGN KEY (fk_explotacion) 
-		REFERENCES MU_EXPLOTACION (Clave),
-	CONSTRAINT fk_fase_maquinaria_tipo_maquinaria_fase FOREIGN KEY (fk_fase) 
-		REFERENCES MU_FASE (Clave),
 	CONSTRAINT fk_maquinaria_maquinaria_tipo_maquinaria_fase FOREIGN KEY (fk_maquinaria)
 		REFERENCES MU_MAQUINARIA (Clave),
-	CONSTRAINT fk_tipo_maquinaria_maquinaria_tipo_maquinaria_fase FOREIGN KEY (fk_tipo_maquinaria) 
-		REFERENCES MU_TIPO_MAQUINARIA (Clave),
 	CONSTRAINT fk_tipo_maquinaria_fase_maquinaria_tipo_maquinaria_fase FOREIGN KEY (fk_tipo_maquinaria_fase) 
 		REFERENCES MU_TIPO_MAQUINARIA_FASE (Clave)
 );
@@ -543,8 +509,6 @@ CREATE TABLE MU_INVENTARIO (
 		REFERENCES MU_MINERAL_NO_METALICO (Clave),
 	CONSTRAINT fk_venta_inventario FOREIGN KEY (fk_venta) 
 		REFERENCES MU_VENTA (Clave),
-	CONSTRAINT fk_presentacion_inventario FOREIGN KEY (fk_presentacion)
-		REFERENCES MU_PRESENTACION (Clave),
 	CONSTRAINT fk_presentacion_mineral_inventario FOREIGN KEY (fk_presentacion_mineral)
 		REFERENCES MU_PRESENTACION_MINERAL (Clave)
 );
@@ -575,8 +539,6 @@ CREATE TABLE MU_DETALLE_SOLICITUD_COMPRA (
 	fk_mineral_no_metalico INTEGER,
 	fk_solicitud_compra INTEGER NOT NULL,
 	CONSTRAINT pk_detalle_solicitud_compra PRIMARY KEY (Clave),
-	CONSTRAINT fk_empresa_detalle_solicitud_compra FOREIGN KEY (fk_empresa)
-		REFERENCES MU_EMPRESA (Clave),
 	CONSTRAINT fk_mineral_empresa_detalle_solicitud_compra FOREIGN KEY (fk_mineral_empresa)
 		REFERENCES MU_MINERAL_EMPRESA (Clave),
 	CONSTRAINT fk_mineral_metalico_detalle_solicitud_compra FOREIGN KEY (fk_mineral_metalico)
