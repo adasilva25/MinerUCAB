@@ -16,8 +16,7 @@ export default class DataTable extends React.Component {
         super(props);
 
         this.*/state = {
-           datatable: null,
-            checkrows:[],
+           datatable: null
        }/* 
         
         this.check = this.check.bind(this);
@@ -35,7 +34,7 @@ export default class DataTable extends React.Component {
         let urlModificar = this.props.urlModificar;
         let dataSet = [];
         let columns = [];
-        let call=null;
+        // let call=null;
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -112,13 +111,26 @@ export default class DataTable extends React.Component {
                             "info": "_START_-_END_ de _TOTAL_",
                         },
                         columnDefs: [
+                        // {
+                        //     'targets': 0,
+                        //     'checkboxes': {
+                        //        'selectRow': true
+                        //     },
+                        //     name: 'dtcheckbox'
+                        // }, 
                         {
                             'targets': 0,
-                            'checkboxes': {
-                               'selectRow': true
-                            },
-                            name: 'dtcheckbox'
-                        }, 
+                            'orderable': false,
+                            // 'className': 'dt-body-center',
+                            render: function (data, type, row, meta){
+                                if (checktable === true){
+                                    return '<input type="checkbox" name="id[]" value="' + row[0] + '" class="checkbox-dt">';
+                                }
+                                else {
+                                    return row[0]
+                                }
+                            }
+                        },
                         {
                             targets: -1,
                             orderable: false,
@@ -157,8 +169,7 @@ export default class DataTable extends React.Component {
                        $('#frm-dt').on('change', function(e){
                             var form = this;
                             var rows_selected = table.column(0).checkboxes.selected();
-                            call=rows_selected;
-                            console.log(call[0]);
+                            // call=rows_selected;
                             
                                        
                             //this.props.callback(rows_selected);
@@ -175,6 +186,7 @@ export default class DataTable extends React.Component {
                         }else{
                             table.column('crudoptions:name').visible(false);
                         }
+
                         const botonesEliminar = document.getElementsByClassName('dt-checkboxes-cell');
                         if (botonesEliminar.length > 0){
                             for (let i = 0; i < botonesEliminar.length; i++){
@@ -183,19 +195,19 @@ export default class DataTable extends React.Component {
                                 }.bind(this)
                             }
                         }
-
                         
-                            const checks = document.getElementsByClassName('dt-checkboxes-cell sorting_1');
-                            console.log(checks);
+                        if (checktable === true){
+                            const checks = document.getElementsByClassName('checkbox-dt');
                             if (checks.length > 0){
+                                // console.log(checks)
                                 for (let i = 0; i < checks.length; i++){
                                     checks[i].onclick = function() {
-                                        console.log("entra ya mardito");
-                                        this.props.minerales(i);
+                                        this.props.selectCheck(checks[i].value)
+                                        // console.log(this.props.selectCheck)
                                     }.bind(this)
                                 }
                             }
-                       
+                        }
 
                     }).catch((e) => {
                         console.log('Error en axios')

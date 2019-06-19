@@ -36,11 +36,6 @@ export default class RegistrarYacimiento extends React.Component {
                 }]
             }]
         }
-        this.handleOnClickAEtapa = this.handleOnClickAEtapa.bind(this);
-        this.handleOnClickAFase = this.handleOnClickAFase.bind(this);
-        this.onSelectFase = this.onSelectFase.bind(this);
-        this.accordionf = this.accordionf.bind(this);
-        this.callbackMinerales = this.callbackMinerales.bind(this);
     }
 
     onClickDashboardPage(){
@@ -143,8 +138,8 @@ export default class RegistrarYacimiento extends React.Component {
         console.log(this.state.etapas);
     };
 
-    callbackMinerales = (dataFromChild) =>{
-        console.log(dataFromChild,"padreeeeee");
+    selectCheck = (id) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
+        console.log('entro', id)
     };
 
     render(){
@@ -243,14 +238,17 @@ export default class RegistrarYacimiento extends React.Component {
                                         <Col sm={0} md={1}></Col>
                                         <Col sm={12} md={10}>
                                             <DataTable
-                                                minerales={this.callbackMinerales}
+                                                selectCheck={this.selectCheck}
+                                                agregar={false}
+                                                modificar={false}
+                                                consultar={false}
+                                                eliminar={false}
                                                 columns={'http://localhost:3000/column_names/test_table'} 
                                                 data={'http://localhost:3000/users'}
                                                 url={'consultar_empleado/:'}
                                                 checktable={true}
                                                 textoSingular={'mineral'}
                                                 textoPlural={'minerales'}
-                                        
                                             />
                                         </Col>
                                         <Col sm={0} md={1}></Col>
@@ -470,7 +468,6 @@ export default class RegistrarYacimiento extends React.Component {
                                                                     <Col sm={0} md={1}></Col>
                                                                     <Col sm={12} md={10}>
                                                                         <DataTable
-                                                                            checktable={true}
                                                                             columns={'http://localhost:3000/column_names/test_table'} 
                                                                             data={'http://localhost:3000/users'}
                                                                             url={'consultar_empleado/:'}
