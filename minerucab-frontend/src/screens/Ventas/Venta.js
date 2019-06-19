@@ -75,6 +75,7 @@ export default class Venta extends React.Component {
                                       checktable={false}
                                       textoSingular={'cliente'}
                                       textoPlural={'clientes'}
+                                      size={270}
                                   />
                               </Col>
                               <Col sm={0} md={1}></Col>

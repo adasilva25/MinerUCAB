@@ -60,6 +60,7 @@ export default class Cargo extends React.Component {
                                 textoPlural={'cargos'}
                                 modal={this.modalOpen}
                                 checktable={false}
+                                size={270}
                             />
                         </Col>
                         <Col sm={0} md={1}></Col>

@@ -24,8 +24,11 @@ export default class DataTable extends React.Component {
         let checktable = this.props.checktable === true;
         let urlConsultar = this.props.urlConsultar;
         let urlModificar = this.props.urlModificar;
+        let size = this.props.size;
         let dataSet = [];
         let columns = [];
+        const textoPlural = this.props.textoPlural;
+        const modalEliminar = this.props.modalEliminar;
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -78,9 +81,10 @@ export default class DataTable extends React.Component {
                         //Quitar searching
                             //searching: false,
                         //Scrollbar
-                            scrollY: 270,
+                            scrollY: size,
                         //No permitir orden
                             //ordering:  false
+                            "order": [[ 1, "asc" ]],
                         "language": {
                             "paginate": {
                                 "previous": "Anterior",
@@ -147,17 +151,40 @@ export default class DataTable extends React.Component {
                         $('#frm-dt').on('submit', function(e){
                             var form = this;
                             var rows_selected = table.column(0).checkboxes.selected();
-                                //console.log(rows_selected)
-                                //debugger;
-                              /*Iterate over all selected checkboxes
+                                //console.log(rows_selected,)
+                              //Iterate over all selected checkboxes
                               $.each(rows_selected, function(index, rowId){
-                              });*/
+                                //console.log(encodeURIComponent(rowId))
+                              });
+                              //debugger;
                         });
                         if(checktable === false){
                             table.column('dtcheckbox:name').visible(false);
                         }else{
                             table.column('crudoptions:name').visible(false);
                         }
+
+                        const botonesEliminar = document.getElementsByClassName('icondelete');
+                            if (botonesEliminar.length > 0){
+                                for (let i = 0; i < botonesEliminar.length; i++){
+                                    if (textoPlural === 'minerales metalicos' || textoPlural === 'minerales no metalicos'){
+                                        if(textoPlural === 'minerales metalicos' && !botonesEliminar[i].className.baseVal.includes('mineralesnometalicos')){
+                                            botonesEliminar[i].classList.add(textoPlural.replace(/\s/g,''));
+                                        }
+                                        else if (textoPlural === 'minerales no metalicos' && !botonesEliminar[i].className.baseVal.includes('mineralesmetalicos')){
+                                            botonesEliminar[i].classList.add(textoPlural.replace(/\s/g,''));
+                                        }
+                                    }
+                                    botonesEliminar[i].onclick = function() {
+                                        if (this.props.textoPlural === 'minerales metalicos' || this.props.textoPlural === 'minerales no metalicos'){
+                                            this.props.modalEliminar(botonesEliminar[i])
+                                        }
+                                        else {
+                                            this.props.modalEliminar(botonesEliminar[i].id)
+                                        }   
+                                    }.bind(this)
+                                }
+                            }
 
                     }).catch((e) => {
                         console.log('Error en axios')
@@ -185,16 +212,6 @@ export default class DataTable extends React.Component {
             history.push(this.props.urlCrear);
         }
     }
-    setUpOnClickFunction = () => {
-        const botonesEliminar = document.getElementsByClassName('icondelete');
-        if (botonesEliminar.length > 0){
-            for (let i = 0; i < botonesEliminar.length; i++){
-                botonesEliminar[i].onclick = function() {
-                    this.props.modalEliminar(botonesEliminar[i].id)
-                }.bind(this)
-            }
-        }
-    }
     render(){
         return (
             <div>
@@ -202,13 +219,10 @@ export default class DataTable extends React.Component {
                 <table  className="display" width="100%" ref={el => this.el = el}>
                 </table>
                 {
-                    this.setUpOnClickFunction()
-                }
-                {
                   (this.props.checktable === true && 
-                <p className="form-group">
-                   <button type="submit" className="btn btn-primary btn-subcheckbox">Submit</button>
-                </p>)
+                    <p className="form-group">
+                       <button type="submit" className="btn btn-primary btn-subcheckbox">Submit</button>
+                    </p>)
                 }  
             </form>
             {

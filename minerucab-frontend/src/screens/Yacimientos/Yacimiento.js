@@ -23,6 +23,7 @@ export default class Yacimiento extends React.Component {
                                 url={'consultar_empleado/:'}
                                 textoSingular={'prueba'}
                                 textoPlural={'pruebas'}
+                                size={270}
                             />
                         </Col>
                         <Col sm={0} md={1}></Col>

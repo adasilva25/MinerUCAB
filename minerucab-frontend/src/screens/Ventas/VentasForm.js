@@ -30,7 +30,7 @@ export default class VentasForm extends React.Component {
             },
             responseType: 'json'
         }
-        axios.get('http://localhost:3000/minerales', config)
+        axios.get('http://localhost:3000/getAllMineralesMetalicosConPresentacion', config)
             .then((res) => {
                 console.log(res)
                 res.data.forEach(element => {
@@ -39,7 +39,7 @@ export default class VentasForm extends React.Component {
                         presentacion: '',
                         precio: 0
                     }
-                    mineralInfo.nombre = element.nombre;
+                    mineralInfo.nombre = element.mineral;
                     mineralInfo.presentacion = element.presentacion;
                     mineralInfo.precio = element.precio;
                     // console.log(mineralInfo)

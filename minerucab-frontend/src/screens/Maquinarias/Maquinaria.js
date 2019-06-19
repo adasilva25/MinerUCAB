@@ -90,6 +90,7 @@ export default class Maquinaria extends React.Component {
                                             checktable={false}
                                             textoSingular={'maquinaria'}
                                             textoPlural={'maquinarias'}
+                                            size={270}
                                         />
                                     </Col>
                                     <Col sm={0} md={1}></Col>
