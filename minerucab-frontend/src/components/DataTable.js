@@ -111,14 +111,14 @@ export default class DataTable extends React.Component {
                             "info": "_START_-_END_ de _TOTAL_",
                         },
                         columnDefs: [
-                        // {
-                        //     'targets': 0,
-                        //     'checkboxes': {
-                        //        'selectRow': true
-                        //     },
-                        //     name: 'dtcheckbox'
-                        // }, 
-                        {
+                       /* {
+                          'targets': 0,
+                            'checkboxes': {
+                              'selectRow': true
+                            },
+                            name: 'dtcheckbox'
+                         }, */
+                       {
                             'targets': 0,
                             'orderable': false,
                             // 'className': 'dt-body-center',
@@ -166,12 +166,21 @@ export default class DataTable extends React.Component {
                                 //console.log("Estatus:",selectedid);
                               return false;
                         });
+                       /* if (checktable === true){
                        $('#frm-dt').on('change', function(e){
                             var form = this;
-                            var rows_selected = table.column(0).checkboxes.selected();
+                            var rows_selected = table.columns(0).checkboxes.selected();
+                            
+                            var actualRows=[];
+                            var i=0;
+                            while(rows_selected[i] != undefined ){
+                                actualRows.push(rows_selected[i]);
+                                i++;
+                            
                             // call=rows_selected;
                             
-                                       
+                            }
+                            this.props.selectCheck(actualRows);
                             //this.props.callback(rows_selected);
                                 //console.log(rows_selected)
                                 //debugger;
@@ -180,14 +189,15 @@ export default class DataTable extends React.Component {
                               });*/
 
 
-                        });
+                        //}.bind(this));
+                       //}
                         if(checktable === false){
                             table.column('dtcheckbox:name').visible(false);
                         }else{
                             table.column('crudoptions:name').visible(false);
                         }
 
-                        const botonesEliminar = document.getElementsByClassName('dt-checkboxes-cell');
+                        const botonesEliminar = document.getElementsByClassName('icondelete');
                         if (botonesEliminar.length > 0){
                             for (let i = 0; i < botonesEliminar.length; i++){
                                 botonesEliminar[i].onclick = function() {
