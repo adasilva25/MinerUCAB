@@ -22,7 +22,6 @@ export default class Cliente extends React.Component {
     }
     modalEliminarOpen = (i) => {
         // console.log(i)
-        
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -48,6 +47,9 @@ export default class Cliente extends React.Component {
     modalCrearClienteClose = () => this.setState({ modalShowCrearCliente: false });
     modalCrearClienteOpen = () => {
         this.setState({ modalShowCrearCliente: true })
+    }
+    selectCheck = (i) => {
+        console.log('entro', i);
     }
     render(){
         return (
@@ -98,9 +100,10 @@ export default class Cliente extends React.Component {
                                             modalEliminar={this.modalEliminarOpen}
                                             modalCrear={this.modalCrearClienteOpen}
                                             reload={this.state.reload}
-                                            checktable={false}
+                                            checktable={true}
                                             textoSingular={'cliente'}
                                             textoPlural={'clientes'}
+                                            selectCheck={this.selectCheck}
                                         />
                                     </Col>
                                     <Col sm={0} md={1}></Col>

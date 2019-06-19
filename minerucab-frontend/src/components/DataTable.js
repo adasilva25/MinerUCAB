@@ -111,6 +111,7 @@ export default class DataTable extends React.Component {
                             "info": "_START_-_END_ de _TOTAL_",
                         },
                         columnDefs: [
+
                        /* {
                           'targets': 0,
                             'checkboxes': {
@@ -119,6 +120,7 @@ export default class DataTable extends React.Component {
                             name: 'dtcheckbox'
                          }, */
                        {
+
                             'targets': 0,
                             'orderable': false,
                             // 'className': 'dt-body-center',
@@ -169,6 +171,7 @@ export default class DataTable extends React.Component {
                        /* if (checktable === true){
                        $('#frm-dt').on('change', function(e){
                             var form = this;
+
                             var rows_selected = table.columns(0).checkboxes.selected();
                             
                             var actualRows=[];
@@ -182,6 +185,7 @@ export default class DataTable extends React.Component {
                             }
                             this.props.selectCheck(actualRows);
                             //this.props.callback(rows_selected);
+
                                 //console.log(rows_selected)
                                 //debugger;
                               /*Iterate over all selected checkboxes
@@ -205,6 +209,7 @@ export default class DataTable extends React.Component {
                                 }.bind(this)
                             }
                         }
+
                         
                         if (checktable === true){
                             const checks = document.getElementsByClassName('checkbox-dt');
@@ -216,6 +221,7 @@ export default class DataTable extends React.Component {
                                         // console.log(this.props.selectCheck)
                                     }.bind(this)
                                 }
+
                             }
                         }
 
@@ -228,10 +234,13 @@ export default class DataTable extends React.Component {
                 console.log('Error en axios')
             })
 
+
       
 
     }
 
+
+   
     componentWillUnmount = () => {
         const datatable = $(this.el);
         datatable.DataTable().destroy()
@@ -247,24 +256,7 @@ export default class DataTable extends React.Component {
             history.push(this.props.urlCrear);
         }
     }
-    
 
-
-    check(){
-        /*this.$el = $(this.el);
-        var table = this.$el.DataTable();
-        var form = this;
-        var rows_selected = table.column(0).checkboxes.selected();
-        
-        this.setState(() => ({
-            checkrows: rows_selected,
-        }));
-        console.log(this.state.checkrows[0]);*/
-        console.log(this.state.checkrows,"hfhfudfjbfdjfjn");
-
-    }
-
-    
 
     render(){
         return (
@@ -272,7 +264,6 @@ export default class DataTable extends React.Component {
             <form name="frm-dt" id="frm-dt" >
                 <table  className="display" width="100%" ref={el => this.el = el}>
                 </table>
-               
                 {
                   (this.props.checktable === true && 
                 <p className="form-group">
