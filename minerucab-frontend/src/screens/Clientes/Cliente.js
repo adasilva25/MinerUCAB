@@ -22,7 +22,6 @@ export default class Cliente extends React.Component {
     }
     modalEliminarOpen = (i) => {
         // console.log(i)
-        
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -48,6 +47,9 @@ export default class Cliente extends React.Component {
     modalCrearClienteClose = () => this.setState({ modalShowCrearCliente: false });
     modalCrearClienteOpen = () => {
         this.setState({ modalShowCrearCliente: true })
+    }
+    selectCheck = (i) => {
+        console.log('entro', i);
     }
     render(){
         return (
@@ -102,6 +104,7 @@ export default class Cliente extends React.Component {
                                             textoSingular={'cliente'}
                                             textoPlural={'clientes'}
                                             size={270}
+                                            //selectCheck={this.selectCheck}
                                         />
                                     </Col>
                                     <Col sm={0} md={1}></Col>

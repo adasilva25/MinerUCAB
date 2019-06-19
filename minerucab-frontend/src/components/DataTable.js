@@ -12,9 +12,17 @@ const $ = require('jquery');
 $.DataTable = require('datatables.net');
 
 export default class DataTable extends React.Component {
-    state = {
-        datatable: null
-    }
+    /* constructor(props){
+        super(props);
+
+        this.*/state = {
+           datatable: null
+       }/* 
+        
+        this.check = this.check.bind(this);
+    }*/
+
+    
     componentDidMount = () => {
         const iconoConsultar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconsearch" icon={Icons.faSearch}/>);
         const iconoModificar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconedit" icon={Icons.faEdit} />);
@@ -29,6 +37,7 @@ export default class DataTable extends React.Component {
         let columns = [];
         const textoPlural = this.props.textoPlural;
         const modalEliminar = this.props.modalEliminar;
+        // let call=null;
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -106,13 +115,28 @@ export default class DataTable extends React.Component {
                             "info": "_START_-_END_ de _TOTAL_",
                         },
                         columnDefs: [
-                        {
-                            'targets': 0,
+
+                       /* {
+                          'targets': 0,
                             'checkboxes': {
-                               'selectRow': true
+                              'selectRow': true
                             },
                             name: 'dtcheckbox'
-                        }, 
+                         }, */
+                       {
+
+                            'targets': 0,
+                            'orderable': false,
+                            // 'className': 'dt-body-center',
+                            render: function (data, type, row, meta){
+                                if (checktable === true){
+                                    return '<input type="checkbox" name="id[]" value="' + row[0] + '" class="checkbox-dt">';
+                                }
+                                else {
+                                    return row[0]
+                                }
+                            }
+                        },
                         {
                             targets: -1,
                             orderable: false,
@@ -148,7 +172,7 @@ export default class DataTable extends React.Component {
                                 //console.log("Estatus:",selectedid);
                               return false;
                         });*/
-                        $('#frm-dt').on('submit', function(e){
+                        /*$('#frm-dt').on('submit', function(e){
                             var form = this;
                             var rows_selected = table.column(0).checkboxes.selected();
                                 //console.log(rows_selected,)
@@ -157,7 +181,34 @@ export default class DataTable extends React.Component {
                                 //console.log(encodeURIComponent(rowId))
                               });
                               //debugger;
-                        });
+                        });*/
+                       /* if (checktable === true){
+                       $('#frm-dt').on('change', function(e){
+                            var form = this;
+
+                            var rows_selected = table.columns(0).checkboxes.selected();
+                            
+                            var actualRows=[];
+                            var i=0;
+                            while(rows_selected[i] != undefined ){
+                                actualRows.push(rows_selected[i]);
+                                i++;
+                            
+                            // call=rows_selected;
+                            
+                            }
+                            this.props.selectCheck(actualRows);
+                            //this.props.callback(rows_selected);
+
+                                //console.log(rows_selected)
+                                //debugger;
+                              /*Iterate over all selected checkboxes
+                              $.each(rows_selected, function(index, rowId){
+                              });*/
+
+
+                        //}.bind(this));
+                       //}
                         if(checktable === false){
                             table.column('dtcheckbox:name').visible(false);
                         }else{
@@ -186,6 +237,20 @@ export default class DataTable extends React.Component {
                                 }
                             }
 
+                        if (checktable === true){
+                            const checks = document.getElementsByClassName('checkbox-dt');
+                            if (checks.length > 0){
+                                // console.log(checks)
+                                for (let i = 0; i < checks.length; i++){
+                                    checks[i].onclick = function() {
+                                        this.props.selectCheck(checks[i].value)
+                                        // console.log(this.props.selectCheck)
+                                    }.bind(this)
+                                }
+
+                            }
+                        }
+
                     }).catch((e) => {
                         console.log('Error en axios')
                     })
@@ -195,8 +260,13 @@ export default class DataTable extends React.Component {
                 console.log('Error en axios')
             })
 
+
+      
+
     }
 
+
+   
     componentWillUnmount = () => {
         const datatable = $(this.el);
         datatable.DataTable().destroy()
@@ -212,10 +282,11 @@ export default class DataTable extends React.Component {
             history.push(this.props.urlCrear);
         }
     }
+    
     render(){
         return (
             <div>
-            <form name="frm-dt" id="frm-dt">
+            <form name="frm-dt" id="frm-dt" >
                 <table  className="display" width="100%" ref={el => this.el = el}>
                 </table>
                 {

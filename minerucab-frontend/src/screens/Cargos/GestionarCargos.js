@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import OpcionesGlobales from '../../components/OpcionesGlobales'
 import OpcionesLocales from '../../components/OpcionesLocales';
+import OpcionesGlobales from '../../components/OpcionesGlobales';
 import axios from 'axios';
 import DataTable from '../../components/DataTable';
 
