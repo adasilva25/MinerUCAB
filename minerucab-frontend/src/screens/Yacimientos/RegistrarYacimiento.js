@@ -25,7 +25,7 @@ export default class RegistrarYacimiento extends React.Component {
 
         this.state = {
             key:"Etapa 1",
-            key2: 1,
+            key2:[],
             etapas: [{
                 nombre: "Etapa 1",
                 numero: 1,
@@ -40,6 +40,7 @@ export default class RegistrarYacimiento extends React.Component {
         this.handleOnClickAFase = this.handleOnClickAFase.bind(this);
         this.onSelectFase = this.onSelectFase.bind(this);
         this.accordionf = this.accordionf.bind(this);
+        this.callbackMinerales = this.callbackMinerales.bind(this);
     }
 
     onClickDashboardPage(){
@@ -50,13 +51,50 @@ export default class RegistrarYacimiento extends React.Component {
         history.push('/');  
     }  
     
-    accordionf(){
-        if(this.state.key2 === 1){
+    accordionf(e){
+        console.log(this.state.key2[e],e);
+        console.log(this.state.key2[2], "holoooA");
+        var k=this.state.key2;
+        if (k[e] === undefined){
+            console.log(this.state.key2[e], "UND");
+            if(e != 0){
+                console.log( "10");
+                for(var i=0; i<=(e-k.length);i++){
+                    k.push(0);
+                }
+            }
+            else{
+                console.log( "20");
+                k.push(0);
+                
+            }
+            
+            
+        }
+       
+             console.log(this.state.key2[e], "holA");
+            if(k[e] === 0){
+                k[e]=1;
+                console.log( "1");
+                this.setState((prevState) => ({
+                    key2: k
+                }));
+            }
+            else{
+                k[e]=0;
+                console.log( "2");
+                this.setState((prevState) => ({
+                    key2: k
+                }));
+            }
+            console.log(this.state.key2, "ho",this.state.key2[1]);
+        
+       /* if(this.state.key2 === 1){
             this.setState({key2: 0});
         }
         else{
             this.setState({key2: 1});
-        }
+        }*/
     }
     onSelectFase(etapa_num, Key){
         var etapa1= this.state.etapas.findIndex(x => x.numero === etapa_num );
@@ -103,7 +141,11 @@ export default class RegistrarYacimiento extends React.Component {
             )     
         }));
         console.log(this.state.etapas);
-    }
+    };
+
+    callbackMinerales = (dataFromChild) =>{
+        console.log(dataFromChild,"padreeeeee");
+    };
 
     render(){
         
@@ -117,146 +159,173 @@ export default class RegistrarYacimiento extends React.Component {
 
                     <FormTitulo titulo="Registrar Yacimiento" tamaño="BIG"/>
                     <Accordion defaultActiveKey={1} >
-                      <Card className="CardAcc">
-                        <Accordion.Toggle as={Card.Header} eventKey={this.state.key2} onClick={this.accordionf} className="accordion borderacc">
-                          
-                            <FormTitulo titulo="Información General"/>
-                        </Accordion.Toggle>
-                        <Accordion.Collapse eventKey={1} >
-                          <Card.Body className="BodyAcc">
-                            <Form.Row className="formMargins">
-                                <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
-                                    <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
-                                    <Form.Control type="text" className="form-input" placeholder="Introduzca nombre del yacimiento" />
-                                    <Form.Text className="text-muted">
-                                        Obligatorio
-                                    </Form.Text>
-                                </Form.Group>
-                                <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
-                                    <Form.Label className="cliente-description-fields-text">Descripción</Form.Label>
-                                    <Form.Control as="textarea" rows="1" className="form-input-juridico-textarea" placeholder="Introduzca una descripción"/>
-                                    <Form.Text className="text-muted">
-                                        Obligatorio
-                                    </Form.Text>
-                                </Form.Group>   
-                            </Form.Row>
-                                  
-                            
-                            <Form.Row className="formMargins">
-                                <Form.Group as={Col} md="6" controlId="formBasicEmail"  className="inputsPaddingRight">
-                                    <Form.Label className="cliente-description-fields-text">Área</Form.Label>
-                                    <InputGroup className="MyInputGroup">
-                                        <Form.Control type="text" className="form-input" placeholder="Introduzca tamaño del yacimiento" /> 
-                                        <InputGroup.Append>
-                                            <InputGroup.Text  className="input-append-ventas-form" >Km<sup>2</sup></InputGroup.Text>
-                                        </InputGroup.Append>
-                                    </InputGroup>
-                                    <Form.Text className="text-muted">
-                                        Obligatorio
-                                    </Form.Text>    
-                                </Form.Group>
-                                <FormFecha titulo="Fecha de Registro" clase="inputsPaddingLeft"/>    
-                            </Form.Row>
+                        <Card className="CardAcc">
+                            <Accordion.Toggle as={Card.Header} eventKey={this.state.key2[0]} onClick={() => this.accordionf(0)} className="accordion borderacc">
+                              
+                                <FormTitulo titulo="Información General"/>
+                            </Accordion.Toggle>
+                            <Accordion.Collapse eventKey={1} >
+                                <Card.Body className="BodyAcc">
+                                    <Form.Row className="formMargins">
+                                        <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
+                                            <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
+                                            <Form.Control type="text" className="form-input" placeholder="Introduzca nombre del yacimiento" />
+                                            <Form.Text className="text-muted">
+                                                Obligatorio
+                                            </Form.Text>
+                                        </Form.Group>
+                                        <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
+                                            <Form.Label className="cliente-description-fields-text">Descripción</Form.Label>
+                                            <Form.Control as="textarea" rows="1" className="form-input-juridico-textarea" placeholder="Introduzca una descripción"/>
+                                            <Form.Text className="text-muted">
+                                                Obligatorio
+                                            </Form.Text>
+                                        </Form.Group>   
+                                    </Form.Row>
+                                          
+                                    
+                                    <Form.Row className="formMargins">
+                                        <Form.Group as={Col} md="6" controlId="formBasicEmail"  className="inputsPaddingRight">
+                                            <Form.Label className="cliente-description-fields-text">Área</Form.Label>
+                                            <InputGroup className="MyInputGroup">
+                                                <Form.Control type="text" className="form-input" placeholder="Introduzca tamaño del yacimiento" /> 
+                                                <InputGroup.Append>
+                                                    <InputGroup.Text  className="input-append-ventas-form" >Km<sup>2</sup></InputGroup.Text>
+                                                </InputGroup.Append>
+                                            </InputGroup>
+                                            <Form.Text className="text-muted">
+                                                Obligatorio
+                                            </Form.Text>    
+                                        </Form.Group>
+                                        <FormFecha titulo="Fecha de Registro" clase="inputsPaddingLeft"/>    
+                                    </Form.Row>
 
-                            <Form.Row className="formMargins">
-                                <Form.Group as={Col} md="6" controlId="formBasicEmail"  className="inputsPaddingRight">
-                                    <Form.Label className="cliente-description-fields-text">Tipo de Yacimiento</Form.Label>
-                                    <Form.Control 
-                                    as="select" 
-                                    className="form-input"
-                                    >
-                                        <option>Alóctono</option>
-                                        <option>Autóctono</option>
-                                    </Form.Control>
-                                    <Form.Text className="text-muted">
-                                        Obligatorio
-                                    </Form.Text>    
-                                </Form.Group>
-                            </Form.Row>
-                    </Card.Body>
-                        </Accordion.Collapse>
-                      </Card>
+                                    <Form.Row className="formMargins">
+                                        <Form.Group as={Col} md="6" controlId="formBasicEmail"  className="inputsPaddingRight">
+                                            <Form.Label className="cliente-description-fields-text">Tipo de Yacimiento</Form.Label>
+                                            <Form.Control 
+                                            as="select" 
+                                            className="form-input"
+                                            >
+                                                <option>Alóctono</option>
+                                                <option>Autóctono</option>
+                                            </Form.Control>
+                                            <Form.Text className="text-muted">
+                                                Obligatorio
+                                            </Form.Text>    
+                                        </Form.Group>
+                                    </Form.Row>
+                                </Card.Body>
+                            </Accordion.Collapse>
+                        </Card>
                     </Accordion>
-                    <FormLugar/>
-                    <FormTitulo titulo="Minerales"/>
-                    <Row>
-                        <Col sm={0} md={1}></Col>
-                        <Col sm={12} md={10}>
-                            <DataTable
-                                columns={'http://localhost:3000/column_names/test_table'} 
-                                data={'http://localhost:3000/users'}
-                                url={'consultar_empleado/:'}
-                            />
-                        </Col>
-                        <Col sm={0} md={1}></Col>
-                    </Row>
-                    <Container>
-                        <FormTitulo titulo="Carbón"/>
-                        <Form.Row className="formMargins">
-                            <Form.Group as={Col} md="3" controlId="formBasicEmail"  className="inputsPaddingRight">
-                                <Form.Label className="cliente-description-fields-text">Clarita</Form.Label>
-                                <InputGroup className="MyInputGroup">
-                                    <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
-                                    <InputGroup.Append>
-                                        <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
-                                    </InputGroup.Append>
-                                </InputGroup>
-                                <Form.Text className="text-muted">
-                                    Obligatorio
-                                </Form.Text>    
-                            </Form.Group>
-                            <Form.Group as={Col} md="3" controlId="formBasicEmail"  className="inputsPaddingRight">
-                                <Form.Label className="cliente-description-fields-text">Durita</Form.Label>
-                                <InputGroup className="MyInputGroup">
-                                    <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
-                                    <InputGroup.Append>
-                                        <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
-                                    </InputGroup.Append>
-                                </InputGroup>
-                                <Form.Text className="text-muted">
-                                    Obligatorio
-                                </Form.Text>    
-                            </Form.Group>
-                            <Form.Group as={Col} md="3" controlId="formBasicEmail"  className="inputsPaddingRight">
-                                <Form.Label className="cliente-description-fields-text">Fusita</Form.Label>
-                                <InputGroup className="MyInputGroup">
-                                    <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
-                                    <InputGroup.Append>
-                                        <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
-                                    </InputGroup.Append>
-                                </InputGroup>
-                                <Form.Text className="text-muted">
-                                    Obligatorio
-                                </Form.Text>    
-                            </Form.Group>
-                            <Form.Group as={Col} md="3" controlId="formBasicEmail"  className="inputsPaddingRight">
-                                <Form.Label className="cliente-description-fields-text">Virita</Form.Label>
-                                <InputGroup className="MyInputGroup">
-                                    <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
-                                    <InputGroup.Append>
-                                        <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
-                                    </InputGroup.Append>
-                                </InputGroup>
-                                <Form.Text className="text-muted">
-                                    Obligatorio
-                                </Form.Text>    
-                            </Form.Group>
-                        </Form.Row>
-                        <Form.Row className="formMargins">
-                            <Form.Group as={Col} md="12" controlId="formBasicEmail"  className="inputsPaddingRight">
-                                <Form.Label className="cliente-description-fields-text">Total</Form.Label>
-                                <InputGroup className="MyInputGroup">
-                                    <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
-                                    <InputGroup.Append>
-                                        <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
-                                    </InputGroup.Append>
-                                </InputGroup>
-                                <Form.Text className="text-muted">
-                                    Obligatorio
-                                </Form.Text>    
-                            </Form.Group>
-                        </Form.Row>
-                    </Container>
+                    <Accordion defaultActiveKey={1} >
+                        <Card className="CardAcc">
+                            <Accordion.Toggle as={Card.Header} eventKey={this.state.key2[1]} onClick={() => this.accordionf(1)} className="accordion borderacc">
+                                <FormTitulo titulo="Ubicación"/>
+                            </Accordion.Toggle>
+                            <Accordion.Collapse eventKey={1} >
+                                <Card.Body className="BodyAcc">
+                                    <FormLugar/>
+                                </Card.Body>
+                            </Accordion.Collapse>
+                        </Card>
+                    </Accordion>
+                    <Accordion defaultActiveKey={1} >
+                        <Card className="CardAcc">
+                            <Accordion.Toggle as={Card.Header} eventKey={this.state.key2[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
+                                <FormTitulo titulo="Minerales"/>
+                            </Accordion.Toggle>
+                            <Accordion.Collapse eventKey={1} >
+                                <Card.Body className="BodyAcc">
+                    
+                                    <Row>
+                                        <Col sm={0} md={1}></Col>
+                                        <Col sm={12} md={10}>
+                                            <DataTable
+                                                minerales={this.callbackMinerales}
+                                                columns={'http://localhost:3000/column_names/test_table'} 
+                                                data={'http://localhost:3000/users'}
+                                                url={'consultar_empleado/:'}
+                                                checktable={true}
+                                                textoSingular={'mineral'}
+                                                textoPlural={'minerales'}
+                                        
+                                            />
+                                        </Col>
+                                        <Col sm={0} md={1}></Col>
+                                    </Row>
+                                    <Container>
+                                        <FormTitulo titulo="Carbón"/>
+                                        <Form.Row className="formMargins">
+                                            <Form.Group as={Col} md="3" controlId="formBasicEmail"  className="inputsPaddingRight">
+                                                <Form.Label className="cliente-description-fields-text">Clarita</Form.Label>
+                                                <InputGroup className="MyInputGroup">
+                                                    <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                    <InputGroup.Append>
+                                                        <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
+                                                    </InputGroup.Append>
+                                                </InputGroup>
+                                                <Form.Text className="text-muted">
+                                                    Obligatorio
+                                                </Form.Text>    
+                                            </Form.Group>
+                                            <Form.Group as={Col} md="3" controlId="formBasicEmail"  className="inputsPaddingRight">
+                                                <Form.Label className="cliente-description-fields-text">Durita</Form.Label>
+                                                <InputGroup className="MyInputGroup">
+                                                    <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                    <InputGroup.Append>
+                                                        <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
+                                                    </InputGroup.Append>
+                                                </InputGroup>
+                                                <Form.Text className="text-muted">
+                                                    Obligatorio
+                                                </Form.Text>    
+                                            </Form.Group>
+                                            <Form.Group as={Col} md="3" controlId="formBasicEmail"  className="inputsPaddingRight">
+                                                <Form.Label className="cliente-description-fields-text">Fusita</Form.Label>
+                                                <InputGroup className="MyInputGroup">
+                                                    <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                    <InputGroup.Append>
+                                                        <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
+                                                    </InputGroup.Append>
+                                                </InputGroup>
+                                                <Form.Text className="text-muted">
+                                                    Obligatorio
+                                                </Form.Text>    
+                                            </Form.Group>
+                                            <Form.Group as={Col} md="3" controlId="formBasicEmail"  className="inputsPaddingRight">
+                                                <Form.Label className="cliente-description-fields-text">Virita</Form.Label>
+                                                <InputGroup className="MyInputGroup">
+                                                    <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                    <InputGroup.Append>
+                                                        <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
+                                                    </InputGroup.Append>
+                                                </InputGroup>
+                                                <Form.Text className="text-muted">
+                                                    Obligatorio
+                                                </Form.Text>    
+                                            </Form.Group>
+                                        </Form.Row>
+                                        <Form.Row className="formMargins">
+                                            <Form.Group as={Col} md="12" controlId="formBasicEmail"  className="inputsPaddingRight">
+                                                <Form.Label className="cliente-description-fields-text">Total</Form.Label>
+                                                <InputGroup className="MyInputGroup">
+                                                    <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                    <InputGroup.Append>
+                                                        <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
+                                                    </InputGroup.Append>
+                                                </InputGroup>
+                                                <Form.Text className="text-muted">
+                                                    Obligatorio
+                                                </Form.Text>    
+                                            </Form.Group>
+                                        </Form.Row>
+                                    </Container>
+                                </Card.Body>
+                            </Accordion.Collapse>
+                        </Card>
+                    </Accordion>
                     <FormTitulo titulo="Información de explotación" tamaño="BIG"/>
                     <Form.Row className="formMargins">
                         <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
@@ -401,6 +470,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                     <Col sm={0} md={1}></Col>
                                                                     <Col sm={12} md={10}>
                                                                         <DataTable
+                                                                            checktable={true}
                                                                             columns={'http://localhost:3000/column_names/test_table'} 
                                                                             data={'http://localhost:3000/users'}
                                                                             url={'consultar_empleado/:'}

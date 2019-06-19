@@ -12,9 +12,18 @@ const $ = require('jquery');
 $.DataTable = require('datatables.net');
 
 export default class DataTable extends React.Component {
-    state = {
-        datatable: null
-    }
+    /* constructor(props){
+        super(props);
+
+        this.*/state = {
+           datatable: null,
+            checkrows:[],
+       }/* 
+        
+        this.check = this.check.bind(this);
+    }*/
+
+    
     componentDidMount = () => {
         const iconoConsultar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconsearch" icon={Icons.faSearch}/>);
         const iconoModificar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconedit" icon={Icons.faEdit} />);
@@ -26,6 +35,7 @@ export default class DataTable extends React.Component {
         let urlModificar = this.props.urlModificar;
         let dataSet = [];
         let columns = [];
+        let call=null;
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -144,20 +154,48 @@ export default class DataTable extends React.Component {
                                 //console.log("Estatus:",selectedid);
                               return false;
                         });
-                        $('#frm-dt').on('submit', function(e){
+                       $('#frm-dt').on('change', function(e){
                             var form = this;
                             var rows_selected = table.column(0).checkboxes.selected();
+                            call=rows_selected;
+                            console.log(call[0]);
+                            
+                                       
+                            //this.props.callback(rows_selected);
                                 //console.log(rows_selected)
                                 //debugger;
                               /*Iterate over all selected checkboxes
                               $.each(rows_selected, function(index, rowId){
                               });*/
+
+
                         });
                         if(checktable === false){
                             table.column('dtcheckbox:name').visible(false);
                         }else{
                             table.column('crudoptions:name').visible(false);
                         }
+                        const botonesEliminar = document.getElementsByClassName('dt-checkboxes-cell');
+                        if (botonesEliminar.length > 0){
+                            for (let i = 0; i < botonesEliminar.length; i++){
+                                botonesEliminar[i].onclick = function() {
+                                    this.props.modalEliminar(botonesEliminar[i].id)
+                                }.bind(this)
+                            }
+                        }
+
+                        
+                            const checks = document.getElementsByClassName('dt-checkboxes-cell sorting_1');
+                            console.log(checks);
+                            if (checks.length > 0){
+                                for (let i = 0; i < checks.length; i++){
+                                    checks[i].onclick = function() {
+                                        console.log("entra ya mardito");
+                                        this.props.minerales(i);
+                                    }.bind(this)
+                                }
+                            }
+                       
 
                     }).catch((e) => {
                         console.log('Error en axios')
@@ -167,6 +205,8 @@ export default class DataTable extends React.Component {
             }).catch((e) => {
                 console.log('Error en axios')
             })
+
+      
 
     }
 
@@ -185,25 +225,32 @@ export default class DataTable extends React.Component {
             history.push(this.props.urlCrear);
         }
     }
-    setUpOnClickFunction = () => {
-        const botonesEliminar = document.getElementsByClassName('icondelete');
-        if (botonesEliminar.length > 0){
-            for (let i = 0; i < botonesEliminar.length; i++){
-                botonesEliminar[i].onclick = function() {
-                    this.props.modalEliminar(botonesEliminar[i].id)
-                }.bind(this)
-            }
-        }
+    
+
+
+    check(){
+        /*this.$el = $(this.el);
+        var table = this.$el.DataTable();
+        var form = this;
+        var rows_selected = table.column(0).checkboxes.selected();
+        
+        this.setState(() => ({
+            checkrows: rows_selected,
+        }));
+        console.log(this.state.checkrows[0]);*/
+        console.log(this.state.checkrows,"hfhfudfjbfdjfjn");
+
     }
+
+    
+
     render(){
         return (
             <div>
-            <form name="frm-dt" id="frm-dt">
+            <form name="frm-dt" id="frm-dt" >
                 <table  className="display" width="100%" ref={el => this.el = el}>
                 </table>
-                {
-                    this.setUpOnClickFunction()
-                }
+               
                 {
                   (this.props.checktable === true && 
                 <p className="form-group">
