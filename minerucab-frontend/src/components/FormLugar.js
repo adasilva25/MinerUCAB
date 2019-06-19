@@ -24,7 +24,7 @@ export default class FormLugar extends React.Component {
     render(){
         return ( 
             <div>
-                <FormTitulo titulo="Ubicación"/>
+                
                 <Form.Row className="formMargins">
                     <Form.Group  as={Col} md="4" controlId="formBasicEmail" className="div-ventas-pedido-form inputsPaddingRight">
                         <Form.Label className="cliente-description-fields-text">Estado</Form.Label>

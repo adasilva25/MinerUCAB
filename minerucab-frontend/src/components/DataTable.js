@@ -12,9 +12,17 @@ const $ = require('jquery');
 $.DataTable = require('datatables.net');
 
 export default class DataTable extends React.Component {
-    state = {
-        datatable: null
-    }
+    /* constructor(props){
+        super(props);
+
+        this.*/state = {
+           datatable: null
+       }/* 
+        
+        this.check = this.check.bind(this);
+    }*/
+
+    
     componentDidMount = () => {
         const iconoConsultar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconsearch" icon={Icons.faSearch}/>);
         const iconoModificar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconedit" icon={Icons.faEdit} />);
@@ -24,8 +32,12 @@ export default class DataTable extends React.Component {
         let checktable = this.props.checktable === true;
         let urlConsultar = this.props.urlConsultar;
         let urlModificar = this.props.urlModificar;
+        let size = this.props.size;
         let dataSet = [];
         let columns = [];
+        const textoPlural = this.props.textoPlural;
+        const modalEliminar = this.props.modalEliminar;
+        // let call=null;
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -78,9 +90,10 @@ export default class DataTable extends React.Component {
                         //Quitar searching
                             //searching: false,
                         //Scrollbar
-                            scrollY: 270,
+                            scrollY: size,
                         //No permitir orden
                             //ordering:  false
+                            "order": [[ 1, "asc" ]],
                         "language": {
                             "paginate": {
                                 "previous": "Anterior",
@@ -102,19 +115,26 @@ export default class DataTable extends React.Component {
                             "info": "_START_-_END_ de _TOTAL_",
                         },
                         columnDefs: [
-                        // {
-                        //     'targets': 0,
-                        //     'checkboxes': {
-                        //        'selectRow': true
-                        //     },
-                        //     name: 'dtcheckbox'
-                        // }, 
-                        {
+
+                       /* {
+                          'targets': 0,
+                            'checkboxes': {
+                              'selectRow': true
+                            },
+                            name: 'dtcheckbox'
+                         }, */
+                       {
+
                             'targets': 0,
                             'orderable': false,
                             // 'className': 'dt-body-center',
                             render: function (data, type, row, meta){
-                                return '<input type="checkbox" name="id[]" value="' + row[0] + '" class="checkbox-dt">';
+                                if (checktable === true){
+                                    return '<input type="checkbox" name="id[]" value="' + row[0] + '" class="checkbox-dt">';
+                                }
+                                else {
+                                    return row[0]
+                                }
                             }
                         },
                         {
@@ -145,23 +165,50 @@ export default class DataTable extends React.Component {
                             }
                         })
 
-                        $('select[name=dt-dropdown]').on('change', function () {   
+                        /*$('select[name=dt-dropdown]').on('change', function () {   
                             var selectedid = $(this).children(":selected").attr("id");
                             var rowdata = table.row( $(this).parents('tr') ).data()[0];
                                 //console.log("Row:",rowdata);
                                 //console.log("Estatus:",selectedid);
                               return false;
-                        });
-                        $('#frm-dt').on('submit', function(e){
+                        });*/
+                        /*$('#frm-dt').on('submit', function(e){
                             var form = this;
                             var rows_selected = table.column(0).checkboxes.selected();
-                            console.log(rows_selected);
+                                //console.log(rows_selected,)
+                              //Iterate over all selected checkboxes
+                              $.each(rows_selected, function(index, rowId){
+                                //console.log(encodeURIComponent(rowId))
+                              });
+                              //debugger;
+                        });*/
+                       /* if (checktable === true){
+                       $('#frm-dt').on('change', function(e){
+                            var form = this;
+
+                            var rows_selected = table.columns(0).checkboxes.selected();
+                            
+                            var actualRows=[];
+                            var i=0;
+                            while(rows_selected[i] != undefined ){
+                                actualRows.push(rows_selected[i]);
+                                i++;
+                            
+                            // call=rows_selected;
+                            
+                            }
+                            this.props.selectCheck(actualRows);
+                            //this.props.callback(rows_selected);
+
                                 //console.log(rows_selected)
                                 //debugger;
                               /*Iterate over all selected checkboxes
                               $.each(rows_selected, function(index, rowId){
                               });*/
-                        });
+
+
+                        //}.bind(this));
+                       //}
                         if(checktable === false){
                             table.column('dtcheckbox:name').visible(false);
                         }else{
@@ -169,21 +216,38 @@ export default class DataTable extends React.Component {
                         }
 
                         const botonesEliminar = document.getElementsByClassName('icondelete');
-                        if (botonesEliminar.length > 0){
-                            for (let i = 0; i < botonesEliminar.length; i++){
-                                botonesEliminar[i].onclick = function() {
-                                    this.props.modalEliminar(botonesEliminar[i].id)
-                                }.bind(this)
+                            if (botonesEliminar.length > 0){
+                                for (let i = 0; i < botonesEliminar.length; i++){
+                                    if (textoPlural === 'minerales metalicos' || textoPlural === 'minerales no metalicos'){
+                                        if(textoPlural === 'minerales metalicos' && !botonesEliminar[i].className.baseVal.includes('mineralesnometalicos')){
+                                            botonesEliminar[i].classList.add(textoPlural.replace(/\s/g,''));
+                                        }
+                                        else if (textoPlural === 'minerales no metalicos' && !botonesEliminar[i].className.baseVal.includes('mineralesmetalicos')){
+                                            botonesEliminar[i].classList.add(textoPlural.replace(/\s/g,''));
+                                        }
+                                    }
+                                    botonesEliminar[i].onclick = function() {
+                                        if (this.props.textoPlural === 'minerales metalicos' || this.props.textoPlural === 'minerales no metalicos'){
+                                            this.props.modalEliminar(botonesEliminar[i])
+                                        }
+                                        else {
+                                            this.props.modalEliminar(botonesEliminar[i].id)
+                                        }   
+                                    }.bind(this)
+                                }
                             }
-                        }
 
-                        const checks = document.getElementsByClassName('checkbox-dt');
-                        if (checks.length > 0){
-                            console.log(checks)
-                            for (let i = 0; i < checks.length; i++){
-                                checks[i].onclick = function() {
-                                    this.props.selectCheck(checks[i])
-                                }.bind(this)
+                        if (checktable === true){
+                            const checks = document.getElementsByClassName('checkbox-dt');
+                            if (checks.length > 0){
+                                // console.log(checks)
+                                for (let i = 0; i < checks.length; i++){
+                                    checks[i].onclick = function() {
+                                        this.props.selectCheck(checks[i].value)
+                                        // console.log(this.props.selectCheck)
+                                    }.bind(this)
+                                }
+
                             }
                         }
 
@@ -197,7 +261,12 @@ export default class DataTable extends React.Component {
             })
 
 
+      
+
     }
+
+
+   
     componentWillUnmount = () => {
         const datatable = $(this.el);
         datatable.DataTable().destroy()
@@ -213,17 +282,18 @@ export default class DataTable extends React.Component {
             history.push(this.props.urlCrear);
         }
     }
+    
     render(){
         return (
             <div>
-            <form name="frm-dt" id="frm-dt">
+            <form name="frm-dt" id="frm-dt" >
                 <table  className="display" width="100%" ref={el => this.el = el}>
                 </table>
                 {
                   (this.props.checktable === true && 
-                <p className="form-group">
-                   <button type="submit" className="btn btn-primary btn-subcheckbox">Submit</button>
-                </p>)
+                    <p className="form-group">
+                       <button type="submit" className="btn btn-primary btn-subcheckbox">Submit</button>
+                    </p>)
                 }  
             </form>
             {

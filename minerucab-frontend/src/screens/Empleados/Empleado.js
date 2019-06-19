@@ -24,6 +24,7 @@ export default class ConsultarEmpleados extends React.Component {
                                     data={'http://localhost:3000/users'}
                                     textoSingular={'prueba'}
                                     textoPlural={'pruebas'}
+                                    size={270}
                                 />
                             </Col>
                         </Row>
