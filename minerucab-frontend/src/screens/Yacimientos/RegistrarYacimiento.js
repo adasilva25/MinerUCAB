@@ -25,10 +25,21 @@ export default class RegistrarYacimiento extends React.Component {
 
         this.state = {
             key:"Etapa 1",
+            yacimiento:{
+                nombre:null,
+                descripcion:null,
+                area:null,
+                fecha:null,
+                tipo:null
+            },
+            ubicacion:{
+                estado:null,
+                municipio:null,
+                parroquia:null
+            },
             accordionKey:[],
             mineralShow:'none',
-            cargoShow:'none',
-            tipoMaquinariaShow:'none',
+            
             Minerales:[{
                 nombre:null,
                 id:-1,
@@ -40,27 +51,37 @@ export default class RegistrarYacimiento extends React.Component {
                 }]
                 
             }],
-            Cargos:[{
-                nombre:null,
-                id:-1,
-                sueldo:0,
-                cantidad:0,
-                accordionKey:0
-            }],
-            TipoMaquinaria:[{
-                nombre:null,
-                id:-1,
-                costo:0,
-                cantidad:0,
-                accordionKey:0
-            }],
+            
             etapas: [{
                 nombre: "Etapa 1",
+                descripcion: null,
+                duracion:null,
+                costo:null,
                 numero: 1,
                 key:"Fase 1",
                 fases: [{
                     nombre: "Fase 1",
-                    numero:1
+                    descripcion:null,
+                    duracion:null,
+                    costo:null,
+                    cargoShow:'none',
+                    tipoMaquinariaShow:'none',
+                    numero:1,
+                    cargos:[{
+                        nombre:null,
+                        id:-1,
+                        sueldo:0,
+                        cantidad:0,
+                        accordionKey:0
+                    }],
+                    tipoMaquinaria:[{
+                        nombre:null,
+                        id:-1,
+                        costo:0,
+                        cantidad:0,
+                        accordionKey:0
+                    }]
+
                 }]
             }]
         }
@@ -157,11 +178,12 @@ export default class RegistrarYacimiento extends React.Component {
         }*/
     }
 
-    accordionC(i){
+    accordionC(i,etapaNum,faseNum){
        // console.log(this.state.Cargos[i].accordionKey,i);
        // console.log(this.state.Cargos[i].accordionKey, "holoooA");
-        var cargos=this.state.Cargos;
-        var k=this.state.Cargos[i].accordionKey;
+        var etapas1 = this.state.etapas;
+        var cargos=etapas1[etapaNum-1].fases[faseNum-1].cargos;
+        var k=cargos[i].accordionKey;
        
            // console.log(this.state.Cargos, "mineralesssss");
             //console.log(this.state.Cargos[i].accordionKey, "holA");
@@ -170,7 +192,7 @@ export default class RegistrarYacimiento extends React.Component {
                 //console.log( "1");
                 cargos[i].accordionKey=k;
                 this.setState(() => ({
-                    Cargos: cargos
+                    etapas: etapas1
                 }));
             }
             else{
@@ -178,7 +200,7 @@ export default class RegistrarYacimiento extends React.Component {
                 //console.log( "2");
                 cargos[i].accordionKey=k;
                 this.setState(() => ({
-                    Cargos: cargos
+                    etapas: etapas1
                 }));
             }
           //  console.log(this.state.Cargos[i].accordionKey, "ho",this.state.Cargos[i].accordionKey);
@@ -192,11 +214,13 @@ export default class RegistrarYacimiento extends React.Component {
     }
 
 
-    accordionTM(i){
+    accordionTM(i,etapaNum,faseNum){
       ///  console.log(this.state.TipoMaquinaria[i].accordionKey,i);
        // console.log(this.state.TipoMaquinaria[i].accordionKey, "holoooA");
-        var tiposMaquinaria=this.state.TipoMaquinaria;
-        var k=this.state.TipoMaquinaria[i].accordionKey;
+        
+        var etapas1 = this.state.etapas;
+        var tiposMaquinaria=etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria;
+        var k=tiposMaquinaria[i].accordionKey;
        
            // console.log(this.state.TipoMaquinaria, "mineralesssss");
            // console.log(this.state.TipoMaquinaria[i].accordionKey, "holA");
@@ -205,7 +229,7 @@ export default class RegistrarYacimiento extends React.Component {
                // console.log( "1");
                 tiposMaquinaria[i].accordionKey=k;
                 this.setState(() => ({
-                    TipoMaquinaria: tiposMaquinaria
+                    etapas: etapas1
                 }));
             }
             else{
@@ -213,7 +237,7 @@ export default class RegistrarYacimiento extends React.Component {
               //  console.log( "2");
                 tiposMaquinaria[i].accordionKey=k;
                 this.setState(() => ({
-                    TipoMaquinaria: tiposMaquinaria
+                    etapas: etapas1
                 }));
             }
             //console.log(this.state.TipoMaquinaria[i].accordionKey, "ho",this.state.TipoMaquinaria[i].accordionKey);
@@ -235,12 +259,35 @@ export default class RegistrarYacimiento extends React.Component {
     handleOnClickAEtapa(){
         var etapa= this.state.etapas;
         var Etapa={
-                nombre: '',
-                numero: 0,
+                nombre:'',
+                descripcion: null,
+                duracion:null,
+                costo:null,
+                numero: 1,
                 key:"Fase 1",
                 fases: [{
                     nombre: "Fase 1",
-                    numero:1
+                    descripcion:null,
+                    duracion:null,
+                    costo:null,
+                    cargoShow:'none',
+                    tipoMaquinariaShow:'none',
+                    numero:1,
+                    cargos:[{
+                        nombre:null,
+                        id:-1,
+                        sueldo:0,
+                        cantidad:0,
+                        accordionKey:0
+                    }],
+                    tipoMaquinaria:[{
+                        nombre:null,
+                        id:-1,
+                        costo:0,
+                        cantidad:0,
+                        accordionKey:0
+                    }]
+
                 }]
             }
         Etapa.numero=etapa[etapa.length-1].numero+1;
@@ -259,7 +306,26 @@ export default class RegistrarYacimiento extends React.Component {
         var fase1= this.state.etapas[etapa1].fases;
         var Fase={
                 nombre: '',
-                numero:0
+                descripcion:null,
+                duracion:null,
+                costo:null,
+                cargoShow:'none',
+                tipoMaquinariaShow:'none',
+                numero:1,
+                cargos:[{
+                    nombre:null,
+                    id:-1,
+                    sueldo:0,
+                    cantidad:0,
+                    accordionKey:0
+                }],
+                tipoMaquinaria:[{
+                    nombre:null,
+                    id:-1,
+                    costo:0,
+                    cantidad:0,
+                    accordionKey:0
+                }]
             }
         
         Fase.numero=fase1[fase1.length-1].numero+1; 
@@ -275,15 +341,53 @@ export default class RegistrarYacimiento extends React.Component {
     };
 
 
-    handleOnClickEFase(){
-        
+    handleOnClickEFase(etapaNum,faseNum){
+        var etapas1 =this.state.etapas;
+        var etapa = this.state.etapas[etapaNum-1];
+        var eliminado = false;
+        etapa.fases.splice(faseNum-1,1);
+        for(var i = faseNum-1; i < etapa.fases.length; i++) {
+            
+            if((etapa.fases[i]!=undefined)){
+                etapa.fases[i].numero--;
+                etapa.fases[i].nombre='Fase '+etapa.fases[i].numero;
+            }
+        }
+
+        etapas1[etapaNum-1]=etapa;
+        this.setState(() => ({
+            etapas: etapas1
+        }));
+
+    }
+
+    handleOnClickEEtapa(etapaNum){
+
+        var etapas1 =this.state.etapas;
+        console.log(etapas1, etapaNum-1);
+        console.log(etapas1[etapaNum-1]);
+        for(var i =0; i< etapas1[etapaNum-1].fases.length; i++){
+
+            this.handleOnClickEFase(etapaNum,etapas1[etapaNum-1].fases[i].numero);
+        }
+        etapas1.splice(etapaNum-1,1);
+
+        for(var i = etapaNum-1; i < etapas1.length; i++) {
+            
+            if((etapas1[i]!=undefined)){
+                etapas1[i].numero--;
+                etapas1[i].nombre='Etapa '+etapas1[i].numero;
+            }
+        }
+
+        this.setState(() => ({
+            etapas: etapas1
+        }));
 
     }
 
 
-
-
-    selectMinerales = (id) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
+    selectMinerales = (id,et,fa) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         console.log('entroMinerales', id)
 
       
@@ -361,16 +465,17 @@ export default class RegistrarYacimiento extends React.Component {
 
 
 
-    selectCargos = (id) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
-        console.log('entroCargos', id)
-        let  cargos=this.state.Cargos;
+    selectCargos = (id,etapaNum,faseNum) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
+        console.log('entroCargos', id,etapaNum,faseNum);
+        var etapas1 = this.state.etapas;
+        let cargos=this.state.etapas[etapaNum-1].fases[faseNum-1].cargos;
         var eliminado= false;
         var cargoS='inline';
-        if(this.state.Cargos[0].id === -1){
-            this.state.Cargos.shift();
+        if(cargos[0].id === -1){
+            cargos.shift();
 
         }
-        for(var i = 0; i < this.state.Cargos.length; i++) {
+        for(var i = 0; i < this.state.etapas[etapaNum-1].fases[faseNum-1].cargos.length; i++) {
            // console.log(cargos[i].id,"id");
             if(cargos[i].id === id){
                 cargos.splice(i,1);
@@ -402,10 +507,9 @@ export default class RegistrarYacimiento extends React.Component {
             };
             cargos.push(cargo);
         }
-
+        etapas1[etapaNum-1].fases[faseNum-1].cargoShow=cargoS;
         this.setState(() => ({
-            cargoShow: cargoS,
-            Cargos: cargos
+            etapas:etapas1
         }));
         console.log(cargos);
         
@@ -413,16 +517,18 @@ export default class RegistrarYacimiento extends React.Component {
 
 
 
-    selectTipoMaquinaria = (id) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
+    selectTipoMaquinaria = (id,etapaNum,faseNum) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         console.log('entroTipoMaquinaria', id)
-        let  tiposMaquinaria=this.state.TipoMaquinaria;
+        var etapas1 = this.state.etapas;
+        let tiposMaquinaria=this.state.etapas[etapaNum-1].fases[faseNum-1].tipoMaquinaria;
         var eliminado= false;
         var tipoMaquinariaS='inline';
-        if(this.state.TipoMaquinaria[0].id === -1){
-            this.state.TipoMaquinaria.shift();
+
+        if(tiposMaquinaria[0].id === -1){
+            tiposMaquinaria.shift();
 
         }
-        for(var i = 0; i < this.state.TipoMaquinaria.length; i++) {
+        for(var i = 0; i < this.state.etapas[etapaNum-1].fases[faseNum-1].tipoMaquinaria.length; i++) {
            // console.log(tiposMaquinaria[i].id,"id");
             if(tiposMaquinaria[i].id === id){
                 if(tiposMaquinaria[i+1] != undefined){
@@ -459,9 +565,11 @@ export default class RegistrarYacimiento extends React.Component {
             tiposMaquinaria.push(tipoMaquinaria);
         }
 
+        etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinariaShow=tipoMaquinariaS;
+
         this.setState(() => ({
-            tipoMaquinariaShow: tipoMaquinariaS,
-            TipoMaquinaria: tiposMaquinaria
+            etapas: etapas1
+            
         }));
        console.log(tiposMaquinaria);
         
@@ -469,15 +577,15 @@ export default class RegistrarYacimiento extends React.Component {
 
 
 
-    selectFunctionCheckbox = (boton) => {
+    selectFunctionCheckbox = (boton,etapa,fase) => {
         if (boton.className.includes('cargos')){
-            this.selectCargos(boton.value)
+            this.selectCargos(boton.value,etapa,fase)
         }
         else if (boton.className.includes('minerales')){
-            this.selectMinerales(boton.value)
+            this.selectMinerales(boton.value,etapa,fase)
         }
         else if (boton.className.includes('tiposdemaquinaria')){
-            this.selectTipoMaquinaria(boton.value)            
+            this.selectTipoMaquinaria(boton.value,etapa,fase)            
         }
     }
 
@@ -592,6 +700,8 @@ export default class RegistrarYacimiento extends React.Component {
                                                 checktable={true}
                                                 textoSingular={'mineral'}
                                                 textoPlural={'minerales'}
+                                                etapa={0}
+                                                fase={0}
                                             />
                                         </Col>
                                         <Col sm={0} md={1}></Col>
@@ -701,7 +811,7 @@ export default class RegistrarYacimiento extends React.Component {
                                             return(
 
                                                 <Tab eventKey={etapa.nombre} title={etapa.nombre}>
-                                                    <Button variant="outline-danger" className="btn-eliminar" disabled={(this.state.etapas.length == 1)? true: false}>Eliminar</Button>
+                                                    <Button variant="outline-danger" className="btn-eliminar" onClick={() => this.handleOnClickEEtapa(etapa.numero)} disabled={(this.state.etapas.length == 1)? true: false}>Eliminar</Button>
                                                     <Container>
                                                    
                                                         <FormTitulo titulo={"Información General de la Etapa "+etapa.numero}/>
@@ -748,7 +858,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                             </Form.Group>  
                                                         </Form.Row>
                                                         <FormTitulo titulo="Fases"/>
-                                                        <Button variant="outline-primary" className="btn-agregar" onClick={()=>this.handleOnClickAFase(etapa.numero)}>Agregar Fase</Button>
+                                                        <Button variant="outline-primary" className="btn-agregar" onClick={() => this.handleOnClickAFase(etapa.numero)}>Agregar Fase</Button>
                                                         <Tabs
                                                             id="controlled-tab-example"
                                                             defaultActiveKey={this.state.etapas[etapa.numero-1].key}
@@ -757,7 +867,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                         
                                                                 return(    
                                                                     <Tab eventKey={fase.nombre} title={fase.nombre}>
-                                                                        <Button variant="outline-danger" onClick={this.handleOnClickEFase} className="btn-eliminar" disabled={(this.state.etapas[etapa.numero-1].fases.length == 1)? true: false}>Eliminar</Button>
+                                                                        <Button variant="outline-danger" onClick={() => this.handleOnClickEFase(etapa.numero,fase.numero)} className="btn-eliminar" disabled={(this.state.etapas[etapa.numero-1].fases.length == 1)? true: false}>Eliminar</Button>
                                                                         <Container>
                                                                             <FormTitulo titulo={"Información General de la Fase "+fase.numero}/>
                                                                             <Form.Row className="formMargins">
@@ -802,7 +912,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                     </Form.Text> 
                                                                                 </Form.Group>  
                                                                             </Form.Row>
-                                                                            <FormTitulo titulo="Empleados"/>
+                                                                            <FormTitulo titulo="Cargos"/>
                                                                             <Row>
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
@@ -818,17 +928,19 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                             checktable={true}
                                                                                             textoSingular={'cargo'}
                                                                                             textoPlural={'cargos'}
+                                                                                            etapa={etapa.numero}
+                                                                                            fase={fase.numero}
                                                                                         />
                                                                                     </Col>
                                                                                     <Col sm={0} md={1}></Col>
                                                                             </Row>
                                                                             <Container>
-                                                                            {this.state.Cargos.map((cargo,index)=>{             
+                                                                            {fase.cargos.map((cargo,index)=>{             
                                                                                 return(
-                                                                                    <div style={{display: this.state.cargoShow}}>
+                                                                                    <div style={{display: fase.cargoShow}}>
                                                                                         <Accordion defaultActiveKey={1} >
                                                                                             <Card className="CardAcc">
-                                                                                                <Accordion.Toggle as={Card.Header} eventKey={cargo.accordionKey} onClick={() => this.accordionC(index)} className="accordion borderacc">
+                                                                                                <Accordion.Toggle as={Card.Header} eventKey={cargo.accordionKey} onClick={() => this.accordionC(index,etapa.numero,fase.numero)} className="accordion borderacc">
                                                                                                     <FormTitulo titulo={cargo.nombre}/>
                                                                                                 </Accordion.Toggle>
                                                                                                 <Accordion.Collapse eventKey={1} >
@@ -864,7 +976,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                 );
                                                                             })}
                                                                             </Container>
-                                                                            <FormTitulo titulo="Maquinarias"/>
+                                                                            <FormTitulo titulo="Tipo de Maquinarias"/>
                                                                             <Row>
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
@@ -880,17 +992,19 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                             checktable={true}
                                                                                             textoSingular={'tipo de maquinaria'}
                                                                                             textoPlural={'tipos de maquinaria'}
+                                                                                            etapa={etapa.numero}
+                                                                                            fase={fase.numero}
                                                                                         />
                                                                                     </Col>
                                                                                     <Col sm={0} md={1}></Col>
                                                                             </Row>
                                                                             <Container>
-                                                                            {this.state.TipoMaquinaria.map((tipoMaquinaria,index)=>{             
+                                                                            {fase.tipoMaquinaria.map((tipoMaquinaria,index)=>{             
                                                                                 return(
-                                                                                    <div style={{display: this.state.tipoMaquinariaShow}}>
+                                                                                    <div style={{display: fase.tipoMaquinariaShow}}>
                                                                                         <Accordion defaultActiveKey={1} >
                                                                                             <Card className="CardAcc">
-                                                                                                <Accordion.Toggle as={Card.Header} eventKey={tipoMaquinaria.accordionKey} onClick={() => this.accordionTM(index)} className="accordion borderacc">
+                                                                                                <Accordion.Toggle as={Card.Header} eventKey={tipoMaquinaria.accordionKey} onClick={() => this.accordionTM(index,etapa.numero,fase.numero)} className="accordion borderacc">
                                                                                                     <FormTitulo titulo={tipoMaquinaria.nombre}/>
                                                                                                 </Accordion.Toggle>
                                                                                                 <Accordion.Collapse eventKey={1} >

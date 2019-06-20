@@ -37,6 +37,9 @@ export default class DataTable extends React.Component {
         let columns = [];
         const textoPlural = this.props.textoPlural;
         const modalEliminar = this.props.modalEliminar;
+        let etapa = this.props.etapa;
+        let fase = this.props.fase;
+        console.log("inicio",etapa,fase);
         // let call=null;
         const config = {
             headers: {
@@ -257,8 +260,8 @@ export default class DataTable extends React.Component {
                                         }
                                     }
                                     checks[i].onclick = function() {
-                                        console.log("DataTable Checks");
-                                        this.props.selectCheck(checks[i])
+                                        console.log("DataTable Checks",etapa,fase);
+                                        this.props.selectCheck(checks[i],etapa,fase);
                                         // this.props.selectCheck(checks[i].value)
                                         // console.log(this.props.selectCheck)
                                     }.bind(this)
