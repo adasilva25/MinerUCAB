@@ -100,10 +100,11 @@ export default class Cliente extends React.Component {
                                             modalEliminar={this.modalEliminarOpen}
                                             modalCrear={this.modalCrearClienteOpen}
                                             reload={this.state.reload}
-                                            checktable={true}
+                                            checktable={false}
                                             textoSingular={'cliente'}
                                             textoPlural={'clientes'}
-                                            selectCheck={this.selectCheck}
+                                            size={270}
+                                            //selectCheck={this.selectCheck}
                                         />
                                     </Col>
                                     <Col sm={0} md={1}></Col>

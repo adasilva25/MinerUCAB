@@ -275,6 +275,12 @@ export default class RegistrarYacimiento extends React.Component {
     };
 
 
+    handleOnClickEFase(){
+        
+
+    }
+
+
 
 
     selectMinerales = (id) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
@@ -739,7 +745,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                         
                                                                 return(    
                                                                     <Tab eventKey={fase.nombre} title={fase.nombre}>
-                                                                        <Button variant="outline-danger" className="btn-eliminar">Eliminar</Button>
+                                                                        <Button variant="outline-danger" onClick={this.handleOnClickEFase} className="btn-eliminar">Eliminar</Button>
                                                                         <Container>
                                                                             <FormTitulo titulo={"Información General de la Fase "+fase.numero}/>
                                                                             <Form.Row className="formMargins">

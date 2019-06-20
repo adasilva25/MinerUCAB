@@ -1,11 +1,10 @@
-import React from 'react';
+﻿import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import axios from 'axios';
-import {history} from '../routers/History';
 
 export default class ModalComponent extends React.Component {
   eliminarEnBD = () => {
@@ -20,7 +19,6 @@ export default class ModalComponent extends React.Component {
       .then((res) => {
         console.log(res);
         this.props.onHide
-        history.push('/home')
       })
       .catch((e) => {
         console.log(e)
