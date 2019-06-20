@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import OpcionesLocales from '../../components/OpcionesLocales';
+import OpcionesGlobales from '../../components/OpcionesGlobales';
 
 
 export default class RegistrarClienteJuridico extends React.Component {             

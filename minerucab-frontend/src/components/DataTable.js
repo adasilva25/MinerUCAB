@@ -32,8 +32,11 @@ export default class DataTable extends React.Component {
         let checktable = this.props.checktable === true;
         let urlConsultar = this.props.urlConsultar;
         let urlModificar = this.props.urlModificar;
+        let size = this.props.size;
         let dataSet = [];
         let columns = [];
+        const textoPlural = this.props.textoPlural;
+        const modalEliminar = this.props.modalEliminar;
         // let call=null;
         const config = {
             headers: {
@@ -87,9 +90,10 @@ export default class DataTable extends React.Component {
                         //Quitar searching
                             //searching: false,
                         //Scrollbar
-                            scrollY: 270,
+                            scrollY: size,
                         //No permitir orden
                             //ordering:  false
+                            "order": [[ 1, "asc" ]],
                         "language": {
                             "paginate": {
                                 "previous": "Anterior",
@@ -161,16 +165,28 @@ export default class DataTable extends React.Component {
                             }
                         })
 
-                        $('select[name=dt-dropdown]').on('change', function () {   
+                        /*$('select[name=dt-dropdown]').on('change', function () {   
                             var selectedid = $(this).children(":selected").attr("id");
                             var rowdata = table.row( $(this).parents('tr') ).data()[0];
                                 //console.log("Row:",rowdata);
                                 //console.log("Estatus:",selectedid);
                               return false;
-                        });
-                       /*if (checktable === true){
-                           $('#frm-dt').on('change', function(e){
-                                var form = this;
+
+                        });*/
+                        /*$('#frm-dt').on('submit', function(e){
+                            var form = this;
+                            var rows_selected = table.column(0).checkboxes.selected();
+                                //console.log(rows_selected,)
+                              //Iterate over all selected checkboxes
+                              $.each(rows_selected, function(index, rowId){
+                                //console.log(encodeURIComponent(rowId))
+                              });
+                              //debugger;
+                        });*/
+                       /* if (checktable === true){
+                       $('#frm-dt').on('change', function(e){
+                            var form = this;
+
 
                                 var rows_selected = table.columns(0).checkboxes.selected();
                                 
@@ -203,15 +219,27 @@ export default class DataTable extends React.Component {
                         }
 
                         const botonesEliminar = document.getElementsByClassName('icondelete');
-                        if (botonesEliminar.length > 0){
-                            for (let i = 0; i < botonesEliminar.length; i++){
-                                botonesEliminar[i].onclick = function() {
-                                    this.props.modalEliminar(botonesEliminar[i].id)
-                                }.bind(this)
+                            if (botonesEliminar.length > 0){
+                                for (let i = 0; i < botonesEliminar.length; i++){
+                                    if (textoPlural === 'minerales metalicos' || textoPlural === 'minerales no metalicos'){
+                                        if(textoPlural === 'minerales metalicos' && !botonesEliminar[i].className.baseVal.includes('mineralesnometalicos')){
+                                            botonesEliminar[i].classList.add(textoPlural.replace(/\s/g,''));
+                                        }
+                                        else if (textoPlural === 'minerales no metalicos' && !botonesEliminar[i].className.baseVal.includes('mineralesmetalicos')){
+                                            botonesEliminar[i].classList.add(textoPlural.replace(/\s/g,''));
+                                        }
+                                    }
+                                    botonesEliminar[i].onclick = function() {
+                                        if (this.props.textoPlural === 'minerales metalicos' || this.props.textoPlural === 'minerales no metalicos'){
+                                            this.props.modalEliminar(botonesEliminar[i])
+                                        }
+                                        else {
+                                            this.props.modalEliminar(botonesEliminar[i].id)
+                                        }   
+                                    }.bind(this)
+                                }
                             }
-                        }
 
-                        
                         if (checktable === true){
                             const checks = document.getElementsByClassName('checkbox-dt');
                             if (checks.length > 0){
@@ -258,8 +286,7 @@ export default class DataTable extends React.Component {
             history.push(this.props.urlCrear);
         }
     }
-
-
+    
     render(){
         return (
             <div>
@@ -268,9 +295,9 @@ export default class DataTable extends React.Component {
                 </table>
                 {
                   (this.props.checktable === true && 
-                <p className="form-group">
-                   <button type="submit" className="btn btn-primary btn-subcheckbox">Submit</button>
-                </p>)
+                    <p className="form-group">
+                       <button type="submit" className="btn btn-primary btn-subcheckbox">Submit</button>
+                    </p>)
                 }  
             </form>
             {
