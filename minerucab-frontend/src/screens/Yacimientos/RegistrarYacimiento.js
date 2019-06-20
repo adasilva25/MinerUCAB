@@ -469,6 +469,18 @@ export default class RegistrarYacimiento extends React.Component {
 
 
 
+    selectFunctionCheckbox = (boton) => {
+        if (boton.className.includes('cargos')){
+            this.selectCargos(boton.value)
+        }
+        else if (boton.className.includes('minerales')){
+            this.selectMinerales(boton.value)
+        }
+        else if (boton.className.includes('tiposdemaquinaria')){
+            this.selectTipoMaquinaria(boton.value)            
+        }
+    }
+
 
 
     render(){
@@ -569,7 +581,7 @@ export default class RegistrarYacimiento extends React.Component {
                                         <Col sm={0} md={1}></Col>
                                         <Col sm={12} md={10}>
                                             <DataTable
-                                                selectCheck={this.selectMinerales}
+                                                selectCheck={this.selectFunctionCheckbox}
                                                 agregar={false}
                                                 modificar={false}
                                                 consultar={false}
@@ -795,7 +807,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
                                                                                         <DataTable
-                                                                                            selectCheck={this.selectCargos}
+                                                                                            selectCheck={this.selectFunctionCheckbox}
                                                                                             agregar={false}
                                                                                             modificar={false}
                                                                                             consultar={false}
@@ -857,7 +869,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
                                                                                         <DataTable
-                                                                                            selectCheck={this.selectTipoMaquinaria}
+                                                                                            selectCheck={this.selectFunctionCheckbox}
                                                                                             agregar={false}
                                                                                             modificar={false}
                                                                                             consultar={false}
