@@ -4,7 +4,9 @@ CREATE TABLE MU_LUGAR (
 	Tipo VARCHAR(10) NOT NULL,
 	fk_lugar INTEGER,
 	CONSTRAINT pk_clave_lugar PRIMARY KEY (Clave),
-	CONSTRAINT fk_lugar FOREIGN KEY (fk_lugar) REFERENCES MU_LUGAR (Clave)
+	CONSTRAINT fk_lugar FOREIGN KEY (fk_lugar) REFERENCES MU_LUGAR (Clave),
+	CONSTRAINT check_tipo_lugar 
+		CHECK (Tipo IN ('Estado', 'Municipio', 'Parroquia'))
 );
 
 CREATE TABLE MU_ESTATUS (
@@ -18,7 +20,9 @@ CREATE TABLE MU_HORARIO (
 	Dia VARCHAR(10) NOT NULL,
 	Hora_entrada TIME NOT NULL,
 	Hora_salida TIME NOT NULL,
-	CONSTRAINT pk_clave_horario PRIMARY KEY (Clave)
+	CONSTRAINT pk_clave_horario PRIMARY KEY (Clave),
+	CONSTRAINT check_dia_horario
+		CHECK (Dia IN ('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'))
 );
 
 CREATE TABLE MU_ROL (
@@ -30,8 +34,10 @@ CREATE TABLE MU_ROL (
 CREATE TABLE MU_PRIVILEGIO (
 	Clave SERIAL,
 	Nombre VARCHAR(15) NOT NULL,
-	Tipo VARCHAR(10) NOT NULL,
-	CONSTRAINT pk_clave_privilegio PRIMARY KEY (Clave)
+	Tipo CHAR(1) NOT NULL,
+	CONSTRAINT pk_clave_privilegio PRIMARY KEY (Clave),
+	CONSTRAINT check_tipo_privilegio
+		CHECK (Tipo IN ('C', 'R', 'U', 'D'))
 );
 
 CREATE TABLE MU_PRESENTACION (
@@ -62,17 +68,17 @@ CREATE TABLE MU_TIPO_YACIMIENTO (
 
 CREATE TABLE MU_MINERAL_METALICO (
 	Clave SERIAL,
-	Nombre VARCHAR(10) NOT NULL,
-	Descripcion VARCHAR(20),
-	Dureza INTEGER NOT NULL,
+	Nombre VARCHAR(20) NOT NULL,
+	Descripcion VARCHAR(70),
+	Dureza DECIMAL NOT NULL,
 	CONSTRAINT pk_clave_mineral_metalico PRIMARY KEY (Clave)
 );
 
 CREATE TABLE MU_MINERAL_NO_METALICO (
 	Clave SERIAL,
-	Nombre VARCHAR(10) NOT NULL,
-	Descripcion VARCHAR(20),
-	Uso VARCHAR(30) NOT NULL,
+	Nombre VARCHAR(20) NOT NULL,
+	Descripcion VARCHAR(70),
+	Uso VARCHAR(70) NOT NULL,
 	CONSTRAINT pk_clave_mineral_no_metalico PRIMARY KEY (Clave)
 );
 
@@ -94,9 +100,11 @@ CREATE TABLE MU_TIPO_PAGO_TARJETA_DEBITO (
 CREATE TABLE MU_TIPO_PAGO_TARJETA_CREDITO (
 	Clave SERIAL,
 	Banco VARCHAR(15) NOT NULL,
-	Numero_tarjeta VARCHAR(30) NOT NULL UNIQUE CHECK('Master Card', 'Visa', 'Otro'),
+	Numero_tarjeta VARCHAR(30) NOT NULL UNIQUE,
 	Tipo VARCHAR(20) NOT NULL,
-	CONSTRAINT pk_clave_tipo_pago_tarjeta_credito PRIMARY KEY (Clave)
+	CONSTRAINT pk_clave_tipo_pago_tarjeta_credito PRIMARY KEY (Clave),
+	CONSTRAINT check_tipo_tarjeta_credito 
+		CHECK (Tipo IN ('Master Card', 'Visa', 'Otro'))
 );
 
 CREATE TABLE MU_TIPO_PAGO_TRANSFERENCIA (
@@ -164,11 +172,10 @@ CREATE TABLE MU_ROL_PRIVILEGIO (
 CREATE TABLE MU_MINERAL_MINERAL (
 	Clave SERIAL,
 	Porcentaje DECIMAL NOT NULL,
-	fk_mineral_metalico_compuesto INTEGER,
-	fk_mineral_metalico_compone INTEGER,
+	fk_mineral_metalico_compuesto INTEGER,	-- Es compuesto por el de abajo
+	fk_mineral_metalico_compone INTEGER,	-- Compone al de arriba
 	fk_mineral_no_metalico_compuesto INTEGER,
 	fk_mineral_no_metalico_compone INTEGER,
-	fk_privilegio INTEGER NOT NULL,
 	CONSTRAINT pk_mineral_mineral PRIMARY KEY (Clave),
 	CONSTRAINT fk_mineral_metalico_compuesto FOREIGN KEY (fk_mineral_metalico_compuesto) 
 		REFERENCES MU_MINERAL_METALICO (Clave),
@@ -213,7 +220,11 @@ CREATE TABLE MU_EMPLEADO (
 	CONSTRAINT fk_cargo_empleado FOREIGN KEY (fk_cargo) 
 		REFERENCES MU_CARGO (Clave),
 	CONSTRAINT fk_estatus_empleado FOREIGN KEY (fk_estatus) 
-		REFERENCES MU_ESTATUS (Clave)
+		REFERENCES MU_ESTATUS (Clave),
+	CONSTRAINT check_sexo_empleado
+		CHECK (Sexo IN ('Femenino', 'Masculino', 'Otro')),
+	CONSTRAINT check_nivel_instruccion_empleado
+		CHECK (Nivel_de_instruccion IN ('Primaria', 'Secundaria', 'Universitaria', 'Superior', 'Otro'))
 );
 
 CREATE TABLE MU_USUARIO (
@@ -454,7 +465,7 @@ CREATE TABLE MU_HORARIO_EMPLEADO (
 	fk_horario INTEGER NOT NULL,
 	CONSTRAINT pk_horario_empleado PRIMARY KEY (Clave),
 	CONSTRAINT fk_empleado_cargo_fase_horario_empleado FOREIGN KEY (fk_empleado_cargo_fase) 
-		REFERENCES MU_EMPLEADO_CARGO_FASE (Clave)
+		REFERENCES MU_EMPLEADO_CARGO_FASE (Clave),
 	CONSTRAINT fk_horario_horario_empleado FOREIGN KEY (fk_horario) 
 		REFERENCES MU_HORARIO (Clave)
 );
