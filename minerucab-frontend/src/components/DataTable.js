@@ -112,14 +112,14 @@ export default class DataTable extends React.Component {
                         },
                         columnDefs: [
 
-                       /* {
+                      /* {
                           'targets': 0,
                             'checkboxes': {
                               'selectRow': true
                             },
                             name: 'dtcheckbox'
                          }, */
-                       {
+                      {
 
                             'targets': 0,
                             'orderable': false,
@@ -168,33 +168,34 @@ export default class DataTable extends React.Component {
                                 //console.log("Estatus:",selectedid);
                               return false;
                         });
-                       /* if (checktable === true){
-                       $('#frm-dt').on('change', function(e){
-                            var form = this;
+                       /*if (checktable === true){
+                           $('#frm-dt').on('change', function(e){
+                                var form = this;
 
-                            var rows_selected = table.columns(0).checkboxes.selected();
-                            
-                            var actualRows=[];
-                            var i=0;
-                            while(rows_selected[i] != undefined ){
-                                actualRows.push(rows_selected[i]);
-                                i++;
-                            
-                            // call=rows_selected;
-                            
-                            }
-                            this.props.selectCheck(actualRows);
-                            //this.props.callback(rows_selected);
+                                var rows_selected = table.columns(0).checkboxes.selected();
+                                
+                                var actualRows=[];
+                                var i=0;
+                                while(rows_selected[i] != undefined ){
+                                    actualRows.push(rows_selected[i]);
+                                    i++;
+                                
+                                // call=rows_selected;
+                                
+                                }
+                                console.log(rows_selected);
+                                this.props.selectCheck(actualRows);
+                                //this.props.callback(rows_selected);
 
-                                //console.log(rows_selected)
-                                //debugger;
-                              /*Iterate over all selected checkboxes
-                              $.each(rows_selected, function(index, rowId){
-                              });*/
+                                    
+                                    //debugger;
+                                  /*Iterate over all selected checkboxes
+                                  $.each(rows_selected, function(index, rowId){
+                                  });*/
 
 
-                        //}.bind(this));
-                       //}
+                           // }.bind(this));
+                       // }
                         if(checktable === false){
                             table.column('dtcheckbox:name').visible(false);
                         }else{
@@ -214,9 +215,10 @@ export default class DataTable extends React.Component {
                         if (checktable === true){
                             const checks = document.getElementsByClassName('checkbox-dt');
                             if (checks.length > 0){
-                                // console.log(checks)
+                                
                                 for (let i = 0; i < checks.length; i++){
                                     checks[i].onclick = function() {
+                                        console.log("DataTable Checks");
                                         this.props.selectCheck(checks[i].value)
                                         // console.log(this.props.selectCheck)
                                     }.bind(this)

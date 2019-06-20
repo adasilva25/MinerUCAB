@@ -27,16 +27,32 @@ export default class RegistrarYacimiento extends React.Component {
             key:"Etapa 1",
             accordionKey:[],
             mineralShow:'none',
+            cargoShow:'none',
+            tipoMaquinariaShow:'none',
             Minerales:[{
                 nombre:null,
                 id:-1,
                 total: 0,
-                accordionKey:[0],
+                accordionKey:0,
                 componentes:[{
                     nombre:null,
                     total:0
                 }]
                 
+            }],
+            Cargos:[{
+                nombre:null,
+                id:-1,
+                sueldo:0,
+                cantidad:0,
+                accordionKey:0
+            }],
+            TipoMaquinaria:[{
+                nombre:null,
+                id:-1,
+                costo:0,
+                cantidad:0,
+                accordionKey:0
             }],
             etapas: [{
                 nombre: "Etapa 1",
@@ -61,19 +77,19 @@ export default class RegistrarYacimiento extends React.Component {
     }  
     
     accordionf(e){
-        console.log(this.state.accordionKey[e],e);
-        console.log(this.state.accordionKey[2], "holoooA");
+      //  console.log(this.state.accordionKey[e],e);
+       // console.log(this.state.accordionKey[2], "holoooA");
         var k=this.state.accordionKey;
         if (k[e] === undefined){
-            console.log(this.state.accordionKey[e], "UND");
+           // console.log(this.state.accordionKey[e], "UND");
             if(e != 0){
-                console.log( "10");
+             //   console.log( "10");
                 for(var i=0; i<=(e-k.length);i++){
                     k.push(0);
                 }
             }
             else{
-                console.log( "20");
+             //   console.log( "20");
                 k.push(0);
                 
             }
@@ -81,22 +97,22 @@ export default class RegistrarYacimiento extends React.Component {
             
         }
        
-             console.log(this.state.accordionKey[e], "holA");
+            // console.log(this.state.accordionKey[e], "holA");
             if(k[e] === 0){
                 k[e]=1;
-                console.log( "1");
+               // console.log( "1");
                 this.setState((prevState) => ({
                     accordionKey: k
                 }));
             }
             else{
                 k[e]=0;
-                console.log( "2");
+              //  console.log( "2");
                 this.setState((prevState) => ({
                     accordionKey: k
                 }));
             }
-            console.log(this.state.accordionKey, "ho",this.state.accordionKey[1]);
+           // console.log(this.state.accordionKey, "ho",this.state.accordionKey[1]);
         
        /* if(this.state.accordionKey === 1){
             this.setState({accordionKey: 0});
@@ -107,46 +123,100 @@ export default class RegistrarYacimiento extends React.Component {
     }
 
 
-    accordionfM(e,i){
-        console.log(this.state.Minerales[i].accordionKey[e],e);
-        /*console.log(this.state.Minerales[i].accordionKey[2], "holoooA");
-        var minerales=this.state.Mienrales;
+    accordionM(i){
+       // console.log(this.state.Minerales[i].accordionKey,i);
+     //   console.log(this.state.Minerales[i].accordionKey, "holoooA");
+        var minerales=this.state.Minerales;
         var k=this.state.Minerales[i].accordionKey;
-        if (k[e] === undefined){
-            console.log(this.state.Minerales[i].accordionKey[e], "UND");
-            if(e != 0){
-                console.log( "10");
-                for(var i=0; i<=(e-k.length);i++){
-                    k.push(0);
-                }
-            }
-            else{
-                console.log( "20");
-                k.push(0);
-                
-            }
-            
-            
-        }
        
-             console.log(this.state.Minerales[i].accordionKey[e], "holA");
-            if(k[e] === 0){
-                k[e]=1;
-                console.log( "1");
+           // console.log(this.state.Minerales, "mineralesssss");
+           // console.log(this.state.Minerales[i].accordionKey, "holA");
+            if(k === 0){
+                k=1;
+              //  console.log( "1");
                 minerales[i].accordionKey=k;
-                this.setState((prevState) => ({
+                this.setState(() => ({
                     Minerales: minerales
                 }));
             }
             else{
-                k[e]=0;
-                console.log( "2");
+                k=0;
+             //   console.log( "2");
                 minerales[i].accordionKey=k;
-                this.setState((prevState) => ({
+                this.setState(() => ({
                     Minerales: minerales
                 }));
             }
-            console.log(this.state.Minerales[i].accordionKey, "ho",this.state.Minerales[i].accordionKey[1]);
+            //console.log(this.state.Minerales[i].accordionKey, "ho",this.state.Minerales[i].accordionKey);
+        
+       /* if(this.state.accordionKey === 1){
+            this.setState({accordionKey: 0});
+        }
+        else{
+            this.setState({accordionKey: 1});
+        }*/
+    }
+
+    accordionC(i){
+       // console.log(this.state.Cargos[i].accordionKey,i);
+       // console.log(this.state.Cargos[i].accordionKey, "holoooA");
+        var cargos=this.state.Cargos;
+        var k=this.state.Cargos[i].accordionKey;
+       
+           // console.log(this.state.Cargos, "mineralesssss");
+            //console.log(this.state.Cargos[i].accordionKey, "holA");
+            if(k === 0){
+                k=1;
+                //console.log( "1");
+                cargos[i].accordionKey=k;
+                this.setState(() => ({
+                    Cargos: cargos
+                }));
+            }
+            else{
+                k=0;
+                //console.log( "2");
+                cargos[i].accordionKey=k;
+                this.setState(() => ({
+                    Cargos: cargos
+                }));
+            }
+          //  console.log(this.state.Cargos[i].accordionKey, "ho",this.state.Cargos[i].accordionKey);
+        
+       /* if(this.state.accordionKey === 1){
+            this.setState({accordionKey: 0});
+        }
+        else{
+            this.setState({accordionKey: 1});
+        }*/
+    }
+
+
+    accordionTM(i){
+      ///  console.log(this.state.TipoMaquinaria[i].accordionKey,i);
+       // console.log(this.state.TipoMaquinaria[i].accordionKey, "holoooA");
+        var tiposMaquinaria=this.state.TipoMaquinaria;
+        var k=this.state.TipoMaquinaria[i].accordionKey;
+       
+           // console.log(this.state.TipoMaquinaria, "mineralesssss");
+           // console.log(this.state.TipoMaquinaria[i].accordionKey, "holA");
+            if(k === 0){
+                k=1;
+               // console.log( "1");
+                tiposMaquinaria[i].accordionKey=k;
+                this.setState(() => ({
+                    TipoMaquinaria: tiposMaquinaria
+                }));
+            }
+            else{
+                k=0;
+              //  console.log( "2");
+                tiposMaquinaria[i].accordionKey=k;
+                this.setState(() => ({
+                    TipoMaquinaria: tiposMaquinaria
+                }));
+            }
+            //console.log(this.state.TipoMaquinaria[i].accordionKey, "ho",this.state.TipoMaquinaria[i].accordionKey);
         
        /* if(this.state.accordionKey === 1){
             this.setState({accordionKey: 0});
@@ -204,8 +274,15 @@ export default class RegistrarYacimiento extends React.Component {
         console.log(this.state.etapas);
     };
 
+
+
+
     selectMinerales = (id) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
-        console.log('entro', id)
+        console.log('entroMinerales', id)
+
+      
+
+
         let  minerales=this.state.Minerales;
         var eliminado= false;
         var mineralS='inline';
@@ -214,8 +291,14 @@ export default class RegistrarYacimiento extends React.Component {
             this.state.Minerales.shift();
 
         }
+
+
+
+
+
+
         for(var i = 0; i < this.state.Minerales.length; i++) {
-            console.log(minerales[i].id,"id");
+            //console.log(minerales[i].id,"id");
             if(minerales[i].id === id){
                 minerales.splice(i,1);
                 eliminado=true;
@@ -226,6 +309,7 @@ export default class RegistrarYacimiento extends React.Component {
                 nombre:'',
                 id:'',
                 total: 0,
+                accordionKey:0,
                 componentes:[]
             }
             
@@ -239,7 +323,7 @@ export default class RegistrarYacimiento extends React.Component {
                 }
                 componente.nombre='Componente '+id+' '+componetesNombres[k];
                 mineral.componentes.push(componente);
-                console.log(k,"k",componetesNombres[k]);
+               // console.log(k,"k",componetesNombres[k]);
             }
             minerales.push(mineral);
         }
@@ -249,6 +333,7 @@ export default class RegistrarYacimiento extends React.Component {
                 nombre:null,
                 id:-1,
                 total: 0,
+                accordionKey:0,
                 componentes:[{
                     nombre:null,
                     total:0
@@ -262,8 +347,123 @@ export default class RegistrarYacimiento extends React.Component {
             Minerales: minerales
         }));
         console.log(minerales);
-        console.log(minerales[0].componentes[1]);
+       // console.log(minerales[0].componentes[1]);
     };
+
+
+
+
+
+
+    selectCargos = (id) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
+        console.log('entroCargos', id)
+        let  cargos=this.state.Cargos;
+        var eliminado= false;
+        var cargoS='inline';
+        if(this.state.Cargos[0].id === -1){
+            this.state.Cargos.shift();
+
+        }
+        for(var i = 0; i < this.state.Cargos.length; i++) {
+           // console.log(cargos[i].id,"id");
+            if(cargos[i].id === id){
+                cargos.splice(i,1);
+                eliminado=true;
+            }
+        }
+        if(!eliminado){
+            let cargo={
+                nombre:null,
+                id:-1,
+                sueldo:0,
+                cantidad:0,
+                accordionKey:0
+            }
+            
+
+            cargo.nombre='Cargo'+id;
+            cargo.id=id;
+            cargos.push(cargo);
+        }
+        if(cargos.length===0){
+            cargoS='none';
+            let cargo={
+                nombre:null,
+                id:-1,
+                sueldo:0,
+                cantidad:0,
+                accordionKey:0
+            };
+            cargos.push(cargo);
+        }
+
+        this.setState(() => ({
+            cargoShow: cargoS,
+            Cargos: cargos
+        }));
+        console.log(cargos);
+        
+    };
+
+
+
+    selectTipoMaquinaria = (id) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
+        console.log('entroTipoMaquinaria', id)
+        let  tiposMaquinaria=this.state.TipoMaquinaria;
+        var eliminado= false;
+        var tipoMaquinariaS='inline';
+        if(this.state.TipoMaquinaria[0].id === -1){
+            this.state.TipoMaquinaria.shift();
+
+        }
+        for(var i = 0; i < this.state.TipoMaquinaria.length; i++) {
+           // console.log(tiposMaquinaria[i].id,"id");
+            if(tiposMaquinaria[i].id === id){
+                if(tiposMaquinaria[i+1] != undefined){
+                    tiposMaquinaria[i+1].accordionKey=1;
+                }
+                tiposMaquinaria.splice(i,1);
+                eliminado=true;
+            }
+        }
+        if(!eliminado){
+
+
+            let tipoMaquinaria={
+                nombre:null,
+                id:-1,
+                costo:0,
+                cantidad:0,
+                accordionKey:0
+            };
+            
+            tipoMaquinaria.nombre='Tipo de Maquinaria '+id;
+            tipoMaquinaria.id=id;
+            tiposMaquinaria.push(tipoMaquinaria);
+        }
+        if(tiposMaquinaria.length===0){
+            tipoMaquinariaS='none';
+            let tipoMaquinaria={
+               nombre:null,
+                id:-1,
+                costo:0,
+                cantidad:0,
+                accordionKey:0
+            };
+            tiposMaquinaria.push(tipoMaquinaria);
+        }
+
+        this.setState(() => ({
+            tipoMaquinariaShow: tipoMaquinariaS,
+            TipoMaquinaria: tiposMaquinaria
+        }));
+       console.log(tiposMaquinaria);
+        
+    };
+
+
+
+
 
     render(){
         
@@ -277,7 +477,7 @@ export default class RegistrarYacimiento extends React.Component {
                    
 
                     <FormTitulo titulo="Registrar Yacimiento" tamaño="BIG"/>
-                     <h1> {this.state.Minerales[0].componentes[0].nombre}</h1>
+                     
                     <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[0]} onClick={() => this.accordionf(0)} className="accordion borderacc">
@@ -384,7 +584,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                 <div style={{display: this.state.mineralShow}}>
                                                     <Accordion defaultActiveKey={1} >
                                                         <Card className="CardAcc">
-                                                            <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[1]} onClick={() => this.accordionf(1,index)} className="accordion borderacc">
+                                                            <Accordion.Toggle as={Card.Header} eventKey={mineral.accordionKey} onClick={() => this.accordionM(index)} className="accordion borderacc">
                                                                 <FormTitulo titulo={mineral.nombre}/>
                                                             </Accordion.Toggle>
                                                             <Accordion.Collapse eventKey={1} >
@@ -589,72 +789,124 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
                                                                                         <DataTable
-                                                                                            columns={'http://localhost:3000/column_names/test_table'} 
-                                                                                            data={'http://localhost:3000/users'}
+                                                                                            selectCheck={this.selectCargos}
+                                                                                            agregar={false}
+                                                                                            modificar={false}
+                                                                                            consultar={false}
+                                                                                            eliminar={false}
+                                                                                            columns={'http://localhost:3000/column_names/cliente'} 
+                                                                                            data={'http://localhost:3000/getAllClientes'}
                                                                                             url={'consultar_empleado/:'}
+                                                                                            checktable={true}
+                                                                                            textoSingular={'cargo'}
+                                                                                            textoPlural={'cargos'}
                                                                                         />
                                                                                     </Col>
                                                                                     <Col sm={0} md={1}></Col>
                                                                             </Row>
                                                                             <Container>
-                                                                                <FormTitulo titulo="Geólogo"/>
-                                                                                <Form.Row className="formMargins">
-                                                                                    <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
-                                                                                        <Form.Label className="cliente-description-fields-text">Cantidad de empleados</Form.Label>
-                                                                                        <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad de empleados" />
-                                                                                        <Form.Text className="text-muted">
-                                                                                            Obligatorio
-                                                                                        </Form.Text>
-                                                                                    </Form.Group>
-                                                                                    <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
-                                                                                         <Form.Label className="cliente-description-fields-text">Sueldo</Form.Label>
-                                                                                        <InputGroup className="MyInputGroup">
-                                                                                            <Form.Control type="text" className="form-input"  placeholder="Introduzca sueldo por empleado" /> 
-                                                                                            <InputGroup.Append>
-                                                                                                <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
-                                                                                            </InputGroup.Append>
-                                                                                        </InputGroup>
-                                                                                        <Form.Text className="text-muted">
-                                                                                            Obligatorio
-                                                                                        </Form.Text> 
-                                                                                    </Form.Group>
-                                                                                </Form.Row>
+                                                                            {this.state.Cargos.map((cargo,index)=>{             
+                                                                                return(
+                                                                                    <div style={{display: this.state.cargoShow}}>
+                                                                                        <Accordion defaultActiveKey={1} >
+                                                                                            <Card className="CardAcc">
+                                                                                                <Accordion.Toggle as={Card.Header} eventKey={cargo.accordionKey} onClick={() => this.accordionC(index)} className="accordion borderacc">
+                                                                                                    <FormTitulo titulo={cargo.nombre}/>
+                                                                                                </Accordion.Toggle>
+                                                                                                <Accordion.Collapse eventKey={1} >
+                                                                                                    <Card.Body className="BodyAcc">
+
+                                                                                                        <Form.Row className="formMargins">
+                                                                                                            <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
+                                                                                                                <Form.Label className="cliente-description-fields-text">Cantidad de empleados</Form.Label>
+                                                                                                                <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad de empleados" />
+                                                                                                                <Form.Text className="text-muted">
+                                                                                                                    Obligatorio
+                                                                                                                </Form.Text>
+                                                                                                            </Form.Group>
+                                                                                                            <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
+                                                                                                                 <Form.Label className="cliente-description-fields-text">Sueldo</Form.Label>
+                                                                                                                <InputGroup className="MyInputGroup">
+                                                                                                                    <Form.Control type="text" className="form-input"  placeholder="Introduzca sueldo por empleado" /> 
+                                                                                                                    <InputGroup.Append>
+                                                                                                                        <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
+                                                                                                                    </InputGroup.Append>
+                                                                                                                </InputGroup>
+                                                                                                                <Form.Text className="text-muted">
+                                                                                                                    Obligatorio
+                                                                                                                </Form.Text> 
+                                                                                                            </Form.Group>
+                                                                                                        </Form.Row>
+
+                                                                                                    </Card.Body>
+                                                                                                </Accordion.Collapse>
+                                                                                            </Card>
+                                                                                        </Accordion>
+                                                                                    </div>
+                                                                                );
+                                                                            })}
                                                                             </Container>
                                                                             <FormTitulo titulo="Maquinarias"/>
                                                                             <Row>
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
                                                                                         <DataTable
-                                                                                            columns={'http://localhost:3000/column_names/test_table'} 
-                                                                                            data={'http://localhost:3000/users'}
+                                                                                            selectCheck={this.selectTipoMaquinaria}
+                                                                                            agregar={false}
+                                                                                            modificar={false}
+                                                                                            consultar={false}
+                                                                                            eliminar={false}
+                                                                                            columns={'http://localhost:3000/column_names/cliente'} 
+                                                                                            data={'http://localhost:3000/getAllClientes'}
                                                                                             url={'consultar_empleado/:'}
+                                                                                            checktable={true}
+                                                                                            textoSingular={'tipo de maquinaria'}
+                                                                                            textoPlural={'tipos de maquinaria'}
                                                                                         />
                                                                                     </Col>
                                                                                     <Col sm={0} md={1}></Col>
                                                                             </Row>
                                                                             <Container>
-                                                                                <FormTitulo titulo="Perforadora"/>
-                                                                                <Form.Row className="formMargins">
-                                                                                    <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
-                                                                                        <Form.Label className="cliente-description-fields-text">Cantidad de unidades</Form.Label>
-                                                                                        <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad de unidades" />
-                                                                                        <Form.Text className="text-muted">
-                                                                                            Obligatorio
-                                                                                        </Form.Text>
-                                                                                    </Form.Group>
-                                                                                    <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
-                                                                                         <Form.Label className="cliente-description-fields-text">Costo</Form.Label>
-                                                                                        <InputGroup className="MyInputGroup">
-                                                                                            <Form.Control type="text" className="form-input"  placeholder="Introduzca costo por unidad" /> 
-                                                                                            <InputGroup.Append>
-                                                                                                <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
-                                                                                            </InputGroup.Append>
-                                                                                        </InputGroup>
-                                                                                        <Form.Text className="text-muted">
-                                                                                            Obligatorio
-                                                                                        </Form.Text> 
-                                                                                    </Form.Group>
-                                                                                </Form.Row>
+                                                                            {this.state.TipoMaquinaria.map((tipoMaquinaria,index)=>{             
+                                                                                return(
+                                                                                    <div style={{display: this.state.tipoMaquinariaShow}}>
+                                                                                        <Accordion defaultActiveKey={1} >
+                                                                                            <Card className="CardAcc">
+                                                                                                <Accordion.Toggle as={Card.Header} eventKey={tipoMaquinaria.accordionKey} onClick={() => this.accordionTM(index)} className="accordion borderacc">
+                                                                                                    <FormTitulo titulo={tipoMaquinaria.nombre}/>
+                                                                                                </Accordion.Toggle>
+                                                                                                <Accordion.Collapse eventKey={1} >
+                                                                                                    <Card.Body className="BodyAcc">
+
+                                                                                                        <Form.Row className="formMargins">
+                                                                                                            <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
+                                                                                                                <Form.Label className="cliente-description-fields-text">Cantidad de unidades</Form.Label>
+                                                                                                                <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad de unidades" />
+                                                                                                                <Form.Text className="text-muted">
+                                                                                                                    Obligatorio
+                                                                                                                </Form.Text>
+                                                                                                            </Form.Group>
+                                                                                                            <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
+                                                                                                                 <Form.Label className="cliente-description-fields-text">Costo</Form.Label>
+                                                                                                                <InputGroup className="MyInputGroup">
+                                                                                                                    <Form.Control type="text" className="form-input"  placeholder="Introduzca costo por unidad" /> 
+                                                                                                                    <InputGroup.Append>
+                                                                                                                        <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
+                                                                                                                    </InputGroup.Append>
+                                                                                                                </InputGroup>
+                                                                                                                <Form.Text className="text-muted">
+                                                                                                                    Obligatorio
+                                                                                                                </Form.Text> 
+                                                                                                            </Form.Group>
+                                                                                                        </Form.Row>
+
+                                                                                                    </Card.Body>
+                                                                                                </Accordion.Collapse>
+                                                                                            </Card>
+                                                                                        </Accordion>
+                                                                                    </div>
+                                                                                );
+                                                                            })}
                                                                             </Container>
                                                                         </Container>
                                                                     </Tab>
