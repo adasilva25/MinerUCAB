@@ -689,7 +689,7 @@ export default class RegistrarYacimiento extends React.Component {
                                             return(
 
                                                 <Tab eventKey={etapa.nombre} title={etapa.nombre}>
-                                                    <Button variant="outline-danger" className="btn-eliminar">Eliminar</Button>
+                                                    <Button variant="outline-danger" className="btn-eliminar" disabled={(this.state.etapas.length == 1)? true: false}>Eliminar</Button>
                                                     <Container>
                                                    
                                                         <FormTitulo titulo={"Información General de la Etapa "+etapa.numero}/>
@@ -745,7 +745,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                         
                                                                 return(    
                                                                     <Tab eventKey={fase.nombre} title={fase.nombre}>
-                                                                        <Button variant="outline-danger" onClick={this.handleOnClickEFase} className="btn-eliminar">Eliminar</Button>
+                                                                        <Button variant="outline-danger" onClick={this.handleOnClickEFase} className="btn-eliminar" disabled={(this.state.etapas[etapa.numero-1].fases.length == 1)? true: false}>Eliminar</Button>
                                                                         <Container>
                                                                             <FormTitulo titulo={"Información General de la Fase "+fase.numero}/>
                                                                             <Form.Row className="formMargins">
