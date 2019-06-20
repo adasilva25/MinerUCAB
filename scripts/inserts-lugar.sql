@@ -22,7 +22,7 @@ INSERT INTO MU_LUGAR(Nombre, Tipo, fk_lugar) VALUES
 ('Vargas', 'Estado', NULL),
 ('Yaracuy', 'Estado', NULL),
 ('Zulia', 'Estado', NULL),
-('Distrito Capital', 'Estado', NULL)
+('Distrito Capital', 'Estado', NULL);
 
 INSERT INTO MU_LUGAR(Nombre, Tipo, fk_lugar) VALUES
 ('Alto Orinoco','Municipio',1),
@@ -359,7 +359,7 @@ INSERT INTO MU_LUGAR(Nombre, Tipo, fk_lugar) VALUES
 ('Simón Bolívar','Municipio', 23),
 ('Sucre','Municipio', 23),
 ('Valmore Rodríguez','Municipio', 23),
-('Libertador', 'Municipio',24)
+('Libertador', 'Municipio',24);
 
 INSERT INTO MU_LUGAR (Nombre, Tipo, fk_lugar) VALUES
 ('Huachamacare','Parroquia',25),
