@@ -30,7 +30,7 @@ const getAllEmployees = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
-    client.query('SELECT * FROM empleado;')
+    client.query('SELECT * FROM test_table;')
     .then((response) => {
         client.end();
         // res.header("Access-Control-Allow-Origin", "http://localhost:8080");

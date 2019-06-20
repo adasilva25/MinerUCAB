@@ -230,7 +230,7 @@ export default class DataTable extends React.Component {
                                         }
                                     }
                                     botonesEliminar[i].onclick = function() {
-                                        if (this.props.textoPlural === 'minerales metalicos' || this.props.textoPlural === 'minerales no metalicos'){
+                                        if ((this.props.textoPlural === 'minerales metalicos' || this.props.textoPlural === 'minerales no metalicos')){
                                             this.props.modalEliminar(botonesEliminar[i])
                                         }
                                         else {
@@ -245,9 +245,21 @@ export default class DataTable extends React.Component {
                             if (checks.length > 0){
                                 
                                 for (let i = 0; i < checks.length; i++){
+                                    if (textoPlural === 'cargos' || textoPlural === 'minerales' || textoPlural === 'tipos de maquinaria'){
+                                        if(textoPlural === 'cargos' && !checks[i].className.includes('minerales') && !checks[i].className.includes('tipos de maquinaria')){
+                                            checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                                        }
+                                        else if (textoPlural === 'minerales' && !checks[i].className.includes('cargos') && !checks[i].className.includes('tipos de maquinaria')){
+                                            checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                                        }
+                                        else if (textoPlural === 'tipos de maquinaria' && !checks[i].className.includes('minerales') && !checks[i].className.includes('cargos')){
+                                            checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                                        }
+                                    }
                                     checks[i].onclick = function() {
                                         console.log("DataTable Checks");
-                                        this.props.selectCheck(checks[i].value)
+                                        this.props.selectCheck(checks[i])
+                                        // this.props.selectCheck(checks[i].value)
                                         // console.log(this.props.selectCheck)
                                     }.bind(this)
                                 }
