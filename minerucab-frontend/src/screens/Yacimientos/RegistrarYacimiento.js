@@ -24,6 +24,7 @@ export default class RegistrarYacimiento extends React.Component {
         super(props);
 
         this.state = {
+            prueba: true,
             key:"Etapa 1",
             yacimiento:{
                 nombre:null,
@@ -87,6 +88,12 @@ export default class RegistrarYacimiento extends React.Component {
         }
 
         this.handleOnClickAEtapa = this.handleOnClickAEtapa.bind(this);
+    }
+
+    prueba = (e) => {
+        this.setState((prevState) => ({
+            prueba: !this.state.prueba
+        }));
     }
 
     onClickDashboardPage(){
@@ -577,15 +584,17 @@ export default class RegistrarYacimiento extends React.Component {
 
 
 
-    selectFunctionCheckbox = (boton,etapa,fase) => {
-        if (boton.className.includes('cargos')){
-            this.selectCargos(boton.value,etapa,fase)
+    selectFunctionCheckbox = (boton) => {
+        // console.log('selectFunctionCheckbox', boton.alt)
+        // console.log('selectFunctionCheckbox', boton)
+        if (boton.includes('cargos')){
+            console.log('cargos')
         }
-        else if (boton.className.includes('minerales')){
-            this.selectMinerales(boton.value,etapa,fase)
+        else if (boton.includes('minerales')){
+            console.log('minerales')
         }
-        else if (boton.className.includes('tiposdemaquinaria')){
-            this.selectTipoMaquinaria(boton.value,etapa,fase)            
+        else if (boton.includes('tiposdemaquinaria')){
+            console.log('tipos de maquinarias')          
         }
     }
 
@@ -862,6 +871,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                         <Tabs
                                                             id="controlled-tab-example"
                                                             defaultActiveKey={this.state.etapas[etapa.numero-1].key}
+                                                            onClick={this.prueba}
                                                         >
                                                             {this.state.etapas[etapa.numero-1].fases.map((fase,index)=>{
                                                                         

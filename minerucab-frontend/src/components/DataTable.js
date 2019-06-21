@@ -39,7 +39,10 @@ export default class DataTable extends React.Component {
         const modalEliminar = this.props.modalEliminar;
         let etapa = this.props.etapa;
         let fase = this.props.fase;
+        const selectCheck = this.props.selectCheck
+        // console.log('selectCheck', selectCheck)
         console.log("inicio",etapa,fase);
+        const alt = etapa.toString() + '_' + fase.toString()
         // let call=null;
         const config = {
             headers: {
@@ -82,6 +85,7 @@ export default class DataTable extends React.Component {
                         dataSet.push(values)
                     })
 
+                        let i = -1;
                     
                         this.$el = $(this.el);
                         var table = this.$el.DataTable({
@@ -96,7 +100,7 @@ export default class DataTable extends React.Component {
                             scrollY: size,
                         //No permitir orden
                             //ordering:  false
-                            "order": [[ 1, "asc" ]],
+                            // "order": [[ 1, "asc" ]],
                         "language": {
                             "paginate": {
                                 "previous": "Anterior",
@@ -107,7 +111,7 @@ export default class DataTable extends React.Component {
                             "infoFiltered": "",
                             "zeroRecords": "No existen registros con estas características.",
                             "lengthMenu": 'Mostrando <select>'+
-                                '<option value="5">5</option>'+
+                                '<option value="2">2</option>'+
                                 '<option value="10">10</option>'+
                                 '<option value="25">25</option>'+
                                 '<option value="50">50</option>'+
@@ -119,27 +123,39 @@ export default class DataTable extends React.Component {
                         },
                         columnDefs: [
 
-                      /* {
+                       {
                           'targets': 0,
                             'checkboxes': {
                               'selectRow': true
                             },
                             name: 'dtcheckbox'
-                         }, */
-                      {
+                         }, 
+                    //   {
 
-                            'targets': 0,
-                            'orderable': false,
-                            // 'className': 'dt-body-center',
-                            render: function (data, type, row, meta){
-                                if (checktable === true){
-                                    return '<input type="checkbox" name="id[]" value="' + row[0] + '" class="checkbox-dt">';
-                                }
-                                else {
-                                    return row[0]
-                                }
-                            }
-                        },
+                    //         'targets': 0,
+                    //         'orderable': false,
+                    //         // 'className': 'dt-body-center',
+                    //         render: function (data, type, row, meta){
+                    //             i++;
+                    //             // console.log(data)
+                                
+                    //             if (checktable === true){
+                    //                 console.log('data', data)
+                    //                 console.log('row', row)
+                    //                 console.log('type', meta.row)
+                    //                 const input = <input type="checkbox" value={meta.row} name={data} className="checkbox-dt"></input>;
+                    //                 console.log('input.value', input.props.value)
+                    //                 const inputHTML = ReactDOMServer.renderToStaticMarkup(input);
+                    //                 return inputHTML
+                    //                 // return '<input type="checkbox" value="' + data + '" class="checkbox-dt">';
+                    //                 // console.log(input)
+                    //                 return input;
+                    //             }
+                    //             else {
+                    //                 return row[0]
+                    //             }
+                    //         }
+                    //     },
                         {
                             targets: -1,
                             orderable: false,
@@ -186,25 +202,104 @@ export default class DataTable extends React.Component {
                               });
                               //debugger;
                         });*/
-                       /* if (checktable === true){
-                       $('#frm-dt').on('change', function(e){
-                            var form = this;
+                       if (checktable === true){
+                        // console.log('antes', document.getElementsByClassName('dt-checkboxes'))
+                        const checkboxesDT = document.getElementsByClassName('dt-checkboxes')
+                        // console.log('tP', textoPlural)
+                        let m = 0;
+                            if (checkboxesDT.length > 0){
+                                for (let k = 0; k < checkboxesDT.length; k++){
+                                    // console.log('entroLETK')
+                                    // console.log(checkboxesDT[k].alt);
 
+                                    // console.log('classList', checkboxesDT[k].classList.length)
 
-                                var rows_selected = table.columns(0).checkboxes.selected();
-                                
-                                var actualRows=[];
-                                var i=0;
-                                while(rows_selected[i] != undefined ){
-                                    actualRows.push(rows_selected[i]);
-                                    i++;
-                                
-                                // call=rows_selected;
-                                
+                                    //  FUNCIONA PERFECT
+                                    if (checkboxesDT[k].classList.length === 1){
+                                        
+                                        checkboxesDT[k].alt = dataSet[m][0]
+                                        console.log('dataSet', dataSet[m][0])
+                                        console.log('alt', checkboxesDT[k].alt)
+                                        checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,''));
+                                        m++;
+                                    }
+
+                                    //      ANTERIOR EN CASO DE EMERGENCIA
+                                    // if (textoPlural === 'cargos' || textoPlural === 'minerales' || textoPlural === 'tipos de maquinaria'){
+                                    //     if(textoPlural === 'cargos' && !checkboxesDT[k].className.includes('minerales') && !checkboxesDT[k].className.includes('tipos de maquinaria')){
+                                    //         checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,''));
+                                    //     }
+                                    //     else if (textoPlural === 'minerales' && !checkboxesDT[k].className.includes('cargos') && !checkboxesDT[k].className.includes('tipos de maquinaria')){
+                                    //         checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,''));
+                                    //     }
+                                    //     else if (textoPlural === 'tipos de maquinaria' && !checkboxesDT[k].className.includes('minerales') && !checkboxesDT[k].className.includes('cargos')){
+                                    //         checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,''));
+                                    //     }
+                                    // }
                                 }
-                                console.log(rows_selected);
-                                this.props.selectCheck(actualRows);
-                                //this.props.callback(rows_selected);
+                            }
+                       
+                        $('.dt-checkboxes').ready(function(){
+                            // console.log('dt-checkboxes', document.getElementsByClassName('dt-checkboxes'))
+                            // const checks = document.getElementsByClassName('dt-checkboxes');
+                            // checks[0].classList.add('hola');
+                            // console.log(checks[0])
+
+                            // for (let i = 0; i < checks.length; i++){
+                            //     console.log('long inicial', checks[i].classList.length)
+                            //     if (checks[i].length === 1){
+                            //         checks[i].id = (this.props.textoPlural.replace(/\s/g,''));
+                            //     }
+                            //     console.log('long final', checks[i].classList.length)
+                            //     console.log('classes values', checks[i].classList)
+                            //     // if (textoPlural === 'cargos' || textoPlural === 'minerales' || textoPlural === 'tipos de maquinaria'){
+                            //     //     if(textoPlural === 'cargos' && !checks[i].className.includes('minerales') && !checks[i].className.includes('tipos de maquinaria')){
+                            //     //         checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                            //     //     }
+                            //     //     else if (textoPlural === 'minerales' && !checks[i].className.includes('cargos') && !checks[i].className.includes('tipos de maquinaria')){
+                            //     //         checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                            //     //     }
+                            //     //     else if (textoPlural === 'tipos de maquinaria' && !checks[i].className.includes('minerales') && !checks[i].className.includes('cargos')){
+                            //     //         checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                            //     //     }
+                            //     // }
+                            // }
+                        })
+                       
+                       
+                        $('.dt-checkboxes').on('change', function(e){
+                            var form = this;
+                            console.log('jquery', $('.dt-checkboxes'))
+                            // console.log('dt-checkboxes list', document.getElementsByClassName('dt-checkboxes'))
+                            // console.log(table.column(0).checkboxes)
+                            
+                            // console.log('length', document.getElementsByClassName('dt-checkboxes').length)
+                            
+                            console.log('me pones una banderita ahí', table.columns(0).checkboxes.selected()[0], etapa, fase);
+                            console.log('e target alt', e.target.alt)
+                            // console.log('selectCheck change', selectCheck)
+                            selectCheck(e.target.className)
+                            
+                            // this.props.selectCheck()
+                                
+                        })
+
+                        // console.log(document.getElementsByClassName('dt-checkboxes'))
+                        
+                       }
+                       
+                                // var actualRows=[];
+                                // var i=0;
+                                // while(rows_selected[i] != undefined ){
+                                //     actualRows.push(rows_selected[i]);
+                                //     i++;
+                                
+                                // // call=rows_selected;
+                                
+                                // }
+                                // console.log(rows_selected);
+                                // this.props.selectCheck(actualRows);
+                                // this.props.callback(rows_selected);
 
                                     
                                     //debugger;
@@ -221,6 +316,7 @@ export default class DataTable extends React.Component {
                             table.column('crudoptions:name').visible(false);
                         }
 
+                        // console.log(getElementsByClassName('dt-checkboxes'))
                         const botonesEliminar = document.getElementsByClassName('icondelete');
                             if (botonesEliminar.length > 0){
                                 for (let i = 0; i < botonesEliminar.length; i++){
@@ -243,32 +339,62 @@ export default class DataTable extends React.Component {
                                 }
                             }
 
-                        if (checktable === true){
-                            const checks = document.getElementsByClassName('checkbox-dt');
-                            if (checks.length > 0){
-                                
-                                for (let i = 0; i < checks.length; i++){
-                                    if (textoPlural === 'cargos' || textoPlural === 'minerales' || textoPlural === 'tipos de maquinaria'){
-                                        if(textoPlural === 'cargos' && !checks[i].className.includes('minerales') && !checks[i].className.includes('tipos de maquinaria')){
-                                            checks[i].classList.add(textoPlural.replace(/\s/g,''));
-                                        }
-                                        else if (textoPlural === 'minerales' && !checks[i].className.includes('cargos') && !checks[i].className.includes('tipos de maquinaria')){
-                                            checks[i].classList.add(textoPlural.replace(/\s/g,''));
-                                        }
-                                        else if (textoPlural === 'tipos de maquinaria' && !checks[i].className.includes('minerales') && !checks[i].className.includes('cargos')){
-                                            checks[i].classList.add(textoPlural.replace(/\s/g,''));
-                                        }
-                                    }
-                                    checks[i].onclick = function() {
-                                        console.log("DataTable Checks",etapa,fase);
-                                        this.props.selectCheck(checks[i],etapa,fase);
-                                        // this.props.selectCheck(checks[i].value)
-                                        // console.log(this.props.selectCheck)
-                                    }.bind(this)
-                                }
+                            // if (checktable === true){
+                            //     const checks = document.getElementsByClassName('checkbox-dt');
+                            //     console.log(checks.length)
+                            //     if (checks.length > 0){
+                                    
+                            //         for (let i = 0; i < checks.length; i++){
+                            //             if (textoPlural === 'cargos' || textoPlural === 'minerales' || textoPlural === 'tipos de maquinaria'){
+                            //                 if(textoPlural === 'cargos' && !checks[i].className.includes('minerales') && !checks[i].className.includes('tipos de maquinaria')){
+                            //                     checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                            //                 }
+                            //                 else if (textoPlural === 'minerales' && !checks[i].className.includes('cargos') && !checks[i].className.includes('tipos de maquinaria')){
+                            //                     checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                            //                 }
+                            //                 else if (textoPlural === 'tipos de maquinaria' && !checks[i].className.includes('minerales') && !checks[i].className.includes('cargos')){
+                            //                     checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                            //                 }
+                            //             }
+                            //             // checks[i].alt = alt;
+                            //             // console.log('alt viejo', checks[i].alt)
+                            //             if (checks[i].alt === ''){
+                            //                 checks[i].alt = alt;
+                            //                 // console.log('alt nevo', checks[i].alt)
+                            //             }
+                                        
+                            //             // if (checks[i].name === ''){
+                            //             //     for (let j = 0; j < dataSet.length; j++){
+                            //             //         checks[i+j].name = dataSet[j][0]
+                            //             //         console.log(checks)
+                            //             //         console.log('name', checks[i+j].name, dataSet[j][0])
+                            //             //         // console.log(checks[j].name)
+                            //             //     }
+                            //             // }
+                                            
+                                        
+                            //             // console.log(checks)
+                            //             checks[i].onclick = function() {
+                            //                 console.log("DataTable Checks",etapa,fase);
+                            //                 // console.log(table.column(0).checkboxes.selected());
+                            //                 console.log('name', checks[i].name)
+                            //                 console.log('value', checks[i].value)
+                            //                 this.props.selectCheck(checks[i]);
+                            //                 // this.props.selectCheck(checks[i].value)
+                            //                 // console.log(this.props.selectCheck)
+                            //             }.bind(this)
+                            //         }
+    
+                            //     }
+                            // }
+                        
 
-                            }
-                        }
+                            // console.log('checks did mount', document.getElementsByClassName('checkbox-dt').length)
+                            // const checks = document.getElementsByClassName('checkbox-dt')
+                            // this.setState(() => ({
+                            //     checks: checks
+                            // }));
+                            console.log('final', document.getElementsByClassName('dt-checkboxes'))
 
                     }).catch((e) => {
                         console.log('Error en axios')
@@ -301,6 +427,47 @@ export default class DataTable extends React.Component {
             history.push(this.props.urlCrear);
         }
     }
+
+    setOnClickCheck = () => {
+        const textoPlural = this.props.textoPlural;
+        const etapa = this.props.etapa;
+        const fase = this.props.fase;
+        console.log('setOnClickCheck')
+
+        if (this.props.checktable === true){
+            // console.log('entro')
+            console.log(document.getElementsByClassName('checkbox-dt').length)
+            let checks = document.getElementsByClassName('checkbox-dt');
+            console.log('checks[0]', checks.length, checks)
+            // console.log('length', checks.length)
+            if (checks.length > 0){
+                // console.log('checks >0')
+                for (let i = 0; i < checks.length; i++){
+                    console.log('entro en el if')
+                    if (textoPlural === 'cargos' || textoPlural === 'minerales' || textoPlural === 'tipos de maquinaria'){
+                        if(textoPlural === 'cargos' && !checks[i].className.includes('minerales') && !checks[i].className.includes('tipos de maquinaria')){
+                            checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                        }
+                        else if (textoPlural === 'minerales' && !checks[i].className.includes('cargos') && !checks[i].className.includes('tipos de maquinaria')){
+                            checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                        }
+                        else if (textoPlural === 'tipos de maquinaria' && !checks[i].className.includes('minerales') && !checks[i].className.includes('cargos')){
+                            checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                        }
+                    }
+                    
+                    checks[i].onClick = function() {
+                        console.log('onClick', checks[i])
+                        console.log("DataTable Checks",etapa,fase);
+                        // this.props.selectCheck(checks[i],etapa,fase);
+                        // this.props.selectCheck(checks[i].value)
+                        // console.log(this.props.selectCheck)
+                    }
+                }
+
+            }
+        }
+    }
     
     render(){
         return (
@@ -313,7 +480,7 @@ export default class DataTable extends React.Component {
                     <p className="form-group">
                        <button type="submit" className="btn btn-primary btn-subcheckbox">Submit</button>
                     </p>)
-                }  
+                }
             </form>
             {
                 (this.props.agregar === true && 
