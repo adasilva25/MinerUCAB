@@ -41,7 +41,7 @@ export default class DataTable extends React.Component {
         let fase = this.props.fase;
         const selectCheck = this.props.selectCheck
         // console.log('selectCheck', selectCheck)
-        console.log("inicio",etapa,fase);
+        // console.log("inicio",etapa,fase);
         const alt = etapa.toString() + '_' + fase.toString()
         // let call=null;
         const config = {
@@ -218,9 +218,9 @@ export default class DataTable extends React.Component {
                                     if (checkboxesDT[k].classList.length === 1){
                                         
                                         checkboxesDT[k].alt = dataSet[m][0]
-                                        console.log('dataSet', dataSet[m][0])
-                                        console.log('alt', checkboxesDT[k].alt)
-                                        checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,''));
+                                        // console.log('dataSet', dataSet[m][0])
+                                        // console.log('alt', checkboxesDT[k].alt)
+                                        checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,'')+etapa+fase);
                                         m++;
                                     }
 
@@ -239,6 +239,7 @@ export default class DataTable extends React.Component {
                                 }
                             }
                        
+                            
                         $('.dt-checkboxes').ready(function(){
                             // console.log('dt-checkboxes', document.getElementsByClassName('dt-checkboxes'))
                             // const checks = document.getElementsByClassName('dt-checkboxes');
@@ -266,17 +267,21 @@ export default class DataTable extends React.Component {
                             // }
                         })
                        
-                       
-                        $('.dt-checkboxes').on('change', function(e){
+                        const textoPrueba = textoPlural.replace(/\s/g,'')
+                        $('.dt-checkboxes.'+textoPrueba+etapa+fase).on('change', function(e){
                             var form = this;
-                            console.log('jquery', $('.dt-checkboxes'))
+                            // console.log('jquery', $('.dt-checkboxes'))
                             // console.log('dt-checkboxes list', document.getElementsByClassName('dt-checkboxes'))
                             // console.log(table.column(0).checkboxes)
                             
                             // console.log('length', document.getElementsByClassName('dt-checkboxes').length)
                             
-                            console.log('me pones una banderita ahí', table.columns(0).checkboxes.selected()[0], etapa, fase);
-                            console.log('e target alt', e.target.alt)
+                            // console.log('me pones una banderita ahí', table.columns(0).checkboxes.selected()[0], etapa, fase);
+                            
+                            console.log('SELECCIONADO ', e.target.checked) // SELECCIONADO O NO
+                            console.log('ID EN BD ', e.target.alt)   // ID EN BD
+                            console.log('TABLA SELECCIONADA ', e.target.className)
+                            console.log('ETAPA - FASE ', etapa, fase)
                             // console.log('selectCheck change', selectCheck)
                             selectCheck(e.target.className)
                             
@@ -394,7 +399,7 @@ export default class DataTable extends React.Component {
                             // this.setState(() => ({
                             //     checks: checks
                             // }));
-                            console.log('final', document.getElementsByClassName('dt-checkboxes'))
+                            // console.log('final', document.getElementsByClassName('dt-checkboxes'))
 
                     }).catch((e) => {
                         console.log('Error en axios')

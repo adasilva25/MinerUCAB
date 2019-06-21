@@ -588,7 +588,7 @@ export default class RegistrarYacimiento extends React.Component {
         // console.log('selectFunctionCheckbox', boton.alt)
         // console.log('selectFunctionCheckbox', boton)
         if (boton.includes('cargos')){
-            console.log('cargos')
+            console.log('entro cargos')
         }
         else if (boton.includes('minerales')){
             console.log('minerales')
