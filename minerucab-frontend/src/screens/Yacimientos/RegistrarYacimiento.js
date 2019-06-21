@@ -59,6 +59,7 @@ export default class RegistrarYacimiento extends React.Component {
                 duracion:null,
                 costo:null,
                 numero: 1,
+                numeroV:1,
                 key:"Fase 1",
                 fases: [{
                     nombre: "Fase 1",
@@ -68,6 +69,7 @@ export default class RegistrarYacimiento extends React.Component {
                     cargoShow:'none',
                     tipoMaquinariaShow:'none',
                     numero:1,
+                    numeroV:1,
                     cargos:[{
                         nombre:null,
                         id:-1,
@@ -271,6 +273,7 @@ export default class RegistrarYacimiento extends React.Component {
                 duracion:null,
                 costo:null,
                 numero: 1,
+                numeroV:1,
                 key:"Fase 1",
                 fases: [{
                     nombre: "Fase 1",
@@ -280,6 +283,7 @@ export default class RegistrarYacimiento extends React.Component {
                     cargoShow:'none',
                     tipoMaquinariaShow:'none',
                     numero:1,
+                    numeroV:1,
                     cargos:[{
                         nombre:null,
                         id:-1,
@@ -298,6 +302,7 @@ export default class RegistrarYacimiento extends React.Component {
                 }]
             }
         Etapa.numero=etapa[etapa.length-1].numero+1;
+        Etapa.numeroV=Etapa.numero;
         console.log(Etapa);
         Etapa.nombre= 'Etapa '+ Etapa.numero;    
         this.setState((prevState) => ({
@@ -319,6 +324,7 @@ export default class RegistrarYacimiento extends React.Component {
                 cargoShow:'none',
                 tipoMaquinariaShow:'none',
                 numero:1,
+                numeroV:1,
                 cargos:[{
                     nombre:null,
                     id:-1,
@@ -335,7 +341,8 @@ export default class RegistrarYacimiento extends React.Component {
                 }]
             }
         
-        Fase.numero=fase1[fase1.length-1].numero+1; 
+        Fase.numero=fase1[fase1.length-1].numero+1;
+        Fase.numeroV=Fase.numero; 
         Fase.nombre= 'Fase '+ Fase.numero;  
         console.log(Fase);
         console.log(Etapa);
@@ -358,6 +365,7 @@ export default class RegistrarYacimiento extends React.Component {
             if((etapa.fases[i]!=undefined)){
                 etapa.fases[i].numero--;
                 etapa.fases[i].nombre='Fase '+etapa.fases[i].numero;
+                console.log('Numero',etapa.fases[i].numero,'NUmeV',etapa.fases[i].numeroV);
             }
         }
 
@@ -365,6 +373,7 @@ export default class RegistrarYacimiento extends React.Component {
         this.setState(() => ({
             etapas: etapas1
         }));
+
 
     }
 
@@ -584,17 +593,21 @@ export default class RegistrarYacimiento extends React.Component {
 
 
 
-    selectFunctionCheckbox = (boton) => {
+    selectFunctionCheckbox = (classN,id, etapaNum,faseNum) => {
         // console.log('selectFunctionCheckbox', boton.alt)
         // console.log('selectFunctionCheckbox', boton)
-        if (boton.includes('cargos')){
-            console.log('entro cargos')
+        console.log('IndexC',classN.indexOf("cargos"))
+        console.log('IndexM',classN.indexOf("minerales"))
+        console.log('IndexT',classN.indexOf("tiposdemaquinaria"))
+        if (classN.indexOf("cargos") != -1){
+            console.log('ENTRO CARGO')
+            this.selectCargos(id,etapaNum,faseNum)
         }
-        else if (boton.includes('minerales')){
-            console.log('minerales')
+        else if (classN.indexOf("minerales") != -1){
+            this.selectMinerales(id,etapaNum,faseNum)
         }
-        else if (boton.includes('tiposdemaquinaria')){
-            console.log('tipos de maquinarias')          
+        else if (classN.indexOf("tiposdemaquinaria") != -1 ){
+            this.selectTipoMaquinaria(id,etapaNum,faseNum)          
         }
     }
 
@@ -703,8 +716,8 @@ export default class RegistrarYacimiento extends React.Component {
                                                 modificar={false}
                                                 consultar={false}
                                                 eliminar={false}
-                                                columns={'http://localhost:3000/column_names/test_table'} 
-                                                data={'http://localhost:3000/users'}
+                                                columns={'http://localhost:3000/column_names/cliente'} 
+                                                data={'http://localhost:3000/getAllClientes'}
                                                 url={'consultar_empleado/:'}
                                                 checktable={true}
                                                 textoSingular={'mineral'}
@@ -932,15 +945,16 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                             modificar={false}
                                                                                             consultar={false}
                                                                                             eliminar={false}
-                                                                                            columns={'http://localhost:3000/column_names/test_table'} 
-                                                                                            data={'http://localhost:3000/users'}
+                                                                                            columns={'http://localhost:3000/column_names/cliente'} 
+                                                                                            data={'http://localhost:3000/getAllClientes'}
                                                                                             url={'consultar_empleado/:'}
                                                                                             checktable={true}
                                                                                             textoSingular={'cargo'}
                                                                                             textoPlural={'cargos'}
-                                                                                            etapa={etapa.numero}
-                                                                                            fase={fase.numero}
+                                                                                            etapa={etapa.numeroV}
+                                                                                            fase={fase.numeroV}
                                                                                         />
+                                                                                        {console.log('FASENV',fase.numeroV)}
                                                                                     </Col>
                                                                                     <Col sm={0} md={1}></Col>
                                                                             </Row>
@@ -996,14 +1010,14 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                             modificar={false}
                                                                                             consultar={false}
                                                                                             eliminar={false}
-                                                                                            columns={'http://localhost:3000/column_names/test_table'} 
-                                                                                            data={'http://localhost:3000/users'}
+                                                                                            columns={'http://localhost:3000/column_names/cliente'} 
+                                                                                            data={'http://localhost:3000/getAllClientes'}
                                                                                             url={'consultar_empleado/:'}
                                                                                             checktable={true}
                                                                                             textoSingular={'tipo de maquinaria'}
                                                                                             textoPlural={'tipos de maquinaria'}
-                                                                                            etapa={etapa.numero}
-                                                                                            fase={fase.numero}
+                                                                                            etapa={etapa.numeroV}
+                                                                                            fase={fase.numeroV}
                                                                                         />
                                                                                     </Col>
                                                                                     <Col sm={0} md={1}></Col>

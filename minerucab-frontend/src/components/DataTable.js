@@ -283,7 +283,7 @@ export default class DataTable extends React.Component {
                             console.log('TABLA SELECCIONADA ', e.target.className)
                             console.log('ETAPA - FASE ', etapa, fase)
                             // console.log('selectCheck change', selectCheck)
-                            selectCheck(e.target.className)
+                            selectCheck(e.target.className,e.target.alt,etapa,fase);
                             
                             // this.props.selectCheck()
                                 
