@@ -109,4 +109,40 @@ INSERT INTO MU_TIPO_MAQUINARIA (Nombre) VALUES
     ('Plancha'),
     ('Planta de Fundición'),
     ('Tractor'),
-    ('Vehículo'),
+    ('Vehículo');
+
+-------------------------------------    ESTATUS     -------------------------------------
+INSERT INTO ESTATUS (Nombre) VALUES 
+    ('Activo'), ('Inactivo'), ('En uso'), ('En explotación'), ('Explotado'), ('Procesada'), ('En proceso'),
+    ('En reparación');
+
+-------------------------------------    MAQUINARIA     -------------------------------------
+INSERT INTO MU_MAQUINARIA (Identificador, Fecha_adquisicion, fk_tipo_maquinaria, fk_estatus) VALUES
+    ('1111111111', '01-25-1999', 1, 1),
+    ('2222222222', '01-31-1999', 2, 2),
+    ('3333333333', '07-14-1999', 2, 1),
+    ('4444444444', '04-03-1998', 1, 3),
+    ('5555555555', '05-24-1998', 4, 3),
+    ('6666666666', '11-23-2018', 4, 3),
+    ('7777777777', '01-05-2010', 5, 1),
+    ('8888888888', '02-07-1973', 6, 1),
+    ('9999999999', '05-30-1951', 5, 2),
+    ('1010101010', '05-30-1951', 7, 2);
+
+-------------------------------------    CLIENTE NATURAL     -------------------------------------
+INSERT INTO MU_CLIENTE_NATURAL (CI, P_nombre, S_nombre, P_apellido, S_apellido, Fecha_nacimiento, Email, Telefono, fk_lugar) VALUES
+    ('V26435741', 'Andrea', 'Valentina', 'Da Silva', 'Baudet', '01-25-1999', 'andreadasilvab@gmail.com', '04140110935', 984),
+    ('V27164848', 'Diego', 'Alfonso', 'Gutiérrez', 'Duarte', '07-14-1999', 'diegoalfonsogutierrez@gmail.com', '04262857751', 440),
+    ('V27086052', 'Alba', 'Sofía', 'Sánchez', 'Silvestre', '01-31-1999', 'albasofia.n.n@gmail.com', '04122765991', 445),
+    ('V26530119', 'Miguel', 'Antonio', 'Peña', 'Fraga', '04-03-1998', 'mpfraga@gmail.com', '04242855585', 450),
+    ('V27127854', 'Gabriel', 'Alejandro', 'Terán', 'Guerrero', '05-24-1999', 'gabrielgt12@hotmail.com', '04126102278', 452),
+    ('V26904756', 'Gustavo', 'Ignacio', 'Sánchez', 'Rodríguez', '05-15-1998', 'gustavosr@gmail.com', '04241828934', 447);
+-------------------------------------    CLIENTE JURÍDICO     -------------------------------------
+INSERT INTO MU_CLIENTE_JURIDICO (Nombre, RIF, Email, Telefono, fk_lugar) VALUES 
+    ('IBM', 'J11111111', 'ibm@ibm.com', '02123788072', 560),
+    ('AVG', 'J22222222', 'avg@avg.com', '02126725272', 565),
+    ('SAP', 'J33333333', 'sap@sap.com', '02126453638', 568),
+    ('Oracle', 'J44444444', 'oracle@oracle.com', '02123473638', 570),
+    ('Apple', 'J55555555', 'apple@apple.com', '02126909081', 580),
+    ('Microsoft', 'J66666666', 'microsoft@microsoft.com', '02126939528', 585);
+
