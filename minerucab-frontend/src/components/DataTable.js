@@ -184,6 +184,7 @@ export default class DataTable extends React.Component {
                             }
                         })
 
+
                         /*$('select[name=dt-dropdown]').on('change', function () {   
                             var selectedid = $(this).children(":selected").attr("id");
                             var rowdata = table.row( $(this).parents('tr') ).data()[0];
@@ -208,6 +209,7 @@ export default class DataTable extends React.Component {
                         // console.log('tP', textoPlural)
                         let m = 0;
                             if (checkboxesDT.length > 0){
+                                console.log('datatable', this.$el)
                                 for (let k = 0; k < checkboxesDT.length; k++){
                                     // console.log('entroLETK')
                                     // console.log(checkboxesDT[k].alt);
@@ -268,6 +270,9 @@ export default class DataTable extends React.Component {
                         })
                        
                         const textoPrueba = textoPlural.replace(/\s/g,'')
+                        if (textoPrueba === 'cargos12'){
+                            this.props.nombreDT(table)
+                        }
                         $('.dt-checkboxes.'+textoPrueba+etapa+fase).on('change', function(e){
                             var form = this;
                             // console.log('jquery', $('.dt-checkboxes'))
@@ -283,6 +288,7 @@ export default class DataTable extends React.Component {
                             console.log('TABLA SELECCIONADA ', e.target.className)
                             console.log('ETAPA - FASE ', etapa, fase)
                             // console.log('selectCheck change', selectCheck)
+                            console.log('className', e.target.className)
                             selectCheck(e.target.className,e.target.alt,etapa,fase);
                             
                             // this.props.selectCheck()
