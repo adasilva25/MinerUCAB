@@ -30,6 +30,7 @@ export default class RegistrarYacimiento extends React.Component {
 
         this.state = {
             eliminadosFases: [],
+            eliminar:true,
             prueba: true,
             key:"Etapa 1",
             yacimiento:{
@@ -64,14 +65,17 @@ export default class RegistrarYacimiento extends React.Component {
                 descripcion: null,
                 duracion:null,
                 costo:null,
+                etapaShow:true,
                 numero: 1,
                 numeroV:1,
+                eliminar:true,
                 key:"Fase 1",
                 fases: [{
                     nombre: "Fase 1",
                     descripcion:null,
                     duracion:null,
                     costo:null,
+                    faseShow:true,
                     cargoShow:'none',
                     tipoMaquinariaShow:'none',
                     numero:1,
@@ -96,6 +100,8 @@ export default class RegistrarYacimiento extends React.Component {
         }
 
         this.handleOnClickAEtapa = this.handleOnClickAEtapa.bind(this);
+       // this.eliminarActivoEtapa = this.eliminarActivoEtapa.bind(this);
+        //this.eliminarActivoFase = this.eliminarActivoFase.bind(this);
     }
 
     prueba = (e) => {
@@ -270,14 +276,17 @@ export default class RegistrarYacimiento extends React.Component {
                 descripcion: null,
                 duracion:null,
                 costo:null,
+                etapaShow:true,
                 numero: 1,
                 numeroV:1,
+                eliminar:true,
                 key:"Fase 1",
                 fases: [{
                     nombre: "Fase 1",
                     descripcion:null,
                     duracion:null,
                     costo:null,
+                    faseShow:true,
                     cargoShow:'none',
                     tipoMaquinariaShow:'none',
                     numero:1,
@@ -299,26 +308,34 @@ export default class RegistrarYacimiento extends React.Component {
 
                 }]
             }
-        Etapa.numero=etapa[etapa.length-1].numero+1;
-        Etapa.numeroV=Etapa.numero;
+
+        for (var i = etapa.length - 1; i >= 0; i--) {
+            if(etapa[i].numero!=0){
+                Etapa.numero=etapa[i].numero+1;
+                break;
+            }
+        }
+        Etapa.numeroV=etapa[etapa.length-1].numeroV+1;
         console.log(Etapa);
         Etapa.nombre= 'Etapa '+ Etapa.numero;    
         this.setState((prevState) => ({
-            etapas: prevState.etapas.concat(Etapa)
+            etapas: prevState.etapas.concat(Etapa),
+            eliminar: false
         }));
+        //this.eliminarActivoEtapa();
     }
 
     
 
     handleOnClickAFase(etapa_num){
-        var etapa1= this.state.etapas.findIndex(x => x.numero === etapa_num );
-        var Etapa= this.state.etapas[etapa1];
-        var fase1= this.state.etapas[etapa1].fases;
+        var Etapa= this.state.etapas;
+        var fase1= this.state.etapas[etapa_num-1].fases;
         var Fase={
                 nombre: '',
                 descripcion:null,
                 duracion:null,
                 costo:null,
+                faseShow:true,
                 cargoShow:'none',
                 tipoMaquinariaShow:'none',
                 numero:1,
@@ -339,27 +356,119 @@ export default class RegistrarYacimiento extends React.Component {
                 }]
             }
         
-        Fase.numero=fase1[fase1.length-1].numero+1;
-        Fase.numeroV=Fase.numero; 
+        //console.log('Lenght',this.state.etapas[etapa_num-1].fases.length
+         //   );
+        for (var i = fase1.length - 1; i >= 0; i--) {
+           // console.log('FASE NUMEROOOOO V',fase1[i].numero);
+            if(fase1[i].numero!=0){
+                Fase.numero=fase1[i].numero+1;
+               // console.log('FASE NUMEROOOOO N',Fase.numero);
+                break;
+            }
+        }
+        Fase.numeroV=fase1[fase1.length-1].numeroV+1; 
         Fase.nombre= 'Fase '+ Fase.numero;  
-        console.log(Fase);
-        console.log(Etapa);
+        console.log('NUMfase',Fase.numeroV,'NUMeta',etapa_num);
+        //console.log(Fase);
+       // console.log(Etapa);
+       /* fase1.concat(Fase);
+        Etapa[etapa_num-1]=fase1;
         this.setState((prevState) => ({
+            etapas: Etapa
+        }));*/
+       this.setState((prevState) => ({
             etapas: prevState.etapas.map(
-                obj => (obj.numero === etapa_num ? Object.assign(obj,{fases: fase1.concat(Fase)}): obj )
+                obj => (obj.numeroV === etapa_num ? Object.assign(obj,{fases: fase1.concat(Fase)}): obj )
             )     
         }));
         console.log(this.state.etapas);
-    };
+        this.eliminarActivoFase(etapa_num,1);
+    }
 
 
     handleOnClickEFase(etapaNum,faseNum){
 
-        console.log(faseNum)
+      /*  var etapas1 =this.state.etapas;
+        var etapa = this.state.etapas[etapaNum-1];
+        var eliminado = false;
+        
+       // for(var i = faseNum-1; i < etapa.fases.length; i++) {
+
+            if((etapa.fases[faseNum]!=undefined)){
+                let faseAux=etapa.fases[faseNum-1];
+                etapa.fases[faseNum-1]=etapa.fases[faseNum];
+                etapa.fases[faseNum]= faseAux;
+                //etapa.fases[i].numero--;
+                //etapa.fases[i].nombre='Fase '+etapa.fases[i].numero;
+                //console.log('Numero',etapa.fases[i].numero,'NUmeV',etapa.fases[i].numeroV);
+            }
+        //}
+       // etapa.fases.splice(faseNum-1,1);
+
+        etapas1[etapaNum-1]=etapa;
+        this.setState(() => ({
+            etapas: etapas1
+            }));*/
+
+
+
+
+
+
+     /* var etapas1 =this.state.etapas;
+        var etapa = this.state.etapas[etapaNum-1];
+        var eliminado = false;
+        etapa.fases.splice(faseNum-1,1);
+        for(var i = faseNum-1; i < etapa.fases.length; i++) {
+
+            if((etapa.fases[i]!=undefined)){
+                etapa.fases[i].numero--;
+                etapa.fases[i].nombre='Fase '+etapa.fases[i].numero;
+                console.log('Numero',etapa.fases[i].numero,'NUmeV',etapa.fases[i].numeroV);
+            }
+        }
+
+        etapas1[etapaNum-1]=etapa;
+        this.setState(() => ({
+            etapas: etapas1
+            }));*/
+
+
+        var etapas1 =this.state.etapas;
+        var etapa = this.state.etapas[etapaNum-1];
+        etapa.fases[faseNum-1].faseShow=false;
+        etapa.fases[faseNum-1].numero=0;
+        for(var i = faseNum; i < etapa.fases.length; i++) {
+
+            if((etapa.fases[i]!=undefined) && (etapa.fases[i].numero!=0) ){
+                
+                
+                etapa.fases[i].numero--;
+                
+                etapa.fases[i].nombre='Fase '+etapa.fases[i].numero;
+                console.log('Numero',etapa.fases[i].numero,'NUmeV',etapa.fases[i].numeroV);
+            }
+        }
+     
+
+        etapas1[etapaNum-1]=etapa;
+        this.setState(() => ({
+            etapas: etapas1
+            }));
+
+
+        this.eliminarActivoFase(etapaNum,0);
+
+
+       /* console.log(faseNum)
 
         this.setState((prevState) => ({
             eliminadosFases: prevState.eliminadosFases.concat(faseNum)
-        }));
+        }));*/
+
+
+
+
 
         // this.setState(prevState => ({
         //     ...prevState,
@@ -468,26 +577,82 @@ export default class RegistrarYacimiento extends React.Component {
     handleOnClickEEtapa(etapaNum){
 
         var etapas1 =this.state.etapas;
-        console.log(etapas1, etapaNum-1);
-        console.log(etapas1[etapaNum-1]);
-        for(var i =0; i< etapas1[etapaNum-1].fases.length; i++){
+        //console.log(etapas1, etapaNum-1);
+        //console.log(etapas1[etapaNum-1]);
+        /*for(var i =0; i< etapas1[etapaNum-1].fases.length; i++){
 
             this.handleOnClickEFase(etapaNum,etapas1[etapaNum-1].fases[i].numero);
-        }
-        etapas1.splice(etapaNum-1,1);
-
-        for(var i = etapaNum-1; i < etapas1.length; i++) {
+        }*/
+        //etapas1.splice(etapaNum-1,1);
+        etapas1[etapaNum-1].etapaShow=false;
+        etapas1[etapaNum-1].numero=0;
+        for(var i = etapaNum; i < etapas1.length; i++) {
             
-            if((etapas1[i]!=undefined)){
+          
+            if((etapas1[i]!=undefined) && (etapas1[i].numero!=0)){
+               
+                
                 etapas1[i].numero--;
                 etapas1[i].nombre='Etapa '+etapas1[i].numero;
             }
         }
 
         this.setState(() => ({
-            etapas: etapas1
+            etapas: etapas1,
         }));
+        this.eliminarActivoEtapa();
+    }
 
+
+
+    eliminarActivoEtapa=()=>{
+
+        let i=0;
+        let activar=true;
+        let etapas = this.state.etapas;
+        for(let k=0; k< this.state.etapas.length; k++){
+             if(etapas[k].numero!=0){
+                i++;
+            }
+        }
+        
+        if(i>1){
+            activar=false;
+        }
+
+        this.setState(() => ({
+            eliminar:activar
+        }));
+        console.log('Eliminar Etapa',activar,i);
+       
+    }
+
+
+    eliminarActivoFase=(etapaNum,e)=>{
+
+        let i=0+e;
+        let activar=true;
+        let fases=this.state.etapas[etapaNum-1].fases;
+        for(let k=0; k<this.state.etapas[etapaNum-1].fases.length; k++){
+             if(fases[k].numero!=0){
+                i++;
+            }
+        }
+        
+        if(i>1){
+            activar=false;
+        }
+
+        let etapas = this.state.etapas;
+        let etapa = this.state.etapas[etapaNum-1];
+        etapa.eliminar = activar;
+        etapas[etapaNum-1] = etapa;
+
+        this.setState(() => ({
+            etapas: etapas
+        }));
+         console.log('Eliminar Fase',activar,i);
+        
     }
 
 
@@ -810,8 +975,8 @@ export default class RegistrarYacimiento extends React.Component {
                                                 modificar={false}
                                                 consultar={false}
                                                 eliminar={false}
-                                                columns={'http://localhost:3000/column_names/test_table'} 
-                                                data={'http://localhost:3000/users'}
+                                                columns={'http://localhost:3000/column_names/cliente'} 
+                                                data={'http://localhost:3000/getAllClientes'}
                                                 url={'consultar_empleado/:'}
                                                 checktable={true}
                                                 textoSingular={'mineral'}
@@ -922,11 +1087,12 @@ export default class RegistrarYacimiento extends React.Component {
                                         id="controlled-tab-example"
                                         defaultActiveKey={this.state.key}
                                     >
-                                        {this.state.etapas.map((etapa,index)=>{
+                                        {this.state.etapas.map((etapa,indexe)=>{
+                                            if (etapa.etapaShow === true) 
                                             return(
 
-                                                <Tab eventKey={etapa.nombre} title={etapa.nombre}>
-                                                    <Button variant="outline-danger" className="btn-eliminar" onClick={() => this.handleOnClickEEtapa(etapa.numero)} disabled={(this.state.etapas.length == 1)? true: false}>Eliminar</Button>
+                                                <Tab eventKey={etapa.nombre} title={etapa.nombre} key={indexe}>
+                                                    <Button variant="outline-danger" className="btn-eliminar" onClick={() => this.handleOnClickEEtapa(etapa.numeroV)} disabled={this.state.eliminar}>Eliminar</Button>
                                                     <Container>
                                                    
                                                         <FormTitulo titulo={"Información General de la Etapa "+etapa.numero}/>
@@ -973,18 +1139,20 @@ export default class RegistrarYacimiento extends React.Component {
                                                             </Form.Group>  
                                                         </Form.Row>
                                                         <FormTitulo titulo="Fases"/>
-                                                        <Button variant="outline-primary" className="btn-agregar" onClick={() => this.handleOnClickAFase(etapa.numero)}>Agregar Fase</Button>
+                                                        <Button variant="outline-primary" className="btn-agregar" onClick={() => this.handleOnClickAFase(etapa.numeroV)}>Agregar Fase</Button>
                                                         <Tabs
                                                             id="controlled-tab-example"
-                                                            defaultActiveKey={this.state.etapas[etapa.numero-1].key}
+                                                            defaultActiveKey={this.state.etapas[etapa.numeroV-1].key}
                                                             onClick={this.prueba}
                                                         >
-                                                            {this.state.etapas[etapa.numero-1].fases.map((fase,index)=>{
+                                                            {this.state.etapas[etapa.numeroV-1].fases.map((fase,indexf)=>{
                                                                 console.log()        
 
-                                                                if (!this.state.eliminadosFases.includes(fase.numero)) return(    
-                                                                    <Tab eventKey={fase.nombre} title={fase.nombre}>
-                                                                        <Button variant="outline-danger" onClick={() => this.handleOnClickEFase(etapa.numero,fase.numero)} className="btn-eliminar" disabled={(this.state.etapas[etapa.numero-1].fases.length == 1)? true: false}>Eliminar</Button>
+                                                                if (fase.faseShow === true) 
+
+                                                                    return(    
+                                                                    <Tab eventKey={fase.nombre}  title={fase.nombre} key={indexf}>
+                                                                        <Button variant="outline-danger" onClick={() => this.handleOnClickEFase(etapa.numeroV,fase.numeroV)} className="btn-eliminar" disabled={etapa.eliminar}>Eliminar</Button>
                                                                         <Container>
                                                                             <FormTitulo titulo={"Información General de la Fase "+fase.numero}/>
                                                                             <Form.Row className="formMargins">
@@ -1039,8 +1207,8 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                             modificar={false}
                                                                                             consultar={false}
                                                                                             eliminar={false}
-                                                                                            columns={'http://localhost:3000/column_names/test_table'} 
-                                                                                            data={'http://localhost:3000/users'}
+                                                                                            columns={'http://localhost:3000/column_names/cliente'} 
+                                                                                            data={'http://localhost:3000/getAllClientes'}
                                                                                             url={'consultar_empleado/:'}
                                                                                             checktable={true}
                                                                                             textoSingular={'cargo'}
@@ -1049,7 +1217,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                             fase={fase.numeroV}
                                                                                             nombreDT={this.props.nombreDT}
                                                                                         />
-                                                                                        {console.log('FASENV',fase.numeroV)}
+                                                                                       
                                                                                     </Col>
                                                                                     <Col sm={0} md={1}></Col>
                                                                             </Row>
@@ -1105,8 +1273,8 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                             modificar={false}
                                                                                             consultar={false}
                                                                                             eliminar={false}
-                                                                                            columns={'http://localhost:3000/column_names/test_table'} 
-                                                                                            data={'http://localhost:3000/users'}
+                                                                                            columns={'http://localhost:3000/column_names/cliente'} 
+                                                                                            data={'http://localhost:3000/getAllClientes'}
                                                                                             url={'consultar_empleado/:'}
                                                                                             checktable={true}
                                                                                             textoSingular={'tipo de maquinaria'}
