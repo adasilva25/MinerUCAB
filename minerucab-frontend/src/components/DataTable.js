@@ -42,8 +42,10 @@ export default class DataTable extends React.Component {
         const selectCheck = this.props.selectCheck
         // console.log('selectCheck', selectCheck)
         // console.log("inicio",etapa,fase);
-        const alt = etapa.toString() + '_' + fase.toString()
-        // let call=null;
+        console.log(etapa)
+        if(etapa !== undefined){
+            const alt = etapa.toString() + '_' + fase.toString()
+        }
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
