@@ -100,8 +100,7 @@ INSERT INTO MU_CARGO (Nombre, Descripcion) VALUES
     ('Supervisor de Campo', 'Supervisa las actividades de campo de la explotación'),
     ('Técnico', 'Supervisa el estado de los equipos y la maquinaria'),
     ('Topógrafo', 'Realiza el levantamiento plano-milimétrico del terreno');
-
-CHECK (Nivel_de_instruccion IN ('Primaria', 'Secundaria', 'Universitaria', 'Superior', 'Otro'))
+    
 ------------------------------   EMPLEADOS   ------------------------------
 INSERT INTO MU_EMPLEADO (CI, P_nombre, S_nombre, P_apellido, S_apellido, Fecha_nacimiento, Sexo, Nivel_de_instruccion, Telefono, fk_lugar, fk_cargo, fk_estatus) VALUES
     ('V11111111', 'Andrea', 'Valentina', 'Da Silva', 'Baudet', '01-25-1999', 'Femenino', 'Universitaria', '04141111111', 546, 1, 1),

@@ -128,7 +128,7 @@ const getNombreMineralNoMetalicoById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT nombre FROM mineral_no_metalico WHERE clave = ($1);';
+    const text = 'SELECT nombre FROM mu_mineral_no_metalico WHERE clave = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
