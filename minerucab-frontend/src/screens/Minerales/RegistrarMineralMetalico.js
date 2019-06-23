@@ -146,12 +146,12 @@ export default class RegistrarMineralMetalico extends React.Component {
     				<Col md={12}>
     					<Row>
 		    				<Col md={5}>
-			    				<Form.Label className="cliente-description-fields-text" refs="premindropdown">Presentación</Form.Label>
+			    				<Form.Label className="cliente-description-fields-text">Presentación</Form.Label>
 			                    <Form.Control 
 			                        as="select" 
 			                        key={index} 
 			                        id={''+index}
-			                        className="form-input form-input-dropdown-mineral-venta form-input-dropdown-mineral-presentacion"
+			                        className="form-input form-input-dropdown-mineral-presentacion"
 			                        onChange={this.selectedOption}>
 			                        {
 			                            this.renderOptions()
@@ -271,7 +271,6 @@ export default class RegistrarMineralMetalico extends React.Component {
                                         <Form.Group>
                                             <Form.Label className="cliente-description-fields-text">Descripción</Form.Label>
                                             <Form.Control 
-                                                type="text" 
                                                 id="descripcion-mineral-metalico"
                                                 className="form-input" 
                                                 value={this.state.descripcion} 
