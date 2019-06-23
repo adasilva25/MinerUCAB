@@ -33,6 +33,10 @@ export default class RegistrarYacimiento extends React.Component {
             eliminar:true,
             prueba: true,
             key:"Etapa 1",
+            explotacion:{
+                duracion:0,
+                costo:0,
+            },
             yacimiento:{
                 nombre:null,
                 descripcion:null,
@@ -55,6 +59,7 @@ export default class RegistrarYacimiento extends React.Component {
                 accordionKey:0,
                 componentes:[{
                     nombre:null,
+                    id:0,
                     total:0
                 }]
                 
@@ -63,8 +68,8 @@ export default class RegistrarYacimiento extends React.Component {
             etapas: [{
                 nombre: "Etapa 1",
                 descripcion: null,
-                duracion:null,
-                costo:null,
+                duracion:0,
+                costo:0,
                 etapaShow:true,
                 numero: 1,
                 numeroV:1,
@@ -73,8 +78,8 @@ export default class RegistrarYacimiento extends React.Component {
                 fases: [{
                     nombre: "Fase 1",
                     descripcion:null,
-                    duracion:null,
-                    costo:null,
+                    duracion:0,
+                    costo:0,
                     faseShow:true,
                     cargoShow:'none',
                     tipoMaquinariaShow:'none',
@@ -274,8 +279,8 @@ export default class RegistrarYacimiento extends React.Component {
         var Etapa={
                 nombre:'',
                 descripcion: null,
-                duracion:null,
-                costo:null,
+                duracion:0,
+                costo:0,
                 etapaShow:true,
                 numero: 1,
                 numeroV:1,
@@ -284,8 +289,8 @@ export default class RegistrarYacimiento extends React.Component {
                 fases: [{
                     nombre: "Fase 1",
                     descripcion:null,
-                    duracion:null,
-                    costo:null,
+                    duracion:0,
+                    costo:0,
                     faseShow:true,
                     cargoShow:'none',
                     tipoMaquinariaShow:'none',
@@ -333,8 +338,8 @@ export default class RegistrarYacimiento extends React.Component {
         var Fase={
                 nombre: '',
                 descripcion:null,
-                duracion:null,
-                costo:null,
+                duracion:0,
+                costo:0,
                 faseShow:true,
                 cargoShow:'none',
                 tipoMaquinariaShow:'none',
@@ -458,6 +463,8 @@ export default class RegistrarYacimiento extends React.Component {
 
 
         this.eliminarActivoFase(etapaNum,0);
+        this.actualizarCostos();
+        this.actualizarDuracion();
 
 
        /* console.log(faseNum)
@@ -601,6 +608,8 @@ export default class RegistrarYacimiento extends React.Component {
             etapas: etapas1,
         }));
         this.eliminarActivoEtapa();
+        this.actualizarCostos();
+        this.actualizarDuracion();
     }
 
 
@@ -659,12 +668,13 @@ export default class RegistrarYacimiento extends React.Component {
     selectMinerales = (id,et,fa) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         console.log('entroMinerales', id)
 
-      
-
-
         let  minerales=this.state.Minerales;
         var eliminado= false;
         var mineralS='inline';
+        
+        let costo_anterior=0;
+        let id_a_eliminar=-1;
+
         var componetesNombres=['Clarita','Durita','Virita','Fusita'];
         if(this.state.Minerales[0].id === -1){
             this.state.Minerales.shift();
@@ -678,11 +688,40 @@ export default class RegistrarYacimiento extends React.Component {
 
         for(var i = 0; i < this.state.Minerales.length; i++) {
             //console.log(minerales[i].id,"id");
+            
+
+            costo_anterior=document.getElementById('YacimientosTotalMineral'+minerales[i].id).value;
+           
+            
+
+
+           if(eliminado){
+                document.getElementById('YacimientosTotalMineral'+minerales[i-1].id).value=costo_anterior;
+                /*for(let j=0; j<minerales[i-1].componentes.length; j++){
+                    document.getElementById('YacimientosMineralComponente'+minerales[i-1].id+minerales[i-1].componentes[j].id).value=cantidad_anterior[j];  
+                }*/
+            }
+
             if(minerales[i].id === id){
-                minerales.splice(i,1);
+               
+                for(let j=0; j<minerales[i].componentes.length; j++){
+                    document.getElementById('YacimientosMineralComponente'+minerales[i].id+minerales[i].componentes[j].id).value='';  
+                }
+                document.getElementById('YacimientosTotalMineral'+id).value='';
+
+                //minerales.splice(i,1);
+                id_a_eliminar=i;
                 eliminado=true;
             }
+
+            
+            
         }
+
+        if(eliminado){
+            minerales.splice(id_a_eliminar,1);
+        }
+
         if(!eliminado){
             let mineral={
                 nombre:'',
@@ -695,12 +734,14 @@ export default class RegistrarYacimiento extends React.Component {
 
             mineral.nombre='Mineral'+id;
             mineral.id=id;
-            for(var k=0; k<componetesNombres.length; k++){
+            for(var k=0; k<this.state.explotacion.costo; k++){
                 let componente={
                     nombre:'',
-                    total:0
+                    id:0,
+                    total:''
                 }
-                componente.nombre='Componente '+id+' '+componetesNombres[k];
+                componente.nombre='Componente '+id;
+                componente.id = id+k;//EPALEEPALEARRIBARRIBA
                 mineral.componentes.push(componente);
                // console.log(k,"k",componetesNombres[k]);
             }
@@ -715,7 +756,7 @@ export default class RegistrarYacimiento extends React.Component {
                 accordionKey:0,
                 componentes:[{
                     nombre:null,
-                    total:0
+                    total:''
                 }]    
             };
             minerales.push(mineral);
@@ -725,7 +766,19 @@ export default class RegistrarYacimiento extends React.Component {
             mineralShow: mineralS,
             Minerales: minerales
         }));
+
+        if(eliminado){
+            for(let i=0; i<this.state.Minerales.length;i++){
+                for(let j=0; j<this.state.Minerales[i].componentes.length; j++){
+                    document.getElementById('YacimientosMineralComponente'+minerales[i].id+minerales[i].componentes[j].id).value = this.state.Minerales[i].componentes[j].total;
+                    
+                }
+            }
+        }
+
+
         console.log(minerales);
+
        // console.log(minerales[0].componentes[1]);
     };
 
@@ -740,17 +793,40 @@ export default class RegistrarYacimiento extends React.Component {
         let cargos=this.state.etapas[etapaNum-1].fases[faseNum-1].cargos;
         var eliminado= false;
         var cargoS='inline';
+        let costo_anterior = 0;
+        let cantidad_anterior = 0;
+        let id_a_eliminar=0;
+
         if(cargos[0].id === -1){
             cargos.shift();
 
         }
         for(var i = 0; i < this.state.etapas[etapaNum-1].fases[faseNum-1].cargos.length; i++) {
            // console.log(cargos[i].id,"id");
+
+            costo_anterior =document.getElementById('YacimientosCantidadCargo'+etapaNum+faseNum+i).value='';
+            cantidad_anterior =document.getElementById('YacimientosSueldoCargo'+etapaNum+faseNum+i).value='';
+
+            if(eliminado){
+                document.getElementById('YacimientosCantidadCargo'+etapaNum+faseNum+(i-1)).value=costo_anterior;
+                document.getElementById('YacimientosSueldoCargo'+etapaNum+faseNum+(i-1)).value=cantidad_anterior;
+
+            }
             if(cargos[i].id === id){
-                cargos.splice(i,1);
+               
+                document.getElementById('YacimientosCantidadCargo'+etapaNum+faseNum+i).value='';
+                document.getElementById('YacimientosSueldoCargo'+etapaNum+faseNum+i).value='';
+                id_a_eliminar=i;
+               // cargos.splice(i,1);
                 eliminado=true;
             }
         }
+
+        if(eliminado){
+            cargos.splice(id_a_eliminar,1);
+        }
+
+
         if(!eliminado){
             let cargo={
                 nombre:null,
@@ -780,6 +856,11 @@ export default class RegistrarYacimiento extends React.Component {
         this.setState(() => ({
             etapas:etapas1
         }));
+
+
+
+        this.actualizarCostos();
+
         console.log(cargos);
         
     };
@@ -792,6 +873,9 @@ export default class RegistrarYacimiento extends React.Component {
         let tiposMaquinaria=this.state.etapas[etapaNum-1].fases[faseNum-1].tipoMaquinaria;
         var eliminado= false;
         var tipoMaquinariaS='inline';
+        let costo_anterior = 0;
+        let cantidad_anterior = 0;
+        let id_a_eliminar=0;
 
         if(tiposMaquinaria[0].id === -1){
             tiposMaquinaria.shift();
@@ -799,14 +883,32 @@ export default class RegistrarYacimiento extends React.Component {
         }
         for(var i = 0; i < this.state.etapas[etapaNum-1].fases[faseNum-1].tipoMaquinaria.length; i++) {
            // console.log(tiposMaquinaria[i].id,"id");
+            costo_anterior=document.getElementById('YacimientosCantidadTipoMaquinaria'+etapaNum+faseNum+i).value;
+            cantidad_anterior=document.getElementById('YacimientosCostoTipoMaquinaria'+etapaNum+faseNum+i).value;
+            if(eliminado){
+                    
+                document.getElementById('YacimientosCantidadTipoMaquinaria'+etapaNum+faseNum+(i-1)).value=costo_anterior;
+                document.getElementById('YacimientosCostoTipoMaquinaria'+etapaNum+faseNum+(i-1)).value=cantidad_anterior;
+            }
             if(tiposMaquinaria[i].id === id){
                 if(tiposMaquinaria[i+1] != undefined){
                     tiposMaquinaria[i+1].accordionKey=1;
+                    
                 }
-                tiposMaquinaria.splice(i,1);
+                document.getElementById('YacimientosCantidadTipoMaquinaria'+etapaNum+faseNum+i).value='';
+                document.getElementById('YacimientosCostoTipoMaquinaria'+etapaNum+faseNum+i).value='';
+                id_a_eliminar=i;
+                //tiposMaquinaria.splice(i,1);
                 eliminado=true;
             }
+           
+
         }
+        if(eliminado){
+            tiposMaquinaria.splice(id_a_eliminar,1);
+        }
+
+
         if(!eliminado){
 
 
@@ -840,6 +942,9 @@ export default class RegistrarYacimiento extends React.Component {
             etapas: etapas1
             
         }));
+
+        this.actualizarCostos();
+
        console.log(tiposMaquinaria);
         
     };
@@ -872,6 +977,640 @@ export default class RegistrarYacimiento extends React.Component {
 
 
 
+    handleOnClickSubmittData=()=>{
+
+
+        const info = {
+            yacimiento:{
+                nombre:null,
+                descripcion:null,
+                area:null,
+                tipo:null,
+                ubicacion:{
+                    estado:null,
+                    municipio:null,
+                    parroquia:null
+                },
+                fecha:{
+                    dia:null,
+                    mes:null,
+                    ano:null
+                }
+            },
+            minerales:[{
+                id:0,
+                total: 0,
+                componentes:[{
+                    id:0,
+                    total:0
+                }]
+            }],
+            explotacion:{
+                duracion:0,
+                costo:0,
+            },
+            etapas: [{
+                nombre: null,
+                duracion:0,
+                costo:0,
+                fases: [{
+                    nombre: null,
+                    duracion:0,
+                    costo:0,
+                    cargos:[{
+                        id:0,
+                        sueldo:0,
+                        cantidad:0,
+                    }],
+                    tipoMaquinaria:[{
+                        id:0,
+                        costo:0,
+                        cantidad:0,
+                    }]
+                }]
+            }]
+        }
+
+        let incompleto = document.getElementById("YacimientosNombreYacimiento").value.trim(); 
+        if(!incompleto){
+            console.log('COMPLETO');
+        }
+      /*  if(document.getElementById("YacimientosNombreYacimiento").value.trim){
+
+        }
+        this.state.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value;
+        this.state.yacimiento.descripcion*/
+        console.log('NOMBRE YACIMEITNO',incompleto);
+
+        info.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value.trim();
+        info.yacimiento.descripcion = document.getElementById("YacimientosDescripcionYacimiento").value.trim();
+        info.yacimiento.area = document.getElementById("YacimientosTamañoYacimiento").value.trim();
+        info.yacimiento.tipo = document.getElementById("YacimientosTipoYacimiento").value.trim();
+        info.yacimiento.ubicacion.estado = document.getElementById("LugarEstado").value.trim();
+        info.yacimiento.ubicacion.municipio = document.getElementById("LugarMunicipio").value.trim();
+        info.yacimiento.ubicacion.parroquia = document.getElementById("LugarParroquia").value.trim();
+        info.yacimiento.fecha.dia = document.getElementById("FechaDia").value.trim();
+        info.yacimiento.fecha.mes = document.getElementById("FechaMes").value.trim();
+        info.yacimiento.fecha.ano = document.getElementById("FechaAno").value.trim();
+
+        for(let i=0; i<this.state.Minerales.length; i++){
+            let mineral={
+                id:0,
+                total: 0,
+                componentes:[{
+                    id:0,
+                    total:0
+                }]
+            }
+           
+            mineral.id=this.state.Minerales[i].id;
+            mineral.total=document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim();
+            for(let k=0; k<this.state.Minerales[i].componentes.length; k++){
+                let componente = {
+                    id:0,
+                    total:0
+                }
+
+                componente.id = this.state.Minerales[i].componentes[k].id;
+                componente.total = document.getElementById("YacimientosMineralComponente"+mineral.id+componente.id).value.trim();
+                mineral.componentes.push(componente);
+            }
+
+            info.minerales.push(mineral);
+        }
+        
+
+        info.explotacion.duracion = document.getElementById('YacimientosDuracionInfoExplotacion').value.trim();
+        info.explotacion.costo = document.getElementById('YacimientosCostoInfoExplotacion').value.trim();
+
+        this.state.etapas.forEach((etapaR)=>{
+            if(etapaR.numero != 0){
+                let etapa= {
+                    nombre: null,
+                    duracion:0,
+                    costo:0,
+                    fases: [{
+                        nombre: null,
+                        duracion:0,
+                        costo:0,
+                        cargos:[{
+                            id:0,
+                            sueldo:0,
+                            cantidad:0,
+                        }],
+                        tipoMaquinaria:[{
+                            id:0,
+                            costo:0,
+                            cantidad:0,
+                        }]
+                    }]
+                }
+                
+                etapa.nombre = document.getElementById('YacimientosNombreEtapa'+etapaR.numeroV).value.trim();
+                etapa.duracion = etapaR.duracion;
+                etapa.costo = etapaR.costo;
+
+                etapaR.fases.forEach((faseR)=>{
+                    if(faseR.numero != 0){
+                        let fase= {
+                            nombre: null,
+                            duracion:0,
+                            costo:0,
+                            cargos:[{
+                                id:0,
+                                sueldo:0,
+                                cantidad:0,
+                            }],
+                            tipoMaquinaria:[{
+                                id:0,
+                                costo:0,
+                                cantidad:0,
+                            }]
+                        }
+
+                        fase.nombre = document.getElementById('YacimientosNombreEtapaFase'+etapaR.numeroV+faseR.numeroV).value.trim();
+                        fase.duracion = document.getElementById('YacimientosDuracionEtapaFase'+etapaR.numeroV+faseR.numeroV).value.trim();
+                        fase.costo = document.getElementById('YacimientosCostoEtapaFase'+etapaR.numeroV+faseR.numeroV).value.trim();
+                        
+                        faseR.cargos.forEach((cargoR)=>{
+                            let cargo={
+                                id:0,
+                                sueldo:0,
+                                cantidad:0,
+                            }
+                            cargo.id = cargoR.id;
+                            cargo.sueldo = cargoR.sueldo;
+                            cargo.cantidad = cargoR.cantidad;
+
+                            fase.cargos.push(cargo);
+                        });
+
+                        faseR.tipoMaquinaria.forEach((tipoMaquinariaR)=>{
+                            let tipoMaquinaria={
+                                id:0,
+                                costo:0,
+                                cantidad:0,
+                            }
+                            tipoMaquinaria.id = tipoMaquinariaR.id;
+                            tipoMaquinaria.costo = tipoMaquinariaR.costo;
+                            tipoMaquinaria.cantidad = tipoMaquinariaR.cantidad;
+
+                            fase.tipoMaquinaria.push(tipoMaquinaria);
+                        });
+
+                        etapa.fases.push(fase);
+                    }
+                });
+
+                info.etapas.push(etapa);
+
+
+            }
+        });
+
+        console.log(info);
+
+    }
+
+
+
+
+    handleOnChangeCostoTipoMaq=(event,etapaNum,faseNum,tipoMaqNum)=>{
+        const value = event.target.value;
+        const valueTrimmed = value.trim();
+        const etapas1= this.state.etapas;
+
+        
+
+        if(valueTrimmed){
+            event.target.state='valid';
+             console.log("valido",document.getElementById('YacimientosCostoTextTipoMaquinaria'+etapaNum+faseNum+tipoMaqNum).innerHTML);
+
+            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>-1) ){
+                document.getElementById('YacimientosCostoTextTipoMaquinaria'+etapaNum+faseNum+tipoMaqNum).innerHTML = "Obligatorio";
+                etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].costo=Number(valueTrimmed);
+                
+                this.setState(() => ({
+                    etapas: etapas1
+                    
+                }));
+                console.log('Costo Maquinaria', this.state.etapas[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].costo);
+                this.actualizarCostos();
+            }
+            else{
+                
+                document.getElementById('YacimientosCostoTextTipoMaquinaria'+etapaNum+faseNum+tipoMaqNum).innerHTML = "Introduzca un número válido";
+                etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].costo=0;
+                this.actualizarCostos();
+            }
+           
+        }
+        else{
+            event.target.state='invalid';
+            document.getElementById('YacimientosCostoTextTipoMaquinaria'+etapaNum+faseNum+tipoMaqNum).innerHTML = "Introduzca un número válido";
+              console.log("invalido");
+        }
+        
+        if(!value){
+            event.target.state='';
+            document.getElementById('YacimientosCostoTextTipoMaquinaria'+etapaNum+faseNum+tipoMaqNum).innerHTML = "Obligatorio";
+            etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].costo=0;
+            this.actualizarCostos();
+        }
+        
+         
+
+    }
+
+    handleOnChangeCantidadTipoMaq=(event,etapaNum,faseNum,tipoMaqNum)=>{
+        const value = event.target.value;
+        const valueTrimmed = value.trim();
+        const etapas1= this.state.etapas;
+
+        
+
+        if(valueTrimmed){
+            event.target.state='valid';
+             console.log("valido",document.getElementById('YacimientosCantidadTextTipoMaquinaria'+etapaNum+faseNum+tipoMaqNum).innerHTML);
+
+            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0) && (Number.isInteger(Number(valueTrimmed))) ){
+                document.getElementById('YacimientosCantidadTextTipoMaquinaria'+etapaNum+faseNum+tipoMaqNum).innerHTML = "Obligatorio";
+                etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].cantidad=Number(valueTrimmed);
+                
+                this.setState(() => ({
+                    etapas: etapas1
+                    
+                }));
+                this.actualizarCostos();
+            }
+            else{
+                
+                document.getElementById('YacimientosCantidadTextTipoMaquinaria'+etapaNum+faseNum+tipoMaqNum).innerHTML = "Introduzca un número válido";
+                etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].cantidad=0;
+                this.actualizarCostos();
+            }
+           
+        }
+        else{
+            event.target.state='invalid';
+            document.getElementById('YacimientosCantidadTextTipoMaquinaria'+etapaNum+faseNum+tipoMaqNum).innerHTML = "Introduzca un número válido";
+              console.log("invalido");
+        }
+        
+        if(!value){
+            event.target.state='';
+            document.getElementById('YacimientosCantidadTextTipoMaquinaria'+etapaNum+faseNum+tipoMaqNum).innerHTML = "Obligatorio";
+            etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].cantidad=0;
+            this.actualizarCostos();
+        }
+        
+
+    }
+
+
+
+
+    handleOnChangeSueldoCargo=(event,etapaNum,faseNum,cargoNum)=>{
+        const value = event.target.value;
+        const valueTrimmed = value.trim();
+        const etapas1= this.state.etapas;
+
+        
+
+        if(valueTrimmed){
+            event.target.state='valid';
+             console.log("valido",document.getElementById('YacimientosSueldoTextCargo'+etapaNum+faseNum+cargoNum).innerHTML);
+
+            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>-1) ){
+                document.getElementById('YacimientosSueldoTextCargo'+etapaNum+faseNum+cargoNum).innerHTML = "Obligatorio";
+                etapas1[etapaNum-1].fases[faseNum-1].cargos[cargoNum].sueldo=Number(valueTrimmed);
+                
+                this.setState(() => ({
+                    etapas: etapas1
+                    
+                }));
+                console.log('Costo Maquinaria', this.state.etapas[etapaNum-1].fases[faseNum-1].cargos[cargoNum].sueldo);
+                this.actualizarCostos();
+            }
+            else{
+                
+                document.getElementById('YacimientosSueldoTextCargo'+etapaNum+faseNum+cargoNum).innerHTML = "Introduzca un número válido";
+                etapas1[etapaNum-1].fases[faseNum-1].cargos[cargoNum].sueldo=0;
+                this.actualizarCostos();
+            }
+           
+        }
+        else{
+            event.target.state='invalid';
+            document.getElementById('YacimientosSueldoTextCargo'+etapaNum+faseNum+cargoNum).innerHTML = "Introduzca un número válido";
+              console.log("invalido");
+        }
+        
+        if(!value){
+            event.target.state='';
+            document.getElementById('YacimientosSueldoTextCargo'+etapaNum+faseNum+cargoNum).innerHTML = "Obligatorio";
+            etapas1[etapaNum-1].fases[faseNum-1].cargos[cargoNum].sueldo=0;
+            this.actualizarCostos();
+        }
+    }
+
+
+
+
+
+    handleOnChangeCantidadCargo=(event,etapaNum,faseNum,cargoNum)=>{
+        const value = event.target.value;
+        const valueTrimmed = value.trim();
+        const etapas1= this.state.etapas;
+
+        
+
+        if(valueTrimmed){
+            event.target.state='valid';
+             console.log("valido",document.getElementById('YacimientosCantidadTextCargo'+etapaNum+faseNum+cargoNum).innerHTML);
+
+            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0) && (Number.isInteger(Number(valueTrimmed))) ){
+                document.getElementById('YacimientosCantidadTextCargo'+etapaNum+faseNum+cargoNum).innerHTML = "Obligatorio";
+                etapas1[etapaNum-1].fases[faseNum-1].cargos[cargoNum].cantidad=Number(valueTrimmed);
+                
+                this.setState(() => ({
+                    etapas: etapas1
+                    
+                }));
+                this.actualizarCostos();
+            }
+            else{
+                
+                document.getElementById('YacimientosCantidadTextCargo'+etapaNum+faseNum+cargoNum).innerHTML = "Introduzca un número válido";
+                etapas1[etapaNum-1].fases[faseNum-1].cargos[cargoNum].cantidad=0;
+                this.actualizarCostos();
+            }
+           
+        }
+        else{
+            event.target.state='invalid';
+            document.getElementById('YacimientosCantidadTextCargo'+etapaNum+faseNum+cargoNum).innerHTML = "Introduzca un número válido";
+              console.log("invalido");
+        }
+        
+        if(!value){
+            event.target.state='';
+            document.getElementById('YacimientosCantidadTextCargo'+etapaNum+faseNum+cargoNum).innerHTML = "Obligatorio";
+            etapas1[etapaNum-1].fases[faseNum-1].cargos[cargoNum].cantidad=0;
+            this.actualizarCostos();
+        }
+        
+
+    }
+
+    actualizarCostos=()=>{
+        let etapas1 = this.state.etapas;
+        let explotacion1 = this.state.explotacion;
+        explotacion1.costo = 0;
+        etapas1.forEach((etapaR)=>{
+            etapaR.costo=0;
+            if(etapaR.numero != 0){
+                etapaR.fases.forEach((faseR)=>{
+                    faseR.costo=0;
+                    if(faseR.numero!=0){
+                        console.log('tipo maqui costo atualizacion', faseR.cargos);
+                        faseR.cargos.forEach((cargoR)=>{
+                            faseR.costo += Math.round(parseFloat(cargoR.sueldo * cargoR.cantidad)*100)/100;
+                            console.log('tipoualizacion', cargoR.sueldo);
+                        });
+
+                        faseR.tipoMaquinaria.forEach((tipoMaquinariaR)=>{
+
+                            faseR.costo += Math.round(parseFloat(tipoMaquinariaR.costo * tipoMaquinariaR.cantidad)*100)/100;
+
+                        });
+
+                        etapaR.costo += faseR.costo;
+                    }
+                });
+                explotacion1.costo += etapaR.costo;
+            }
+        });
+
+        this.setState(() => ({
+            etapas: etapas1,
+            explotacion: explotacion1
+                    
+        }));
+        console.log('CostoTotal', this.state.explotacion.costo);
+    }
+
+
+
+
+
+    handleOnChangeDuracionFase=(event,etapaNum,faseNum)=>{
+        const value = event.target.value;
+        const valueTrimmed = value.trim();
+        const etapas1= this.state.etapas;
+
+        
+
+        if(valueTrimmed){
+            event.target.state='valid';
+             console.log("valido",document.getElementById('YacimientosDuracionTextEtapaFase'+etapaNum+faseNum).innerHTML);
+
+            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0) && (Number.isInteger(Number(valueTrimmed))) ){
+                document.getElementById('YacimientosDuracionTextEtapaFase'+etapaNum+faseNum).innerHTML = "Obligatorio";
+                etapas1[etapaNum-1].fases[faseNum-1].duracion=Number(valueTrimmed);
+                
+                this.setState(() => ({
+                    etapas: etapas1
+                    
+                }));
+                this.actualizarDuracion();
+            }
+            else{
+                
+                document.getElementById('YacimientosDuracionTextEtapaFase'+etapaNum+faseNum).innerHTML = "Introduzca un número válido";
+                etapas1[etapaNum-1].fases[faseNum-1].duracion=0;
+                this.actualizarDuracion();
+            }
+           
+        }
+        else{
+            event.target.state='invalid';
+            document.getElementById('YacimientosDuracionTextEtapaFase'+etapaNum+faseNum).innerHTML = "Introduzca un número válido";
+              console.log("invalido");
+        }
+        
+        if(!value){
+            event.target.state='';
+            document.getElementById('YacimientosDuracionTextEtapaFase'+etapaNum+faseNum).innerHTML = "Obligatorio";
+            etapas1[etapaNum-1].fases[faseNum-1].duracion=0;
+            this.actualizarDuracion();
+        }
+        
+
+    }
+
+
+
+
+    actualizarDuracion=()=>{
+        let etapas1 = this.state.etapas;
+        let explotacion1 = this.state.explotacion;
+
+        explotacion1.duracion = 0;
+        etapas1.forEach((etapaR)=>{
+            etapaR.duracion=0;
+            if(etapaR.numero != 0){
+                etapaR.fases.forEach((faseR)=>{
+                    if(faseR.numero!=0){
+                        etapaR.duracion += faseR.duracion;
+                    }
+                });
+                explotacion1.duracion += etapaR.duracion;
+            }
+        });
+
+        this.setState(() => ({
+            etapas: etapas1,
+            explotacion: explotacion1
+                    
+        }));
+        console.log('Duracion Total', this.state.explotacion.duracion);
+
+    }
+
+
+
+    handleOnChangeMineralComponentes=(event,minNUm,compNUm,minIndx,compIndx)=>{
+        const value = event.target.value;
+        const valueTrimmed = value.trim();
+        const minerales= this.state.Minerales;
+
+
+        if(valueTrimmed){
+            event.target.state='valid';
+            console.log("validoMineralCompo",document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML);
+
+            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0)  ){
+                document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML = "Obligatorio";
+                minerales[minIndx].componentes[compIndx].total =Number(valueTrimmed);
+            }
+            else{
+                
+                document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML = "Introduzca un número válido";
+               
+            }
+           
+        }
+        else{
+            event.target.state='invalid';
+            document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML = "Introduzca un número válido";
+              console.log("invalido");
+        }
+        
+        if(!value){
+            event.target.state='';
+            document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML = "Obligatorio";
+            minerales[minIndx].componentes[compIndx].total = -1;
+        }
+    }
+
+    handleOnChangeMineral=(event,minNUm)=>{
+        const value = event.target.value;
+        const valueTrimmed = value.trim();
+        const minerales= this.state.Minerales;
+
+        if(valueTrimmed){
+            event.target.state='valid';
+            console.log("validoMineral",document.getElementById('YacimientosTotalTextMineral'+minNUm).innerHTML);
+
+            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0)  ){
+                document.getElementById('YacimientosTotalTextMineral'+minNUm).innerHTML = "Obligatorio";
+                
+            }
+            else{
+                
+                document.getElementById('YacimientosTotalTextMineral'+minNUm).innerHTML = "Introduzca un número válido";
+               
+            }
+           
+        }
+        else{
+            event.target.state='invalid';
+            document.getElementById('YacimientosTotalTextMineral'+minNUm).innerHTML = "Introduzca un número válido";
+              console.log("invalido");
+        }
+        
+        if(!value){
+            event.target.state='';
+            document.getElementById('YacimientosTotalTextMineral'+minNUm).innerHTML = "Obligatorio";
+           
+        }
+    }
+
+    handleOnChangeValidarNumeros=(event,Texto)=>{
+        const value = event.target.value;
+        const valueTrimmed = value.trim();
+        const minerales= this.state.Minerales;
+
+        if(valueTrimmed){
+            event.target.state='valid';
+            
+
+            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0)  ){
+                document.getElementById(Texto).innerHTML = "Obligatorio";
+                
+            }
+            else{
+                
+                document.getElementById(Texto).innerHTML = "Introduzca un número válido";
+               
+            }
+           
+        }
+        else{
+            event.target.state='invalid';
+            document.getElementById(Texto).innerHTML = "Introduzca un número válido";
+            console.log("invalido");
+        }
+        
+        if(!value){
+            event.target.state='';
+            document.getElementById(Texto).innerHTML = "Obligatorio";
+           
+        }
+    }
+
+     handleOnChangeValidarTexto=(event,Texto,Mensaje)=>{
+        const value = event.target.value;
+        const valueTrimmed = value.trim();
+        const minerales= this.state.Minerales;
+
+        if(valueTrimmed){
+            event.target.state='valid';
+            document.getElementById(Texto).innerHTML = "Obligatorio";
+            document.getElementById(Texto).classList.remove("invalidText");
+            event.target.classList.remove("invalid");
+
+           
+        }
+        else{
+            event.target.state='invalid';
+            document.getElementById(Texto).innerHTML = Mensaje;
+            document.getElementById(Texto).classList.add("invalidText");
+            event.target.classList.add("invalid");
+            console.log('clases',event.target.classList);
+        
+        }
+        
+        if(!value){
+            event.target.state='';
+            document.getElementById(Texto).innerHTML = "Obligatorio";
+            event.target.classList.add("invalid");
+           
+        }
+    }
+
+
     render(){
         
        
@@ -894,17 +1633,17 @@ export default class RegistrarYacimiento extends React.Component {
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
                                     <Form.Row className="formMargins">
-                                        <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
+                                        <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,"YacimientosNombreYacimientoText","Introduzca un nombre válido")} controlId="YacimientosNombreYacimiento" className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
                                             <Form.Control type="text" className="form-input" placeholder="Introduzca nombre del yacimiento" />
-                                            <Form.Text className="text-muted">
+                                            <Form.Text className="text-muted" id="YacimientosNombreYacimientoText">
                                                 Obligatorio
                                             </Form.Text>
                                         </Form.Group>
-                                        <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
+                                        <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,"YacimientosDescripcionYacimientoText","Introduzca una descripción válida")} controlId="YacimientosDescripcionYacimiento" className="inputsPaddingLeft">
                                             <Form.Label className="cliente-description-fields-text">Descripción</Form.Label>
                                             <Form.Control as="textarea" rows="1" className="form-input-juridico-textarea" placeholder="Introduzca una descripción"/>
-                                            <Form.Text className="text-muted">
+                                            <Form.Text className="text-muted" id="YacimientosDescripcionYacimientoText">
                                                 Obligatorio
                                             </Form.Text>
                                         </Form.Group>   
@@ -912,7 +1651,7 @@ export default class RegistrarYacimiento extends React.Component {
                                           
                                     
                                     <Form.Row className="formMargins">
-                                        <Form.Group as={Col} md="6" controlId="formBasicEmail"  className="inputsPaddingRight">
+                                        <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarNumeros(evt,"YacimientosTamañoYacimientoText")} controlId="YacimientosTamañoYacimiento"  className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Área</Form.Label>
                                             <InputGroup className="MyInputGroup">
                                                 <Form.Control type="text" className="form-input" placeholder="Introduzca tamaño del yacimiento" /> 
@@ -920,7 +1659,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                     <InputGroup.Text  className="input-append-ventas-form" >Km<sup>2</sup></InputGroup.Text>
                                                 </InputGroup.Append>
                                             </InputGroup>
-                                            <Form.Text className="text-muted">
+                                            <Form.Text className="text-muted" id="YacimientosTamañoYacimientoText">
                                                 Obligatorio
                                             </Form.Text>    
                                         </Form.Group>
@@ -928,7 +1667,7 @@ export default class RegistrarYacimiento extends React.Component {
                                     </Form.Row>
 
                                     <Form.Row className="formMargins">
-                                        <Form.Group as={Col} md="6" controlId="formBasicEmail"  className="inputsPaddingRight">
+                                        <Form.Group as={Col} md="6" controlId="YacimientosTipoYacimiento"  className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Tipo de Yacimiento</Form.Label>
                                             <Form.Control 
                                             as="select" 
@@ -988,7 +1727,7 @@ export default class RegistrarYacimiento extends React.Component {
                                         <Col sm={0} md={1}></Col>
                                     </Row>
                                     <Container>
-                                        {this.state.Minerales.map((mineral,index)=>{             
+                                        {this.state.Minerales.map((mineral,indexMin)=>{             
                                             return(
                                                 <div style={{display: this.state.mineralShow}}>
                                                     <Accordion defaultActiveKey={1} >
@@ -999,11 +1738,11 @@ export default class RegistrarYacimiento extends React.Component {
                                                             <Accordion.Collapse eventKey={1} >
                                                                 <Card.Body className="BodyAcc">
                                                                     <Form.Row className="formMargins">
-                                                                    {mineral.componentes.map((componente,index)=>{
+                                                                    {mineral.componentes.map((componente,indexComp)=>{
                                                                             
                                                                         return(
                                                                             
-                                                                                <Form.Group as={Col} md="3" controlId="formBasicEmail"  className="inputsPaddingRight">
+                                                                                <Form.Group as={Col} md="3" onChange={(evt)=>this.handleOnChangeMineralComponentes(evt,mineral.id,componente.id,indexMin,indexComp)} controlId={'YacimientosMineralComponente'+mineral.id+componente.id} className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">{componente.nombre}</Form.Label>
                                                                                     <InputGroup className="MyInputGroup">
                                                                                         <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
@@ -1011,7 +1750,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                             <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                         </InputGroup.Append>
                                                                                     </InputGroup>
-                                                                                    <Form.Text className="text-muted">
+                                                                                    <Form.Text className="text-muted" id={'YacimientosTextMineralComponente'+mineral.id+componente.id}>
                                                                                         Obligatorio
                                                                                     </Form.Text>    
                                                                                 </Form.Group>
@@ -1020,7 +1759,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                     })}
                                                                     </Form.Row>
                                                                     <Form.Row className="formMargins">
-                                                                        <Form.Group as={Col} md="12" controlId="formBasicEmail"  className="inputsPaddingRight">
+                                                                        <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineral(evt,mineral.id)} controlId={'YacimientosTotalMineral'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
                                                                                 <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
@@ -1028,7 +1767,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>
                                                                             </InputGroup>
-                                                                            <Form.Text className="text-muted">
+                                                                            <Form.Text className="text-muted" id={'YacimientosTotalTextMineral'+mineral.id}>
                                                                                 Obligatorio
                                                                             </Form.Text>    
                                                                         </Form.Group>
@@ -1056,10 +1795,10 @@ export default class RegistrarYacimiento extends React.Component {
                                 <Card.Body className="BodyAcc">
                                     
                                     <Form.Row className="formMargins">
-                                        <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
+                                        <Form.Group as={Col} md="6" controlId={'YacimientosDuracionInfoExplotacion'} className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Duración de la Explotación</Form.Label>
                                             <InputGroup className="MyInputGroup">
-                                                <Form.Control type="text" className="form-input" disabled={true}/> 
+                                                <Form.Control type="text" className="form-input" placeholder={this.state.explotacion.duracion} disabled/> 
                                                 <InputGroup.Append>
                                                     <InputGroup.Text  className="input-append-ventas-form" >días</InputGroup.Text>
                                                 </InputGroup.Append>
@@ -1068,10 +1807,10 @@ export default class RegistrarYacimiento extends React.Component {
                                                 Calculado
                                             </Form.Text> 
                                         </Form.Group>
-                                        <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
+                                        <Form.Group as={Col} md="6" controlId={'YacimientosCostoInfoExplotacion'} className="inputsPaddingLeft">
                                             <Form.Label className="cliente-description-fields-text">Costo Total de la Explotación</Form.Label>
                                             <InputGroup className="MyInputGroup">
-                                                <Form.Control type="text" className="form-input" disabled={true}  /> 
+                                                <Form.Control type="text" className="form-input" placeholder={this.state.explotacion.costo} disabled  /> 
                                                     <InputGroup.Append>
                                                         <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
                                                     </InputGroup.Append>
@@ -1097,26 +1836,20 @@ export default class RegistrarYacimiento extends React.Component {
                                                    
                                                         <FormTitulo titulo={"Información General de la Etapa "+etapa.numero}/>
                                                         <Form.Row className="formMargins">
-                                                            <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
+                                                            <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,'YacimientosNombreTextEtapa'+etapa.numeroV,"Introduzca un nombre válido")} controlId={'YacimientosNombreEtapa'+etapa.numeroV} className="inputsPaddingRight">
                                                                 <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
                                                                 <Form.Control type="text" className="form-input" placeholder="Introduzca nombre de la etapa" />
-                                                                <Form.Text className="text-muted">
+                                                                <Form.Text className="text-muted" id={'YacimientosNombreTextEtapa'+etapa.numeroV}>
                                                                     Obligatorio
                                                                 </Form.Text>
                                                             </Form.Group>
-                                                            <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
-                                                                <Form.Label className="cliente-description-fields-text">Descripción</Form.Label>
-                                                                <Form.Control as="textarea" rows="1" className="form-input-juridico-textarea" placeholder="Introduzca una descripción"/>
-                                                                <Form.Text className="text-muted">
-                                                                    Obligatorio
-                                                                </Form.Text>
-                                                            </Form.Group>  
+                                                            
                                                         </Form.Row>
                                                         <Form.Row className="formMargins">
-                                                            <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
+                                                            <Form.Group as={Col} md="6" controlId={'YacimientosDuracionEtapa'+etapa.numeroV}className="inputsPaddingRight">
                                                                 <Form.Label className="cliente-description-fields-text">Duración de la Etapa</Form.Label>
                                                                 <InputGroup className="MyInputGroup">
-                                                                    <Form.Control type="text" className="form-input" disabled={true}/> 
+                                                                    <Form.Control type="text" className="form-input" placeholder={etapa.duracion} disabled/> 
                                                                     <InputGroup.Append>
                                                                         <InputGroup.Text  className="input-append-ventas-form" >días</InputGroup.Text>
                                                                     </InputGroup.Append>
@@ -1125,10 +1858,10 @@ export default class RegistrarYacimiento extends React.Component {
                                                                     Calculado
                                                                 </Form.Text> 
                                                             </Form.Group>
-                                                            <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
+                                                            <Form.Group as={Col} md="6" controlId={'YacimientosCostoEtapa'+etapa.numeroV} className="inputsPaddingLeft">
                                                                  <Form.Label className="cliente-description-fields-text">Costo Total de la Etapa</Form.Label>
                                                                 <InputGroup className="MyInputGroup">
-                                                                    <Form.Control type="text" className="form-input" disabled={true}  /> 
+                                                                    <Form.Control type="text" className="form-input" placeholder={etapa.costo} disabled /> 
                                                                     <InputGroup.Append>
                                                                         <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
                                                                     </InputGroup.Append>
@@ -1156,38 +1889,32 @@ export default class RegistrarYacimiento extends React.Component {
                                                                         <Container>
                                                                             <FormTitulo titulo={"Información General de la Fase "+fase.numero}/>
                                                                             <Form.Row className="formMargins">
-                                                                                <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
+                                                                                <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,'YacimientosNombreTextEtapaFase'+etapa.numeroV+fase.numeroV,"Introduzca un nombre válido")} controlId={'YacimientosNombreEtapaFase'+etapa.numeroV+fase.numeroV} className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
                                                                                     <Form.Control type="text" className="form-input" placeholder="Introduzca nombre de la fase" />
-                                                                                    <Form.Text className="text-muted">
+                                                                                    <Form.Text className="text-muted" id={'YacimientosNombreTextEtapaFase'+etapa.numeroV+fase.numeroV}>
                                                                                         Obligatorio
                                                                                     </Form.Text>
                                                                                 </Form.Group>
-                                                                                <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
-                                                                                    <Form.Label className="cliente-description-fields-text">Descripción</Form.Label>
-                                                                                    <Form.Control as="textarea" rows="1" className="form-input-juridico-textarea" placeholder="Introduzca una descripción"/>
-                                                                                    <Form.Text className="text-muted">
-                                                                                        Obligatorio
-                                                                                    </Form.Text>
-                                                                                </Form.Group>  
+                                                                               
                                                                             </Form.Row>
                                                                             <Form.Row className="formMargins">
-                                                                                <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
+                                                                                <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeDuracionFase(evt,etapa.numeroV,fase.numeroV)} controlId={'YacimientosDuracionEtapaFase'+etapa.numeroV+fase.numeroV} className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">Duración de la Fase</Form.Label>
                                                                                     <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control type="text" className="form-input"/> 
+                                                                                        <Form.Control type="text" className="form-input" placeholder="Introduzca la duración de la fase"/> 
                                                                                         <InputGroup.Append>
                                                                                             <InputGroup.Text  className="input-append-ventas-form" placeholder="Introduzca la duración de la fase" >días</InputGroup.Text>
                                                                                         </InputGroup.Append>
                                                                                     </InputGroup>
-                                                                                    <Form.Text className="text-muted">
+                                                                                    <Form.Text className="text-muted" id={'YacimientosDuracionTextEtapaFase'+etapa.numeroV+fase.numeroV}>
                                                                                         Obligatorio
                                                                                     </Form.Text> 
                                                                                 </Form.Group>
-                                                                                <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
+                                                                                <Form.Group as={Col} md="6" controlId={'YacimientosCostoEtapaFase'+etapa.numeroV+fase.numeroV} className="inputsPaddingLeft">
                                                                                      <Form.Label className="cliente-description-fields-text">Costo Total de la Fase</Form.Label>
                                                                                     <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control type="text" className="form-input"  /> 
+                                                                                        <Form.Control type="text" className="form-input"  placeholder={fase.costo} disabled /> 
                                                                                         <InputGroup.Append>
                                                                                             <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
                                                                                         </InputGroup.Append>
@@ -1222,7 +1949,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                     <Col sm={0} md={1}></Col>
                                                                             </Row>
                                                                             <Container>
-                                                                            {fase.cargos.map((cargo,index)=>{             
+                                                                            {fase.cargos.map((cargo,indexcar)=>{             
                                                                                 return(
                                                                                     <div style={{display: fase.cargoShow}}>
                                                                                         <Accordion defaultActiveKey={1} >
@@ -1234,14 +1961,14 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                                     <Card.Body className="BodyAcc">
 
                                                                                                         <Form.Row className="formMargins">
-                                                                                                            <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
+                                                                                                            <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeCantidadCargo(evt,etapa.numeroV,fase.numeroV,indexcar)} controlId={'YacimientosCantidadCargo'+etapa.numeroV+fase.numeroV+indexcar} className="inputsPaddingRight">
                                                                                                                 <Form.Label className="cliente-description-fields-text">Cantidad de empleados</Form.Label>
                                                                                                                 <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad de empleados" />
-                                                                                                                <Form.Text className="text-muted">
+                                                                                                                <Form.Text className="text-muted" id={'YacimientosCantidadTextCargo'+etapa.numeroV+fase.numeroV+indexcar}>
                                                                                                                     Obligatorio
                                                                                                                 </Form.Text>
                                                                                                             </Form.Group>
-                                                                                                            <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
+                                                                                                            <Form.Group as={Col} onChange={(evt)=>this.handleOnChangeSueldoCargo(evt,etapa.numeroV,fase.numeroV,indexcar)} md="6" controlId={'YacimientosSueldoCargo'+etapa.numeroV+fase.numeroV+indexcar} className="inputsPaddingLeft">
                                                                                                                  <Form.Label className="cliente-description-fields-text">Sueldo</Form.Label>
                                                                                                                 <InputGroup className="MyInputGroup">
                                                                                                                     <Form.Control type="text" className="form-input"  placeholder="Introduzca sueldo por empleado" /> 
@@ -1249,7 +1976,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                                                         <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
                                                                                                                     </InputGroup.Append>
                                                                                                                 </InputGroup>
-                                                                                                                <Form.Text className="text-muted">
+                                                                                                                <Form.Text className="text-muted" id={'YacimientosSueldoTextCargo'+etapa.numeroV+fase.numeroV+indexcar}>
                                                                                                                     Obligatorio
                                                                                                                 </Form.Text> 
                                                                                                             </Form.Group>
@@ -1286,7 +2013,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                     <Col sm={0} md={1}></Col>
                                                                             </Row>
                                                                             <Container>
-                                                                            {fase.tipoMaquinaria.map((tipoMaquinaria,index)=>{             
+                                                                            {fase.tipoMaquinaria.map((tipoMaquinaria,indexTM)=>{             
                                                                                 return(
                                                                                     <div style={{display: fase.tipoMaquinariaShow}}>
                                                                                         <Accordion defaultActiveKey={1} >
@@ -1298,14 +2025,14 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                                     <Card.Body className="BodyAcc">
 
                                                                                                         <Form.Row className="formMargins">
-                                                                                                            <Form.Group as={Col} md="6" controlId="formBasicEmail" className="inputsPaddingRight">
+                                                                                                            <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeCantidadTipoMaq(evt,etapa.numeroV,fase.numeroV,indexTM)} controlId={'YacimientosCantidadTipoMaquinaria'+etapa.numeroV+fase.numeroV+indexTM} className="inputsPaddingRight">
                                                                                                                 <Form.Label className="cliente-description-fields-text">Cantidad de unidades</Form.Label>
                                                                                                                 <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad de unidades" />
-                                                                                                                <Form.Text className="text-muted">
+                                                                                                                <Form.Text id={'YacimientosCantidadTextTipoMaquinaria'+etapa.numeroV+fase.numeroV+indexTM} className="text-muted">
                                                                                                                     Obligatorio
                                                                                                                 </Form.Text>
                                                                                                             </Form.Group>
-                                                                                                            <Form.Group as={Col} md="6" controlId="exampleForm.ControlTextarea1" className="inputsPaddingLeft">
+                                                                                                            <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeCostoTipoMaq(evt,etapa.numeroV,fase.numeroV,indexTM)} controlId={'YacimientosCostoTipoMaquinaria'+etapa.numeroV+fase.numeroV+indexTM} className="inputsPaddingLeft">
                                                                                                                  <Form.Label className="cliente-description-fields-text">Costo</Form.Label>
                                                                                                                 <InputGroup className="MyInputGroup">
                                                                                                                     <Form.Control type="text" className="form-input"  placeholder="Introduzca costo por unidad" /> 
@@ -1313,7 +2040,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                                                         <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
                                                                                                                     </InputGroup.Append>
                                                                                                                 </InputGroup>
-                                                                                                                <Form.Text className="text-muted">
+                                                                                                                <Form.Text id={'YacimientosCostoTextTipoMaquinaria'+etapa.numeroV+fase.numeroV+indexTM} className="text-muted">
                                                                                                                     Obligatorio
                                                                                                                 </Form.Text> 
                                                                                                             </Form.Group>
@@ -1341,6 +2068,14 @@ export default class RegistrarYacimiento extends React.Component {
                             </Accordion.Collapse>
                         </Card>
                     </Accordion>
+                    <div>
+                    <Button className="RYacimiento-btn btn-block">
+                        Cancelar
+                    </Button>
+                    <Button className="RYacimiento-btn btn-block btn-margin-izq" onClick={this.handleOnClickSubmittData}>
+                        Enviar
+                    </Button>
+                    </div>
                 </Container>
             </div>
         ) 

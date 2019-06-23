@@ -26,18 +26,18 @@ export default class FormFecha extends React.Component {
         var {clase}=this.props;
 
         return ( 
-            <Form.Group as={Col} md="6" controlId="formBasicEmail" className={clase}>
+            <Form.Group as={Col} md="6" className={clase}>
                 <Form.Label className="cliente-description-fields-text">{titulo}</Form.Label>
                     <Row className="div-content-date">
-                        <Form.Control type="text" className="form-date form-input form-input-day" placeholder="DD" />                                                    
+                        <Form.Control type="text" id="FechaDia"  className="form-date form-input form-input-day" placeholder="DD" />                                                    
                             <Form.Text className="text-muted">
                                 /
                             </Form.Text>
-                        <Form.Control type="text" className="form-date form-input" placeholder="MM" />                                                    
+                        <Form.Control type="text" id="FechaMes" className="form-date form-input" placeholder="MM" />                                                    
                             <Form.Text className="text-muted">
                                  /
                             </Form.Text>
-                        <Form.Control type="text" className="form-date form-input" placeholder="YYYY" />                                            
+                        <Form.Control type="text" id="FechaAno" className="form-date form-input" placeholder="YYYY" />                                            
                     </Row>
                 <Form.Text className="text-muted">
                     Este campo es obligatorio
