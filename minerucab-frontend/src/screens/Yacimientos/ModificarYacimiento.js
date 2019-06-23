@@ -24,7 +24,7 @@ import Card from 'react-bootstrap/Card'
 
 const $ = require('jquery');
 
-export default class RegistrarYacimiento extends React.Component {
+export default class ModificarYacimiento extends React.Component {
     constructor(props){
         super(props);
 

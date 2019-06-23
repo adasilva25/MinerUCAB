@@ -136,7 +136,7 @@ export default class FormLugar extends React.Component {
             <div>
                 
                 <Form.Row className="formMargins">
-                    <Form.Group  as={Col} md="4" controlId="formBasicEmail" className="div-ventas-pedido-form inputsPaddingRight">
+                    <Form.Group  as={Col} md="4" controlId="LugarEstado" className="div-ventas-pedido-form inputsPaddingRight">
                         <Form.Label className="cliente-description-fields-text">Estado</Form.Label>
                         <Form.Control 
                             as="select" 
@@ -148,7 +148,9 @@ export default class FormLugar extends React.Component {
                         }
                         </Form.Control>
                     </Form.Group>
-                    <Form.Group as={Col} md="4" controlId="formBasicEmail" className="div-ventas-pedido-form inputsPaddingRight">
+
+                    <Form.Group as={Col} md="4" controlId="LugarMunicipio" className="div-ventas-pedido-form inputsPaddingRight">
+
                         <Form.Label className="cliente-description-fields-text">Municipio</Form.Label>
                         <Form.Control 
                             as="select" 
@@ -160,7 +162,7 @@ export default class FormLugar extends React.Component {
                             }
                         </Form.Control>
                     </Form.Group>
-                    <Form.Group as={Col} md="4" controlId="formBasicEmail" className="div-ventas-pedido-form inputsPaddingLeft">
+                    <Form.Group as={Col} md="4" controlId="LugarParroquia" className="div-ventas-pedido-form inputsPaddingLeft">
                         <Form.Label className="cliente-description-fields-text">Parroquia</Form.Label>
                         <Form.Control 
                             as="select"

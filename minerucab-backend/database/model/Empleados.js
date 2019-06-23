@@ -30,6 +30,9 @@ const getAllEmpleados = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
+
+    //client.query('SELECT * FROM test_table;')
+
     client.query('SELECT * FROM mu_empleado;')
     .then((response) => {
         client.end();

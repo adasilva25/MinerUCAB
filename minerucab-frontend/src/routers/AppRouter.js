@@ -11,6 +11,7 @@ import VentasForm from '../screens/Ventas/VentasForm';
 import ModalYesNo from '../components/ModalYesNo';
 import GestionarCargos from '../screens/Cargos/GestionarCargos';
 import RegistrarYacimiento from '../screens/Yacimientos/RegistrarYacimiento';
+import ModificarYacimiento from '../screens/Yacimientos/ModificarYacimiento';
 import {NotFoundPage} from '../components/NotFoundPage';
 import {history} from './History';
 import HomePage from '../screens/Home/HomePage'
@@ -65,6 +66,7 @@ const AppRouter = () => (
         {/* ------------------------ YACIMIENTO ------------------------ */}
         <Route path="/yacimiento" component={Yacimiento} />
         <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />
+        <Route path="/modificar_yacimiento" component={ModificarYacimiento} />
       </Switch>
     </div>
   </Router>
