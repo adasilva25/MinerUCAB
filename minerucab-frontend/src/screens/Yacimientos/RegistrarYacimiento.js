@@ -1031,6 +1031,10 @@ export default class RegistrarYacimiento extends React.Component {
             }]
         }
 
+
+        
+        
+
         let incompleto = document.getElementById("YacimientosNombreYacimiento").value.trim(); 
         if(!incompleto){
             console.log('COMPLETO');
@@ -1053,6 +1057,7 @@ export default class RegistrarYacimiento extends React.Component {
         info.yacimiento.fecha.mes = document.getElementById("FechaMes").value.trim();
         info.yacimiento.fecha.ano = document.getElementById("FechaAno").value.trim();
 
+        info.minerales.shift();
         for(let i=0; i<this.state.Minerales.length; i++){
             let mineral={
                 id:0,
@@ -1076,13 +1081,21 @@ export default class RegistrarYacimiento extends React.Component {
                 mineral.componentes.push(componente);
             }
 
-            info.minerales.push(mineral);
+            if(mineral.id != -1){
+                info.minerales.push(mineral);
+            }
+            else{
+                info.minerales.shift();
+            }
+            
         }
         
 
-        info.explotacion.duracion = document.getElementById('YacimientosDuracionInfoExplotacion').value.trim();
-        info.explotacion.costo = document.getElementById('YacimientosCostoInfoExplotacion').value.trim();
+        info.explotacion.duracion = this.state.explotacion.duracion;
+        info.explotacion.costo = this.state.explotacion.costo;
 
+        info.etapas.shift();
+        
         this.state.etapas.forEach((etapaR)=>{
             if(etapaR.numero != 0){
                 let etapa= {
@@ -1110,6 +1123,7 @@ export default class RegistrarYacimiento extends React.Component {
                 etapa.duracion = etapaR.duracion;
                 etapa.costo = etapaR.costo;
 
+                etapa.fases.shift();
                 etapaR.fases.forEach((faseR)=>{
                     if(faseR.numero != 0){
                         let fase= {
@@ -1129,9 +1143,11 @@ export default class RegistrarYacimiento extends React.Component {
                         }
 
                         fase.nombre = document.getElementById('YacimientosNombreEtapaFase'+etapaR.numeroV+faseR.numeroV).value.trim();
-                        fase.duracion = document.getElementById('YacimientosDuracionEtapaFase'+etapaR.numeroV+faseR.numeroV).value.trim();
-                        fase.costo = document.getElementById('YacimientosCostoEtapaFase'+etapaR.numeroV+faseR.numeroV).value.trim();
+                        fase.duracion = faseR.duracion;
+                        fase.costo = faseR.costo;
                         
+                        fase.cargos.shift();
+                        fase.tipoMaquinaria.shift();
                         faseR.cargos.forEach((cargoR)=>{
                             let cargo={
                                 id:0,
@@ -1142,8 +1158,15 @@ export default class RegistrarYacimiento extends React.Component {
                             cargo.sueldo = cargoR.sueldo;
                             cargo.cantidad = cargoR.cantidad;
 
-                            fase.cargos.push(cargo);
+                            
+                            if(cargo.id!=0){
+                               fase.cargos.push(cargo);
+                            }
+                            else{
+                                fase.cargos.shift();
+                            }
                         });
+
 
                         faseR.tipoMaquinaria.forEach((tipoMaquinariaR)=>{
                             let tipoMaquinaria={
@@ -1155,14 +1178,33 @@ export default class RegistrarYacimiento extends React.Component {
                             tipoMaquinaria.costo = tipoMaquinariaR.costo;
                             tipoMaquinaria.cantidad = tipoMaquinariaR.cantidad;
 
-                            fase.tipoMaquinaria.push(tipoMaquinaria);
+                            
+
+                            if(tipoMaquinaria.id!=0){
+                               fase.tipoMaquinaria.push(tipoMaquinaria);
+                            }
+                            else{
+                                fase.tipoMaquinaria.shift();
+                            }
                         });
 
-                        etapa.fases.push(fase);
+                        
+                        if((fase.nombre!=null) && (fase.nombre != '')){
+                           etapa.fases.push(fase);
+                        }
+                        else{
+                            etapa.fases.shift();
+                        }
                     }
                 });
-
-                info.etapas.push(etapa);
+                
+                if((etapa.nombre!=null) && (etapa.nombre != '')){
+                    info.etapas.push(etapa);
+                }
+                else{
+                    info.etapas.shift();
+                }
+                
 
 
             }
