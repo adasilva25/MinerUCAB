@@ -488,12 +488,6 @@ export default class DataTable extends React.Component {
             <form name="frm-dt" id="frm-dt" >
                 <table  className="display" width="100%" ref={el => this.el = el}>
                 </table>
-                {
-                  (this.props.checktable === true && 
-                    <p className="form-group">
-                       <button type="submit" className="btn btn-primary btn-subcheckbox">Submit</button>
-                    </p>)
-                }
             </form>
             {
                 (this.props.agregar === true && 
