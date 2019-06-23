@@ -98,6 +98,7 @@ export default class DataTable extends React.Component {
                             //searching: false,
                         //Scrollbar
                             scrollY: size,
+                            scrollX: 300,
                         //No permitir orden
                             //ordering:  false
                             // "order": [[ 1, "asc" ]],

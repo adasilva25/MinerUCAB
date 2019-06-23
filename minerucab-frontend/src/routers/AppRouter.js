@@ -3,8 +3,8 @@ import { Router, Route, Switch } from 'react-router-dom';
 import LoginPage from '../screens/Login/LoginPage';
 import CambiarContrasena from '../screens/Login/CambiarContrasena';
 import DashboardPage from '../components/DashboardPage';
-import GestionarEmpleado from '../screens/Empleados/GestionarEmpleado';
 import Empleado from '../screens/Empleados/Empleado';
+import GestionarEmpleado from '../screens/Empleados/GestionarEmpleado';
 import RegistrarClienteNatural from '../screens/Clientes/RegistrarClienteNatural';
 import RegistrarClienteJuridico from '../screens/Clientes/RegistrarClienteJuridico';
 import VentasForm from '../screens/Ventas/VentasForm';
@@ -40,9 +40,9 @@ const AppRouter = () => (
         <Route path="/dashboard" component={DashboardPage} />
         <Route path="/home" component={HomePage} />
         {/* ------------------------ CARGOS ------------------------ */}
-        <Route path="/cargo" component={Cargo} />
+        /*<Route path="/cargo" component={Cargo} />
         <Route path="/registrar_cargo" component={RegistrarCargo} />
-        <Route path="/gestionar_cargos/:accion/:id?" component={GestionarCargos} />
+        <Route path="/gestionar_cargos/:accion/:id?" component={GestionarCargos} />*/
         {/* ------------------------ CLIENTES ------------------------ */}
         <Route path="/cliente" component={Cliente} />
         <Route path="/buscar_cliente" component={ModalBuscarCliente} />
@@ -51,7 +51,7 @@ const AppRouter = () => (
         <Route path="/borar_cliente" component={ModalYesNo} />
         {/* ------------------------ EMPLEADOS ------------------------ */}
         <Route path="/empleado" component={Empleado} />
-        <Route path="/gestionar_empleado/:accion/:id?" component={GestionarEmpleado}/>
+        <Route path="/registrar_empleado/:accion/:id?" component={GestionarEmpleado} />
         {/* ------------------------ MAQUINARIAS ------------------------ */}
         <Route path="/maquinaria" component={Maquinaria} />
         <Route path="/gestionar_maquinaria/:accion/:id?" component={GestionarMaquinaria}/>

@@ -1756,8 +1756,10 @@ export default class RegistrarYacimiento extends React.Component {
                                                 modificar={false}
                                                 consultar={false}
                                                 eliminar={false}
+
                                                 columns={'http://localhost:3000/column_names/cliente'} 
                                                 data={'http://localhost:3000/getAllClientes'}
+
                                                 url={'consultar_empleado/:'}
                                                 checktable={true}
                                                 textoSingular={'mineral'}
@@ -1971,13 +1973,16 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
                                                                                         <DataTable
+
                                                                                             selectCheck={this.selectFunctionCheckbox}
+
                                                                                             agregar={false}
                                                                                             modificar={false}
                                                                                             consultar={false}
                                                                                             eliminar={false}
                                                                                             columns={'http://localhost:3000/column_names/cliente'} 
                                                                                             data={'http://localhost:3000/getAllClientes'}
+
                                                                                             url={'consultar_empleado/:'}
                                                                                             checktable={true}
                                                                                             textoSingular={'cargo'}
@@ -2037,13 +2042,16 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
                                                                                         <DataTable
+
                                                                                             selectCheck={this.selectFunctionCheckbox}
+
                                                                                             agregar={false}
                                                                                             modificar={false}
                                                                                             consultar={false}
                                                                                             eliminar={false}
                                                                                             columns={'http://localhost:3000/column_names/cliente'} 
                                                                                             data={'http://localhost:3000/getAllClientes'}
+
                                                                                             url={'consultar_empleado/:'}
                                                                                             checktable={true}
                                                                                             textoSingular={'tipo de maquinaria'}

@@ -25,12 +25,33 @@ const { Client } = require('pg');
 
 // FORMATO  CONNECTION STRING postgressql://YourUserName:YourPassword@localhost:5432/YourDatabase
 
-const getAllEmployees = (req, res) => {
+const getAllEmpleados = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
-    client.query('SELECT * FROM test_table;')
+
+    //client.query('SELECT * FROM test_table;')
+
+    client.query('SELECT * FROM mu_empleado;')
+    .then((response) => {
+        client.end();
+        // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+    })
+}
+
+const getCriticInfoEmpleados = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
+    });
+    client.connect();
+    client.query('SELECT ci as Cedula, p_nombre as Nombre, p_apellido as Apellido FROM mu_empleado;')
+
     .then((response) => {
         client.end();
         // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
@@ -47,7 +68,7 @@ const getEmpleadoByCedula = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT * FROM empleado WHERE ci = ($1);';
+    const text = 'SELECT * FROM mu_empleado WHERE ci = ($1);';
     const values = [req.params.cedula];
     client.query(text, values)
     .then((response) => {
@@ -65,7 +86,25 @@ const getEmpleadoById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT * FROM empleado WHERE id = ($1);';
+    const text = 'SELECT * FROM mu_empleado WHERE clave = ($1);';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+    })
+}
+
+const deleteEmpleadoById = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'DELETE FROM mu_empleado WHERE clave = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -79,8 +118,10 @@ const getEmpleadoById = (req, res) => {
 }
 
 module.exports = {
-    getAllEmployees,
+    getAllEmpleados,
+    getCriticInfoEmpleados,
     getEmpleadoByCedula,
-    getEmpleadoById
+    getEmpleadoById,
+    deleteEmpleadoById
     // ,[siguientes funciones]
 }

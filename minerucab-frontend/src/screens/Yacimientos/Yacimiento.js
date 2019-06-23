@@ -18,8 +18,8 @@ export default class Yacimiento extends React.Component {
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
                             <DataTable
-                                columns={'http://localhost:3000/column_names/test_table'} 
-                                data={'http://localhost:3000/users'}
+                                columns={'http://localhost:3000/column_names/empleado'} 
+                                data={'http://localhost:3000/getAllEmpleados'}
                                 url={'consultar_empleado/:'}
                                 textoSingular={'prueba'}
                                 textoPlural={'pruebas'}
