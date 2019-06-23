@@ -10,6 +10,8 @@ const General = require('../database/model/General');
 const Cargos = require('../database/model/Cargos');
 const Clientes = require('../database/model/Clientes');
 const Roles = require('../database/model/Roles');
+const Usuarios = require('../database/model/Usuarios')
+const Lugares = require('../database/model/Lugares');
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -39,17 +41,21 @@ app.get('/', (req, res) => {
   res.send('<h1>Hello Express!</h1>');
 });
 
-app.get('/users', Empleados.getAllEmployees);
+//app.get('/users', Empleados.getAllEmployees);
 
 app.get('/column_names/:table_name', General.getAllTableColumns);
 
 app.get('/getAllCargos', Cargos.getAllCargos);
 
-app.get('/getCargoById/:id', Cargos.getCargoById);
+app.get('/getCargoByIdEmpleado/:id', Cargos.getCargoByIdEmpleado);
 
 app.get('/getAllRoles', Roles.getAllRoles);
 
-app.get('/getRolById/:id', Roles.getRolById);
+app.get('/getRolByIdEmpleado/:id', Roles.getRolByIdEmpleado);
+
+app.get('/getAllEmpleados', Empleados.getAllEmpleados);
+
+app.get('/getCriticInfoEmpleados', Empleados.getCriticInfoEmpleados)
 
 app.get('/getEmpleadoByCedula/:cedula', Empleados.getEmpleadoByCedula);
 
@@ -79,6 +85,18 @@ app.get('/getNombreMineralNoMetalicoById/:id', Minerales.getNombreMineralNoMetal
 
 app.get('/getAllPresentaciones', Presentaciones.getAllPresentaciones);
 
+app.get('/getUsuarioById/:id', Usuarios.getUsuarioById);
+
+/* -- Lugar -- */
+
+app.get('/getAllEstados', Lugares.getAllEstados);
+
+app.get('/getAllMunicipiosByIdEstado/:id', Lugares.getAllMunicipiosByIdEstado);
+
+app.get('/getAllParroquiasByIdMunicipio/:id', Lugares.getAllParroquiasByIdMunicipio);
+
+app.get('/getLugarByIdParroquia/:id', Lugares.getLugarByIdParroquia);
+
 /* ------------------------------ DELETE ------------------------------ */
 
 app.delete('/deleteClienteById/:id', Clientes.deleteClienteById);
@@ -86,6 +104,8 @@ app.delete('/deleteClienteById/:id', Clientes.deleteClienteById);
 app.delete('/deleteMineralMetalicoById/:id', Minerales.deleteMineralMetalicoById);
 
 app.delete('/deleteMineralNoMetalicoById/:id', Minerales.deleteMineralNoMetalicoById);
+
+app.delete('/deleteEmpleadoById/:id', Empleados.deleteEmpleadoById)
 
 /* -------------------------------------------------------------------- */
 

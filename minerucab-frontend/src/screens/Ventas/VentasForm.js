@@ -188,7 +188,7 @@ export default class VentasForm extends React.Component {
         document.getElementsByClassName("form-input-total-venta")[0].value = nuevoTotal;
     }
     renderOptions = (tipo, indexF) => {
-        
+        console.log('index', indexF)
         if (tipo === 'mineral'){
             let mineral = [];
             return (this.state.minerales.map((optionMin, index) => {

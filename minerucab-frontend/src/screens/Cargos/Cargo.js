@@ -46,7 +46,7 @@ export default class Cargo extends React.Component {
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
                             <DataTable
-                                columns={'http://localhost:3000/column_names/cargo'} 
+                                columns={'http://localhost:3000/column_names/mu_cargo'} 
                                 data={'http://localhost:3000/getAllCargos'}
                                 modificar={true}
                                 consultar={true}
