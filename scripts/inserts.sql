@@ -107,7 +107,7 @@ INSERT INTO MU_EMPLEADO (CI, P_nombre, S_nombre, P_apellido, S_apellido, Fecha_n
     ('V11111111', 'Andrea', 'Valentina', 'Da Silva', 'Baudet', '01-25-1999', 'Femenino', 'Universitaria', '04141111111', 546, 1, 1),
     ('V22222223', 'Diego', 'Alfonso', 'Gutiérrez', 'Duarte', '07-14-1999', 'Masculino', 'Universitaria', '04142222222', 765, 1, 1),
     ('V33333333', 'Alba', 'Sofía', 'Sánchez', 'Silvestre', '01-31-1999', 'Femenino', 'Superior', '04123333333', 865, 1, 3),
-    ('V44444444', 'Javier', 'Alejandro', 'Andrade', 'González', '07-21-1998', 'Masculino', 'Universitaria', '0424445421', 321, 2, 2),
+    ('V44444444', 'Javier', 'Alejandro', 'Andrade', 'González', '07-21-1998', 'Masculino', 'Universitaria', '0424445421', 965, 2, 2),
     ('E55555555', 'Gustavo', 'Ignacio', 'Sánchez', 'Rodríguez', '05-15-1998', 'Masculino', 'Otro', '04161265342', 987, 2, 1),
     ('V66666666', 'Miguel', 'Antonio', 'Peña', 'Fraga', '04-03-1998', 'Masculino', 'Superior', '04142890753', 1010, 2, 3),
     ('V77777777', 'Gabriel', 'Alejandro', 'Terán', 'Guerrero', '05-24-1999', 'Masculino', 'Universitaria', '04167652341', 1090, 3, 3),

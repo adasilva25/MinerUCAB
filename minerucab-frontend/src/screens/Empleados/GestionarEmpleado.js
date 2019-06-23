@@ -19,6 +19,7 @@ import $ from 'jquery'
 
 export default class GestionarEmpleado extends React.Component {  
 	state = {
+        poseeusuario: true,
 		cargos: [],
 		roles: [],
 		accordionKey:[],
@@ -91,62 +92,71 @@ export default class GestionarEmpleado extends React.Component {
         }
         //Si consulto o modifico
         if (this.props.match.params.accion !== 'CR'){
-            axios.get(`http://localhost:3000/getEmpleadoById/${this.props.match.params.id}`, config)
-            .then((res) => {
-                var d = new Date(res.data[0].fecha_nacimiento,);
-              this.setState(() => ({
-                pnombre: res.data[0].p_nombre,
-                snombre: res.data[0].s_nombre,
-                papellido: res.data[0].p_apellido,
-                sapellido: res.data[0].s_apellido,
-                nacionalidad: res.data[0].ci[0],
-                ci: res.data[0].ci.slice(1),
-                sexo: res.data[0].sexo,
-                nacimd: d.getDate(),
-                nacimm: (d.getMonth()+1),
-                nacima: d.getFullYear(),
-                nivel: res.data[0].nivel_de_instruccion,
-                telefono: res.data[0].telefono,
-                parroquia: res.data[0].fk_lugar
-              }))
-              this.state.pred=true;
-          }).catch((e) => {
-              console.log('Error en axios')
-          })
-          axios.get(`http://localhost:3000/getCargoByIdEmpleado/${this.props.match.params.id}`, config)
-            .then((res) => {
-              this.setState(() => ({
-                cargo: [{
-                    clave: res.data[0].clave,
-                    nombre: res.data[0].nombre,
-                }]
-              }));
-          }).catch((e) => {
-              console.log('Error en axios')
-          })
-          axios.get(`http://localhost:3000/getUsuarioById/${this.props.match.params.id}`, config)
-            .then((res) => {
-              this.setState(() => ({
-                usuario: [{
-                    clave: res.data[0].clave,
-                    usuario: res.data[0].usuario,
-                    contrasena: res.data[0].contrasena,
-                }]
-              }));
-          }).catch((e) => {
-              console.log('Error en axios')
-          })
-          axios.get(`http://localhost:3000/getRolByIdEmpleado/${this.props.match.params.id}`, config)
-            .then((res) => {
-              this.setState(() => ({
-                rol: [{
-                    clave: res.data[0].clave,
-                    nombre: res.data[0].nombre,
-                }]
-              }));
-          }).catch((e) => {
-              console.log('Error en axios')
-          })
+                axios.get(`http://localhost:3000/getEmpleadoById/${this.props.match.params.id}`, config)
+                .then((res) => {
+                    var d = new Date(res.data[0].fecha_nacimiento,);
+                  this.setState(() => ({
+                    pnombre: res.data[0].p_nombre,
+                    snombre: res.data[0].s_nombre,
+                    papellido: res.data[0].p_apellido,
+                    sapellido: res.data[0].s_apellido,
+                    nacionalidad: res.data[0].ci[0],
+                    ci: res.data[0].ci.slice(1),
+                    sexo: res.data[0].sexo[0],
+                    nacimd: d.getDate(),
+                    nacimm: (d.getMonth()+1),
+                    nacima: d.getFullYear(),
+                    nivel: res.data[0].nivel_de_instruccion,
+                    telefono: res.data[0].telefono,
+                    parroquia: res.data[0].fk_lugar
+                  }))
+                  this.state.pred=true;
+              }).catch((e) => {
+                  console.log('Error en axios')
+              })
+              axios.get(`http://localhost:3000/getCargoByIdEmpleado/${this.props.match.params.id}`, config)
+                .then((res) => {
+                  this.setState(() => ({
+                    cargo: [{
+                        clave: res.data[0].clave,
+                        nombre: res.data[0].nombre,
+                    }]
+                  }));
+              }).catch((e) => {
+                  console.log('Error en axios')
+              })
+              axios.get(`http://localhost:3000/getUsuarioById/${this.props.match.params.id}`, config)
+                .then((res) => {
+                    if(res.data.length === 0){
+                        this.setState(() => ({
+                            poseeusuario: false,
+                        }))
+                    }
+                    else{
+                        this.setState(() => ({
+                            usuario: [{
+                                clave: res.data[0].clave,
+                                usuario: res.data[0].usuario,
+                                contrasena: res.data[0].contrasena,
+                            }]
+                          }));
+                    }
+              }).catch((e) => {
+                  console.log('Error en axios')
+              })
+              if(this.state.poseeusuario === false){
+                axios.get(`http://localhost:3000/getRolByIdEmpleado/${this.props.match.params.id}`, config)
+                .then((res) => {
+                  this.setState(() => ({
+                    rol: [{
+                        clave: res.data[0].clave,
+                        nombre: res.data[0].nombre,
+                    }]
+                  }));
+              }).catch((e) => {
+                  console.log('Error en axios')
+              })
+            }
         }
 
         //Si consulto
@@ -541,7 +551,10 @@ export default class GestionarEmpleado extends React.Component {
                             <Row>
                                 <Col md={11}>
                                 {
-                                    this.renderLugar()
+                                    (!this.state.pred) && this.renderLugar()
+                                }
+                                {
+                                    (this.state.pred) && this.renderLugar()
                                 }
                                 </Col>
                                 <Col md={1}></Col>

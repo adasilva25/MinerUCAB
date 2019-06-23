@@ -17,7 +17,8 @@ export default class FormLugarPred extends React.Component {
         parroquiaSel: '',
         estadoCO: '',
         municipioCO: '',
-        parroquiaCO: ''
+        parroquiaCO: '',
+        parroquiarendered: 1
     }
     componentDidMount = () => {
         const config = {
@@ -40,7 +41,7 @@ export default class FormLugarPred extends React.Component {
                     }));
                 })
                 if(this.props.predet === false){
-                    setTimeout($('.dd-e').trigger('click'), 150)
+                    $('.dd-e').trigger('click')
                 }
             }).catch((e) => {
                 console.log('Error en axios')
@@ -56,7 +57,7 @@ export default class FormLugarPred extends React.Component {
                     parroquiaCO: res.data[0].parroquia,
                     parroquiaSel: this.props.idParroquia
                 }))
-                    setTimeout($('.dd-e').trigger('click'), 150)
+                    $('.dd-e').trigger('click')
                 }).catch((e) => {
                     console.log('Error en axios')
                 })
@@ -86,14 +87,12 @@ export default class FormLugarPred extends React.Component {
                 return (this.state.municipios.map((optionMun) => {
                     return(<option value={optionMun.clave}>{optionMun.nombre}</option>)
                 }));
-            }else{
-                return(<option value='vacio'></option>)
             }
         }
         else if (tipo === 'parroquia'){
             if (this.state.parroquias.length > 0){
                 return (this.state.parroquias.map((optionPar) => {
-                    return(<option value={optionPar.clave}>{optionPar.nombre}</option>)
+                    return(<option value={optionPar.clave} id={optionPar.clave}>{optionPar.nombre}</option>)
                 }));
             }
         }
@@ -174,9 +173,7 @@ export default class FormLugarPred extends React.Component {
                             municipios: prevState.municipios.concat(municipiosInfo)
                         }));
                     })
-                if(this.props.predet === false){
-                    $('.dd-m').trigger('click')
-                }
+                    //$('.dd-m').trigger('click')
                 }).catch((e) => {
                     console.log('Error en axios')
                 })
@@ -259,14 +256,33 @@ export default class FormLugarPred extends React.Component {
             $(".dd-m").val(this.state.municipioSel).change()
         }
         if((tipo === 'parroquia')&&(this.props.predet === true)){
-            $(".dd-p").val(this.state.parroquiaSel).change()
+            function test(t,valx,element){
+                setTimeout(function(){
+                    if(element.state.parroquiarendered === 1){
+                        if((t === true)){
+                            $(".dd-p option[value="+valx+"]").attr("selected",true);
+                            //$('.dd-e').trigger('click');
+                            //$(".dd-e").val(valx).change()
+                        element.setState(() => ({
+                            estadorendered: 0
+                        }));
+                        }
+                    }
+                    else if(element.state.parroquiarendered === 0){
+                        console.log("no")
+                    }
+                },300);
+            }
+            test(this.props.predet,this.state.parroquiaSel,this);
+            /*console.log($(".dd-p")[0][3])
+            $(".dd-p").val(this.state.parroquiaSel).change()*/
+            //this.forceUpdate()
         }
     }
 
     render(){
         return ( 
             <div>
-                
                 <Form.Row className="formMargins">
                     <Form.Group  as={Col} md="4" controlId="formBasicEmail" className="div-ventas-pedido-form inputsPaddingRight">
                         <Form.Label className="cliente-description-fields-text">Estado</Form.Label>

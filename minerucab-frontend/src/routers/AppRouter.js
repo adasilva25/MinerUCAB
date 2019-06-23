@@ -51,7 +51,7 @@ const AppRouter = () => (
         <Route path="/borar_cliente" component={ModalYesNo} />
         {/* ------------------------ EMPLEADOS ------------------------ */}
         <Route path="/empleado" component={Empleado} />
-        <Route path="/registrar_empleado/:accion/:id?" component={GestionarEmpleado} />
+        <Route path="/gestionar_empleado/:accion/:id?" component={GestionarEmpleado} />
         {/* ------------------------ MAQUINARIAS ------------------------ */}
         <Route path="/maquinaria" component={Maquinaria} />
         <Route path="/gestionar_maquinaria/:accion/:id?" component={GestionarMaquinaria}/>

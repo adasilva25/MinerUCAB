@@ -40,7 +40,7 @@ export default class RegistrarCargo extends React.Component {
                           </p>
                         </Col>
                         <Col md={6}>
-                          <Form.Control type="password" className="form-input-ccargo" placeholder="Introduzca su contraseña actual" />
+                          <Form.Control className="form-input-ccargo" placeholder="Introduzca su contraseña actual" />
                           <Form.Text className="text-muted">
                               Este campo es obligatorio
                           </Form.Text>
@@ -61,7 +61,7 @@ export default class RegistrarCargo extends React.Component {
                           </p>
                         </Col>
                         <Col md={6}>
-                          <Form.Control type="password" className="form-input-ccargo" placeholder="Introduzca su nueva contraseña" />
+                          <Form.Control className="form-input-ccargo" placeholder="Introduzca su nueva contraseña" />
                           <Form.Text className="text-muted">
                               Este campo es obligatorio
                           </Form.Text>
