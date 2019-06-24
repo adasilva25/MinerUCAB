@@ -24,8 +24,8 @@ import Venta from '../screens/Ventas/Venta';
 import Maquinaria from '../screens/Maquinarias/Maquinaria';
 import GestionarMaquinaria from '../screens/Maquinarias/GestionarMaquinaria';
 import Mineral from '../screens/Minerales/Mineral';
-import RegistrarMineralMetalico from '../screens/Minerales/RegistrarMineralMetalico';
-import RegistrarMineralNoMetalico from '../screens/Minerales/RegistrarMineralNoMetalico';
+import GestionarMineralMetalico from '../screens/Minerales/GestionarMineralMetalico';
+import GestionarMineralNoMetalico from '../screens/Minerales/GestionarMineralNoMetalico';
 
 // history back --> https://stackoverflow.com/questions/19051212/add-a-parameter-with-js-function-window-history-back
 // history props --> https://stackoverflow.com/questions/44121069/how-to-pass-params-with-history-push-link-redirect-in-react-router-v4/45263164#45263164
@@ -58,8 +58,8 @@ const AppRouter = () => (
         <Route path="/gestionar_maquinaria/:accion/:id?" component={GestionarMaquinaria}/>
         {/* ------------------------ MINERALES ------------------------ */}
         <Route path="/mineral" component={Mineral} />
-        <Route path="/registrar_mineral_metalico/:accion:id?" component={RegistrarMineralMetalico} />
-        <Route path="/registrar_mineral_no_metalico/:accion:id?" component={RegistrarMineralNoMetalico} />
+        <Route path="/gestionar_mineral_metalico/:accion/:id?" component={GestionarMineralMetalico} />
+        <Route path="/gestionar_mineral_no_metalico/:accion/:id?" component={GestionarMineralNoMetalico} />
         {/* ------------------------ VENTAS ------------------------ */}
         <Route path="/venta" component={Venta} />
         <Route path="/gestionar_ventas/:id?" component={VentasForm} />

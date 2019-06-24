@@ -94,6 +94,7 @@ export default class GestionarEmpleado extends React.Component {
         if (this.props.match.params.accion !== 'CR'){
                 axios.get(`http://localhost:3000/getEmpleadoById/${this.props.match.params.id}`, config)
                 .then((res) => {
+                    console.log(res)
                     var d = new Date(res.data[0].fecha_nacimiento,);
                   this.setState(() => ({
                     pnombre: res.data[0].p_nombre,
@@ -570,16 +571,16 @@ export default class GestionarEmpleado extends React.Component {
                                     <Col md={5}>
                                         <Form.Group>
                                             <Form.Label className="cliente-description-fields-text">Nivel de instrucción</Form.Label>
-                                            <Form.Control 
-                                                type="text" 
-                                                className="form-input" 
-                                                id="nivel-empleado"
-                                                value={this.state.nivel}
-                                                disabled={!this.state.modificar}
-                                                onChange={this.onInputChange}
-                                                placeholder="Introduzca el nivel de instrucción"
-                                                autoFocus
-                                            />
+                                            <Form.Control as="select"
+                                            className="form-input form-nivel"
+                                            disabled={!this.state.modificar}
+                                            value={this.state.nivel}>
+                                                <option>Primaria</option>
+                                                <option>Secundaria</option>
+                                                <option>Universitaria</option>
+                                                <option>Superior</option>
+                                                <option>Otro</option>
+                                            </Form.Control>
                                             <Form.Text className="text-muted">
                                                 Este campo es obligatorio
                                             </Form.Text>

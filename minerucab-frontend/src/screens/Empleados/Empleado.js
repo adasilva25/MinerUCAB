@@ -28,7 +28,7 @@ export default class Cliente extends React.Component {
         }
         axios.get(`http://localhost:3000/getEmpleadoById/${i}`, config)
             .then((res) => {
-                this.setState({ infoEliminar: `${res.data[0].nombre} ${res.data[0].apellido}` })
+                this.setState({ infoEliminar: `${res.data[0].p_nombre} ${res.data[0].p_apellido}` })
                 this.setState
                 this.setState(
                     { 
@@ -49,7 +49,7 @@ export default class Cliente extends React.Component {
                 <ModalYesNo
                     show={this.state.modalShowEliminar}
                     onHide={this.modalEliminarClose}
-                    mensaje={'¿Está seguro que desea eliminar el cliente'}
+                    mensaje={'¿Está seguro que desea eliminar el empleado'}
                     infoeliminar={this.state.infoEliminar}
                     urleliminar={`http://localhost:3000/deleteEmpleadoById/${this.state.idEliminar}`}
                 />

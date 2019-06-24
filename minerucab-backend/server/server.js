@@ -86,6 +86,10 @@ app.get('/getNombreMineralNoMetalicoById/:id', Minerales.getNombreMineralNoMetal
 
 app.get('/getAllPresentaciones', Presentaciones.getAllPresentaciones);
 
+app.get('/getAllPresentacionesByIdMineralMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralMetalico);
+
+app.get('/getAllPresentacionesByIdMineralNoMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralNoMetalico);
+
 app.get('/getUsuarioById/:id', Usuarios.getUsuarioById);
 
 app.get('/getAllTiposMaquinaria', TiposMaquinaria.getAllTiposMaquinaria);
