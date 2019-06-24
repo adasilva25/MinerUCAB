@@ -241,12 +241,15 @@ export default class GestionarEmpleado extends React.Component {
       console.log("em")
     }
     onSubmit = (e) => {
-        console.log(this.state.pnombre, this.state.snombre, this.state.papellido, this.state.sapellido)
-        console.log(this.state.nacionalidad, this.state.ci, this.state.nacimd, this.state.nacimm, this.state.nacima)
-        console.log(this.state.sexo)
-        console.log(this.state.telefono, this.state.nivel)
-        console.log(this.state.cargo[0].nombre, this.state.rol[0].nombre)
-        console.log(this.state.usuario[0].usuario, this.state.usuario[0].contrasena)
+        console.log(document.getElementById('LugarEstado').value)
+        console.log(document.getElementById('LugarMunicipio').value)
+        console.log(document.getElementById('LugarParroquia').value)
+        //console.log(this.state.pnombre, this.state.snombre, this.state.papellido, this.state.sapellido)
+        //console.log(this.state.nacionalidad, this.state.ci, this.state.nacimd, this.state.nacimm, this.state.nacima)
+        //console.log(this.state.sexo)
+        //console.log(this.state.telefono, this.state.nivel)
+        //console.log(this.state.cargo[0].nombre, this.state.rol[0].nombre)
+        //console.log(this.state.usuario[0].usuario, this.state.usuario[0].contrasena)
     }
     renderTitle = () => {
       if (this.props.match.params.accion === 'CR'){

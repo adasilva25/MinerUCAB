@@ -21,13 +21,8 @@ export default class GestionarMineralMetalico extends React.Component {
         presentaciones: [],
         presentacionesmin: [],
         componentes: [],
-        componentesmin: [{
-            mineral: 1,
-            porcentaje: 1,
-            compShow: true,
-            numero: 1,
-            numeroV:1,
-        }],
+        componentesmin: [],
+        modificar: true
     }
     componentDidMount = () => {
     	const config = {
@@ -37,6 +32,12 @@ export default class GestionarMineralMetalico extends React.Component {
             responseType: 'json'
         }
 
+        if(this.props.match.params.accion === 'CO'){
+            this.setState(() => ({
+                modificar: false,
+            }))
+        }
+        //Crear o Modificar (necesito valores predeterminados)
         if(this.props.match.params.accion !== 'CO'){
             axios.get('http://localhost:3000/getAllPresentaciones', config)
                 .then((res) => {
@@ -69,6 +70,7 @@ export default class GestionarMineralMetalico extends React.Component {
                 })
         }
 
+        //Consultar o modificar (necesito informacion)
         if (this.props.match.params.accion !== 'CR'){
             axios.get(`http://localhost:3000/getMineralMetalicoById/${this.props.match.params.id}`, config)
                 .then((res) => {
@@ -78,27 +80,49 @@ export default class GestionarMineralMetalico extends React.Component {
                     dureza: res.data[0].dureza,
                     descripcion: res.data[0].descripcion,
                   }));
-              }).catch((e) => {
-                  console.log('Error en axios')
-              })
-            axios.get(`http://localhost:3000/getAllPresentacionesByIdMineralMetalico/${this.props.match.params.id}`, config)
-                .then((res) => {
-                    console.log(res)
-                    res.data.forEach(element => {
-                        let presInfo = {
-                            presentacion: '',
-                            nombre: '',
-                            precio: 0,
-                            presShow: true,
-                            numero: 1,
-                            numeroV:1,
-                        }
-                        presInfo.presentacion = element.clave;
-                        presInfo.nombre = element.nombre;
-                        presInfo.precio = element.precio;
-                        this.setState((prevState) => ({
-                            presentacionesmin: prevState.presentacionesmin.concat(presInfo)
-                        }));
+                  axios.get(`http://localhost:3000/getAllPresentacionesByIdMineralMetalico/${this.props.match.params.id}`, config)
+                    .then((res) => {
+                        console.log("presentaciones", res)
+                        res.data.forEach(element => {
+                            let presInfo = {
+                                presentacion: 1,
+                                nombre: '',
+                                precio: 0,
+                                presShow: true,
+                                numero: 1,
+                                numeroV:1,
+                            }
+                            presInfo.presentacion = element.clave;
+                            presInfo.nombre = element.nombre;
+                            presInfo.precio = element.precio;
+                            this.setState((prevState) => ({
+                                presentacionesmin: prevState.presentacionesmin.concat(presInfo)
+                            }));
+                        })
+                    }).catch((e) => {
+                         console.log('Error en axios')
+                    })
+                  axios.get(`http://localhost:3000/getAllComponentesByIdMineralMetalico/${this.props.match.params.id}`, config)
+                    .then((res) => {
+                        console.log("componentes", res)
+                        res.data.forEach(element => {
+                            let compInfo = {
+                                mineral: 1,
+                                nombre: '',
+                                porcentaje: 1,
+                                compShow: true,
+                                numero: 1,
+                                numeroV:1,
+                            }
+                            compInfo.mineral = element.clave;
+                            compInfo.nombre = element.nombre;
+                            compInfo.porcentaje = element.porcentaje;
+                            this.setState((prevState) => ({
+                                componentesmin: prevState.componentesmin.concat(compInfo)
+                            }));
+                        })
+                    }).catch((e) => {
+                         console.log('Error en axios')
                     })
               }).catch((e) => {
                   console.log('Error en axios')
@@ -258,121 +282,206 @@ export default class GestionarMineralMetalico extends React.Component {
         }
     }
     renderPresentacionesMin = () => {
-    	return this.state.presentacionesmin.map((option, index) => {
-    		return (
-    			<Form.Row className="div-min-met-presentaciones-form" key={index} id={'formpres'+index}>
-    				<Col md={12}>
-    					<Row>
-		    				<Col md={5}>
-			    				<Form.Label className="cliente-description-fields-text">Presentación</Form.Label>
-			                    <Form.Control 
-			                        as="select" 
-			                        key={index} 
-			                        id={''+index}
-			                        className="form-input form-input-dropdown-mineral-met-presentacion"
-			                        onChange={this.selectedOption}>
-			                        {
-			                            this.renderOptions('presentacion')
-			                        }
-			                    </Form.Control>
-		    				</Col>
-		    				<Col md={5}>
-		    					<Form.Label className="cliente-description-fields-text">Precio</Form.Label>
-			    					<Form.Group>
-		                                <InputGroup className="MyInputGroup">
-		                                    <Form.Control
-		                                    	type="number"
-		                                    	step="0.01"
-		                                        className="form-input form-input-text-precio" 
-		                                        key={index} 
-		                                        defaultValue={1}
-		                                        id={''+index}
-		                                        min="0"
-		                                    />
-		                                    <InputGroup.Append>
-		                                        <InputGroup.Text className="input-append-ventas-form" key={index}>$</InputGroup.Text>
-		                                    </InputGroup.Append>
-		                                </InputGroup>
-		                            </Form.Group>
-				                    <Form.Text className="text-muted">
-				                        Este campo es obligatorio
-				                    </Form.Text>
-		                    </Col>
-		    				<Col md={1}>
-                                <Form.Label className="cliente-description-fields-text"></Form.Label>
-                                <Button 
-                                    variant="outline-danger"
-                                    className="btn-block"
-                                    onClick={() => this.deletePresentacionesMin(index)}
-                                >
-                                    x
-                                </Button>
-                            </Col>
-                            <Col md={1}></Col>
-		    			</Row>
-    				</Col>
-    			</Form.Row>
-    		)
-    	})
+        if(this.props.match.params.accion === 'CO'){
+            return this.state.presentacionesmin.map((option, index) => {
+                const nombrePresentacion = option.nombre
+                const precio = option.precio
+                return (
+                    <Form.Row className="div-min-met-presentaciones-form" key={index} id={'formpres'+index}>
+                        <Col md={12}>
+                            <Row>
+                                <Col md={5}>
+                                    <Form.Label className="cliente-description-fields-text">Presentación</Form.Label>
+                                    <Form.Control 
+                                        key={index} 
+                                        id={''+index}
+                                        className="form-input form-input-dropdown-mineral-met-presentacion"
+                                        value={option.nombre}
+                                        disabled={true}
+                                    />
+                                </Col>
+                                <Col md={5}>
+                                    <Form.Label className="cliente-description-fields-text">Precio</Form.Label>
+                                        <Form.Group>
+                                            <InputGroup className="MyInputGroup">
+                                                <Form.Control
+                                                    className="form-input form-input-text-precio" 
+                                                    key={index} 
+                                                    id={''+index}
+                                                    value={option.precio}
+                                                    disabled={true}
+                                                />
+                                                <InputGroup.Append>
+                                                    <InputGroup.Text className="input-append-ventas-form" key={index}>$</InputGroup.Text>
+                                                </InputGroup.Append>
+                                            </InputGroup>
+                                        </Form.Group>
+                                </Col>
+                                <Col md={1}></Col>
+                                <Col md={1}></Col>
+                            </Row>
+                        </Col>
+                    </Form.Row>
+                )
+            })
+        }else{
+        	return this.state.presentacionesmin.map((option, index) => {
+        		return (
+        			<Form.Row className="div-min-met-presentaciones-form" key={index} id={'formpres'+index}>
+        				<Col md={12}>
+        					<Row>
+    		    				<Col md={5}>
+    			    				<Form.Label className="cliente-description-fields-text">Presentación</Form.Label>
+    			                    <Form.Control 
+    			                        as="select" 
+    			                        key={index} 
+    			                        id={''+index}
+    			                        className="form-input form-input-dropdown-mineral-met-presentacion"
+    			                        onChange={this.selectedOption}>
+    			                        {
+    			                            this.renderOptions('presentacion')
+    			                        }
+    			                    </Form.Control>
+    		    				</Col>
+    		    				<Col md={5}>
+    		    					<Form.Label className="cliente-description-fields-text">Precio</Form.Label>
+    			    					<Form.Group>
+    		                                <InputGroup className="MyInputGroup">
+    		                                    <Form.Control
+    		                                    	type="number"
+    		                                    	step="0.01"
+    		                                        className="form-input form-input-text-precio" 
+    		                                        key={index} 
+    		                                        defaultValue={1}
+    		                                        id={''+index}
+    		                                        min="0"
+    		                                    />
+    		                                    <InputGroup.Append>
+    		                                        <InputGroup.Text className="input-append-ventas-form" key={index}>$</InputGroup.Text>
+    		                                    </InputGroup.Append>
+    		                                </InputGroup>
+    		                            </Form.Group>
+    				                    <Form.Text className="text-muted">
+    				                        Este campo es obligatorio
+    				                    </Form.Text>
+    		                    </Col>
+    		    				<Col md={1}>
+                                    <Form.Label className="cliente-description-fields-text"></Form.Label>
+                                    <Button 
+                                        variant="outline-danger"
+                                        className="btn-block"
+                                        onClick={() => this.deletePresentacionesMin(index)}
+                                    >
+                                        x
+                                    </Button>
+                                </Col>
+                                <Col md={1}></Col>
+    		    			</Row>
+        				</Col>
+        			</Form.Row>
+        		)
+    	   })
+        }
     }
     renderComponentesMin = () => {
-        return this.state.componentesmin.map((option, index) => {
-            return (
-                <Form.Row className="div-min-met-componentes-form" key={index} id={'form'+index}>
-                    <Col md={12}>
-                        <Row>
-                            <Col md={5}>
-                                <Form.Label className="cliente-description-fields-text">Mineral</Form.Label>
-                                <Form.Control 
-                                    as="select" 
-                                    key={index} 
-                                    id={''+index}
-                                    defaultValue={this.componente}
-                                    className="form-input form-input-dropdown-min-met-componente"
-                                    onChange={this.selectedOption}>
-                                    {
-                                        this.renderOptions('componente')
-                                    }
-                                </Form.Control>
-                            </Col>
-                            <Col md={5}>
-                                <Form.Label className="cliente-description-fields-text">Porcentaje</Form.Label>
-                                    <Form.Group>
-                                        <InputGroup className="MyInputGroup InputGroupPorcentajeCompone">
-                                            <Form.Control 
-                                                type="number" 
-                                                className="form-input" 
-                                                id='porcentaje-compone-min-met'
-                                                defaultValue={1}
-                                                step="0.01"
-                                                min="0"
-                                                max="100"
-                                            />
-                                            <InputGroup.Append>
-                                                <InputGroup.Text className="input-append-ventas-form">%</InputGroup.Text>
-                                            </InputGroup.Append>
-                                        </InputGroup>
-                                    </Form.Group>
-                                    <Form.Text className="text-muted">
-                                        Este campo es obligatorio
-                                    </Form.Text>
-                            </Col>
-                            <Col md={1}>
-                                <Form.Label className="cliente-description-fields-text"></Form.Label>
-                                <Button 
-                                    variant="outline-danger"
-                                    className="btn-block"
-                                    onClick={() => this.deleteComponentesMin(index)}
-                                >
-                                    x
-                                </Button>
-                            </Col>
-                            <Col md={1}></Col>
-                        </Row>
-                    </Col>
-                </Form.Row>
-            )
-        })
+        if(this.props.match.params.accion === 'CO'){
+            return this.state.componentesmin.map((option, index) => {
+                return (
+                    <Form.Row className="div-min-met-componentes-form" key={index} id={'form'+index}>
+                        <Col md={12}>
+                            <Row>
+                                <Col md={5}>
+                                    <Form.Label className="cliente-description-fields-text">Mineral</Form.Label>
+                                    <Form.Control 
+                                        key={index} 
+                                        id={''+index}
+                                        className="form-input form-input-dropdown-min-met-componente"
+                                        value={option.nombre}
+                                        disabled={true}
+                                    />
+                                </Col>
+                                <Col md={5}>
+                                    <Form.Label className="cliente-description-fields-text">Porcentaje</Form.Label>
+                                        <Form.Group>
+                                            <InputGroup className="MyInputGroup InputGroupPorcentajeCompone">
+                                                <Form.Control 
+                                                    className="form-input" 
+                                                    id='porcentaje-compone-min-met'
+                                                    value={option.porcentaje}
+                                                    disabled={true}
+                                                />
+                                                <InputGroup.Append>
+                                                    <InputGroup.Text className="input-append-ventas-form">%</InputGroup.Text>
+                                                </InputGroup.Append>
+                                            </InputGroup>
+                                        </Form.Group>
+                                </Col>
+                                <Col md={1}></Col>
+                                <Col md={1}></Col>
+                            </Row>
+                        </Col>
+                    </Form.Row>
+                )
+            })
+        }else{
+            return this.state.componentesmin.map((option, index) => {
+                return (
+                    <Form.Row className="div-min-met-componentes-form" key={index} id={'form'+index}>
+                        <Col md={12}>
+                            <Row>
+                                <Col md={5}>
+                                    <Form.Label className="cliente-description-fields-text">Mineral</Form.Label>
+                                    <Form.Control 
+                                        as="select" 
+                                        key={index} 
+                                        id={''+index}
+                                        defaultValue={this.componente}
+                                        className="form-input form-input-dropdown-min-met-componente"
+                                        onChange={this.selectedOption}>
+                                        {
+                                            this.renderOptions('componente')
+                                        }
+                                    </Form.Control>
+                                </Col>
+                                <Col md={5}>
+                                    <Form.Label className="cliente-description-fields-text">Porcentaje</Form.Label>
+                                        <Form.Group>
+                                            <InputGroup className="MyInputGroup InputGroupPorcentajeCompone">
+                                                <Form.Control 
+                                                    type="number" 
+                                                    className="form-input" 
+                                                    id='porcentaje-compone-min-met'
+                                                    defaultValue={1}
+                                                    step="0.01"
+                                                    min="0"
+                                                    max="100"
+                                                />
+                                                <InputGroup.Append>
+                                                    <InputGroup.Text className="input-append-ventas-form">%</InputGroup.Text>
+                                                </InputGroup.Append>
+                                            </InputGroup>
+                                        </Form.Group>
+                                        <Form.Text className="text-muted">
+                                            Este campo es obligatorio
+                                        </Form.Text>
+                                </Col>
+                                <Col md={1}>
+                                    <Form.Label className="cliente-description-fields-text"></Form.Label>
+                                    <Button 
+                                        variant="outline-danger"
+                                        className="btn-block"
+                                        onClick={() => this.deleteComponentesMin(index)}
+                                    >
+                                        x
+                                    </Button>
+                                </Col>
+                                <Col md={1}></Col>
+                            </Row>
+                        </Col>
+                    </Form.Row>
+                )
+            })
+        }
     }
     render(){
         return (
@@ -420,6 +529,7 @@ export default class GestionarMineralMetalico extends React.Component {
                                                 placeholder="Introduzca el nombre del mineral"
                                                 autoFocus
                                                 onChange={this.onChangeText} 
+                                                disabled={!this.state.modificar}
                                             />
                                             <Form.Text className="text-muted">
                                                 Este campo es obligatorio
@@ -449,6 +559,7 @@ export default class GestionarMineralMetalico extends React.Component {
                                                         step="0.01"
                                                         min="0"
                                                         max="100"
+                                                        disabled={!this.state.modificar}
     	                                            />
                                                     <InputGroup.Append>
                                                         <InputGroup.Text className="input-append-ventas-form">%</InputGroup.Text>
@@ -472,6 +583,7 @@ export default class GestionarMineralMetalico extends React.Component {
                                                 value={this.state.descripcion} 
                                                 placeholder="Introduzca la descripción" 
                                                 onChange={this.onChangeText} 
+                                                disabled={!this.state.modificar}
                                             />
                                         </Form.Group>
                                     </Col>
@@ -522,12 +634,15 @@ export default class GestionarMineralMetalico extends React.Component {
                                 <Row>
                                     <Col md={7}></Col>
                                     <Col md={5}>
-                                        <Button 
-                                            className="ventas-form-btn btn-block"
-                                            onClick={this.addPresentacionesMin}
-                                        >
-                                            Agregar
-                                        </Button>
+                                        {
+                                            (this.props.match.params.accion !== 'CO') &&
+                                            <Button 
+                                                className="ventas-form-btn btn-block"
+                                                onClick={this.addPresentacionesMin}
+                                            >
+                                                Agregar
+                                            </Button>
+                                        }
                                     </Col>
                                 </Row>
                             </Col>
@@ -574,12 +689,15 @@ export default class GestionarMineralMetalico extends React.Component {
                                 <Row>
                                     <Col md={7}></Col>
                                     <Col md={5}>
-                                        <Button 
-                                            className="ventas-form-btn btn-block"
-                                            onClick={this.addComponentesMin}
-                                        >
-                                            Agregar
-                                        </Button>
+                                        {
+                                            (this.props.match.params.accion !== 'CO') &&
+                                            <Button 
+                                                className="ventas-form-btn btn-block"
+                                                onClick={this.addComponentesMin}
+                                            >
+                                                Agregar
+                                            </Button>
+                                        }
                                     </Col>
                                 </Row>
                             </Col>
@@ -594,12 +712,15 @@ export default class GestionarMineralMetalico extends React.Component {
                                     </Col>
                                     <Col md={2}></Col>
                                     <Col md={5}>
-                                        <Button 
-                                            className="ccargo-btn btn-block"
-                                            onClick={this.onSubmit}
-                                        >
-                                            Registrar
-                                        </Button>
+                                        {
+                                            (this.props.match.params.accion !== 'CO') &&
+                                            <Button 
+                                                className="ccargo-btn btn-block"
+                                                onClick={this.onSubmit}
+                                            >
+                                                Registrar
+                                            </Button>
+                                        }
                                     </Col>
                                 </Row>
                             </Col>
