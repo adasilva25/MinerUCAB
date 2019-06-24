@@ -47,7 +47,8 @@ export default class ModificarYacimiento extends React.Component {
                 ubicacion:{
                     estado:null,
                     municipio:null,
-                    parroquia:null
+                    parroquia:null,
+                    idParroquia:null,
                 },
                 fecha:{
                     dia:0,
@@ -69,6 +70,19 @@ export default class ModificarYacimiento extends React.Component {
                     total:0
                 }]
                 
+            }],
+            mineralNoMetalicoId:[],
+            mineralNoMetalicoShow:'inline',
+            MineralesNoMetalicos:[{
+                nombre:null,
+                id:-1,
+                total: 0,
+                accordionKey:0,
+                componentes:[{
+                    nombre:null,
+                    id:0,
+                    total:0
+                }]
             }],
             etapas: [{
                 nombre: "Etapa 1",
@@ -130,7 +144,8 @@ export default class ModificarYacimiento extends React.Component {
                 ubicacion:{
                     estado:"Sucre",
                     municipio:"Sucre",
-                    parroquia:"Altagracia"
+                    parroquia:"Altagracia",
+                    idParroquia:760
                 },
                 fecha:{
                     dia:7,
@@ -172,9 +187,42 @@ export default class ModificarYacimiento extends React.Component {
                     id:4,
                     total:8
                 }]
-            }
-
-            ],
+            }],
+            mineralesNoMetalicos:[{
+                id:1,
+                total: 5,
+                nombre:"ICabron",
+                componentes:[{
+                    id:1,
+                    nombre:"ICarbon",
+                    total:5
+                }, 
+                {
+                    id:2,
+                    nombre:"Bauxita",
+                    total:2
+                }]
+            },
+            {
+                id:8,
+                total: 8,
+                nombre:"Alumina",
+                componentes:[{
+                    nombre:"Adamantium",
+                    id:12,
+                    total:52
+                }, 
+                {
+                    nombre:"Peludito",
+                    id:34,
+                    total:5
+                },
+                {
+                    nombre:"Moradita",
+                    id:54,
+                    total:7
+                }]
+            }],
             explotacion:{
                 duracion:0,
                 costo:0,
@@ -297,7 +345,8 @@ export default class ModificarYacimiento extends React.Component {
                 ubicacion:{
                     estado:null,
                     municipio:null,
-                    parroquia:null
+                    parroquia:null,
+                    idParroquia:null
                 },
                 fecha:{
                     dia:0,
@@ -319,6 +368,19 @@ export default class ModificarYacimiento extends React.Component {
                     total:0
                 }]
                 
+            }],
+            mineralNoMetalicoId:[],
+            mineralNoMetalicoShow:'inline',
+            MineralesNoMetalicos:[{
+                nombre:null,
+                id:-1,
+                total: 0,
+                accordionKey:0,
+                componentes:[{
+                    nombre:null,
+                    id:0,
+                    total:0
+                }]
             }],
             etapas: [{
                 nombre: "Etapa 1",
@@ -368,6 +430,7 @@ export default class ModificarYacimiento extends React.Component {
         state.yacimiento.ubicacion.estado = info.yacimiento.ubicacion.estado;
         state.yacimiento.ubicacion.municipio = info.yacimiento.ubicacion.municipio;
         state.yacimiento.ubicacion.parroquia = info.yacimiento.ubicacion.parroquia;
+        state.yacimiento.ubicacion.idParroquia = info.yacimiento.ubicacion.idParroquia;
         state.yacimiento.fecha.dia = info.yacimiento.fecha.dia;
         state.yacimiento.fecha.mes = info.yacimiento.fecha.mes;
         state.yacimiento.fecha.ano = info.yacimiento.fecha.ano;
@@ -420,7 +483,65 @@ export default class ModificarYacimiento extends React.Component {
             state.Minerales.push(mineral);
         }
         
-        console.log("minerales",state.Minerales);
+
+
+        state.MineralesNoMetalicos.shift();
+        for(let i=0; i<info.mineralesNoMetalicos.length; i++){
+
+            console.log(info.mineralesNoMetalicos[i].componentes.length);
+            state.mineralNoMetalicoId.push(info.mineralesNoMetalicos[i].id);
+
+            let mineral={
+                nombre:null,
+                id:-1,
+                total: 0,
+                accordionKey:0,
+                componentes:[{
+                    nombre:null,
+                    id:0,
+                    total:0
+                }]
+                
+            }
+
+            mineral.nombre=info.mineralesNoMetalicos[i].nombre;
+            mineral.id=info.mineralesNoMetalicos[i].id;
+            mineral.total=info.mineralesNoMetalicos[i].total;
+
+            
+
+            mineral.componentes.shift();
+            for(let j=0; j<info.mineralesNoMetalicos[i].componentes.length; j++){
+                let componente={
+                    nombre:null,
+                    id:0,
+                    total:0
+                }
+
+                componente.id=info.mineralesNoMetalicos[i].componentes[j].id;
+                componente.nombre=info.mineralesNoMetalicos[i].componentes[j].nombre;
+                componente.total=info.mineralesNoMetalicos[i].componentes[j].total;
+
+                mineral.componentes.push(componente);
+                console.log("length",info.mineralesNoMetalicos[i].componentes.length);
+            }
+            state.MineralesNoMetalicos.push(mineral);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //console.log("minerales",state.Minerales);
 
         state.etapas.shift();
 
@@ -592,6 +713,8 @@ export default class ModificarYacimiento extends React.Component {
             explotacion: state.explotacion,
             mineralId: state.mineralId,
             Minerales: state.Minerales,
+            mineralNoMetalicoId: state.mineralNoMetalicoId,
+            MineralesNoMetalicos: state.MineralesNoMetalicos,
             etapas: state.etapas
         }));
     }
@@ -749,6 +872,44 @@ export default class ModificarYacimiento extends React.Component {
             this.setState({accordionKey: 1});
         }*/
     }
+
+
+
+    accordionMNM(i){
+       // console.log(this.state.Minerales[i].accordionKey,i);
+     //   console.log(this.state.Minerales[i].accordionKey, "holoooA");
+        var minerales=this.state.MineralesNoMetalicos;
+        var k=this.state.MineralesNoMetalicos[i].accordionKey;
+       
+           // console.log(this.state.Minerales, "mineralesssss");
+           // console.log(this.state.Minerales[i].accordionKey, "holA");
+            if(k === 0){
+                k=1;
+              //  console.log( "1");
+                minerales[i].accordionKey=k;
+                this.setState(() => ({
+                    MineralesNoMetalicos: minerales
+                }));
+            }
+            else{
+                k=0;
+             //   console.log( "2");
+                minerales[i].accordionKey=k;
+                this.setState(() => ({
+                    MineralesNoMetalicos: minerales
+                }));
+            }
+            //console.log(this.state.Minerales[i].accordionKey, "ho",this.state.Minerales[i].accordionKey);
+        
+       /* if(this.state.accordionKey === 1){
+            this.setState({accordionKey: 0});
+        }
+        else{
+            this.setState({accordionKey: 1});
+        }*/
+    }
+
+
 
     accordionC(i,etapaNum,faseNum){
        // console.log(this.state.Cargos[i].accordionKey,i);
@@ -1345,7 +1506,122 @@ export default class ModificarYacimiento extends React.Component {
 
 
 
+    selectMineralesNoMetalicos = (id,name,et,fa) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
+        console.log('entroMineralesNoMetalicos', id)
 
+        let MineralesNoMetalicos=this.state.MineralesNoMetalicos;
+        var eliminado= false;
+        var mineralS='inline';
+        
+        let costo_anterior=0;
+        let id_a_eliminar=-1;
+
+        var componetesNombres=['Clarita','Durita','Virita','Fusita'];
+        if(this.state.MineralesNoMetalicos[0].id == -1){
+            this.state.MineralesNoMetalicos.shift();
+
+        }
+
+
+
+
+
+
+        for(var i = 0; i < this.state.MineralesNoMetalicos.length; i++) {
+            //console.log(MineralesNoMetalicos[i].id,"id");
+            
+
+            costo_anterior=document.getElementById('YacimientosTotalMineralNoMetalico'+MineralesNoMetalicos[i].id).value;
+           
+            
+
+
+           if(eliminado){
+                document.getElementById('YacimientosTotalMineralNoMetalico'+MineralesNoMetalicos[i-1].id).value=costo_anterior;
+                /*for(let j=0; j<MineralesNoMetalicos[i-1].componentes.length; j++){
+                    document.getElementById('YacimientosMineralComponente'+MineralesNoMetalicos[i-1].id+MineralesNoMetalicos[i-1].componentes[j].id).value=cantidad_anterior[j];  
+                }*/
+            }
+
+            if(MineralesNoMetalicos[i].id == id){
+               
+                for(let j=0; j<MineralesNoMetalicos[i].componentes.length; j++){
+                    document.getElementById('YacimientosMineralNoMetalicoComponente'+MineralesNoMetalicos[i].id+MineralesNoMetalicos[i].componentes[j].id).value='';  
+                }
+                document.getElementById('YacimientosTotalMineralNoMetalico'+id).value='';
+
+                //MineralesNoMetalicos.splice(i,1);
+                id_a_eliminar=i;
+                eliminado=true;
+            }
+
+            
+            
+        }
+
+        if(eliminado){
+            MineralesNoMetalicos.splice(id_a_eliminar,1);
+        }
+
+        if(!eliminado){
+            let mineral={
+                nombre:'',
+                id:'',
+                total: 0,
+                accordionKey:0,
+                componentes:[]
+            }
+            
+
+            mineral.nombre=name;
+            mineral.id=id;
+            for(var k=0; k<this.state.explotacion.costo; k++){
+                let componente={
+                    nombre:'',
+                    id:0,
+                    total:''
+                }
+                componente.nombre='Componente '+id;
+                componente.id = id+k;//EPALEEPALEARRIBARRIBA
+                mineral.componentes.push(componente);
+               // console.log(k,"k",componetesNombres[k]);
+            }
+            MineralesNoMetalicos.push(mineral);
+        }
+        if(MineralesNoMetalicos.length===0){
+            mineralS='none';
+            let mineral={
+                nombre:null,
+                id:-1,
+                total: 0,
+                accordionKey:0,
+                componentes:[{
+                    nombre:null,
+                    total:''
+                }]    
+            };
+            MineralesNoMetalicos.push(mineral);
+        }
+
+        this.setState(() => ({
+            mineralNoMetalicoShow: mineralS,
+            MineralesNoMetalicos: MineralesNoMetalicos
+        }));
+
+        if(eliminado){
+            for(let i=0; i<this.state.MineralesNoMetalicos.length;i++){
+                for(let j=0; j<this.state.MineralesNoMetalicos[i].componentes.length; j++){
+                    document.getElementById('YacimientosMineralNoMetalico'+MineralesNoMetalicos[i].id+MineralesNoMetalicos[i].componentes[j].id).value = this.state.MineralesNoMetalicos[i].componentes[j].total;
+                    
+                }
+            }
+        }
+
+
+        console.log(MineralesNoMetalicos);
+
+       // console.log(minerales[0].componentes[1]);
+    };
 
 
     selectCargos = (id,name,etapaNum,faseNum) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
@@ -1525,11 +1801,14 @@ export default class ModificarYacimiento extends React.Component {
         // console.log('IndexM',classN.indexOf("minerales"))
         // console.log('IndexT',classN.indexOf("tiposdemaquinaria"))
         if (classN.indexOf("cargos") != -1){
-            console.log('ENTRO CARGO')
+            //console.log('ENTRO CARGO')
             this.selectCargos(id,name,etapaNum,faseNum)
         }
-        else if (classN.indexOf("minerales") != -1){
+        else if (classN.indexOf("mineralesmetálicos") != -1){
             this.selectMinerales(id,name,etapaNum,faseNum)
+        }
+        else if (classN.indexOf("mineralesnometálicos") != -1){
+            this.selectMineralesNoMetalicos(id,name,etapaNum,faseNum)
         }
         else if (classN.indexOf("tiposdemaquinaria") != -1 ){
             this.selectTipoMaquinaria(id,name,etapaNum,faseNum)          
@@ -1538,7 +1817,7 @@ export default class ModificarYacimiento extends React.Component {
 
 
 
-    handleOnClickSubmittData=()=>{
+     handleOnClickSubmittData=()=>{
 
 
         const info = {
@@ -1559,6 +1838,14 @@ export default class ModificarYacimiento extends React.Component {
                 }
             },
             minerales:[{
+                id:0,
+                total: 0,
+                componentes:[{
+                    id:0,
+                    total:0
+                }]
+            }],
+            mineralesNoMetalicos:[{
                 id:0,
                 total: 0,
                 componentes:[{
@@ -1611,9 +1898,13 @@ export default class ModificarYacimiento extends React.Component {
         info.yacimiento.descripcion = document.getElementById("YacimientosDescripcionYacimiento").value.trim();
         info.yacimiento.area = document.getElementById("YacimientosTamañoYacimiento").value.trim();
         info.yacimiento.tipo = document.getElementById("YacimientosTipoYacimiento").value.trim();
+
+
         info.yacimiento.ubicacion.estado = document.getElementById("LugarEstado").value.trim();
         info.yacimiento.ubicacion.municipio = document.getElementById("LugarMunicipio").value.trim();
         info.yacimiento.ubicacion.parroquia = document.getElementById("LugarParroquia").value.trim();
+
+
         info.yacimiento.fecha.dia = document.getElementById("FechaDia").value.trim();
         info.yacimiento.fecha.mes = document.getElementById("FechaMes").value.trim();
         info.yacimiento.fecha.ano = document.getElementById("FechaAno").value.trim();
@@ -1651,6 +1942,38 @@ export default class ModificarYacimiento extends React.Component {
             
         }
         
+        info.mineralesNoMetalicos.shift();
+        for(let i=0; i<this.state.MineralesNoMetalicos.length; i++){
+            let mineral={
+                id:0,
+                total: 0,
+                componentes:[{
+                    id:0,
+                    total:0
+                }]
+            }
+           
+            mineral.id=this.state.MineralesNoMetalicos[i].id;
+            mineral.total=document.getElementById("YacimientosTotalMineralNoMetalico"+mineral.id).value.trim();
+            for(let k=0; k<this.state.MineralesNoMetalicos[i].componentes.length; k++){
+                let componente = {
+                    id:0,
+                    total:0
+                }
+
+                componente.id = this.state.MineralesNoMetalicos[i].componentes[k].id;
+                componente.total = document.getElementById("YacimientosMineralNoMetalicoComponente"+mineral.id+componente.id).value.trim();
+                mineral.componentes.push(componente);
+            }
+
+            if(mineral.id != -1){
+                info.mineralesNoMetalicos.push(mineral);
+            }
+            else{
+                info.mineralesNoMetalicos.shift();
+            }
+            
+        }
 
         info.explotacion.duracion = this.state.explotacion.duracion;
         info.explotacion.costo = this.state.explotacion.costo;
@@ -2150,10 +2473,88 @@ export default class ModificarYacimiento extends React.Component {
         }
     }
 
+
+
+    handleOnChangeMineralNoMetalicoComponentes=(event,minNUm,compNUm,minIndx,compIndx)=>{
+        const value = event.target.value;
+        const valueTrimmed = value.trim();
+        const minerales= this.state.MineralesNoMetalicos;
+
+
+        if(valueTrimmed){
+            event.target.state='valid';
+            console.log("validoMineralCompo",document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML);
+
+            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0)  ){
+                document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML = "Obligatorio";
+                minerales[minIndx].componentes[compIndx].total =Number(valueTrimmed);
+            }
+            else{
+                
+                document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML = "Introduzca un número válido";
+               
+            }
+           
+        }
+        else{
+            event.target.state='invalid';
+            document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML = "Introduzca un número válido";
+              console.log("invalido");
+        }
+        
+        if(!value){
+            event.target.state='';
+            document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML = "Obligatorio";
+            minerales[minIndx].componentes[compIndx].total = -1;
+        }
+    }
+
+
+    handleOnChangeMineralNoMetalicoNoMetalico=(event,minNUm)=>{
+        const value = event.target.value;
+        const valueTrimmed = value.trim();
+        const minerales= this.state.MineralesNoMetalicos;
+
+        if(valueTrimmed){
+            event.target.state='valid';
+            console.log("validoMineral",document.getElementById('YacimientosTotalTextMineralNoMetalico'+minNUm).innerHTML);
+
+            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0)  ){
+                document.getElementById('YacimientosTotalTextMineralNoMetalico'+minNUm).innerHTML = "Obligatorio";
+                
+            }
+            else{
+                
+                document.getElementById('YacimientosTotalTextMineralNoMetalico'+minNUm).innerHTML = "Introduzca un número válido";
+               
+            }
+           
+        }
+        else{
+            event.target.state='invalid';
+            document.getElementById('YacimientosTotalTextMineralNoMetalico'+minNUm).innerHTML = "Introduzca un número válido";
+              console.log("invalido");
+        }
+        
+        if(!value){
+            event.target.state='';
+            document.getElementById('YacimientosTotalTextMineralNoMetalico'+minNUm).innerHTML = "Obligatorio";
+           
+        }
+    }
+
+
+    
+
+
+
+
+
+
+
     handleOnChangeValidarNumeros=(event,Texto)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
-        const minerales= this.state.Minerales;
 
         if(valueTrimmed){
             event.target.state='valid';
@@ -2186,7 +2587,6 @@ export default class ModificarYacimiento extends React.Component {
      handleOnChangeValidarTexto=(event,Texto,Mensaje)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
-        const minerales= this.state.Minerales;
 
         if(valueTrimmed){
             event.target.state='valid';
@@ -2296,19 +2696,25 @@ export default class ModificarYacimiento extends React.Component {
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
-                                    <FormLugarPred idParroquia={this.state.yacimiento.ubicacion.parroquia} predet={this.state.yacimiento.ubicacion.estado} accion='M'/>
+                                    <FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='M'/>
                                 </Card.Body>
                             </Accordion.Collapse>
                         </Card>
                     </Accordion>
+
+
+
+
+
+
                     <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
-                                <FormTitulo titulo="Minerales"/>
+                                <FormTitulo titulo="Minerales Metálicos"/>
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
-                                {console.log("mineralId",this.state.mineralId)}
+                    
                                     <Row>
                                         <Col sm={0} md={1}></Col>
                                         <Col sm={12} md={10}>
@@ -2324,11 +2730,11 @@ export default class ModificarYacimiento extends React.Component {
                                                 columns={'http://localhost:3000/column_names/mu_mineral_metalico'} 
                                                 data={'http://localhost:3000/getAllMineralesMetalicos'}
 
-                                                size={200}
                                                 url={'consultar_empleado/:'}
                                                 checktable={true}
-                                                textoSingular={'mineral'}
-                                                textoPlural={'minerales'}
+                                                textoSingular={'mineral metálico'}
+                                                textoPlural={'minerales metálicos'}
+                                                size={200}
                                                 etapa={0}
                                                 fase={0}
                                             />
@@ -2341,7 +2747,7 @@ export default class ModificarYacimiento extends React.Component {
                                                 <div style={{display: this.state.mineralShow}}>
                                                     <Accordion defaultActiveKey={1} >
                                                         <Card className="CardAcc">
-                                                            <Accordion.Toggle as={Card.Header} eventKey={mineral.accordionKey} onClick={() => this.accordionM(index)} className="accordion borderacc">
+                                                            <Accordion.Toggle as={Card.Header} eventKey={mineral.accordionKey} onClick={() => this.accordionM(indexMin)} className="accordion borderacc">
                                                                 <FormTitulo titulo={mineral.nombre}/>
                                                             </Accordion.Toggle>
                                                             <Accordion.Collapse eventKey={1} >
@@ -2354,7 +2760,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                 <Form.Group as={Col} md="3" onChange={(evt)=>this.handleOnChangeMineralComponentes(evt,mineral.id,componente.id,indexMin,indexComp)} controlId={'YacimientosMineralComponente'+mineral.id+componente.id} className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">{componente.nombre}</Form.Label>
                                                                                     <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control type="text" className="form-input" defaultValue={componente.total} placeholder="Introduzca cantidad" /> 
+                                                                                        <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
                                                                                         <InputGroup.Append>
                                                                                             <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                         </InputGroup.Append>
@@ -2371,7 +2777,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineral(evt,mineral.id)} controlId={'YacimientosTotalMineral'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
-                                                                                <Form.Control type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
+                                                                                <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>
@@ -2395,6 +2801,107 @@ export default class ModificarYacimiento extends React.Component {
 
                         </Card>
                     </Accordion>
+
+
+
+
+
+
+                    <Accordion defaultActiveKey={1} >
+                        <Card className="CardAcc">
+                            <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
+                                <FormTitulo titulo="Minerales No Metálicos"/>
+                            </Accordion.Toggle>
+                            <Accordion.Collapse eventKey={1} >
+                                <Card.Body className="BodyAcc">
+                    
+                                    <Row>
+                                        <Col sm={0} md={1}></Col>
+                                        <Col sm={12} md={10}>
+                                            <DataTable
+                                                selectCheck={this.selectFunctionCheckbox}
+                                                modificarCheck={true}
+                                                listaModificarCheck={this.state.mineralNoMetalicoId}
+                                                agregar={false}
+                                                modificar={false}
+                                                consultar={false}
+                                                eliminar={false}
+
+                                                columns={'http://localhost:3000/column_names/mu_mineral_no_metalico'} 
+                                                data={'http://localhost:3000/getAllMineralesNoMetalicos'}
+
+                                                url={'consultar_empleado/:'}
+                                                checktable={true}
+                                                textoSingular={'mineral no metálico'}
+                                                textoPlural={'minerales no metálicos'}
+                                                size={200}
+                                                etapa={0}
+                                                fase={0}
+                                            />
+                                        </Col>
+                                        <Col sm={0} md={1}></Col>
+                                    </Row>
+                                    <Container>
+                                        {this.state.MineralesNoMetalicos.map((mineral,indexMin)=>{             
+                                            return(
+                                                <div style={{display: this.state.mineralNoMetalicoShow}}>
+                                                    <Accordion defaultActiveKey={1} >
+                                                        <Card className="CardAcc">
+                                                            <Accordion.Toggle as={Card.Header} eventKey={mineral.accordionKey} onClick={() => this.accordionMNM(indexMin)} className="accordion borderacc">
+                                                                <FormTitulo titulo={mineral.nombre}/>
+                                                            </Accordion.Toggle>
+                                                            <Accordion.Collapse eventKey={1} >
+                                                                <Card.Body className="BodyAcc">
+                                                                    <Form.Row className="formMargins">
+                                                                    {mineral.componentes.map((componente,indexComp)=>{
+                                                                            
+                                                                        return(
+                                                                            
+                                                                                <Form.Group as={Col} md="3" onChange={(evt)=>this.handleOnChangeMineralNoMetalicoComponentes(evt,mineral.id,componente.id,indexMin,indexComp)} controlId={'YacimientosMineralNoMetalicoComponente'+mineral.id+componente.id} className="inputsPaddingRight">
+                                                                                    <Form.Label className="cliente-description-fields-text">{componente.nombre}</Form.Label>
+                                                                                    <InputGroup className="MyInputGroup">
+                                                                                        <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                                                        <InputGroup.Append>
+                                                                                            <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
+                                                                                        </InputGroup.Append>
+                                                                                    </InputGroup>
+                                                                                    <Form.Text className="text-muted" id={'YacimientosTextMineralNoMetalicoComponente'+mineral.id+componente.id}>
+                                                                                        Obligatorio
+                                                                                    </Form.Text>    
+                                                                                </Form.Group>
+                                                                            
+                                                                        );
+                                                                    })}
+                                                                    </Form.Row>
+                                                                    <Form.Row className="formMargins">
+                                                                        <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineralNoMetalico(evt,mineral.id)} controlId={'YacimientosTotalMineralNoMetalico'+mineral.id}  className="inputsPaddingRight">
+                                                                            <Form.Label className="cliente-description-fields-text">Total</Form.Label>
+                                                                            <InputGroup className="MyInputGroup">
+                                                                                <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                                                <InputGroup.Append>
+                                                                                    <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
+                                                                                </InputGroup.Append>
+                                                                            </InputGroup>
+                                                                            <Form.Text className="text-muted" id={'YacimientosTotalTextMineralNoMetalico'+mineral.id}>
+                                                                                Obligatorio
+                                                                            </Form.Text>    
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                </Card.Body>
+                                                            </Accordion.Collapse>
+                                                        </Card>
+                                                    </Accordion>
+                                                </div>
+                                            );
+                                        })}
+                                    </Container>
+                                </Card.Body>
+                            </Accordion.Collapse>
+                        </Card>
+                    </Accordion>
+
+
+
                     <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[3]} onClick={() => this.accordionf(3)} className="accordion borderacc">

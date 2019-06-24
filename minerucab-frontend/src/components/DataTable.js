@@ -232,7 +232,7 @@ export default class DataTable extends React.Component {
                        if (checktable === true){
                         // console.log('antes', document.getElementsByClassName('dt-checkboxes'))
                         const checkboxesDT = document.getElementsByClassName('dt-checkboxes')
-                        console.log("atributos clases",checkboxesDT);
+                       // console.log("atributos clases",checkboxesDT);
                         // console.log('tP', textoPlural)
                         let m = 0;
                             if (checkboxesDT.length > 0){

@@ -79,7 +79,7 @@ export default class RegistrarYacimiento extends React.Component {
                     total:0
                 }]
                 
-            }]
+            }],
             etapas: [{
                 nombre: "Etapa 1",
                 descripcion: null,
@@ -761,7 +761,7 @@ export default class RegistrarYacimiento extends React.Component {
                 }*/
             }
 
-            if(minerales[i].id === id){
+            if(minerales[i].id == id){
                
                 for(let j=0; j<minerales[i].componentes.length; j++){
                     document.getElementById('YacimientosMineralComponente'+minerales[i].id+minerales[i].componentes[j].id).value='';  
@@ -880,7 +880,7 @@ export default class RegistrarYacimiento extends React.Component {
                 }*/
             }
 
-            if(MineralesNoMetalicos[i].id === id){
+            if(MineralesNoMetalicos[i].id == id){
                
                 for(let j=0; j<MineralesNoMetalicos[i].componentes.length; j++){
                     document.getElementById('YacimientosMineralNoMetalicoComponente'+MineralesNoMetalicos[i].id+MineralesNoMetalicos[i].componentes[j].id).value='';  
@@ -1143,10 +1143,10 @@ export default class RegistrarYacimiento extends React.Component {
             console.log('ENTRO CARGO')
             this.selectCargos(id,name,etapaNum,faseNum)
         }
-        else if (classN.indexOf("mineralesmetalicos") != -1){
+        else if (classN.indexOf("mineralesmetálicos") != -1){
             this.selectMinerales(id,name,etapaNum,faseNum)
         }
-        else if (classN.indexOf("mineralesnometalicos") != -1){
+        else if (classN.indexOf("mineralesnometálicos") != -1){
             this.selectMineralesNoMetalicos(id,name,etapaNum,faseNum)
         }
         else if (classN.indexOf("tiposdemaquinaria") != -1 ){
@@ -2034,7 +2034,7 @@ export default class RegistrarYacimiento extends React.Component {
                     <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
-                                <FormTitulo titulo="Minerales"/>
+                                <FormTitulo titulo="Minerales Metálicos"/>
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
@@ -2054,8 +2054,8 @@ export default class RegistrarYacimiento extends React.Component {
 
                                                 url={'consultar_empleado/:'}
                                                 checktable={true}
-                                                textoSingular={'mineral'}
-                                                textoPlural={'minerales'}
+                                                textoSingular={'mineral metálico'}
+                                                textoPlural={'minerales metálicos'}
                                                 size={200}
                                                 etapa={0}
                                                 fase={0}
@@ -2069,7 +2069,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                 <div style={{display: this.state.mineralShow}}>
                                                     <Accordion defaultActiveKey={1} >
                                                         <Card className="CardAcc">
-                                                            <Accordion.Toggle as={Card.Header} eventKey={mineral.accordionKey} onClick={() => this.accordionM(index)} className="accordion borderacc">
+                                                            <Accordion.Toggle as={Card.Header} eventKey={mineral.accordionKey} onClick={() => this.accordionM(indexMin)} className="accordion borderacc">
                                                                 <FormTitulo titulo={mineral.nombre}/>
                                                             </Accordion.Toggle>
                                                             <Accordion.Collapse eventKey={1} >
@@ -2119,10 +2119,101 @@ export default class RegistrarYacimiento extends React.Component {
                                     </Container>
                                 </Card.Body>
                             </Accordion.Collapse>
-
-
                         </Card>
                     </Accordion>
+
+                    <Accordion defaultActiveKey={1} >
+                        <Card className="CardAcc">
+                            <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
+                                <FormTitulo titulo="Minerales No Metálicos"/>
+                            </Accordion.Toggle>
+                            <Accordion.Collapse eventKey={1} >
+                                <Card.Body className="BodyAcc">
+                    
+                                    <Row>
+                                        <Col sm={0} md={1}></Col>
+                                        <Col sm={12} md={10}>
+                                            <DataTable
+                                                selectCheck={this.selectFunctionCheckbox}
+                                                agregar={false}
+                                                modificar={false}
+                                                consultar={false}
+                                                eliminar={false}
+
+                                                columns={'http://localhost:3000/column_names/mu_mineral_no_metalico'} 
+                                                data={'http://localhost:3000/getAllMineralesNoMetalicos'}
+
+                                                url={'consultar_empleado/:'}
+                                                checktable={true}
+                                                textoSingular={'mineral no metálico'}
+                                                textoPlural={'minerales no metálicos'}
+                                                size={200}
+                                                etapa={0}
+                                                fase={0}
+                                            />
+                                        </Col>
+                                        <Col sm={0} md={1}></Col>
+                                    </Row>
+                                    <Container>
+                                        {this.state.MineralesNoMetalicos.map((mineral,indexMin)=>{             
+                                            return(
+                                                <div style={{display: this.state.mineralNoMetalicoShow}}>
+                                                    <Accordion defaultActiveKey={1} >
+                                                        <Card className="CardAcc">
+                                                            <Accordion.Toggle as={Card.Header} eventKey={mineral.accordionKey} onClick={() => this.accordionMNM(indexMin)} className="accordion borderacc">
+                                                                <FormTitulo titulo={mineral.nombre}/>
+                                                            </Accordion.Toggle>
+                                                            <Accordion.Collapse eventKey={1} >
+                                                                <Card.Body className="BodyAcc">
+                                                                    <Form.Row className="formMargins">
+                                                                    {mineral.componentes.map((componente,indexComp)=>{
+                                                                            
+                                                                        return(
+                                                                            
+                                                                                <Form.Group as={Col} md="3" onChange={(evt)=>this.handleOnChangeMineralNoMetalicoComponentes(evt,mineral.id,componente.id,indexMin,indexComp)} controlId={'YacimientosMineralNoMetalicoComponente'+mineral.id+componente.id} className="inputsPaddingRight">
+                                                                                    <Form.Label className="cliente-description-fields-text">{componente.nombre}</Form.Label>
+                                                                                    <InputGroup className="MyInputGroup">
+                                                                                        <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                                                        <InputGroup.Append>
+                                                                                            <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
+                                                                                        </InputGroup.Append>
+                                                                                    </InputGroup>
+                                                                                    <Form.Text className="text-muted" id={'YacimientosTextMineralNoMetalicoComponente'+mineral.id+componente.id}>
+                                                                                        Obligatorio
+                                                                                    </Form.Text>    
+                                                                                </Form.Group>
+                                                                            
+                                                                        );
+                                                                    })}
+                                                                    </Form.Row>
+                                                                    <Form.Row className="formMargins">
+                                                                        <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineralNoMetalico(evt,mineral.id)} controlId={'YacimientosTotalMineralNoMetalico'+mineral.id}  className="inputsPaddingRight">
+                                                                            <Form.Label className="cliente-description-fields-text">Total</Form.Label>
+                                                                            <InputGroup className="MyInputGroup">
+                                                                                <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                                                <InputGroup.Append>
+                                                                                    <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
+                                                                                </InputGroup.Append>
+                                                                            </InputGroup>
+                                                                            <Form.Text className="text-muted" id={'YacimientosTotalTextMineralNoMetalico'+mineral.id}>
+                                                                                Obligatorio
+                                                                            </Form.Text>    
+                                                                        </Form.Group>
+                                                                    </Form.Row>
+                                                                </Card.Body>
+                                                            </Accordion.Collapse>
+                                                        </Card>
+                                                    </Accordion>
+                                                </div>
+                                            );
+                                        })}
+                                    </Container>
+                                </Card.Body>
+                            </Accordion.Collapse>
+                        </Card>
+                    </Accordion>
+
+
                     <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[3]} onClick={() => this.accordionf(3)} className="accordion borderacc">
