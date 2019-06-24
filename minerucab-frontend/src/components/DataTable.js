@@ -134,7 +134,7 @@ export default class DataTable extends React.Component {
                             render: function (data, type, row, meta){
                                 
                                if (checktable === true){
-                                    console.log(listaModificarCheck);
+                                    
                                     var checkbox = $("<input/>",{
                                         "type": "checkbox"
                                     });
@@ -232,11 +232,11 @@ export default class DataTable extends React.Component {
                        if (checktable === true){
                         // console.log('antes', document.getElementsByClassName('dt-checkboxes'))
                         const checkboxesDT = document.getElementsByClassName('dt-checkboxes')
-                        //console.log("atributos clases",checkboxesDT);
+                        console.log("atributos clases",checkboxesDT);
                         // console.log('tP', textoPlural)
                         let m = 0;
                             if (checkboxesDT.length > 0){
-                                console.log('datatable', this.$el)
+                               // console.log('datatable', this.$el)
                                 for (let k = 0; k < checkboxesDT.length; k++){
                                     // console.log('entroLETK')
                                     // console.log(checkboxesDT[k].alt);
@@ -246,7 +246,8 @@ export default class DataTable extends React.Component {
                                     //  FUNCIONA PERFECT
                                     if (checkboxesDT[k].classList.length === 1){
                                         
-                                        checkboxesDT[k].alt = dataSet[m][0]
+                                        checkboxesDT[k].alt = dataSet[m][0];
+                                        checkboxesDT[k].align = dataSet[m][1];
                                         // console.log('dataSet', dataSet[m][0])
                                         // console.log('alt', checkboxesDT[k].alt)
                                         checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,'')+etapa+fase);
@@ -317,7 +318,7 @@ export default class DataTable extends React.Component {
                             console.log('ETAPA - FASE ', etapa, fase)
                             // console.log('selectCheck change', selectCheck)
                             console.log('className', e.target.className)
-                            selectCheck(e.target.className,e.target.alt,etapa,fase);
+                            selectCheck(e.target.className,e.target.alt,e.target.align,etapa,fase);
                             
                             // this.props.selectCheck()
                                 

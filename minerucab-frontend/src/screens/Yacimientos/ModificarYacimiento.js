@@ -17,6 +17,7 @@ import Tabs from 'react-bootstrap/Tabs'
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Accordion from 'react-bootstrap/Accordion'
+import FormLugarPred from '../../components/FormLugarPred'
 import Card from 'react-bootstrap/Card'
 
 // https://www.w3schools.com/jquery/html_removeclass.asp
@@ -30,6 +31,7 @@ export default class ModificarYacimiento extends React.Component {
 
         this.state = {
             eliminadosFases: [],
+            actualizar:true,
             eliminar:true,
             prueba: true,
             key:"Etapa 1",
@@ -89,7 +91,9 @@ export default class ModificarYacimiento extends React.Component {
                     numero:1,
                     numeroV:1,
                     cargosId:[],
+                    checkInicialCargos:true,
                     tipoMaquinariaId:[],
+                    checkInicialtipoMaquiaria:true,
                     cargos:[{
                         nombre:null,
                         id:-1,
@@ -122,7 +126,7 @@ export default class ModificarYacimiento extends React.Component {
                 nombre:"Okinawa",
                 descripcion:"muy mineraloso",
                 area:300,
-                tipo:"Aloctóno",
+                tipo:"Autóctono",
                 ubicacion:{
                     estado:"Sucre",
                     municipio:"Sucre",
@@ -150,19 +154,22 @@ export default class ModificarYacimiento extends React.Component {
                 }]
             },
             {
-                id:14,
+                id:8,
                 total: 8,
                 nombre:"Epale2",
                 componentes:[{
-                    id:14,
+                    nombre:"Clarita",
+                    id:12,
                     total:52
                 }, 
                 {
-                    id:7,
+                    nombre:"Vitrita",
+                    id:1,
                     total:17
                 },
                 {
-                    id:14,
+                    nombre:"Durita",
+                    id:4,
                     total:8
                 }]
             }
@@ -180,6 +187,8 @@ export default class ModificarYacimiento extends React.Component {
                     nombre: "andrea",
                     duracion:10,
                     costo:4,
+                    checkInicialCargos:true,
+                    checkInicialtipoMaquiaria:true,
                     cargos:[{
                         id:14,
                         nombre:"Natu",
@@ -187,7 +196,7 @@ export default class ModificarYacimiento extends React.Component {
                         cantidad:7,
                     }],
                     tipoMaquinaria:[{
-                        id:1,
+                        id:5,
                         nombre:"Aloa",
                         costo:52,
                         cantidad:7,
@@ -219,6 +228,8 @@ export default class ModificarYacimiento extends React.Component {
                     nombre: "Sanchéz",
                     duracion:1,
                     costo:5,
+                    checkInicialCargos:true,
+                    checkInicialtipoMaquiaria:true,
                     cargos:[{
                         id:3,
                         nombre:"Armadora",
@@ -232,7 +243,7 @@ export default class ModificarYacimiento extends React.Component {
                         cantidad:9,
                     }],
                     tipoMaquinaria:[{
-                        id:10,
+                        id:6,
                         nombre:"Porfi pelase",
                         costo:2,
                         cantidad:8,
@@ -248,6 +259,8 @@ export default class ModificarYacimiento extends React.Component {
                     nombre: "Albita",
                     duracion:1,
                     costo:7.2,
+                    checkInicialCargos:true,
+                    checkInicialtipoMaquiaria:true,
                     cargos:[{
                         id:10,
                         nombre:"empleadae",
@@ -268,6 +281,7 @@ export default class ModificarYacimiento extends React.Component {
 
         let state={
             eliminadosFases: [],
+            actualizar:true,
             eliminar:true,
             prueba: true,
             key:"Etapa 1",
@@ -390,7 +404,6 @@ export default class ModificarYacimiento extends React.Component {
 
             mineral.componentes.shift();
             for(let j=0; j<info.minerales[i].componentes.length; j++){
-                
                 let componente={
                     nombre:null,
                     id:0,
@@ -410,6 +423,10 @@ export default class ModificarYacimiento extends React.Component {
         console.log("minerales",state.Minerales);
 
         state.etapas.shift();
+
+        if (info.etapas.length>1){
+            state.eliminar=false;
+        }
         for(let i=0; i<info.etapas.length; i++){
             let etapa={
                 nombre: "Etapa 1",
@@ -433,6 +450,8 @@ export default class ModificarYacimiento extends React.Component {
                     numeroV:1,
                     cargosId:[],
                     tipoMaquinariaId:[],
+                    checkInicialCargos:true,
+                    checkInicialtipoMaquiaria:true,
                     cargos:[{
                         nombre:null,
                         id:-1,
@@ -456,12 +475,12 @@ export default class ModificarYacimiento extends React.Component {
             etapa.numeroV=i+1;
 
             etapa.nombre= 'Etapa '+ (i+1);
-            etapa.nombreV=info.etapas[i].nombreV;
+            etapa.nombreV=info.etapas[i].nombre;
 
             etapa.duracion=info.etapas[i].duracion;
             etapa.costo= info.etapas[i].costo;
 
-
+            
 
             etapa.fases.shift();
             for(let j=0; j<info.etapas[i].fases.length; j++){
@@ -478,6 +497,8 @@ export default class ModificarYacimiento extends React.Component {
                     numeroV:1,
                     cargosId:[],
                     tipoMaquinariaId:[],
+                    checkInicialCargos:true,
+                    checkInicialtipoMaquiaria:true,
                     cargos:[{
                         nombre:null,
                         id:-1,
@@ -492,7 +513,6 @@ export default class ModificarYacimiento extends React.Component {
                         cantidad:0,
                         accordionKey:0
                     }]
-
                 }
 
 
@@ -504,7 +524,7 @@ export default class ModificarYacimiento extends React.Component {
                 fase.numeroV=j+1;
 
                 fase.nombre= 'Fase '+ (j+1);
-                fase.nombreV=info.etapas[i].fases[j].nombreV;
+                fase.nombreV=info.etapas[i].fases[j].nombre;
 
                 fase.duracion=info.etapas[i].fases[j].duracion;
                 fase.costo= info.etapas[i].fases[j].costo;
@@ -528,10 +548,7 @@ export default class ModificarYacimiento extends React.Component {
                     cargo.cantidad=info.etapas[i].fases[j].cargos[k].cantidad;
                     cargo.nombre=info.etapas[i].fases[j].cargos[k].nombre;
 
-                    fase.cargos.push(cargo);
-
-                   
-                    
+                    fase.cargos.push(cargo);    
                 }
 
 
@@ -554,14 +571,13 @@ export default class ModificarYacimiento extends React.Component {
 
                     fase.tipoMaquinaria.push(tipoMaquinaria);
                 }
-
-                etapa.fases.push(fase);
-               
+                
+                etapa.fases.push(fase); 
             }
-            
-
+            if (etapa.fases.length>1){
+                etapa.eliminar=false;
+            }
             state.etapas.push(etapa);
-
         }
 
         
@@ -571,17 +587,79 @@ export default class ModificarYacimiento extends React.Component {
         console.log("estado inicial",state);
         console.log("estado inicial",state.mineralId);
         this.setState(() => ({
+            eliminar: state.eliminar,
             yacimiento: state.yacimiento,
             explotacion: state.explotacion,
             mineralId: state.mineralId,
             Minerales: state.Minerales,
             etapas: state.etapas
-
         }));
+    }
 
-     }
+    /*inicializarInputs=()=>{
+
+        if((document.getElementById("YacimientosNombreYacimiento")!=null) && (this.state.actualizar)){
+            this.state.actualizar=false;
+            console.log("que manguangua, Ah?!");
+
+            console.log(document.getElementById("YacimientosNombreYacimiento"));
+            document.getElementById("YacimientosNombreYacimiento").value = this.state.yacimiento.nombre ;
+            document.getElementById("YacimientosDescripcionYacimiento").value = this.state.yacimiento.descripcion ;
+            document.getElementById("YacimientosTamañoYacimiento").value = this.state.yacimiento.area ;
+            document.getElementById("YacimientosTipoYacimiento").value = this.state.yacimiento.tipo ;
+            document.getElementById("LugarEstado").value = this.state.yacimiento.ubicacion.estado ;
+            document.getElementById("LugarMunicipio").value = this.state.yacimiento.ubicacion.municipio ;
+            document.getElementById("LugarParroquia").value = this.state.yacimiento.ubicacion.parroquia ;
+            document.getElementById("FechaDia").value = this.state.yacimiento.fecha.dia ;
+            document.getElementById("FechaMes").value = this.state.yacimiento.fecha.mes ; 
+            document.getElementById("FechaAno").value = this.state.yacimiento.fecha.ano ;
 
 
+            for(let i=0; i<this.state.Minerales.length; i++){
+                
+               let mineral=this.state.Minerales[i];
+                
+                document.getElementById("YacimientosTotalMineral"+mineral.id).value = mineral.total;
+                
+                for(let k=0; k<this.state.Minerales[i].componentes.length; k++){
+                    
+                    let componente = this.state.Minerales[i].componentes[k];
+
+                    document.getElementById("YacimientosMineralComponente"+mineral.id+componente.id).value = componente.total;   
+                }  
+            }
+
+            this.state.etapas.forEach((etapaR)=>{
+                if(etapaR.numero != 0){
+                    
+                    document.getElementById('YacimientosNombreEtapa'+etapaR.numeroV).value=etapaR.nombre;
+                    etapaR.fases.forEach((faseR)=>{
+                        if(faseR.numero != 0){
+                            
+                            document.getElementById('YacimientosNombreEtapaFase'+etapaR.numeroV+faseR.numeroV).value=fase.nombre;
+                            document.getElementById('YacimientosDuracionEtapaFase'+etapaR.numeroV+faseR.numeroV).value=faseR.duracion;
+                            let indexcar=0;
+                            faseR.cargos.forEach((cargoR)=>{
+                                
+                                document.getElementById('YacimientosCantidadCargo'+etapaR.numeroV+faseR.numeroV+indexcar).value= cargoR.cantidad;;
+                                document.getElementById('YacimientosSueldoCargo'+etapaR.numeroV+faseR.numeroV+indexcar).value= cargoR.sueldo;;
+             
+                               indexcar++;
+
+                            });
+                            let indexTM = 0;
+                            faseR.tipoMaquinaria.forEach((tipoMaquinariaR)=>{
+                                document.getElementById('YacimientosCantidadTipoMaquinaria'+etapaR.numeroV+faseR.numeroV+indexTM).value= tipoMaquinariaR.costo;
+                                document.getElementById('YacimientosCostoTipoMaquinaria'+etapaR.numeroV+faseR.numeroV+indexTM).value= tipoMaquinariaR.cantidad;
+                                indexTM++;
+                            });
+                        }
+
+                    });
+                }
+            });
+        }
+    }*/
 
 
 
@@ -707,7 +785,6 @@ export default class ModificarYacimiento extends React.Component {
         }*/
     }
 
-
     accordionTM(i,etapaNum,faseNum){
       ///  console.log(this.state.TipoMaquinaria[i].accordionKey,i);
        // console.log(this.state.TipoMaquinaria[i].accordionKey, "holoooA");
@@ -772,6 +849,10 @@ export default class ModificarYacimiento extends React.Component {
                     tipoMaquinariaShow:'none',
                     numero:1,
                     numeroV:1,
+                    cargosId:[],
+                    checkInicialCargos:false,
+                    tipoMaquinariaId:[],
+                    checkInicialtipoMaquiaria:false,
                     cargos:[{
                         nombre:null,
                         id:-1,
@@ -821,6 +902,10 @@ export default class ModificarYacimiento extends React.Component {
                 tipoMaquinariaShow:'none',
                 numero:1,
                 numeroV:1,
+                cargosId:[],
+                checkInicialCargos:false,
+                tipoMaquinariaId:[],
+                checkInicialtipoMaquiaria:false,
                 cargos:[{
                     nombre:null,
                     id:-1,
@@ -935,7 +1020,7 @@ export default class ModificarYacimiento extends React.Component {
         etapas1[etapaNum-1]=etapa;
         this.setState(() => ({
             etapas: etapas1
-            }));
+        }));
 
 
         this.eliminarActivoFase(etapaNum,0);
@@ -1141,7 +1226,7 @@ export default class ModificarYacimiento extends React.Component {
     }
 
 
-    selectMinerales = (id,et,fa) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
+    selectMinerales = (id,name,et,fa) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         console.log('entroMinerales', id)
 
         let  minerales=this.state.Minerales;
@@ -1165,7 +1250,7 @@ export default class ModificarYacimiento extends React.Component {
         for(var i = 0; i < this.state.Minerales.length; i++) {
             //console.log(minerales[i].id,"id");
             
-
+            console.log("id que viene, id que va",minerales[i].id, id);
             costo_anterior=document.getElementById('YacimientosTotalMineral'+minerales[i].id).value;
            
             
@@ -1178,7 +1263,7 @@ export default class ModificarYacimiento extends React.Component {
                 }*/
             }
 
-            if(minerales[i].id === id){
+            if(minerales[i].id == id){
                
                 for(let j=0; j<minerales[i].componentes.length; j++){
                     document.getElementById('YacimientosMineralComponente'+minerales[i].id+minerales[i].componentes[j].id).value='';  
@@ -1208,7 +1293,7 @@ export default class ModificarYacimiento extends React.Component {
             }
             
 
-            mineral.nombre='Mineral'+id;
+            mineral.nombre=name;
             mineral.id=id;
             for(var k=0; k<this.state.explotacion.costo; k++){
                 let componente={
@@ -1263,7 +1348,7 @@ export default class ModificarYacimiento extends React.Component {
 
 
 
-    selectCargos = (id,etapaNum,faseNum) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
+    selectCargos = (id,name,etapaNum,faseNum) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         // console.log('entroCargos', id,etapaNum,faseNum);
         var etapas1 = this.state.etapas;
         let cargos=this.state.etapas[etapaNum-1].fases[faseNum-1].cargos;
@@ -1288,7 +1373,7 @@ export default class ModificarYacimiento extends React.Component {
                 document.getElementById('YacimientosSueldoCargo'+etapaNum+faseNum+(i-1)).value=cantidad_anterior;
 
             }
-            if(cargos[i].id === id){
+            if(cargos[i].id == id){
                
                 document.getElementById('YacimientosCantidadCargo'+etapaNum+faseNum+i).value='';
                 document.getElementById('YacimientosSueldoCargo'+etapaNum+faseNum+i).value='';
@@ -1313,7 +1398,7 @@ export default class ModificarYacimiento extends React.Component {
             }
             
 
-            cargo.nombre='Cargo'+id;
+            cargo.nombre=name;
             cargo.id=id;
             cargos.push(cargo);
         }
@@ -1343,7 +1428,7 @@ export default class ModificarYacimiento extends React.Component {
 
 
 
-    selectTipoMaquinaria = (id,etapaNum,faseNum) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
+    selectTipoMaquinaria = (id,name,etapaNum,faseNum) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         console.log('entroTipoMaquinaria', id)
         var etapas1 = this.state.etapas;
         let tiposMaquinaria=this.state.etapas[etapaNum-1].fases[faseNum-1].tipoMaquinaria;
@@ -1366,7 +1451,7 @@ export default class ModificarYacimiento extends React.Component {
                 document.getElementById('YacimientosCantidadTipoMaquinaria'+etapaNum+faseNum+(i-1)).value=costo_anterior;
                 document.getElementById('YacimientosCostoTipoMaquinaria'+etapaNum+faseNum+(i-1)).value=cantidad_anterior;
             }
-            if(tiposMaquinaria[i].id === id){
+            if(tiposMaquinaria[i].id == id){
                 if(tiposMaquinaria[i+1] != undefined){
                     tiposMaquinaria[i+1].accordionKey=1;
                     
@@ -1396,7 +1481,7 @@ export default class ModificarYacimiento extends React.Component {
                 accordionKey:0
             };
             
-            tipoMaquinaria.nombre='Tipo de Maquinaria '+id;
+            tipoMaquinaria.nombre=name;
             tipoMaquinaria.id=id;
             tiposMaquinaria.push(tipoMaquinaria);
         }
@@ -1431,7 +1516,7 @@ export default class ModificarYacimiento extends React.Component {
     }
 
 
-    selectFunctionCheckbox = (classN,id, etapaNum,faseNum) => {
+    selectFunctionCheckbox = (classN,id, name,etapaNum,faseNum) => {
         // console.log('selectFunctionCheckbox', boton.alt)
         // console.log('selectFunctionCheckbox', boton)
 
@@ -1441,13 +1526,13 @@ export default class ModificarYacimiento extends React.Component {
         // console.log('IndexT',classN.indexOf("tiposdemaquinaria"))
         if (classN.indexOf("cargos") != -1){
             console.log('ENTRO CARGO')
-            this.selectCargos(id,etapaNum,faseNum)
+            this.selectCargos(id,name,etapaNum,faseNum)
         }
         else if (classN.indexOf("minerales") != -1){
-            this.selectMinerales(id,etapaNum,faseNum)
+            this.selectMinerales(id,name,etapaNum,faseNum)
         }
         else if (classN.indexOf("tiposdemaquinaria") != -1 ){
-            this.selectTipoMaquinaria(id,etapaNum,faseNum)          
+            this.selectTipoMaquinaria(id,name,etapaNum,faseNum)          
         }
     }
 
@@ -2153,14 +2238,14 @@ export default class ModificarYacimiento extends React.Component {
                                     <Form.Row className="formMargins">
                                         <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,"YacimientosNombreYacimientoText","Introduzca un nombre válido")} controlId="YacimientosNombreYacimiento" className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
-                                            <Form.Control type="text" className="form-input" placeholder="Introduzca nombre del yacimiento" />
+                                            <Form.Control type="text" className="form-input" defaultValue={this.state.yacimiento.nombre} placeholder="Introduzca nombre del yacimiento" />
                                             <Form.Text className="text-muted" id="YacimientosNombreYacimientoText">
                                                 Obligatorio
                                             </Form.Text>
                                         </Form.Group>
                                         <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,"YacimientosDescripcionYacimientoText","Introduzca una descripción válida")} controlId="YacimientosDescripcionYacimiento" className="inputsPaddingLeft">
                                             <Form.Label className="cliente-description-fields-text">Descripción</Form.Label>
-                                            <Form.Control as="textarea" rows="1" className="form-input-juridico-textarea" placeholder="Introduzca una descripción"/>
+                                            <Form.Control as="textarea" rows="1" className="form-input-juridico-textarea" defaultValue={this.state.yacimiento.descripcion} placeholder="Introduzca una descripción"/>
                                             <Form.Text className="text-muted" id="YacimientosDescripcionYacimientoText">
                                                 Obligatorio
                                             </Form.Text>
@@ -2172,7 +2257,7 @@ export default class ModificarYacimiento extends React.Component {
                                         <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarNumeros(evt,"YacimientosTamañoYacimientoText")} controlId="YacimientosTamañoYacimiento"  className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Área</Form.Label>
                                             <InputGroup className="MyInputGroup">
-                                                <Form.Control type="text" className="form-input" placeholder="Introduzca tamaño del yacimiento" /> 
+                                                <Form.Control type="text" className="form-input" defaultValue={this.state.yacimiento.area} placeholder="Introduzca tamaño del yacimiento" /> 
                                                 <InputGroup.Append>
                                                     <InputGroup.Text  className="input-append-ventas-form" >Km<sup>2</sup></InputGroup.Text>
                                                 </InputGroup.Append>
@@ -2181,7 +2266,7 @@ export default class ModificarYacimiento extends React.Component {
                                                 Obligatorio
                                             </Form.Text>    
                                         </Form.Group>
-                                        <FormFecha titulo="Fecha de Registro" clase="inputsPaddingLeft"/>    
+                                        <FormFecha titulo="Fecha de Registro" clase="inputsPaddingLeft" dia={this.state.yacimiento.fecha.dia} mes={this.state.yacimiento.fecha.mes} ano={this.state.yacimiento.fecha.ano} disabled={true}/>    
                                     </Form.Row>
 
                                     <Form.Row className="formMargins">
@@ -2190,9 +2275,10 @@ export default class ModificarYacimiento extends React.Component {
                                             <Form.Control 
                                             as="select" 
                                             className="form-input"
+                                            defaultValue={this.state.yacimiento.tipo}
                                             >
-                                                <option>Alóctono</option>
-                                                <option>Autóctono</option>
+                                                <option value="Alóctono">Alóctono</option>
+                                                <option value="Autóctono">Autóctono</option>
                                             </Form.Control>
                                             <Form.Text className="text-muted">
                                                 Obligatorio
@@ -2210,7 +2296,7 @@ export default class ModificarYacimiento extends React.Component {
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
-                                    <FormLugar/>
+                                    <FormLugarPred idParroquia={this.state.yacimiento.ubicacion.parroquia} predet={this.state.yacimiento.ubicacion.estado} accion='M'/>
                                 </Card.Body>
                             </Accordion.Collapse>
                         </Card>
@@ -2235,9 +2321,10 @@ export default class ModificarYacimiento extends React.Component {
                                                 consultar={false}
                                                 eliminar={false}
 
-                                                columns={'http://localhost:3000/column_names/cliente'} 
-                                                data={'http://localhost:3000/getAllClientes'}
+                                                columns={'http://localhost:3000/column_names/mu_mineral_metalico'} 
+                                                data={'http://localhost:3000/getAllMineralesMetalicos'}
 
+                                                size={200}
                                                 url={'consultar_empleado/:'}
                                                 checktable={true}
                                                 textoSingular={'mineral'}
@@ -2267,7 +2354,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                 <Form.Group as={Col} md="3" onChange={(evt)=>this.handleOnChangeMineralComponentes(evt,mineral.id,componente.id,indexMin,indexComp)} controlId={'YacimientosMineralComponente'+mineral.id+componente.id} className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">{componente.nombre}</Form.Label>
                                                                                     <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                                                        <Form.Control type="text" className="form-input" defaultValue={componente.total} placeholder="Introduzca cantidad" /> 
                                                                                         <InputGroup.Append>
                                                                                             <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                         </InputGroup.Append>
@@ -2284,7 +2371,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineral(evt,mineral.id)} controlId={'YacimientosTotalMineral'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
-                                                                                <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                                                <Form.Control type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>
@@ -2320,7 +2407,7 @@ export default class ModificarYacimiento extends React.Component {
                                         <Form.Group as={Col} md="6" controlId={'YacimientosDuracionInfoExplotacion'} className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Duración de la Explotación</Form.Label>
                                             <InputGroup className="MyInputGroup">
-                                                <Form.Control type="text" className="form-input" placeholder={this.state.explotacion.duracion} disabled/> 
+                                                <Form.Control type="text" className="form-input"  placeholder={this.state.explotacion.duracion} disabled/> 
                                                 <InputGroup.Append>
                                                     <InputGroup.Text  className="input-append-ventas-form" >días</InputGroup.Text>
                                                 </InputGroup.Append>
@@ -2360,7 +2447,7 @@ export default class ModificarYacimiento extends React.Component {
                                                         <Form.Row className="formMargins">
                                                             <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,'YacimientosNombreTextEtapa'+etapa.numeroV,"Introduzca un nombre válido")} controlId={'YacimientosNombreEtapa'+etapa.numeroV} className="inputsPaddingRight">
                                                                 <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
-                                                                <Form.Control type="text" className="form-input" placeholder="Introduzca nombre de la etapa" />
+                                                                <Form.Control type="text" defaultValue={etapa.nombreV} className="form-input" placeholder="Introduzca nombre de la etapa" />
                                                                 <Form.Text className="text-muted" id={'YacimientosNombreTextEtapa'+etapa.numeroV}>
                                                                     Obligatorio
                                                                 </Form.Text>
@@ -2413,7 +2500,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                             <Form.Row className="formMargins">
                                                                                 <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,'YacimientosNombreTextEtapaFase'+etapa.numeroV+fase.numeroV,"Introduzca un nombre válido")} controlId={'YacimientosNombreEtapaFase'+etapa.numeroV+fase.numeroV} className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
-                                                                                    <Form.Control type="text" className="form-input" placeholder="Introduzca nombre de la fase" />
+                                                                                    <Form.Control type="text" defaultValue={fase.nombreV} className="form-input" placeholder="Introduzca nombre de la fase" />
                                                                                     <Form.Text className="text-muted" id={'YacimientosNombreTextEtapaFase'+etapa.numeroV+fase.numeroV}>
                                                                                         Obligatorio
                                                                                     </Form.Text>
@@ -2424,7 +2511,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                 <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeDuracionFase(evt,etapa.numeroV,fase.numeroV)} controlId={'YacimientosDuracionEtapaFase'+etapa.numeroV+fase.numeroV} className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">Duración de la Fase</Form.Label>
                                                                                     <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control type="text" className="form-input" placeholder="Introduzca la duración de la fase"/> 
+                                                                                        <Form.Control type="text" className="form-input" defaultValue={fase.duracion} placeholder="Introduzca la duración de la fase"/> 
                                                                                         <InputGroup.Append>
                                                                                             <InputGroup.Text  className="input-append-ventas-form" placeholder="Introduzca la duración de la fase" >días</InputGroup.Text>
                                                                                         </InputGroup.Append>
@@ -2448,23 +2535,23 @@ export default class ModificarYacimiento extends React.Component {
                                                                             </Form.Row>
                                                                             <FormTitulo titulo="Cargos"/>
                                                                             <Row>
-                                                                            {console.log("Aquiiiii",fase.cargosId)}
+                                                                            {console.log("Aquiiiii",etapa.numeroV)}
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
                                                                                         <DataTable
 
                                                                                             selectCheck={this.selectFunctionCheckbox}
 
-                                                                                            modificarCheck={true}
+                                                                                            modificarCheck={fase.checkInicialCargos}
                                                                                             listaModificarCheck={fase.cargosId}
 
                                                                                             agregar={false}
                                                                                             modificar={false}
                                                                                             consultar={false}
                                                                                             eliminar={false}
-                                                                                            columns={'http://localhost:3000/column_names/cliente'} 
-                                                                                            data={'http://localhost:3000/getAllClientes'}
-
+                                                                                            columns={'http://localhost:3000/column_names/mu_cargo'} 
+                                                                                            data={'http://localhost:3000/getAllCargos'}
+                                                                                            size={200}
                                                                                             url={'consultar_empleado/:'}
                                                                                             checktable={true}
                                                                                             textoSingular={'cargo'}
@@ -2492,7 +2579,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                                         <Form.Row className="formMargins">
                                                                                                             <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeCantidadCargo(evt,etapa.numeroV,fase.numeroV,indexcar)} controlId={'YacimientosCantidadCargo'+etapa.numeroV+fase.numeroV+indexcar} className="inputsPaddingRight">
                                                                                                                 <Form.Label className="cliente-description-fields-text">Cantidad de empleados</Form.Label>
-                                                                                                                <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad de empleados" />
+                                                                                                                <Form.Control type="text" className="form-input" defaultValue={cargo.cantidad} placeholder="Introduzca cantidad de empleados" />
                                                                                                                 <Form.Text className="text-muted" id={'YacimientosCantidadTextCargo'+etapa.numeroV+fase.numeroV+indexcar}>
                                                                                                                     Obligatorio
                                                                                                                 </Form.Text>
@@ -2500,7 +2587,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                                             <Form.Group as={Col} onChange={(evt)=>this.handleOnChangeSueldoCargo(evt,etapa.numeroV,fase.numeroV,indexcar)} md="6" controlId={'YacimientosSueldoCargo'+etapa.numeroV+fase.numeroV+indexcar} className="inputsPaddingLeft">
                                                                                                                  <Form.Label className="cliente-description-fields-text">Sueldo</Form.Label>
                                                                                                                 <InputGroup className="MyInputGroup">
-                                                                                                                    <Form.Control type="text" className="form-input"  placeholder="Introduzca sueldo por empleado" /> 
+                                                                                                                    <Form.Control type="text" className="form-input" defaultValue={cargo.sueldo}  placeholder="Introduzca sueldo por empleado" /> 
                                                                                                                     <InputGroup.Append>
                                                                                                                         <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
                                                                                                                     </InputGroup.Append>
@@ -2528,15 +2615,16 @@ export default class ModificarYacimiento extends React.Component {
                                                                                             selectCheck={this.selectFunctionCheckbox}
 
 
-                                                                                            modificarCheck={true}
+                                                                                            modificarCheck={fase.checkInicialtipoMaquiaria}
                                                                                             listaModificarCheck={fase.tipoMaquinariaId}
 
                                                                                             agregar={false}
                                                                                             modificar={false}
                                                                                             consultar={false}
                                                                                             eliminar={false}
-                                                                                            columns={'http://localhost:3000/column_names/cliente'} 
-                                                                                            data={'http://localhost:3000/getAllClientes'}
+                                                                                            columns={'http://localhost:3000/column_names/mu_tipo_maquinaria'} 
+                                                                                            data={'http://localhost:3000/getAllTiposMaquinaria'}
+                                                                                            size={200}
 
                                                                                             url={'consultar_empleado/:'}
                                                                                             checktable={true}
@@ -2563,7 +2651,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                                         <Form.Row className="formMargins">
                                                                                                             <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeCantidadTipoMaq(evt,etapa.numeroV,fase.numeroV,indexTM)} controlId={'YacimientosCantidadTipoMaquinaria'+etapa.numeroV+fase.numeroV+indexTM} className="inputsPaddingRight">
                                                                                                                 <Form.Label className="cliente-description-fields-text">Cantidad de unidades</Form.Label>
-                                                                                                                <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad de unidades" />
+                                                                                                                <Form.Control type="text" className="form-input" defaultValue={tipoMaquinaria.cantidad} placeholder="Introduzca cantidad de unidades" />
                                                                                                                 <Form.Text id={'YacimientosCantidadTextTipoMaquinaria'+etapa.numeroV+fase.numeroV+indexTM} className="text-muted">
                                                                                                                     Obligatorio
                                                                                                                 </Form.Text>
@@ -2571,7 +2659,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                                             <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeCostoTipoMaq(evt,etapa.numeroV,fase.numeroV,indexTM)} controlId={'YacimientosCostoTipoMaquinaria'+etapa.numeroV+fase.numeroV+indexTM} className="inputsPaddingLeft">
                                                                                                                  <Form.Label className="cliente-description-fields-text">Costo</Form.Label>
                                                                                                                 <InputGroup className="MyInputGroup">
-                                                                                                                    <Form.Control type="text" className="form-input"  placeholder="Introduzca costo por unidad" /> 
+                                                                                                                    <Form.Control type="text" className="form-input" defaultValue={tipoMaquinaria.costo} placeholder="Introduzca costo por unidad" /> 
                                                                                                                     <InputGroup.Append>
                                                                                                                         <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
                                                                                                                     </InputGroup.Append>
@@ -2613,6 +2701,7 @@ export default class ModificarYacimiento extends React.Component {
                     </Button>
                     </div>
                 </Container>
+               
             </div>
         ) 
     }
