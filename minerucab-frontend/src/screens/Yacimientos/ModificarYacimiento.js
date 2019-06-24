@@ -41,17 +41,21 @@ export default class ModificarYacimiento extends React.Component {
                 nombre:null,
                 descripcion:null,
                 area:null,
-                fecha:null,
-                tipo:null
-            },
-            ubicacion:{
-                estado:null,
-                municipio:null,
-                parroquia:null
+                tipo:null,
+                ubicacion:{
+                    estado:null,
+                    municipio:null,
+                    parroquia:null
+                },
+                fecha:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                }
             },
             accordionKey:[],
-            mineralShow:'none',
-            
+            mineralShow:'inline',
+            mineralId:[],
             Minerales:[{
                 nombre:null,
                 id:-1,
@@ -64,10 +68,9 @@ export default class ModificarYacimiento extends React.Component {
                 }]
                 
             }],
-            
             etapas: [{
                 nombre: "Etapa 1",
-                descripcion: null,
+                nombreV:null,
                 duracion:0,
                 costo:0,
                 etapaShow:true,
@@ -77,14 +80,16 @@ export default class ModificarYacimiento extends React.Component {
                 key:"Fase 1",
                 fases: [{
                     nombre: "Fase 1",
-                    descripcion:null,
+                    nombreV:null,
                     duracion:0,
                     costo:0,
                     faseShow:true,
-                    cargoShow:'none',
-                    tipoMaquinariaShow:'none',
+                    cargoShow:'inline',
+                    tipoMaquinariaShow:'inline',
                     numero:1,
                     numeroV:1,
+                    cargosId:[],
+                    tipoMaquinariaId:[],
                     cargos:[{
                         nombre:null,
                         id:-1,
@@ -108,6 +113,477 @@ export default class ModificarYacimiento extends React.Component {
        // this.eliminarActivoEtapa = this.eliminarActivoEtapa.bind(this);
         //this.eliminarActivoFase = this.eliminarActivoFase.bind(this);
     }
+
+
+     componentWillMount = () => {
+
+        const info = {
+            yacimiento:{
+                nombre:"Okinawa",
+                descripcion:"muy mineraloso",
+                area:300,
+                tipo:"Aloctóno",
+                ubicacion:{
+                    estado:"Sucre",
+                    municipio:"Sucre",
+                    parroquia:"Altagracia"
+                },
+                fecha:{
+                    dia:7,
+                    mes:14,
+                    ano:1999
+                }
+            },
+            minerales:[{
+                id:1,
+                total: 5,
+                nombre:"Epale",
+                componentes:[{
+                    id:1,
+                    nombre:"Carbon",
+                    total:5
+                }, 
+                {
+                    id:2,
+                    nombre:"Bauxita",
+                    total:2
+                }]
+            },
+            {
+                id:14,
+                total: 8,
+                nombre:"Epale2",
+                componentes:[{
+                    id:14,
+                    total:52
+                }, 
+                {
+                    id:7,
+                    total:17
+                },
+                {
+                    id:14,
+                    total:8
+                }]
+            }
+
+            ],
+            explotacion:{
+                duracion:0,
+                costo:0,
+            },
+            etapas: [{
+                nombre: "diego",
+                duracion:80,
+                costo:30,
+                fases: [{
+                    nombre: "andrea",
+                    duracion:10,
+                    costo:4,
+                    cargos:[{
+                        id:14,
+                        nombre:"Natu",
+                        sueldo:5,
+                        cantidad:7,
+                    }],
+                    tipoMaquinaria:[{
+                        id:1,
+                        nombre:"Aloa",
+                        costo:52,
+                        cantidad:7,
+                    }]
+                }/*,
+                {
+                    nombre: "Albita",
+                    duracion:1,
+                    costo:7.2,
+                    cargos:[{
+                        id:10,
+                        nombre:"Em",
+                        sueldo:8,
+                        cantidad:6,
+                    }],
+                    tipoMaquinaria:[{
+                        id:7,
+                        nombre:"Dibujante",
+                        costo:5,
+                        cantidad:9,
+                    }]
+                }*/]
+            },    
+            {
+                nombre: "Baudet",
+                duracion:80,
+                costo:30,
+                fases: [{
+                    nombre: "Sanchéz",
+                    duracion:1,
+                    costo:5,
+                    cargos:[{
+                        id:3,
+                        nombre:"Armadora",
+                        sueldo:8,
+                        cantidad:1,
+                    },
+                    {
+                        id:2,
+                        nombre:"Rompedora",
+                        sueldo:5,
+                        cantidad:9,
+                    }],
+                    tipoMaquinaria:[{
+                        id:10,
+                        nombre:"Porfi pelase",
+                        costo:2,
+                        cantidad:8,
+                    },
+                    {
+                        id:1,
+                        nombre:"Si ves esto entonces funcionó",
+                        costo:9,
+                        cantidad:4,
+                    }]
+                },
+                {
+                    nombre: "Albita",
+                    duracion:1,
+                    costo:7.2,
+                    cargos:[{
+                        id:10,
+                        nombre:"empleadae",
+                        sueldo:8,
+                        cantidad:6,
+                    }],
+                    tipoMaquinaria:[{
+                        id:7,
+                        nombre:"Geo",
+                        costo:5,
+                        cantidad:9,
+                    }]
+                }]
+            }]
+        }
+
+        console.log(info);
+
+        let state={
+            eliminadosFases: [],
+            eliminar:true,
+            prueba: true,
+            key:"Etapa 1",
+            explotacion:{
+                duracion:0,
+                costo:0,
+            },
+            yacimiento:{
+                nombre:null,
+                descripcion:null,
+                area:null,
+                tipo:null,
+                ubicacion:{
+                    estado:null,
+                    municipio:null,
+                    parroquia:null
+                },
+                fecha:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                }
+            },
+            accordionKey:[],
+            mineralShow:'inline',
+            mineralId:[],
+            Minerales:[{
+                nombre:null,
+                id:-1,
+                total: 0,
+                accordionKey:0,
+                componentes:[{
+                    nombre:null,
+                    id:0,
+                    total:0
+                }]
+                
+            }],
+            etapas: [{
+                nombre: "Etapa 1",
+                nombreV:null,
+                duracion:0,
+                costo:0,
+                etapaShow:true,
+                numero: 1,
+                numeroV:1,
+                eliminar:true,
+                key:"Fase 1",
+                fases: [{
+                    nombre: "Fase 1",
+                    nombreV:null,
+                    duracion:0,
+                    costo:0,
+                    faseShow:true,
+                    cargoShow:'inline',
+                    tipoMaquinariaShow:'inline',
+                    numero:1,
+                    numeroV:1,
+                    cargosId:[],
+                    tipoMaquinariaId:[],
+                    cargos:[{
+                        nombre:null,
+                        id:-1,
+                        sueldo:0,
+                        cantidad:0,
+                        accordionKey:0
+                    }],
+                    tipoMaquinaria:[{
+                        nombre:null,
+                        id:-1,
+                        costo:0,
+                        cantidad:0,
+                        accordionKey:0
+                    }]
+
+                }]
+            }]
+        }
+
+        state.yacimiento.nombre=info.yacimiento.nombre;
+        state.yacimiento.descripcion = info.yacimiento.descripcion;
+        state.yacimiento.area = info.yacimiento.area;
+        state.yacimiento.tipo = info.yacimiento.tipo;
+        state.yacimiento.ubicacion.estado = info.yacimiento.ubicacion.estado;
+        state.yacimiento.ubicacion.municipio = info.yacimiento.ubicacion.municipio;
+        state.yacimiento.ubicacion.parroquia = info.yacimiento.ubicacion.parroquia;
+        state.yacimiento.fecha.dia = info.yacimiento.fecha.dia;
+        state.yacimiento.fecha.mes = info.yacimiento.fecha.mes;
+        state.yacimiento.fecha.ano = info.yacimiento.fecha.ano;
+
+
+        state.explotacion.duracion = info.explotacion.duracion;
+        state.explotacion.costo = info.explotacion.costo;
+
+
+        state.Minerales.shift();
+        for(let i=0; i<info.minerales.length; i++){
+
+            console.log(info.minerales[i].componentes.length);
+            state.mineralId.push(info.minerales[i].id);
+
+            let mineral={
+                nombre:null,
+                id:-1,
+                total: 0,
+                accordionKey:0,
+                componentes:[{
+                    nombre:null,
+                    id:0,
+                    total:0
+                }]
+                
+            }
+
+            mineral.nombre=info.minerales[i].nombre;
+            mineral.id=info.minerales[i].id;
+            mineral.total=info.minerales[i].total;
+
+            
+
+            mineral.componentes.shift();
+            for(let j=0; j<info.minerales[i].componentes.length; j++){
+                
+                let componente={
+                    nombre:null,
+                    id:0,
+                    total:0
+                }
+
+                componente.id=info.minerales[i].componentes[j].id;
+                componente.nombre=info.minerales[i].componentes[j].nombre;
+                componente.total=info.minerales[i].componentes[j].total;
+
+                mineral.componentes.push(componente);
+                console.log("length",info.minerales[i].componentes.length);
+            }
+            state.Minerales.push(mineral);
+        }
+        
+        console.log("minerales",state.Minerales);
+
+        state.etapas.shift();
+        for(let i=0; i<info.etapas.length; i++){
+            let etapa={
+                nombre: "Etapa 1",
+                nombreV:null,
+                duracion:0,
+                costo:0,
+                etapaShow:true,
+                numero: 1,
+                numeroV:1,
+                eliminar:true,
+                key:"Fase 1",
+                fases: [{
+                    nombre: "Fase 1",
+                    nombreV:null,
+                    duracion:0,
+                    costo:0,
+                    faseShow:true,
+                    cargoShow:'inline',
+                    tipoMaquinariaShow:'inline',
+                    numero:1,
+                    numeroV:1,
+                    cargosId:[],
+                    tipoMaquinariaId:[],
+                    cargos:[{
+                        nombre:null,
+                        id:-1,
+                        sueldo:0,
+                        cantidad:0,
+                        accordionKey:0
+                    }],
+                    tipoMaquinaria:[{
+                        nombre:null,
+                        id:-1,
+                        costo:0,
+                        cantidad:0,
+                        accordionKey:0
+                    }]
+
+                }]
+            } 
+
+
+            etapa.numero=i+1;
+            etapa.numeroV=i+1;
+
+            etapa.nombre= 'Etapa '+ (i+1);
+            etapa.nombreV=info.etapas[i].nombreV;
+
+            etapa.duracion=info.etapas[i].duracion;
+            etapa.costo= info.etapas[i].costo;
+
+
+
+            etapa.fases.shift();
+            for(let j=0; j<info.etapas[i].fases.length; j++){
+
+                let fase ={
+                    nombre: "Fase 1",
+                    nombreV:null,
+                    duracion:0,
+                    costo:0,
+                    faseShow:true,
+                    cargoShow:'inline',
+                    tipoMaquinariaShow:'inline',
+                    numero:1,
+                    numeroV:1,
+                    cargosId:[],
+                    tipoMaquinariaId:[],
+                    cargos:[{
+                        nombre:null,
+                        id:-1,
+                        sueldo:0,
+                        cantidad:0,
+                        accordionKey:0
+                    }],
+                    tipoMaquinaria:[{
+                        nombre:null,
+                        id:-1,
+                        costo:0,
+                        cantidad:0,
+                        accordionKey:0
+                    }]
+
+                }
+
+
+
+
+
+            
+                fase.numero=j+1;
+                fase.numeroV=j+1;
+
+                fase.nombre= 'Fase '+ (j+1);
+                fase.nombreV=info.etapas[i].fases[j].nombreV;
+
+                fase.duracion=info.etapas[i].fases[j].duracion;
+                fase.costo= info.etapas[i].fases[j].costo;
+                 
+
+                fase.cargos.shift();
+                for(let k=0; k<info.etapas[i].fases[j].cargos.length; k++){
+                    fase.cargosId.push(info.etapas[i].fases[j].cargos[k].id);
+
+                    let cargo={
+                        nombre:null,
+                        id:-1,
+                        sueldo:0,
+                        cantidad:0,
+                        accordionKey:0
+                    }
+
+
+                    cargo.id=info.etapas[i].fases[j].cargos[k].id;
+                    cargo.sueldo=info.etapas[i].fases[j].cargos[k].sueldo;
+                    cargo.cantidad=info.etapas[i].fases[j].cargos[k].cantidad;
+                    cargo.nombre=info.etapas[i].fases[j].cargos[k].nombre;
+
+                    fase.cargos.push(cargo);
+
+                   
+                    
+                }
+
+
+                fase.tipoMaquinaria.shift();
+                for(let k=0; k<info.etapas[i].fases[j].tipoMaquinaria.length; k++){
+                    fase.tipoMaquinariaId.push(info.etapas[i].fases[j].tipoMaquinaria[k].id);
+                    let tipoMaquinaria={
+                        nombre:null,
+                        id:-1,
+                        costo:0,
+                        cantidad:0,
+                        accordionKey:0
+                    }
+
+
+                    tipoMaquinaria.id=info.etapas[i].fases[j].tipoMaquinaria[k].id;
+                    tipoMaquinaria.sueldo=info.etapas[i].fases[j].tipoMaquinaria[k].sueldo;
+                    tipoMaquinaria.cantidad=info.etapas[i].fases[j].tipoMaquinaria[k].cantidad;
+                    tipoMaquinaria.nombre=info.etapas[i].fases[j].tipoMaquinaria[k].nombre;
+
+                    fase.tipoMaquinaria.push(tipoMaquinaria);
+                }
+
+                etapa.fases.push(fase);
+               
+            }
+            
+
+            state.etapas.push(etapa);
+
+        }
+
+        
+
+       
+
+        console.log("estado inicial",state);
+        console.log("estado inicial",state.mineralId);
+        this.setState(() => ({
+            yacimiento: state.yacimiento,
+            explotacion: state.explotacion,
+            mineralId: state.mineralId,
+            Minerales: state.Minerales,
+            etapas: state.etapas
+
+        }));
+
+     }
+
+
+
+
 
     prueba = (e) => {
         this.setState((prevState) => ({
@@ -1746,12 +2222,14 @@ export default class ModificarYacimiento extends React.Component {
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
-                    
+                                {console.log("mineralId",this.state.mineralId)}
                                     <Row>
                                         <Col sm={0} md={1}></Col>
                                         <Col sm={12} md={10}>
                                             <DataTable
                                                 selectCheck={this.selectFunctionCheckbox}
+                                                modificarCheck={true}
+                                                listaModificarCheck={this.state.mineralId}
                                                 agregar={false}
                                                 modificar={false}
                                                 consultar={false}
@@ -1970,11 +2448,15 @@ export default class ModificarYacimiento extends React.Component {
                                                                             </Form.Row>
                                                                             <FormTitulo titulo="Cargos"/>
                                                                             <Row>
+                                                                            {console.log("Aquiiiii",fase.cargosId)}
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
                                                                                         <DataTable
 
                                                                                             selectCheck={this.selectFunctionCheckbox}
+
+                                                                                            modificarCheck={true}
+                                                                                            listaModificarCheck={fase.cargosId}
 
                                                                                             agregar={false}
                                                                                             modificar={false}
@@ -2001,7 +2483,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                     <div style={{display: fase.cargoShow}}>
                                                                                         <Accordion defaultActiveKey={1} >
                                                                                             <Card className="CardAcc">
-                                                                                                <Accordion.Toggle as={Card.Header} eventKey={cargo.accordionKey} onClick={() => this.accordionC(index,etapa.numero,fase.numero)} className="accordion borderacc">
+                                                                                                <Accordion.Toggle as={Card.Header} eventKey={cargo.accordionKey} onClick={() => this.accordionC(indexcar,etapa.numero,fase.numero)} className="accordion borderacc">
                                                                                                     <FormTitulo titulo={cargo.nombre}/>
                                                                                                 </Accordion.Toggle>
                                                                                                 <Accordion.Collapse eventKey={1} >
@@ -2045,6 +2527,10 @@ export default class ModificarYacimiento extends React.Component {
 
                                                                                             selectCheck={this.selectFunctionCheckbox}
 
+
+                                                                                            modificarCheck={true}
+                                                                                            listaModificarCheck={fase.tipoMaquinariaId}
+
                                                                                             agregar={false}
                                                                                             modificar={false}
                                                                                             consultar={false}
@@ -2068,7 +2554,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                     <div style={{display: fase.tipoMaquinariaShow}}>
                                                                                         <Accordion defaultActiveKey={1} >
                                                                                             <Card className="CardAcc">
-                                                                                                <Accordion.Toggle as={Card.Header} eventKey={tipoMaquinaria.accordionKey} onClick={() => this.accordionTM(index,etapa.numero,fase.numero)} className="accordion borderacc">
+                                                                                                <Accordion.Toggle as={Card.Header} eventKey={tipoMaquinaria.accordionKey} onClick={() => this.accordionTM(indexTM,etapa.numero,fase.numero)} className="accordion borderacc">
                                                                                                     <FormTitulo titulo={tipoMaquinaria.nombre}/>
                                                                                                 </Accordion.Toggle>
                                                                                                 <Accordion.Collapse eventKey={1} >

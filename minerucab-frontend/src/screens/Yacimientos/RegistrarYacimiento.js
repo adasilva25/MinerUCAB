@@ -41,13 +41,17 @@ export default class RegistrarYacimiento extends React.Component {
                 nombre:null,
                 descripcion:null,
                 area:null,
-                fecha:null,
-                tipo:null
-            },
-            ubicacion:{
-                estado:null,
-                municipio:null,
-                parroquia:null
+                tipo:null,
+                ubicacion:{
+                    estado:null,
+                    municipio:null,
+                    parroquia:null
+                },
+                fecha:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                }
             },
             accordionKey:[],
             mineralShow:'none',
@@ -2001,7 +2005,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                     <div style={{display: fase.cargoShow}}>
                                                                                         <Accordion defaultActiveKey={1} >
                                                                                             <Card className="CardAcc">
-                                                                                                <Accordion.Toggle as={Card.Header} eventKey={cargo.accordionKey} onClick={() => this.accordionC(index,etapa.numero,fase.numero)} className="accordion borderacc">
+                                                                                                <Accordion.Toggle as={Card.Header} eventKey={cargo.accordionKey} onClick={() => this.accordionC(indexcar,etapa.numero,fase.numero)} className="accordion borderacc">
                                                                                                     <FormTitulo titulo={cargo.nombre}/>
                                                                                                 </Accordion.Toggle>
                                                                                                 <Accordion.Collapse eventKey={1} >
@@ -2068,7 +2072,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                     <div style={{display: fase.tipoMaquinariaShow}}>
                                                                                         <Accordion defaultActiveKey={1} >
                                                                                             <Card className="CardAcc">
-                                                                                                <Accordion.Toggle as={Card.Header} eventKey={tipoMaquinaria.accordionKey} onClick={() => this.accordionTM(index,etapa.numero,fase.numero)} className="accordion borderacc">
+                                                                                                <Accordion.Toggle as={Card.Header} eventKey={tipoMaquinaria.accordionKey} onClick={() => this.accordionTM(indexTM,etapa.numero,fase.numero)} className="accordion borderacc">
                                                                                                     <FormTitulo titulo={tipoMaquinaria.nombre}/>
                                                                                                 </Accordion.Toggle>
                                                                                                 <Accordion.Collapse eventKey={1} >
