@@ -75,12 +75,12 @@ export default class Cliente extends React.Component {
                                         <DataTable
                                             columns={'http://localhost:3000/column_names/mu_empleado'} 
                                             data={'http://localhost:3000/getCriticInfoEmpleados'}
-                                            urlCrear={'/registrar_empleado'}
-                                            urlModificar={'/registrar_empleado'}
-                                            urlConsultar={'#'}
+                                            urlCrear={'/gestionar_empleado/CR'}
+                                            urlModificar={'/gestionar_empleado'}
+                                            urlConsultar={'/gestionar_empleado'}
                                             agregar={true}
                                             modificar={true}
-                                            consultar={false}
+                                            consultar={true}
                                             eliminar={true}
                                             modalEliminar={this.modalEliminarOpen}
                                             reload={this.state.reload}

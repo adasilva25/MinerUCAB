@@ -12,6 +12,7 @@ const Clientes = require('../database/model/Clientes');
 const Roles = require('../database/model/Roles');
 const Usuarios = require('../database/model/Usuarios')
 const Lugares = require('../database/model/Lugares');
+const TiposMaquinaria = require('../database/model/TiposMaquinaria');
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -86,6 +87,8 @@ app.get('/getNombreMineralNoMetalicoById/:id', Minerales.getNombreMineralNoMetal
 app.get('/getAllPresentaciones', Presentaciones.getAllPresentaciones);
 
 app.get('/getUsuarioById/:id', Usuarios.getUsuarioById);
+
+app.get('/getAllTiposMaquinaria', TiposMaquinaria.getAllTiposMaquinaria);
 
 /* -- Lugar -- */
 

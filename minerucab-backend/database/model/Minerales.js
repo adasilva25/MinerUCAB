@@ -6,7 +6,7 @@ const getAllMineralesMetalicos = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    client.query('SELECT * FROM mineral_metalico; ')
+    client.query('SELECT * FROM mu_mineral_metalico; ')
     .then((response) => {
         console.log('Completed!', response.rows[0])
         client.end();
@@ -23,7 +23,7 @@ const getAllMineralesNoMetalicos = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    client.query('SELECT * FROM mineral_no_metalico; ')
+    client.query('SELECT * FROM mu_mineral_no_metalico; ')
     .then((response) => {
         console.log('Completed!', response.rows[0])
         client.end();
@@ -40,7 +40,24 @@ const getAllMineralesMetalicosConPresentacion = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    client.query('SELECT M.nombre as mineral, P.nombre as presentacion, A.precio as precio FROM mineral_metalico M, presentacion P, presentacion_mineral A WHERE M.clave = A.fk_mineral and P.clave = A.fk_presentacion;')
+    client.query('SELECT M.nombre as mineral, P.nombre as presentacion, A.precio as precio FROM mu_mineral_metalico M, mu_presentacion P, mu_presentacion_mineral A WHERE M.clave = A.fk_mineral_metalico and P.clave = A.fk_presentacion;')
+    .then((response) => {
+        console.log('Completed!', response.rows[0])
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+    })
+}
+
+const getAllMineralesNoMetalicosConPresentacion = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    client.query('SELECT M.nombre as mineral, P.nombre as presentacion, A.precio as precio FROM mu_mineral_no_metalico M, mu_presentacion P, mu_presentacion_mineral A WHERE M.clave = A.fk_mineral_no_metalico and P.clave = A.fk_presentacion;')
     .then((response) => {
         console.log('Completed!', response.rows[0])
         client.end();
@@ -57,7 +74,7 @@ const getMineralMetalicoById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT * FROM mineral_metalico WHERE clave = ($1);';
+    const text = 'SELECT * FROM mu_mineral_metalico WHERE clave = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -75,7 +92,7 @@ const getMineralNoMetalicoById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT * FROM mineral_no_metalico WHERE clave = ($1);';
+    const text = 'SELECT * FROM mu_mineral_no_metalico WHERE clave = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -93,7 +110,7 @@ const getNombreMineralMetalicoById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT nombre FROM mineral_metalico WHERE clave = ($1);';
+    const text = 'SELECT nombre FROM mu_mineral_metalico WHERE clave = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -111,7 +128,7 @@ const getNombreMineralNoMetalicoById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT nombre FROM mineral_no_metalico WHERE clave = ($1);';
+    const text = 'SELECT nombre FROM mu_mineral_no_metalico WHERE clave = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -129,7 +146,7 @@ const deleteMineralMetalicoById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'DELETE FROM mineral_metalico WHERE clave = ($1);';
+    const text = 'DELETE FROM mu_mineral_metalico WHERE clave = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -147,7 +164,7 @@ const deleteMineralNoMetalicoById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'DELETE FROM mineral_no_metalico WHERE clave = ($1);';
+    const text = 'DELETE FROM mu_mineral_no_metalico WHERE clave = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {

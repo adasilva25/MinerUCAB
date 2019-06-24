@@ -34,10 +34,11 @@ export default class Mineral extends React.Component {
 
         if (boton.className.baseVal.includes('mineralesnometalicos')){
             console.log('noMetalico', boton.className.baseVal)
+            console.log(boton.id)
             this.setState({ urlEliminar: `http://localhost:3000/deleteMineralNoMetalicoById/${boton.id}` });
             axios.get(`http://localhost:3000/getNombreMineralNoMetalicoById/${boton.id}`, config)
                 .then((res) => {
-                    console.log(res)
+                    console.log("res", res)
                     this.setState({ infoEliminar: `${res.data[0].nombre}` })
                     this.setState(
                         { 
@@ -117,7 +118,7 @@ export default class Mineral extends React.Component {
                                 </Col>
                             </Row>
                             <DataTable
-                                columns={'http://localhost:3000/column_names/mineral_metalico'} 
+                                columns={'http://localhost:3000/column_names/mu_mineral_metalico'} 
                                 data={'http://localhost:3000/getAllMineralesMetalicos'}
                                 urlModificar={'/mineral_metalico'}
                                 urlConsultar={'/mineral_metalico'}
@@ -145,7 +146,7 @@ export default class Mineral extends React.Component {
                                 </Col>
                             </Row>
                             <DataTableAux
-                                columns={'http://localhost:3000/column_names/mineral_no_metalico'} 
+                                columns={'http://localhost:3000/column_names/mu_mineral_no_metalico'} 
                                 data={'http://localhost:3000/getAllMineralesNoMetalicos'}
                                 urlModificar={'/mineral_no_metalico'}
                                 urlConsultar={'/mineral_no_metalico'}
