@@ -42,6 +42,7 @@ export default class RegistrarYacimiento extends React.Component {
                 descripcion:null,
                 area:null,
                 tipo:null,
+                tipoId:null,
                 ubicacion:{
                     estado:null,
                     municipio:null,
@@ -1165,6 +1166,7 @@ export default class RegistrarYacimiento extends React.Component {
                 descripcion:null,
                 area:null,
                 tipo:null,
+                tipoId:null,
                 ubicacion:{
                     estado:null,
                     municipio:null,
@@ -1222,27 +1224,28 @@ export default class RegistrarYacimiento extends React.Component {
         
         
 
-        let incompleto = document.getElementById("YacimientosNombreYacimiento").value.trim(); 
+       /* let incompleto = document.getElementById("YacimientosNombreYacimiento").value.trim(); 
         if(!incompleto){
             console.log('COMPLETO');
-        }
+        }*/
       /*  if(document.getElementById("YacimientosNombreYacimiento").value.trim){
 
         }
         this.state.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value;
         this.state.yacimiento.descripcion*/
-        console.log('NOMBRE YACIMEITNO',incompleto);
+        //console.log('NOMBRE YACIMEITNO',incompleto);
 
         info.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value.trim();
         info.yacimiento.descripcion = document.getElementById("YacimientosDescripcionYacimiento").value.trim();
-        info.yacimiento.area = document.getElementById("YacimientosTamañoYacimiento").value.trim();
+        info.yacimiento.area = Number(document.getElementById("YacimientosTamañoYacimiento").value.trim());
         info.yacimiento.tipo = document.getElementById("YacimientosTipoYacimiento").value.trim();
-        info.yacimiento.ubicacion.estado = document.getElementById("LugarEstado").value.trim();
-        info.yacimiento.ubicacion.municipio = document.getElementById("LugarMunicipio").value.trim();
-        info.yacimiento.ubicacion.parroquia = document.getElementById("LugarParroquia").value.trim();
-        info.yacimiento.fecha.dia = document.getElementById("FechaDia").value.trim();
-        info.yacimiento.fecha.mes = document.getElementById("FechaMes").value.trim();
-        info.yacimiento.fecha.ano = document.getElementById("FechaAno").value.trim();
+        info.yacimiento.tipoId = this.state.yacimiento.tipoId;
+        info.yacimiento.ubicacion.estado = Number(document.getElementById("LugarEstado").value.trim());
+        info.yacimiento.ubicacion.municipio = Number(document.getElementById("LugarMunicipio").value.trim());
+        info.yacimiento.ubicacion.parroquia = Number(document.getElementById("LugarParroquia").value.trim());
+        info.yacimiento.fecha.dia = Number(document.getElementById("FechaDia").value.trim());
+        info.yacimiento.fecha.mes = Number(document.getElementById("FechaMes").value.trim());
+        info.yacimiento.fecha.ano = Number(document.getElementById("FechaAno").value.trim());
 
         info.minerales.shift();
         for(let i=0; i<this.state.Minerales.length; i++){
@@ -1255,16 +1258,17 @@ export default class RegistrarYacimiento extends React.Component {
                 }]
             }
            
-            mineral.id=this.state.Minerales[i].id;
-            mineral.total=document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim();
+            mineral.id=Number(this.state.Minerales[i].id);
+            mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
+            mineral.componentes.shift();
             for(let k=0; k<this.state.Minerales[i].componentes.length; k++){
                 let componente = {
                     id:0,
                     total:0
                 }
 
-                componente.id = this.state.Minerales[i].componentes[k].id;
-                componente.total = document.getElementById("YacimientosMineralComponente"+mineral.id+componente.id).value.trim();
+                componente.id = Number(this.state.Minerales[i].componentes[k].id);
+                componente.total = Number(document.getElementById("YacimientosMineralComponente"+mineral.id+componente.id).value.trim());
                 mineral.componentes.push(componente);
             }
 
@@ -1288,16 +1292,17 @@ export default class RegistrarYacimiento extends React.Component {
                 }]
             }
            
-            mineral.id=this.state.MineralesNoMetalicos[i].id;
-            mineral.total=document.getElementById("YacimientosTotalMineralNoMetalico"+mineral.id).value.trim();
+            mineral.id=Number(this.state.MineralesNoMetalicos[i].id);
+            mineral.total=Number(document.getElementById("YacimientosTotalMineralNoMetalico"+mineral.id).value.trim());
+            mineral.componentes.shift();
             for(let k=0; k<this.state.MineralesNoMetalicos[i].componentes.length; k++){
                 let componente = {
                     id:0,
                     total:0
                 }
 
-                componente.id = this.state.MineralesNoMetalicos[i].componentes[k].id;
-                componente.total = document.getElementById("YacimientosMineralNoMetalicoComponente"+mineral.id+componente.id).value.trim();
+                componente.id = Number(this.state.MineralesNoMetalicos[i].componentes[k].id);
+                componente.total = Number(document.getElementById("YacimientosMineralNoMetalicoComponente"+mineral.id+componente.id).value.trim());
                 mineral.componentes.push(componente);
             }
 
@@ -1373,7 +1378,7 @@ export default class RegistrarYacimiento extends React.Component {
                                 sueldo:0,
                                 cantidad:0,
                             }
-                            cargo.id = cargoR.id;
+                            cargo.id = Number(cargoR.id);
                             cargo.sueldo = cargoR.sueldo;
                             cargo.cantidad = cargoR.cantidad;
 
@@ -1393,7 +1398,7 @@ export default class RegistrarYacimiento extends React.Component {
                                 costo:0,
                                 cantidad:0,
                             }
-                            tipoMaquinaria.id = tipoMaquinariaR.id;
+                            tipoMaquinaria.id = Number(tipoMaquinariaR.id);
                             tipoMaquinaria.costo = tipoMaquinariaR.costo;
                             tipoMaquinaria.cantidad = tipoMaquinariaR.cantidad;
 
@@ -1848,7 +1853,7 @@ export default class RegistrarYacimiento extends React.Component {
     }
 
 
-    handleOnChangeMineralNoMetalicoNoMetalico=(event,minNUm)=>{
+    handleOnChangeMineralNoMetalico=(event,minNUm)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
         const minerales= this.state.MineralesNoMetalicos;

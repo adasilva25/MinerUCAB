@@ -36,14 +36,17 @@ export default class ModificarYacimiento extends React.Component {
             prueba: true,
             key:"Etapa 1",
             explotacion:{
+                id:null,
                 duracion:0,
                 costo:0,
             },
             yacimiento:{
+                id:null,
                 nombre:null,
                 descripcion:null,
                 area:null,
                 tipo:null,
+                tipoId:null,
                 ubicacion:{
                     estado:null,
                     municipio:null,
@@ -87,6 +90,7 @@ export default class ModificarYacimiento extends React.Component {
             etapas: [{
                 nombre: "Etapa 1",
                 nombreV:null,
+                id:null,
                 duracion:0,
                 costo:0,
                 etapaShow:true,
@@ -97,6 +101,7 @@ export default class ModificarYacimiento extends React.Component {
                 fases: [{
                     nombre: "Fase 1",
                     nombreV:null,
+                    id:null,
                     duracion:0,
                     costo:0,
                     faseShow:true,
@@ -137,10 +142,12 @@ export default class ModificarYacimiento extends React.Component {
 
         const info = {
             yacimiento:{
+                id:1,
                 nombre:"Okinawa",
                 descripcion:"muy mineraloso",
                 area:300,
                 tipo:"Autóctono",
+                tipoId:3,
                 ubicacion:{
                     estado:"Sucre",
                     municipio:"Sucre",
@@ -228,10 +235,12 @@ export default class ModificarYacimiento extends React.Component {
                 costo:0,
             },
             etapas: [{
+                id:2,
                 nombre: "diego",
                 duracion:80,
                 costo:30,
                 fases: [{
+                    id:1,
                     nombre: "andrea",
                     duracion:10,
                     costo:4,
@@ -270,10 +279,12 @@ export default class ModificarYacimiento extends React.Component {
             },    
             {
                 nombre: "Baudet",
+                id:4,
                 duracion:80,
                 costo:30,
                 fases: [{
                     nombre: "Sanchéz",
+                    id:3,
                     duracion:1,
                     costo:5,
                     checkInicialCargos:true,
@@ -305,6 +316,7 @@ export default class ModificarYacimiento extends React.Component {
                 },
                 {
                     nombre: "Albita",
+                    id:4,
                     duracion:1,
                     costo:7.2,
                     checkInicialCargos:true,
@@ -334,14 +346,17 @@ export default class ModificarYacimiento extends React.Component {
             prueba: true,
             key:"Etapa 1",
             explotacion:{
+                id:null,
                 duracion:0,
                 costo:0,
             },
             yacimiento:{
                 nombre:null,
+                id:null,
                 descripcion:null,
                 area:null,
                 tipo:null,
+                tipoId:null,
                 ubicacion:{
                     estado:null,
                     municipio:null,
@@ -385,6 +400,7 @@ export default class ModificarYacimiento extends React.Component {
             etapas: [{
                 nombre: "Etapa 1",
                 nombreV:null,
+                id:null,
                 duracion:0,
                 costo:0,
                 etapaShow:true,
@@ -395,6 +411,7 @@ export default class ModificarYacimiento extends React.Component {
                 fases: [{
                     nombre: "Fase 1",
                     nombreV:null,
+                    id:null,
                     duracion:0,
                     costo:0,
                     faseShow:true,
@@ -422,11 +439,12 @@ export default class ModificarYacimiento extends React.Component {
                 }]
             }]
         }
-
+        state.yacimiento.id=info.yacimiento.id;
         state.yacimiento.nombre=info.yacimiento.nombre;
         state.yacimiento.descripcion = info.yacimiento.descripcion;
         state.yacimiento.area = info.yacimiento.area;
         state.yacimiento.tipo = info.yacimiento.tipo;
+        state.yacimiento.tipoId = info.yacimiento.tipoId;
         state.yacimiento.ubicacion.estado = info.yacimiento.ubicacion.estado;
         state.yacimiento.ubicacion.municipio = info.yacimiento.ubicacion.municipio;
         state.yacimiento.ubicacion.parroquia = info.yacimiento.ubicacion.parroquia;
@@ -435,7 +453,7 @@ export default class ModificarYacimiento extends React.Component {
         state.yacimiento.fecha.mes = info.yacimiento.fecha.mes;
         state.yacimiento.fecha.ano = info.yacimiento.fecha.ano;
 
-
+        state.explotacion.id = info.explotacion.id;
         state.explotacion.duracion = info.explotacion.duracion;
         state.explotacion.costo = info.explotacion.costo;
 
@@ -506,7 +524,7 @@ export default class ModificarYacimiento extends React.Component {
 
             mineral.nombre=info.mineralesNoMetalicos[i].nombre;
             mineral.id=info.mineralesNoMetalicos[i].id;
-            mineral.total=info.mineralesNoMetalicos[i].total;
+            mineral.total=Number(info.mineralesNoMetalicos[i].total);
 
             
 
@@ -520,7 +538,7 @@ export default class ModificarYacimiento extends React.Component {
 
                 componente.id=info.mineralesNoMetalicos[i].componentes[j].id;
                 componente.nombre=info.mineralesNoMetalicos[i].componentes[j].nombre;
-                componente.total=info.mineralesNoMetalicos[i].componentes[j].total;
+                componente.total=Number(info.mineralesNoMetalicos[i].componentes[j].total);
 
                 mineral.componentes.push(componente);
                 console.log("length",info.mineralesNoMetalicos[i].componentes.length);
@@ -552,6 +570,7 @@ export default class ModificarYacimiento extends React.Component {
             let etapa={
                 nombre: "Etapa 1",
                 nombreV:null,
+                id:null,
                 duracion:0,
                 costo:0,
                 etapaShow:true,
@@ -562,6 +581,7 @@ export default class ModificarYacimiento extends React.Component {
                 fases: [{
                     nombre: "Fase 1",
                     nombreV:null,
+                    id:null,
                     duracion:0,
                     costo:0,
                     faseShow:true,
@@ -591,7 +611,7 @@ export default class ModificarYacimiento extends React.Component {
                 }]
             } 
 
-
+            etapa.id=info.etapas[i].id;
             etapa.numero=i+1;
             etapa.numeroV=i+1;
 
@@ -640,7 +660,7 @@ export default class ModificarYacimiento extends React.Component {
 
 
 
-            
+                fase.id=info.etapas[i].fases[j].id;
                 fase.numero=j+1;
                 fase.numeroV=j+1;
 
@@ -992,6 +1012,7 @@ export default class ModificarYacimiento extends React.Component {
         var etapa= this.state.etapas;
         var Etapa={
                 nombre:'',
+                id:null,
                 descripcion: null,
                 duracion:0,
                 costo:0,
@@ -1002,6 +1023,7 @@ export default class ModificarYacimiento extends React.Component {
                 key:"Fase 1",
                 fases: [{
                     nombre: "Fase 1",
+                    id:null,
                     descripcion:null,
                     duracion:0,
                     costo:0,
@@ -1055,6 +1077,7 @@ export default class ModificarYacimiento extends React.Component {
         var fase1= this.state.etapas[etapa_num-1].fases;
         var Fase={
                 nombre: '',
+                id:null,
                 descripcion:null,
                 duracion:0,
                 costo:0,
@@ -1822,14 +1845,17 @@ export default class ModificarYacimiento extends React.Component {
 
         const info = {
             yacimiento:{
+                id:null,
                 nombre:null,
                 descripcion:null,
                 area:null,
                 tipo:null,
+                tipoId:null,
                 ubicacion:{
                     estado:null,
                     municipio:null,
-                    parroquia:null
+                    parroquia:null,
+                    parroquiaId:null,
                 },
                 fecha:{
                     dia:null,
@@ -1854,15 +1880,18 @@ export default class ModificarYacimiento extends React.Component {
                 }]
             }],
             explotacion:{
+                id:null,
                 duracion:0,
                 costo:0,
             },
             etapas: [{
                 nombre: null,
+                id:null,
                 duracion:0,
                 costo:0,
                 fases: [{
                     nombre: null,
+                    id:null,
                     duracion:0,
                     costo:0,
                     cargos:[{
@@ -1883,31 +1912,28 @@ export default class ModificarYacimiento extends React.Component {
         
         
 
-        let incompleto = document.getElementById("YacimientosNombreYacimiento").value.trim(); 
+       /* let incompleto = document.getElementById("YacimientosNombreYacimiento").value.trim(); 
         if(!incompleto){
             console.log('COMPLETO');
-        }
+        }*/
       /*  if(document.getElementById("YacimientosNombreYacimiento").value.trim){
 
         }
         this.state.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value;
         this.state.yacimiento.descripcion*/
-        console.log('NOMBRE YACIMEITNO',incompleto);
-
+        //console.log('NOMBRE YACIMEITNO',incompleto);
+        info.yacimiento.id = this.state.yacimiento.id;
         info.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value.trim();
         info.yacimiento.descripcion = document.getElementById("YacimientosDescripcionYacimiento").value.trim();
-        info.yacimiento.area = document.getElementById("YacimientosTamañoYacimiento").value.trim();
+        info.yacimiento.area = Number(document.getElementById("YacimientosTamañoYacimiento").value.trim());
         info.yacimiento.tipo = document.getElementById("YacimientosTipoYacimiento").value.trim();
-
-
-        info.yacimiento.ubicacion.estado = document.getElementById("LugarEstado").value.trim();
-        info.yacimiento.ubicacion.municipio = document.getElementById("LugarMunicipio").value.trim();
-        info.yacimiento.ubicacion.parroquia = document.getElementById("LugarParroquia").value.trim();
-
-
-        info.yacimiento.fecha.dia = document.getElementById("FechaDia").value.trim();
-        info.yacimiento.fecha.mes = document.getElementById("FechaMes").value.trim();
-        info.yacimiento.fecha.ano = document.getElementById("FechaAno").value.trim();
+        info.yacimiento.tipoId = this.state.yacimiento.tipoId;
+        info.yacimiento.ubicacion.estado = Number(document.getElementById("LugarEstado").value.trim());
+        info.yacimiento.ubicacion.municipio = Number(document.getElementById("LugarMunicipio").value.trim());
+        info.yacimiento.ubicacion.parroquia = Number(document.getElementById("LugarParroquia").value.trim());
+        info.yacimiento.fecha.dia = Number(document.getElementById("FechaDia").value.trim());
+        info.yacimiento.fecha.mes = Number(document.getElementById("FechaMes").value.trim());
+        info.yacimiento.fecha.ano = Number(document.getElementById("FechaAno").value.trim());
 
         info.minerales.shift();
         for(let i=0; i<this.state.Minerales.length; i++){
@@ -1920,16 +1946,17 @@ export default class ModificarYacimiento extends React.Component {
                 }]
             }
            
-            mineral.id=this.state.Minerales[i].id;
-            mineral.total=document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim();
+            mineral.id=Number(this.state.Minerales[i].id);
+            mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
+            mineral.componentes.shift();
             for(let k=0; k<this.state.Minerales[i].componentes.length; k++){
                 let componente = {
                     id:0,
                     total:0
                 }
 
-                componente.id = this.state.Minerales[i].componentes[k].id;
-                componente.total = document.getElementById("YacimientosMineralComponente"+mineral.id+componente.id).value.trim();
+                componente.id = Number(this.state.Minerales[i].componentes[k].id);
+                componente.total = Number(document.getElementById("YacimientosMineralComponente"+mineral.id+componente.id).value.trim());
                 mineral.componentes.push(componente);
             }
 
@@ -1953,16 +1980,17 @@ export default class ModificarYacimiento extends React.Component {
                 }]
             }
            
-            mineral.id=this.state.MineralesNoMetalicos[i].id;
-            mineral.total=document.getElementById("YacimientosTotalMineralNoMetalico"+mineral.id).value.trim();
+            mineral.id=Number(this.state.MineralesNoMetalicos[i].id);
+            mineral.total=Number(document.getElementById("YacimientosTotalMineralNoMetalico"+mineral.id).value.trim());
+            mineral.componentes.shift();
             for(let k=0; k<this.state.MineralesNoMetalicos[i].componentes.length; k++){
                 let componente = {
                     id:0,
                     total:0
                 }
 
-                componente.id = this.state.MineralesNoMetalicos[i].componentes[k].id;
-                componente.total = document.getElementById("YacimientosMineralNoMetalicoComponente"+mineral.id+componente.id).value.trim();
+                componente.id = Number(this.state.MineralesNoMetalicos[i].componentes[k].id);
+                componente.total = Number(document.getElementById("YacimientosMineralNoMetalicoComponente"+mineral.id+componente.id).value.trim());
                 mineral.componentes.push(componente);
             }
 
@@ -1975,6 +2003,8 @@ export default class ModificarYacimiento extends React.Component {
             
         }
 
+
+        info.explotacion.id = this.state.explotacion.id;
         info.explotacion.duracion = this.state.explotacion.duracion;
         info.explotacion.costo = this.state.explotacion.costo;
 
@@ -2003,6 +2033,7 @@ export default class ModificarYacimiento extends React.Component {
                     }]
                 }
                 
+                etapa.id = etapaR.id;
                 etapa.nombre = document.getElementById('YacimientosNombreEtapa'+etapaR.numeroV).value.trim();
                 etapa.duracion = etapaR.duracion;
                 etapa.costo = etapaR.costo;
@@ -2026,6 +2057,7 @@ export default class ModificarYacimiento extends React.Component {
                             }]
                         }
 
+                        fase.id = faseR.id;
                         fase.nombre = document.getElementById('YacimientosNombreEtapaFase'+etapaR.numeroV+faseR.numeroV).value.trim();
                         fase.duracion = faseR.duracion;
                         fase.costo = faseR.costo;
@@ -2038,7 +2070,7 @@ export default class ModificarYacimiento extends React.Component {
                                 sueldo:0,
                                 cantidad:0,
                             }
-                            cargo.id = cargoR.id;
+                            cargo.id = Number(cargoR.id);
                             cargo.sueldo = cargoR.sueldo;
                             cargo.cantidad = cargoR.cantidad;
 
@@ -2058,7 +2090,7 @@ export default class ModificarYacimiento extends React.Component {
                                 costo:0,
                                 cantidad:0,
                             }
-                            tipoMaquinaria.id = tipoMaquinariaR.id;
+                            tipoMaquinaria.id = Number(tipoMaquinariaR.id);
                             tipoMaquinaria.costo = tipoMaquinariaR.costo;
                             tipoMaquinaria.cantidad = tipoMaquinariaR.cantidad;
 
@@ -2510,7 +2542,7 @@ export default class ModificarYacimiento extends React.Component {
     }
 
 
-    handleOnChangeMineralNoMetalicoNoMetalico=(event,minNUm)=>{
+    handleOnChangeMineralNo=(event,minNUm)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
         const minerales= this.state.MineralesNoMetalicos;
@@ -2625,7 +2657,7 @@ export default class ModificarYacimiento extends React.Component {
                 <Container className="FormContainer">
                    
 
-                    <FormTitulo titulo="Registrar Yacimiento" tamaño="BIG"/>
+                    <FormTitulo titulo="Modificar Yacimiento" tamaño="BIG"/>
                      
                     <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
@@ -2760,7 +2792,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                 <Form.Group as={Col} md="3" onChange={(evt)=>this.handleOnChangeMineralComponentes(evt,mineral.id,componente.id,indexMin,indexComp)} controlId={'YacimientosMineralComponente'+mineral.id+componente.id} className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">{componente.nombre}</Form.Label>
                                                                                     <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                                                        <Form.Control type="text" className="form-input" defaultValue={componente.total} placeholder="Introduzca cantidad" /> 
                                                                                         <InputGroup.Append>
                                                                                             <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                         </InputGroup.Append>
@@ -2777,7 +2809,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineral(evt,mineral.id)} controlId={'YacimientosTotalMineral'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
-                                                                                <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                                                <Form.Control type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>
@@ -2860,7 +2892,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                 <Form.Group as={Col} md="3" onChange={(evt)=>this.handleOnChangeMineralNoMetalicoComponentes(evt,mineral.id,componente.id,indexMin,indexComp)} controlId={'YacimientosMineralNoMetalicoComponente'+mineral.id+componente.id} className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">{componente.nombre}</Form.Label>
                                                                                     <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                                                        <Form.Control type="text" className="form-input" defaultValue={componente.total} placeholder="Introduzca cantidad" /> 
                                                                                         <InputGroup.Append>
                                                                                             <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                         </InputGroup.Append>
@@ -2877,7 +2909,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineralNoMetalico(evt,mineral.id)} controlId={'YacimientosTotalMineralNoMetalico'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
-                                                                                <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
+                                                                                <Form.Control type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>
