@@ -100,14 +100,12 @@ INSERT INTO MU_CARGO (Nombre, Descripcion) VALUES
     ('Supervisor de Campo', 'Supervisa las actividades de campo de la explotación'),
     ('Técnico', 'Supervisa el estado de los equipos y la maquinaria'),
     ('Topógrafo', 'Realiza el levantamiento plano-milimétrico del terreno');
-
-CHECK (Nivel_de_instruccion IN ('Primaria', 'Secundaria', 'Universitaria', 'Superior', 'Otro'))
 ------------------------------   EMPLEADOS   ------------------------------
 INSERT INTO MU_EMPLEADO (CI, P_nombre, S_nombre, P_apellido, S_apellido, Fecha_nacimiento, Sexo, Nivel_de_instruccion, Telefono, fk_lugar, fk_cargo, fk_estatus) VALUES
     ('V11111111', 'Andrea', 'Valentina', 'Da Silva', 'Baudet', '01-25-1999', 'Femenino', 'Universitaria', '04141111111', 546, 1, 1),
     ('V22222223', 'Diego', 'Alfonso', 'Gutiérrez', 'Duarte', '07-14-1999', 'Masculino', 'Universitaria', '04142222222', 765, 1, 1),
     ('V33333333', 'Alba', 'Sofía', 'Sánchez', 'Silvestre', '01-31-1999', 'Femenino', 'Superior', '04123333333', 865, 1, 3),
-    ('V44444444', 'Javier', 'Alejandro', 'Andrade', 'González', '07-21-1998', 'Masculino', 'Universitaria', '0424445421', 321, 2, 2),
+    ('V44444444', 'Javier', 'Alejandro', 'Andrade', 'González', '07-21-1998', 'Masculino', 'Universitaria', '0424445421', 965, 2, 2),
     ('E55555555', 'Gustavo', 'Ignacio', 'Sánchez', 'Rodríguez', '05-15-1998', 'Masculino', 'Otro', '04161265342', 987, 2, 1),
     ('V66666666', 'Miguel', 'Antonio', 'Peña', 'Fraga', '04-03-1998', 'Masculino', 'Superior', '04142890753', 1010, 2, 3),
     ('V77777777', 'Gabriel', 'Alejandro', 'Terán', 'Guerrero', '05-24-1999', 'Masculino', 'Universitaria', '04167652341', 1090, 3, 3),
@@ -223,7 +221,7 @@ INSERT INTO MU_MAQUINARIA (Identificador, Fecha_adquisicion, fk_tipo_maquinaria,
 
 -------------------------------------    CLIENTE NATURAL     -------------------------------------
 INSERT INTO MU_CLIENTE_NATURAL (CI, P_nombre, S_nombre, P_apellido, S_apellido, Fecha_nacimiento, Email, Telefono, fk_lugar) VALUES
-    ('V26435741', 'Andrea', 'Valentina', 'Pérez', 'Baudet', '01-25-1999', 'andreadasilvab@gmail.com', '04140110935', 984),
+    ('V26435741', 'Andrea', 'Valentina', 'Da Silva', 'Baudet', '01-25-1999', 'andreadasilvab@gmail.com', '04140110935', 984),
     ('V27164848', 'Diego', 'Alfonso', 'Gutiérrez', 'Duarte', '07-14-1999', 'diegoalfonsogutierrez@gmail.com', '04262857751', 440),
     ('V27086052', 'Alba', 'Sofía', 'Sánchez', 'Silvestre', '01-31-1999', 'albasofia.n.n@gmail.com', '04122765991', 445),
     ('V26530119', 'Miguel', 'Antonio', 'Peña', 'Fraga', '04-03-1998', 'mpfraga@gmail.com', '04242855585', 450),

@@ -8,6 +8,7 @@ import Empleado from '../screens/Empleados/Empleado';
 import RegistrarClienteNatural from '../screens/Clientes/RegistrarClienteNatural';
 import RegistrarClienteJuridico from '../screens/Clientes/RegistrarClienteJuridico';
 import VentasForm from '../screens/Ventas/VentasForm';
+import VentasFormConsultar from '../screens/Ventas/VentasFormConsultar';
 import ModalYesNo from '../components/ModalYesNo';
 import GestionarCargos from '../screens/Cargos/GestionarCargos';
 import RegistrarYacimiento from '../screens/Yacimientos/RegistrarYacimiento';
@@ -62,6 +63,7 @@ const AppRouter = () => (
         {/* ------------------------ VENTAS ------------------------ */}
         <Route path="/venta" component={Venta} />
         <Route path="/gestionar_ventas/:id?" component={VentasForm} />
+        <Route path="/consultar_ventas/:accion/:id?" component={VentasFormConsultar} />
         {/* ------------------------ YACIMIENTO ------------------------ */}
         <Route path="/yacimiento" component={Yacimiento} />
         <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />

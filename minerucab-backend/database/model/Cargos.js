@@ -6,9 +6,8 @@ const getAllCargos = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    client.query('SELECT * FROM cargo;')
+    client.query('SELECT * FROM MU_CARGO;')
     .then((response) => {
-        console.log('Completed!', response.rows[0])
         client.end();
         res.status(200).json(response.rows)
     })
@@ -23,7 +22,7 @@ const getCargoById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT * FROM cargo WHERE id = ($1);';
+    const text = 'SELECT * FROM MU_CARGO WHERE id = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {

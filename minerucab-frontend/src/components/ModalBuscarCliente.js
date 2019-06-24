@@ -23,6 +23,7 @@ export default class ModalBuscarCliente extends React.Component {
   onSubmit = (e) => {
     e.preventDefault();
     console.log(this.state.ci);
+    const tipoCi = document.getElementById('tipo-ci').value
 
     const config = {
       headers: {
@@ -30,16 +31,30 @@ export default class ModalBuscarCliente extends React.Component {
       },
       responseType: 'json'
     }
-    axios.get(`http://localhost:3000/getEmpleadoByCedula/${this.state.ci}`, config)
+    if ((tipoCi === 'V') || (tipoCi === 'E')){
+      axios.get(`http://localhost:3000/getClienteByCedula/${tipoCi+this.state.ci}`, config)
       .then((res) => {
           console.log(res)
           if (res.status === 200 && res.data.length === 1){
-            history.push(`/gestionar_ventas/${res.data[0].id}`);
+            history.push(`/gestionar_ventas/${tipoCi+res.data[0].clave}`);
           } 
       }).catch((e) => {
           console.log('Error en axios')
           this.setState({ showMessage: true })
       })
+    }
+    else {
+      axios.get(`http://localhost:3000/getClienteByRIF/${tipoCi+this.state.ci}`, config)
+      .then((res) => {
+          console.log(res)
+          if (res.status === 200 && res.data.length === 1){
+            history.push(`/gestionar_ventas/${tipoCi+res.data[0].clave}`);
+          } 
+      }).catch((e) => {
+          console.log('Error en axios')
+          this.setState({ showMessage: true })
+      })
+    }
   }
   renderError = () => {
     return (
@@ -83,7 +98,12 @@ export default class ModalBuscarCliente extends React.Component {
                 <Col md={2}></Col>
                 <Col md={2}>
                     <Form.Group controlId="formGridState">
-                        <Form.Control as="select" size="sm" className="modal-bc-input modal-bc-dropdown-cirif">
+                        <Form.Control 
+                          as="select" 
+                          size="sm" 
+                          id="tipo-ci"
+                          className="modal-bc-input modal-bc-dropdown-cirif" 
+                        >
                             <option>V</option>
                             <option>E</option>
                             <option>J</option>

@@ -30,7 +30,7 @@ const getAllEmployees = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
-    client.query('SELECT * FROM empleado;')
+    client.query('SELECT * FROM mu_empleado;')
     .then((response) => {
         client.end();
         // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
@@ -47,7 +47,7 @@ const getEmpleadoByCedula = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT * FROM empleado WHERE ci = ($1);';
+    const text = 'SELECT * FROM mu_empleado WHERE ci = ($1);';
     const values = [req.params.cedula];
     client.query(text, values)
     .then((response) => {
@@ -65,7 +65,7 @@ const getEmpleadoById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT * FROM empleado WHERE id = ($1);';
+    const text = 'SELECT * FROM mu_empleado WHERE Clave = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {

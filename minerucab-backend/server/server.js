@@ -8,19 +8,25 @@ const Minerales = require('../database/model/Minerales');
 const Presentaciones = require('../database/model/Presentaciones');
 const General = require('../database/model/General');
 const Cargos = require('../database/model/Cargos');
-const Clientes = require('../database/model/Clientes');
+const ClientesNaturales = require('../database/model/ClientesNaturales');
+const ClientesJuridicos = require('../database/model/ClientesJuridicos');
+const DetalleVentas = require('../database/model/DetalleVentas');
+const PagosValidations = require('../validations/PagosValidations');
 const Roles = require('../database/model/Roles');
+const Ventas = require('../database/model/Ventas');
+const VentasValidations = require('../validations/VentasValidations');
 const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 
-app.use(bodyParser.json())
+app.use(express.json())
 app.use(
   bodyParser.urlencoded({
     extended: true,
   })
 )
+app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:8080");
@@ -29,63 +35,69 @@ app.use(function(req, res, next) {
   next();
 })
 
-/* ------------------------------ POST ------------------------------ */
+/* ----------------------------------- POST ----------------------------------- */
+app.post('/createClienteNatural', ClientesNaturales.createClienteNatural);
+app.post('/createVenta', VentasValidations.createVenta);
 
-app.post('/createClienteNatural', Clientes.createClienteNatural);
-
-/* ------------------------------ GET ------------------------------ */
+/* ----------------------------------- GET ----------------------------------- */
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello Express!</h1>');
 });
 
+
+/* -------------------- PRUEBAS -------------------- */
 app.get('/users', Empleados.getAllEmployees);
-
 app.get('/column_names/:table_name', General.getAllTableColumns);
-
+/* -------------------- CARGOS -------------------- */
 app.get('/getAllCargos', Cargos.getAllCargos);
-
 app.get('/getCargoById/:id', Cargos.getCargoById);
-
+/* -------------------- ROLES -------------------- */
 app.get('/getAllRoles', Roles.getAllRoles);
-
 app.get('/getRolById/:id', Roles.getRolById);
-
+/* -------------------- EMPLEADOS -------------------- */
 app.get('/getEmpleadoByCedula/:cedula', Empleados.getEmpleadoByCedula);
-
 app.get('/getEmpleadoById/:id', Empleados.getEmpleadoById);
-
-app.get('/getClienteNombreApellidoById/:id', Clientes.getClienteNombreApellidoById);
-
-app.get('/getAllClientes', Clientes.getAllClientes);
-
-app.get('/getClienteByCedula/:cedula', Clientes.getClienteByCedula);
-
-app.get('/getClienteById/:id', Clientes.getClienteById);
-
+/* -------------------- CLIENTE -------------------- */
+app.get('/getClienteNombreApellidoById/:id', ClientesNaturales.getClienteNombreApellidoById);
+app.get('/getAllClientes', ClientesNaturales.getAllClientes);
+app.get('/getClienteByCedula/:cedula', ClientesNaturales.getClienteByCedula);
+app.get('/getClienteByRIF/:rif', ClientesJuridicos.getClienteByRIF);
+app.get('/getClienteNombreById/:cedula', ClientesJuridicos.getClienteNombreById);
+app.get('/getClienteById/:id', ClientesNaturales.getClienteById);
+app.get('/getClienteJuridicoById/:id', ClientesJuridicos.getClienteJuridicoById);
+/* -------------------- MINERALES -------------------- */
 app.get('/getAllMineralesMetalicos', Minerales.getAllMineralesMetalicos);
-
 app.get('/getAllMineralesNoMetalicos', Minerales.getAllMineralesNoMetalicos);
-
 app.get('/getAllMineralesMetalicosConPresentacion', Minerales.getAllMineralesMetalicosConPresentacion);
-
+app.get('/getAllMineralesNoMetalicosConPresentacion', Minerales.getAllMineralesNoMetalicosConPresentacion);
 app.get('/getMineralMetalicoById/:id', Minerales.getMineralMetalicoById);
-
 app.get('/getMineralNoMetalicoById/:id', Minerales.getMineralNoMetalicoById);
-
 app.get('/getNombreMineralMetalicoById/:id', Minerales.getNombreMineralMetalicoById);
-
 app.get('/getNombreMineralNoMetalicoById/:id', Minerales.getNombreMineralNoMetalicoById);
-
 app.get('/getAllPresentaciones', Presentaciones.getAllPresentaciones);
+/* -------------------- VENTAS -------------------- */
+app.get('/getVentaById/:id', Ventas.getVentaById);
+app.get('/getAllVentasClientesNaturales', Ventas.getAllVentasClientesNaturales);
+app.get('/getAllVentasClientesJuridicos', Ventas.getAllVentasClientesJuridicos);
+app.get('/getVentaInfo/:id', VentasValidations.getVentaInfo);
+/* -------------------- DETALLES DE VENTAS -------------------- */
+app.get('/getDetalleVentaByIdVenta/:id', DetalleVentas.getDetalleVentaByIdVenta);
+/* -------------------- PAGOS -------------------- */
+app.get('/getPagosChequeDeVenta/:id', PagosValidations.getPagosChequeDeVenta);
+app.get('/getPagosTarjetaCreditoDeVenta/:id', PagosValidations.getPagosTarjetaCreditoDeVenta);
+app.get('/getPagosTarjetaDebitoDeVenta/:id', PagosValidations.getPagosTarjetaDebitoDeVenta);
+app.get('/getPagosTransferenciaDeVenta/:id', PagosValidations.getPagosTransferenciaDeVenta);
 
-/* ------------------------------ DELETE ------------------------------ */
-
-app.delete('/deleteClienteById/:id', Clientes.deleteClienteById);
-
+/* ----------------------------------- DELETE ----------------------------------- */
+/* -------------------- CLIENTES -------------------- */
+app.delete('/deleteClienteById/:id', ClientesNaturales.deleteClienteById);
+/* -------------------- MINERALES -------------------- */
 app.delete('/deleteMineralMetalicoById/:id', Minerales.deleteMineralMetalicoById);
-
 app.delete('/deleteMineralNoMetalicoById/:id', Minerales.deleteMineralNoMetalicoById);
+
+
+
 
 /* -------------------------------------------------------------------- */
 

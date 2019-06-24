@@ -6,9 +6,8 @@ const getAllRoles = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    client.query('SELECT * FROM rol;')
+    client.query('SELECT * FROM mu_rol;')
     .then((response) => {
-        console.log('Completed!', response.rows[0])
         client.end();
         res.status(200).json(response.rows)
     })
@@ -23,11 +22,10 @@ const getRolById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT * FROM rol WHERE id = ($1);';
+    const text = 'SELECT * FROM mu_rol WHERE id = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
-        console.log('Completed!', response.rows[0])
         client.end();
         res.status(200).json(response.rows)
     })

@@ -117,13 +117,13 @@ export default class Mineral extends React.Component {
                                 </Col>
                             </Row>
                             <DataTable
-                                columns={'http://localhost:3000/column_names/mineral_metalico'} 
+                                columns={'http://localhost:3000/column_names/mu_mineral_metalico'} 
                                 data={'http://localhost:3000/getAllMineralesMetalicos'}
                                 urlModificar={'/mineral_metalico'}
                                 urlConsultar={'/mineral_metalico'}
                                 agregar={false}
-                                modificar={false}
-                                consultar={false}
+                                modificar={true}
+                                consultar={true}
                                 eliminar={true}
                                 modalEliminar={this.modalEliminarOpen}
                                 modalCrear={this.modalCrearMineralOpen}
@@ -131,7 +131,7 @@ export default class Mineral extends React.Component {
                                 checktable={false}
                                 textoSingular={'mineral'}
                                 textoPlural={'minerales metalicos'}
-                                size={100}
+                                size={250}
                             />
                              <Row>
                                 <Col md={1}></Col>
@@ -145,13 +145,13 @@ export default class Mineral extends React.Component {
                                 </Col>
                             </Row>
                             <DataTableAux
-                                columns={'http://localhost:3000/column_names/mineral_no_metalico'} 
+                                columns={'http://localhost:3000/column_names/mu_mineral_no_metalico'} 
                                 data={'http://localhost:3000/getAllMineralesNoMetalicos'}
                                 urlModificar={'/mineral_no_metalico'}
                                 urlConsultar={'/mineral_no_metalico'}
                                 agregar={true}
-                                modificar={false}
-                                consultar={false}
+                                modificar={true}
+                                consultar={true}
                                 eliminar={true}
                                 modalEliminar={this.modalEliminarOpen}
                                 modalCrear={this.modalCrearMineralOpen}
@@ -159,7 +159,7 @@ export default class Mineral extends React.Component {
                                 checktable={false}
                                 textoSingular={'mineral'}
                                 textoPlural={'minerales no metalicos'}
-                                size={100}
+                                size={250}
                             />
                         </Col>
                         <Col sm={0} md={1}></Col>
