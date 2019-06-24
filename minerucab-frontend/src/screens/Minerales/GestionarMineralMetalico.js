@@ -134,39 +134,25 @@ export default class GestionarMineralMetalico extends React.Component {
         }
     }
     addPresentacionesMin = (e) => {
-        if(this.state.presentacionesmin.length===0){
-            var nuevaPresentacion = {
-                presentacion: 1,
-                precio: 1,
-                presShow: true,
-                numero: 1,
-                numeroV:1,
-            };
-            this.setState(() => ({
-                presentacionesmin: nuevaPresentacion,
-           }));
-        }
-        else{
-            var presentacAux = this.state.presentacionesmin;
-            var nuevaPresentacion = {
-                presentacion: 1,
-                precio: 1,
-                presShow: true,
-                numero: 1,
-                numeroV:1,
-            };
-            for (var i = presentacAux.length - 1; i >= 0; i--) {
-                if(presentacAux[i].numero!=0){
-                    nuevaPresentacion.numero=presentacAux[i].numero+1;
-                    break;
-                }
+        var presentacAux = this.state.presentacionesmin;
+        var nuevaPresentacion = {
+            presentacion: 1,
+            precio: 1,
+            presShow: true,
+            numero: 1,
+            numeroV:1,
+        };
+        for (var i = presentacAux.length - 1; i >= 0; i--) {
+            if(presentacAux[i].numero!=0){
+                nuevaPresentacion.numero=presentacAux[i].numero+1;
+                break;
             }
-            nuevaPresentacion.numeroV=presentacAux[presentacAux.length-1].numeroV+1;
-
-            this.setState((prevState) => ({
-                presentacionesmin: prevState.presentacionesmin.concat(nuevaPresentacion),
-            }));
         }
+        nuevaPresentacion.numeroV=presentacAux[presentacAux.length-1].numeroV+1;
+
+        this.setState((prevState) => ({
+            presentacionesmin: prevState.presentacionesmin.concat(nuevaPresentacion),
+        }));
     }
     addComponentesMin = (e) => {
         var componenteAux = this.state.componentesmin;
