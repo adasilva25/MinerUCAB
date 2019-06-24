@@ -40,7 +40,7 @@ const getAllMineralesMetalicosConPresentacion = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    client.query('SELECT M.nombre as mineral, P.nombre as presentacion, A.precio as precio FROM mu_mineral_metalico M, mu_presentacion P, mu_presentacion_mineral A WHERE M.clave = A.fk_mineral_metalico and P.clave = A.fk_presentacion;')
+    client.query('SELECT A.Clave, M.nombre as mineral, P.nombre as presentacion, A.precio as precio FROM mu_mineral_metalico M, mu_presentacion P, mu_presentacion_mineral A WHERE M.clave = A.fk_mineral_metalico and P.clave = A.fk_presentacion;')
     .then((response) => {
         console.log('Completed!', response.rows[0])
         client.end();
@@ -57,9 +57,9 @@ const getAllMineralesNoMetalicosConPresentacion = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    client.query('SELECT M.nombre as mineral, P.nombre as presentacion, A.precio as precio FROM mu_mineral_no_metalico M, mu_presentacion P, mu_presentacion_mineral A WHERE M.clave = A.fk_mineral_no_metalico and P.clave = A.fk_presentacion;')
+    client.query('SELECT A.Clave, M.nombre as mineral, P.nombre as presentacion, A.precio as precio FROM mu_mineral_no_metalico M, mu_presentacion P, mu_presentacion_mineral A WHERE M.clave = A.fk_mineral_no_metalico and P.clave = A.fk_presentacion;')
     .then((response) => {
-        console.log('Completed!', response.rows[0])
+        console.log(response)
         client.end();
         res.status(200).json(response.rows)
     })
@@ -181,6 +181,7 @@ module.exports = {
     getAllMineralesMetalicos,
     getAllMineralesNoMetalicos,
     getAllMineralesMetalicosConPresentacion,
+    getAllMineralesNoMetalicosConPresentacion,
     getMineralMetalicoById,
     getMineralNoMetalicoById,
     getNombreMineralMetalicoById,

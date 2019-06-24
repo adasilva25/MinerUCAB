@@ -33,9 +33,11 @@ export default class DataTable extends React.Component {
         let urlConsultar = this.props.urlConsultar;
         let urlModificar = this.props.urlModificar;
         let size = this.props.size;
+        let registros = true;
         let dataSet = [];
         let columns = [];
         const textoPlural = this.props.textoPlural;
+        let columnsSet = 0;
         const modalEliminar = this.props.modalEliminar;
         let etapa = this.props.etapa;
         let fase = this.props.fase;
@@ -52,31 +54,52 @@ export default class DataTable extends React.Component {
             responseType: 'json'
         }
 
-        axios.get(`${this.props.columns}`, config)
-            .then((res) => {
-                res.data.forEach(element => {
-                    columns.push({
-                        title: element.column_name
-                    })
-                })
+                // res.data.forEach(element => {
+                //     columns.push({
+                //         title: element.column_name[0].toUpperCase() + element.column_name.substring(1,element.column_name.length).toLowerCase()
+                //     })
+                //     // columns.push({
+                //     //     title: element.column_name
+                //     // })
+                // })
                 /*DROPDOWN ESTATUS*/
                 /*columns.push(
                 {
                     title: 'Estatus'
                 })*/
-                columns.push({
-                    title: 'Acciones'
-                })
                 axios.get(`${this.props.data}`, config)
                 .then((res) => {
+                    console.log('res', res)
                     res.data.forEach(item => {
                         let values = [];
                         const keys = Object.keys(item);
-
                         for (let key of keys) {
-
+                            if (columnsSet < keys.length){
+                                console.log('entro', key)
+                                columns.push({
+                                    title: key[0].toUpperCase() + key.substring(1,key.length).toLowerCase()
+                                })
+                                columnsSet++;
+                                console.log('columnsSet', columnsSet)
+                            }
+                            if (columnsSet === keys.length){
+                                console.log('entro en acciones')
+                                columns.push({
+                                    title: 'Acciones'
+                                })
+                                columnsSet++;
+                                console.log('columnsSet', columnsSet)
+                            }
                             if (typeof item[key] === 'number'){
                                 values.push(item[key].toString());
+                            }
+                            else if (key.includes('fecha')){
+                                console.log('entro', key)
+                                const date = new Date(item[key])
+                                const dia = date.getDate()
+                                const mes = (date.getMonth() + 1)
+                                const ano = date.getFullYear()
+                                values.push(`${dia}/${mes}/${ano}`)
                             }
                             else {
                                 values.push(item[key]);
@@ -85,6 +108,14 @@ export default class DataTable extends React.Component {
                         values.push('')
                         dataSet.push(values)
                     })
+                    if (res.data.length === 0){
+                        columns.push({title: 'No existen registros'}, {title: 'No existen registros'})
+                        consultar = false;
+                        modificar = false;
+                        eliminar = false;
+                        registros = false;
+                    }
+                    // console.log(dataSet)
 
                         let i = -1;
                     
@@ -108,7 +139,7 @@ export default class DataTable extends React.Component {
                                 "previous": "Anterior",
                                 "next": "Siguiente",
                             },
-                            "emptyTable": "No existen registros.",
+                            "emptyTable": "No existen registros",
                             "infoEmpty": "",
                             "infoFiltered": "",
                             "zeroRecords": "No existen registros con estas características.",
@@ -174,7 +205,10 @@ export default class DataTable extends React.Component {
                                             const iconoEliminar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon id={row[0]} className="icons icondelete" icon={Icons.faTrashAlt}/>)
                                             data += `${iconoEliminar}`
                                         }
-                                        if ((eliminar === false) && (modificar === false) && (consultar === false)){
+                                        if ((eliminar === false) && (modificar === false) && (consultar === false) && (registros === true)){
+                                            data = 'No posee acciones disponibles'
+                                        }
+                                        if (registros === false){
                                             data = 'No posee acciones disponibles'
                                         }
                                     }
@@ -351,6 +385,7 @@ export default class DataTable extends React.Component {
                                     }.bind(this)
                                 }
                             }
+                            
 
                             // if (checktable === true){
                             //     const checks = document.getElementsByClassName('checkbox-dt');
@@ -414,9 +449,6 @@ export default class DataTable extends React.Component {
                     })
                     // this.setState({ datatable: table });
 
-            }).catch((e) => {
-                console.log('Error en axios')
-            })
 
 
       
@@ -485,6 +517,9 @@ export default class DataTable extends React.Component {
     render(){
         return (
             <div>
+            {
+                console.log('btn length', document.getElementsByClassName('icondelete').length)
+            }
             <form name="frm-dt" id="frm-dt" >
                 <table  className="display" width="100%" ref={el => this.el = el}>
                 </table>

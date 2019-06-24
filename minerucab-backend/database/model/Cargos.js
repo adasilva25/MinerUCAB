@@ -8,7 +8,6 @@ const getAllCargos = (req, res) => {
     client.connect();
     client.query('SELECT * FROM mu_cargo;')
     .then((response) => {
-        console.log('Completed!', response.rows[0])
         client.end();
         res.status(200).json(response.rows)
     })

@@ -244,14 +244,11 @@ CREATE TABLE MU_USUARIO (
 CREATE TABLE MU_VENTA (
 	Clave SERIAL,
 	Total DECIMAL NOT NULL,
-	Fecha TIMESTAMP NOT NULL,
-	fk_usuario INTEGER NOT NULL,
+	Fecha TIMESTAMP NOT NULL DEFAULT now(),
 	fk_cliente_natural INTEGER,
 	fk_cliente_juridico INTEGER,
 	fk_estatus INTEGER NOT NULL,
 	CONSTRAINT pk_venta PRIMARY KEY (Clave),
-	CONSTRAINT fk_usuario_venta FOREIGN KEY (fk_usuario) 
-		REFERENCES MU_USUARIO (Clave) ON DELETE CASCADE,
 	CONSTRAINT fk_cliente_natural_venta FOREIGN KEY (fk_cliente_natural) 
 		REFERENCES MU_CLIENTE_NATURAL (Clave) ON DELETE CASCADE,
 	CONSTRAINT fk_cliente_juridico_venta FOREIGN KEY (fk_cliente_juridico) 
@@ -278,7 +275,8 @@ CREATE TABLE MU_DETALLE_VENTA (
 
 CREATE TABLE MU_PAGO (
 	Clave SERIAL,
-	Fecha_pago TIMESTAMP NOT NULL,
+	Monto DECIMAL NOT NULL,
+	Fecha_pago TIMESTAMP NOT NULL DEFAULT now(),
 	fk_venta INTEGER NOT NULL,
 	fk_tipo_pago_cheque INTEGER,
 	fk_tipo_pago_tarjeta_debito INTEGER,

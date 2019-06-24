@@ -41,7 +41,7 @@ const getAllClientes = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
-    client.query('SELECT * FROM cliente;')
+    client.query('SELECT Clave, p_nombre AS "Nombre", p_apellido AS "Apellido", CI AS "Cédula" FROM MU_CLIENTE_NATURAL;')
     .then((response) => {
         client.end();
         // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
@@ -58,7 +58,7 @@ const getClienteByCedula = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT * FROM cliente WHERE ci = ($1);';
+    const text = 'SELECT * FROM MU_CLIENTE_NATURAL WHERE ci = ($1);';
     const values = [req.params.cedula];
     client.query(text, values)
     .then((response) => {
@@ -76,7 +76,7 @@ const getClienteById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT * FROM cliente WHERE id = ($1);';
+    const text = 'SELECT * FROM MU_CLIENTE_NATURAL WHERE Clave = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -94,7 +94,7 @@ const getClienteNombreApellidoById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT nombre, apellido FROM cliente WHERE id = ($1);';
+    const text = 'SELECT p_nombre, p_apellido FROM MU_CLIENTE_NATURAL WHERE Clave = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -112,7 +112,7 @@ const deleteClienteById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'DELETE FROM cliente WHERE id = ($1);';
+    const text = 'DELETE FROM MU_CLIENTE_NATURAL WHERE Clave = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {

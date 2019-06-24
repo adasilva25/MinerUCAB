@@ -78,7 +78,7 @@ export default class Mineral extends React.Component {
         return (
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
-                <OpcionesLocales Usuario={'Andrea Da Silva'}/>
+                <OpcionesLocales Usuario={'Alba Sánchez'}/>
                 <ModalRegistrarMineral
                     show={this.state.modalShowCrearMineral}
                     onHide={this.modalCrearMineralClose}
@@ -132,7 +132,7 @@ export default class Mineral extends React.Component {
                                 checktable={false}
                                 textoSingular={'mineral'}
                                 textoPlural={'minerales metalicos'}
-                                size={100}
+                                size={250}
                             />
                              <Row>
                                 <Col md={1}></Col>
@@ -160,7 +160,7 @@ export default class Mineral extends React.Component {
                                 checktable={false}
                                 textoSingular={'mineral'}
                                 textoPlural={'minerales no metalicos'}
-                                size={100}
+                                size={250}
                             />
                         </Col>
                         <Col sm={0} md={1}></Col>
