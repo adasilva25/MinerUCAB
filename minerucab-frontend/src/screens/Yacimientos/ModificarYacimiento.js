@@ -24,7 +24,7 @@ import Card from 'react-bootstrap/Card'
 
 const $ = require('jquery');
 
-export default class RegistrarYacimiento extends React.Component {
+export default class ModificarYacimiento extends React.Component {
     constructor(props){
         super(props);
 
@@ -1757,14 +1757,13 @@ export default class RegistrarYacimiento extends React.Component {
                                                 consultar={false}
                                                 eliminar={false}
 
-                                                columns={'http://localhost:3000/column_names/mu_mineral_metalico'} 
-                                                data={'http://localhost:3000/getAllMineralesMetalicos'}
+                                                columns={'http://localhost:3000/column_names/cliente'} 
+                                                data={'http://localhost:3000/getAllClientes'}
 
                                                 url={'consultar_empleado/:'}
                                                 checktable={true}
                                                 textoSingular={'mineral'}
                                                 textoPlural={'minerales'}
-                                                size={200}
                                                 etapa={0}
                                                 fase={0}
                                             />
@@ -1981,9 +1980,9 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                             modificar={false}
                                                                                             consultar={false}
                                                                                             eliminar={false}
-                                                                                            columns={'http://localhost:3000/column_names/mu_cargo'} 
-                                                                                            data={'http://localhost:3000/getAllCargos'}
-                                                                                            size={200}
+                                                                                            columns={'http://localhost:3000/column_names/cliente'} 
+                                                                                            data={'http://localhost:3000/getAllClientes'}
+
                                                                                             url={'consultar_empleado/:'}
                                                                                             checktable={true}
                                                                                             textoSingular={'cargo'}
@@ -2050,9 +2049,9 @@ export default class RegistrarYacimiento extends React.Component {
                                                                                             modificar={false}
                                                                                             consultar={false}
                                                                                             eliminar={false}
-                                                                                            columns={'http://localhost:3000/column_names/mu_tipo_maquinaria'} 
-                                                                                            data={'http://localhost:3000/getAllTiposMaquinaria'}
-                                                                                            size={200}
+                                                                                            columns={'http://localhost:3000/column_names/cliente'} 
+                                                                                            data={'http://localhost:3000/getAllClientes'}
+
                                                                                             url={'consultar_empleado/:'}
                                                                                             checktable={true}
                                                                                             textoSingular={'tipo de maquinaria'}

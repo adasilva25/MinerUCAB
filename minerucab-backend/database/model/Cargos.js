@@ -6,7 +6,7 @@ const getAllCargos = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    client.query('SELECT * FROM MU_CARGO;')
+    client.query('SELECT * FROM mu_cargo;')
     .then((response) => {
         client.end();
         res.status(200).json(response.rows)
@@ -17,12 +17,12 @@ const getAllCargos = (req, res) => {
     })
 }
 
-const getCargoById = (req, res) => {
+const getCargoByIdEmpleado = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT * FROM MU_CARGO WHERE id = ($1);';
+    const text = 'SELECT C.clave as clave, C.nombre as nombre FROM mu_cargo C, mu_empleado E WHERE C.clave=E.fk_cargo AND E.clave = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -37,6 +37,6 @@ const getCargoById = (req, res) => {
 
 module.exports = {
     getAllCargos,
-    getCargoById
+    getCargoByIdEmpleado
     // ,[siguientes funciones]
 }

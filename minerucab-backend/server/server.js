@@ -15,6 +15,9 @@ const PagosValidations = require('../validations/PagosValidations');
 const Roles = require('../database/model/Roles');
 const Ventas = require('../database/model/Ventas');
 const VentasValidations = require('../validations/VentasValidations');
+const Usuarios = require('../database/model/Usuarios')
+const Lugares = require('../database/model/Lugares');
+const TiposMaquinaria = require('../database/model/TiposMaquinaria');
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -35,6 +38,8 @@ app.use(function(req, res, next) {
   next();
 })
 
+
+
 /* ----------------------------------- POST ----------------------------------- */
 app.post('/createClienteNatural', ClientesNaturales.createClienteNatural);
 app.post('/createVenta', VentasValidations.createVenta);
@@ -44,18 +49,13 @@ app.post('/createVenta', VentasValidations.createVenta);
 app.get('/', (req, res) => {
   res.send('<h1>Hello Express!</h1>');
 });
-
-
-/* -------------------- PRUEBAS -------------------- */
-app.get('/users', Empleados.getAllEmployees);
-app.get('/column_names/:table_name', General.getAllTableColumns);
 /* -------------------- CARGOS -------------------- */
 app.get('/getAllCargos', Cargos.getAllCargos);
-app.get('/getCargoById/:id', Cargos.getCargoById);
-/* -------------------- ROLES -------------------- */
+app.get('/getCargoByIdEmpleado/:id', Cargos.getCargoByIdEmpleado);
 app.get('/getAllRoles', Roles.getAllRoles);
-app.get('/getRolById/:id', Roles.getRolById);
-/* -------------------- EMPLEADOS -------------------- */
+app.get('/getRolByIdEmpleado/:id', Roles.getRolByIdEmpleado);
+app.get('/getAllEmpleados', Empleados.getAllEmpleados);
+app.get('/getCriticInfoEmpleados', Empleados.getCriticInfoEmpleados)
 app.get('/getEmpleadoByCedula/:cedula', Empleados.getEmpleadoByCedula);
 app.get('/getEmpleadoById/:id', Empleados.getEmpleadoById);
 /* -------------------- CLIENTE -------------------- */
@@ -66,6 +66,15 @@ app.get('/getClienteByRIF/:rif', ClientesJuridicos.getClienteByRIF);
 app.get('/getClienteNombreById/:cedula', ClientesJuridicos.getClienteNombreById);
 app.get('/getClienteById/:id', ClientesNaturales.getClienteById);
 app.get('/getClienteJuridicoById/:id', ClientesJuridicos.getClienteJuridicoById);
+/* -------------------- DETALLES DE VENTAS -------------------- */
+app.get('/getDetalleVentaByIdVenta/:id', DetalleVentas.getDetalleVentaByIdVenta);
+/* -------------------- LUGAR -------------------- */
+app.get('/getAllEstados', Lugares.getAllEstados);
+app.get('/getAllMunicipiosByIdEstado/:id', Lugares.getAllMunicipiosByIdEstado);
+app.get('/getAllParroquiasByIdMunicipio/:id', Lugares.getAllParroquiasByIdMunicipio);
+app.get('/getLugarByIdParroquia/:id', Lugares.getLugarByIdParroquia);
+/* -------------------- MAQUINARIAS -------------------- */
+app.get('/getAllTiposMaquinaria', TiposMaquinaria.getAllTiposMaquinaria);
 /* -------------------- MINERALES -------------------- */
 app.get('/getAllMineralesMetalicos', Minerales.getAllMineralesMetalicos);
 app.get('/getAllMineralesNoMetalicos', Minerales.getAllMineralesNoMetalicos);
@@ -76,25 +85,35 @@ app.get('/getMineralNoMetalicoById/:id', Minerales.getMineralNoMetalicoById);
 app.get('/getNombreMineralMetalicoById/:id', Minerales.getNombreMineralMetalicoById);
 app.get('/getNombreMineralNoMetalicoById/:id', Minerales.getNombreMineralNoMetalicoById);
 app.get('/getAllPresentaciones', Presentaciones.getAllPresentaciones);
+/* -------------------- USUARIOS -------------------- */
+app.get('/getUsuarioById/:id', Usuarios.getUsuarioById);
 /* -------------------- VENTAS -------------------- */
 app.get('/getVentaById/:id', Ventas.getVentaById);
 app.get('/getAllVentasClientesNaturales', Ventas.getAllVentasClientesNaturales);
 app.get('/getAllVentasClientesJuridicos', Ventas.getAllVentasClientesJuridicos);
 app.get('/getVentaInfo/:id', VentasValidations.getVentaInfo);
-/* -------------------- DETALLES DE VENTAS -------------------- */
-app.get('/getDetalleVentaByIdVenta/:id', DetalleVentas.getDetalleVentaByIdVenta);
 /* -------------------- PAGOS -------------------- */
 app.get('/getPagosChequeDeVenta/:id', PagosValidations.getPagosChequeDeVenta);
 app.get('/getPagosTarjetaCreditoDeVenta/:id', PagosValidations.getPagosTarjetaCreditoDeVenta);
 app.get('/getPagosTarjetaDebitoDeVenta/:id', PagosValidations.getPagosTarjetaDebitoDeVenta);
 app.get('/getPagosTransferenciaDeVenta/:id', PagosValidations.getPagosTransferenciaDeVenta);
 
+
+
 /* ----------------------------------- DELETE ----------------------------------- */
 /* -------------------- CLIENTES -------------------- */
 app.delete('/deleteClienteById/:id', ClientesNaturales.deleteClienteById);
+/* -------------------- EMPLEADO -------------------- */
+app.delete('/deleteEmpleadoById/:id', Empleados.deleteEmpleadoById)
 /* -------------------- MINERALES -------------------- */
 app.delete('/deleteMineralMetalicoById/:id', Minerales.deleteMineralMetalicoById);
 app.delete('/deleteMineralNoMetalicoById/:id', Minerales.deleteMineralNoMetalicoById);
+
+
+
+/* ------------------------------ DELETE ------------------------------ */
+//  COMENTADO DEL MERGE DE ALBITA
+// app.delete('/deleteClienteById/:id', Clientes.deleteClienteById);
 
 
 

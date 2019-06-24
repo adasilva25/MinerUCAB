@@ -3,8 +3,8 @@ import { Router, Route, Switch } from 'react-router-dom';
 import LoginPage from '../screens/Login/LoginPage';
 import CambiarContrasena from '../screens/Login/CambiarContrasena';
 import DashboardPage from '../components/DashboardPage';
-import GestionarEmpleado from '../screens/Empleados/GestionarEmpleado';
 import Empleado from '../screens/Empleados/Empleado';
+import GestionarEmpleado from '../screens/Empleados/GestionarEmpleado';
 import RegistrarClienteNatural from '../screens/Clientes/RegistrarClienteNatural';
 import RegistrarClienteJuridico from '../screens/Clientes/RegistrarClienteJuridico';
 import VentasForm from '../screens/Ventas/VentasForm';
@@ -12,6 +12,7 @@ import VentasFormConsultar from '../screens/Ventas/VentasFormConsultar';
 import ModalYesNo from '../components/ModalYesNo';
 import GestionarCargos from '../screens/Cargos/GestionarCargos';
 import RegistrarYacimiento from '../screens/Yacimientos/RegistrarYacimiento';
+import ModificarYacimiento from '../screens/Yacimientos/ModificarYacimiento';
 import {NotFoundPage} from '../components/NotFoundPage';
 import {history} from './History';
 import HomePage from '../screens/Home/HomePage'
@@ -41,9 +42,9 @@ const AppRouter = () => (
         <Route path="/dashboard" component={DashboardPage} />
         <Route path="/home" component={HomePage} />
         {/* ------------------------ CARGOS ------------------------ */}
-        <Route path="/cargo" component={Cargo} />
+        /*<Route path="/cargo" component={Cargo} />
         <Route path="/registrar_cargo" component={RegistrarCargo} />
-        <Route path="/gestionar_cargos/:accion/:id?" component={GestionarCargos} />
+        <Route path="/gestionar_cargos/:accion/:id?" component={GestionarCargos} />*/
         {/* ------------------------ CLIENTES ------------------------ */}
         <Route path="/cliente" component={Cliente} />
         <Route path="/buscar_cliente" component={ModalBuscarCliente} />
@@ -52,7 +53,7 @@ const AppRouter = () => (
         <Route path="/borar_cliente" component={ModalYesNo} />
         {/* ------------------------ EMPLEADOS ------------------------ */}
         <Route path="/empleado" component={Empleado} />
-        <Route path="/gestionar_empleado/:accion/:id?" component={GestionarEmpleado}/>
+        <Route path="/gestionar_empleado/:accion/:id?" component={GestionarEmpleado} />
         {/* ------------------------ MAQUINARIAS ------------------------ */}
         <Route path="/maquinaria" component={Maquinaria} />
         <Route path="/gestionar_maquinaria/:accion/:id?" component={GestionarMaquinaria}/>
@@ -67,6 +68,7 @@ const AppRouter = () => (
         {/* ------------------------ YACIMIENTO ------------------------ */}
         <Route path="/yacimiento" component={Yacimiento} />
         <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />
+        <Route path="/modificar_yacimiento" component={ModificarYacimiento} />
       </Switch>
     </div>
   </Router>

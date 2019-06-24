@@ -346,7 +346,7 @@ export default class VentasForm extends React.Component {
         console.log('total-value', document.getElementsByClassName("form-input-total-venta")[0].value)
     }
     renderOptions = (tipo, indexF) => {
-        
+        console.log('index', indexF)
         if (tipo === 'mineral'){
             let mineral = [];
             return (this.state.minerales.map((optionMin, index) => {
@@ -710,7 +710,6 @@ export default class VentasForm extends React.Component {
                                 </Form.Text>
                             </Col>
                             <Col md={2}>
-                                <FontAwesomeIcon key={index} className="icons icondelete" icon={Icons.faTrashAlt} onClick={() => this.deleteItem(index)}/>
                             </Col>
                         </Row>
                     </Col>
@@ -883,6 +882,9 @@ export default class VentasForm extends React.Component {
                 )
             }
         }
+    }
+    goBack = () => {
+        history.goBack()
     }
     render(){
 
@@ -1093,13 +1095,18 @@ export default class VentasForm extends React.Component {
                             </Col>
                         </Row>
                     </div>
-
                     <div>
                         <Row>
                             <Col md={2}></Col>
                             <Col md={10}>
                                 <Row>
                                     <Col md={5}>
+                                        <Button 
+                                            className="ccargo-btn btn-block div-ventas-pedido-form"
+                                            onClick={this.goBack}
+                                        >
+                                            Volver
+                                        </Button>
                                     </Col>
                                     <Col md={2}></Col>
                                     <Col md={5}>

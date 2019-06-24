@@ -79,7 +79,6 @@ export default class Venta extends React.Component {
                               <Col sm={0} md={1}></Col>
                               <Col sm={12} md={10}>
                                   <DataTable
-                                      columns={'http://localhost:3000/column_names/cliente'} 
                                       data={'http://localhost:3000/getAllVentasClientesNaturales'}
                                       urlModificar={'/registrar_cliente_juridico'}
                                       urlConsultar={'/consultar_ventas'}
@@ -120,7 +119,6 @@ export default class Venta extends React.Component {
                               <Col sm={0} md={1}></Col>
                               <Col sm={12} md={10}>
                                   <DataTable
-                                      columns={'http://localhost:3000/column_names/cliente'} 
                                       data={'http://localhost:3000/getAllVentasClientesJuridicos'}
                                       urlModificar={'/registrar_cliente_juridico'}
                                       urlConsultar={'/consultar_ventas'}

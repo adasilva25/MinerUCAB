@@ -34,10 +34,11 @@ export default class Mineral extends React.Component {
 
         if (boton.className.baseVal.includes('mineralesnometalicos')){
             console.log('noMetalico', boton.className.baseVal)
+            console.log(boton.id)
             this.setState({ urlEliminar: `http://localhost:3000/deleteMineralNoMetalicoById/${boton.id}` });
             axios.get(`http://localhost:3000/getNombreMineralNoMetalicoById/${boton.id}`, config)
                 .then((res) => {
-                    console.log(res)
+                    console.log("res", res)
                     this.setState({ infoEliminar: `${res.data[0].nombre}` })
                     this.setState(
                         { 
@@ -77,7 +78,7 @@ export default class Mineral extends React.Component {
         return (
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
-                <OpcionesLocales Usuario={'Andrea Da Silva'}/>
+                <OpcionesLocales Usuario={'Alba Sánchez'}/>
                 <ModalRegistrarMineral
                     show={this.state.modalShowCrearMineral}
                     onHide={this.modalCrearMineralClose}

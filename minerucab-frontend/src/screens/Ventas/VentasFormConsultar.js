@@ -40,10 +40,14 @@ export default class VentasForm extends React.Component {
         axios.get(`http://localhost:3000/getVentaById/${this.props.match.params.id}`, config)
             .then((res) => {
                 console.log(res)
+                const date = new Date(res.data[0].fecha)
+                const dia = date.getDate()
+                const mes = (date.getMonth() + 1)
+                const ano = date.getFullYear()
                 this.setState((prevState) => ({
                     total: res.data[0].total,
                     estatus: res.data[0].nombre,
-                    fecha: new Date(res.data[0].fecha).toDateString()
+                    fecha: `${dia}-${mes}-${ano}`
                 }));
                 axios.get(`http://localhost:3000/getPagosChequeDeVenta/${this.props.match.params.id}`)
                     .then((res) => {
