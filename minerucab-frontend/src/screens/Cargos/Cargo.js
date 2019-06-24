@@ -48,17 +48,14 @@ export default class Cargo extends React.Component {
                             <DataTable
                                 columns={'http://localhost:3000/column_names/mu_cargo'} 
                                 data={'http://localhost:3000/getAllCargos'}
-                                modificar={true}
-                                consultar={true}
-                                eliminar={true}
-                                agregar={true}
                                 urlCrear={'/registrar_cargo'}
                                 urlModificar={'/gestionar_cargos'}
                                 urlConsultar={'/gestionar_cargos'}
                                 urlEliminar={'/gestionar_cargos'}
                                 textoSingular={'cargo'}
                                 textoPlural={'cargos'}
-                                modal={this.modalOpen}
+                                modalEliminar={this.modalOpen}
+                                reload={this.state.reloadMet}
                                 checktable={false}
                                 size={270}
                             />

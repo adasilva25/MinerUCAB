@@ -50,7 +50,7 @@ const getCriticInfoEmpleados = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
-    client.query('SELECT clave, ci as Cedula, p_nombre as Nombre, p_apellido as Apellido FROM mu_empleado;')
+    client.query('SELECT clave as clave, ci as Cedula, p_nombre as Nombre, p_apellido as Apellido FROM mu_empleado;')
     .then((response) => {
         client.end();
         // res.header("Access-Control-Allow-Origin", "http://localhost:8080");

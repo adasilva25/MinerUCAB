@@ -8,7 +8,6 @@ const getAllRoles = (req, res) => {
     client.connect();
     client.query('SELECT * FROM mu_rol;')
     .then((response) => {
-        console.log('Completed!', response.rows[0])
         client.end();
         res.status(200).json(response.rows)
     })
@@ -27,7 +26,6 @@ const getRolByIdEmpleado = (req, res) => {
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
-        console.log('Completed!', response.rows[0])
         client.end();
         res.status(200).json(response.rows)
     })

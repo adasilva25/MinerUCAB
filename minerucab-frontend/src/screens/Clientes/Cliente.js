@@ -21,7 +21,6 @@ export default class Cliente extends React.Component {
         this.setState({ modalShowEliminar: false, reload: true });
     }
     modalEliminarOpen = (i) => {
-        // console.log(i)
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -31,8 +30,7 @@ export default class Cliente extends React.Component {
         
         axios.get(`http://localhost:3000/getClienteNombreApellidoById/${i}`, config)
             .then((res) => {
-                this.setState({ infoEliminar: `${res.data[0].nombre} ${res.data[0].apellido}` })
-                this.setState
+                this.setState({ infoEliminar: `${res.data[0].p_nombre} ${res.data[0].p_apellido}` })
                 this.setState(
                     { 
                         modalShowEliminar: true, 
@@ -88,7 +86,7 @@ export default class Cliente extends React.Component {
                                     <Col sm={0} md={1}></Col>
                                     <Col sm={12} md={10}>
                                         <DataTable
-                                            columns={'http://localhost:3000/column_names/cliente'} 
+                                            columns={'http://localhost:3000/column_names/mu_cliente_natural'} 
                                             data={'http://localhost:3000/getAllClientes'}
                                             urlModificar={'/registrar_cliente_natural'}
                                             urlConsultar={'/registrar_cliente_natural'}
