@@ -10,6 +10,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import OpcionesGlobales from '../../components/OpcionesGlobales';
 import axios from 'axios';
 import {history} from '../../routers/History';
+import ModalAdvertencia from '../../components/ModalAdvertencia';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 
@@ -21,16 +22,29 @@ export default class VentasForm extends React.Component {
         nombre: '',
         ci: '',
         total: 0,
+        pagosBorrados: [],
         minerales: [],
         pedido: [{
             mineral: "Oro",
             cantidad: 0
         }],
+        pagos: [{
+            tipoPago: '',
+            cantidad: 0
+        }],
         detallePago1: '',
-        detallePago2: '',
+        detallePago2: [],
         showMessage1: false,
-        showMessage2: false
+        showMessage2: false,
+        mensajeError: '',
+        modalShowEliminar: false
     }
+    modalErrorClose = () => {
+        this.setState({ modalShowEliminar: false, reload: true });
+    }
+    modalErrorOpen = () => {
+        this.setState({ modalShowEliminar: true })
+    };
     componentDidMount = () => {
         const config = {
             headers: {
@@ -53,7 +67,6 @@ export default class VentasForm extends React.Component {
                     mineralInfo.nombre = element.mineral;
                     mineralInfo.presentacion = element.presentacion;
                     mineralInfo.precio = element.precio;
-                    // console.log(mineralInfo)
                     this.setState((prevState) => ({
                         minerales: prevState.minerales.concat(mineralInfo)
                     }));
@@ -87,7 +100,7 @@ export default class VentasForm extends React.Component {
             })
         
         if ((this.props.match.params.id[0] === 'V') || (this.props.match.params.id[0] === 'E')){
-            axios.get(`http://localhost:3000/getClienteById/${this.props.match.params.id[1]}`, config)
+            axios.get(`http://localhost:3000/getClienteById/${this.props.match.params.id.slice(1)}`, config)
             .then((res) => {
                 console.log(res)
                 this.setState(() => ({
@@ -100,7 +113,7 @@ export default class VentasForm extends React.Component {
             // console.log(this.state.minerales)
         }
         else {
-            axios.get(`http://localhost:3000/getClienteJuridicoById/${this.props.match.params.id[1]}`, config)
+            axios.get(`http://localhost:3000/getClienteJuridicoById/${this.props.match.params.id.slice(1)}`, config)
             .then((res) => {
                 console.log(res)
                 this.setState(() => ({
@@ -214,89 +227,94 @@ export default class VentasForm extends React.Component {
         
     }
     onSubmit = (e) => {
-        console.log('on sub', document.getElementsByClassName('form-input-total-venta')[0].value)
+        // console.log('on sub', document.getElementsByClassName('form-input-total-venta')[0].value)
         
-        let detalle2 = this.state.detallePago2;
+        // console.log(this.props.match.params.id.slice(1))
 
-        if (this.state.detallePago1 === ''){
-            this.setState(() => ({
-                showMessage1: true
-            }))
-            if (this.state.detallePago2 === ''){
-                console.log(document.getElementsByClassName('form-input-dropdown-tipopago-venta')[0].value)
-                if (document.getElementsByClassName('form-input-dropdown-tipopago-venta')[0].value !== 'Tarjeta de Crédito'){
-                    this.setState(() => ({
-                        showMessage2: true
-                    }))
+        let pedidos = [];
+
+        const numPedidos = document.getElementsByClassName('form-input-dropdown-mineral-venta').length
+    
+        for (let i = 0; i < numPedidos; i++){
+            const indexInState = document.getElementsByClassName('form-input-dropdown-mineral-venta')[i].value
+
+            let pedido = {
+                idPresentacionMineral: this.state.minerales[indexInState].idBdPresentacionMineral,
+                cantidad: document.getElementsByClassName('form-input-text-cantidad')[i].value,
+                precio: document.getElementsByClassName('form-input-text-precio-unitario')[i].value
+            }
+            
+            console.log('pedido', pedido)
+
+            pedidos.push(pedido)
+        }
+
+
+        let pagos = [];
+
+        let total = 0;
+
+        let continuar = true
+
+        for (let i = 0; i < this.state.pagos.length; i++){
+            if ((!this.state.pagosBorrados.includes(i))){
+                console.log('detalle1', document.getElementById('form-input-tipopagodetalle1-ventas'+i).value)
+                let pago = {
+                    tipo: document.getElementsByClassName('form-input-dropdown-tipopago-venta'+i)[0].value,
+                    banco: document.getElementsByClassName('form-input-dropdown-banco-venta'+i)[0].value,
+                    detalle: {
+                        detalle1: document.getElementById('form-input-tipopagodetalle1-ventas'+i).value,
+                        detalle2: ''
+                    },
+                    monto: document.getElementsByClassName('form-input-text-monto-pago-detallado'+i)[0].value
                 }
+
+                if (document.getElementById('form-input-tipopagodetalle1-ventas'+i).value === ''){
+                    continuar = false;
+                    this.setState({ mensajeError: 'Existen campos obligatorios vacíos' })
+                    this.modalErrorOpen()
+                }
+
+                if (pago.tipo !== 'Tarjeta de Débito'){
+                    if (document.getElementById('form-input-tipopagodetalle2-ventas'+i).value !== ''){
+                        pago.detalle.detalle2 = document.getElementById('form-input-tipopagodetalle2-ventas'+i).value
+                    }
+                    else {
+                        continuar = false;
+                        this.setState({ mensajeError: 'Existen campos obligatorios vacíos' })
+                        this.modalErrorOpen()
+                    }
+                }
+
+                total += parseFloat(pago.monto);
+                console.log('total', total)
+
+                pagos.push(pago);
             }
         }
-        else if ((this.state.detallePago2 === '') && (document.getElementsByClassName('form-input-dropdown-tipopago-venta')[0].value !== 'Tarjeta de Crédito') && (document.getElementsByClassName('form-input-dropdown-tipopago-venta')[0].value !== 'Tarjeta de Débito')){
-            console.log('entro')
-            if (this.state.detallePago2 === ''){
-                this.setState(() => ({
-                    showMessage2: true
-                }))
-            }
-            else{
-                this.setState(() => ({
-                    showMessage2: false
-                }))
-            }
+
+        console.log('pagos', pagos);
+
+        let venta = {
+            idCliente: this.props.match.params.id.slice(1),
+            tipoCliente: document.getElementsByClassName('form-input-id')[0].value,
+            pagos: pagos,
+            pedidos: pedidos,
+            total: document.getElementsByClassName('form-input-total-venta')[0].value
+        }
+
+        if (parseFloat(total) !== parseFloat(venta.total)){
+            console.log('no son iguales', parseFloat(total), parseFloat(venta.total))
+            this.setState({ mensajeError: 'El monto total no coincide con el monto pagado por el usuario' })
+            this.modalErrorOpen()
+            continuar = false;
         }
         else {
-            this.setState(() => ({
-                showMessage2: false
-            }))
-            this.setState(() => ({
-                showMessage1: false
-            }))
+            console.log('son iguales')
+        }
 
-            if (document.getElementsByClassName('form-input-dropdown-tipopago-venta')[0].value === 'Tarjeta de Crédito'){
-                detalle2 = document.getElementById('form-input-tipopagodetalle2-ventas')[0].value
-                console.log('deta', document.getElementById('form-input-tipopagodetalle2-ventas'))
-            }
-
-            let venta = {
-                idCliente: this.props.match.params.id[1],
-                tipoCliente: document.getElementsByClassName('form-input-id')[0].value,
-                pagos: [{
-                    tipo: document.getElementsByClassName('form-input-dropdown-tipopago-venta')[0].value,
-                    banco: document.getElementsByClassName('form-input-dropdown-banco-venta')[0].value,
-                    detalle: {
-                        detalle1: this.state.detallePago1,
-                        detalle2: detalle2
-                    },
-                    monto: document.getElementsByClassName('form-input-total-venta')[0].value
-                }],
-                pedidos: [],
-                total: document.getElementsByClassName('form-input-total-venta')[0].value
-            }
-
-            const numPedidos = document.getElementsByClassName('form-input-dropdown-mineral-venta').length
-    
-            for (let i = 0; i < numPedidos; i++){
-                const indexInState = document.getElementsByClassName('form-input-dropdown-mineral-venta')[i].value
-    
-                let pedido = {
-                    idPresentacionMineral: this.state.minerales[indexInState].idBdPresentacionMineral,
-                    cantidad: document.getElementsByClassName('form-input-text-cantidad')[i].value,
-                    precio: document.getElementsByClassName('form-input-text-precio-unitario')[i].value
-                }
-    
-                // tipoMineral: 'metalico',
-                // idBdPresentacionMineral: '',
-                // nombre: '',
-                // presentacion: '',
-                // precio: 0
-    
-                venta.pedidos.push(pedido)
-                console.log('pedido', pedido)
-    
-            }
-    
-            console.log(venta)
-
+        if (continuar){
+            console.log('continuar', venta)
             const config = {
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded'
@@ -308,11 +326,137 @@ export default class VentasForm extends React.Component {
             axios.post('http://localhost:3000/createVenta', config)
                 .then((res) => {
                     console.log(res)
+                    history.push('/venta')
                 }).catch((e) => {
                     console.log('Error en axios')
                 })
-            history.push('/venta');
+            
+            // setTimeout(function(){ history.push('/venta'); }, 1000);
         }
+
+
+
+        // console.log('pedidos', pedidos)
+    
+
+        // let venta = {
+        //     idCliente: this.props.match.params.id[1],
+        //     tipoCliente: document.getElementsByClassName('form-input-id')[0].value,
+        //     pagos: [{
+        //         tipo: document.getElementsByClassName('form-input-dropdown-tipopago-venta')[0].value,
+        //         banco: document.getElementsByClassName('form-input-dropdown-banco-venta')[0].value,
+        //         detalle: {
+        //             detalle1: this.state.detallePago1,
+        //             detalle2: detalle2
+        //         },
+        //         monto: document.getElementsByClassName('form-input-total-venta')[0].value
+        //     }],
+        //     pedidos: [],
+        //     total: document.getElementsByClassName('form-input-total-venta')[0].value
+        // }
+
+
+        //              FUNCIONA        
+
+        // if (this.state.detallePago1 === ''){
+        //     this.setState(() => ({
+        //         showMessage1: true
+        //     }))
+        //     if (this.state.detallePago2 === ''){
+        //         console.log(document.getElementsByClassName('form-input-dropdown-tipopago-venta')[0].value)
+        //         if (document.getElementsByClassName('form-input-dropdown-tipopago-venta')[0].value !== 'Tarjeta de Crédito'){
+        //             this.setState(() => ({
+        //                 showMessage2: true
+        //             }))
+        //         }
+        //     }
+        // }
+        // else if ((this.state.detallePago2 === '') && (document.getElementsByClassName('form-input-dropdown-tipopago-venta')[0].value !== 'Tarjeta de Crédito') && (document.getElementsByClassName('form-input-dropdown-tipopago-venta')[0].value !== 'Tarjeta de Débito')){
+        //     console.log('entro')
+        //     if (this.state.detallePago2 === ''){
+        //         this.setState(() => ({
+        //             showMessage2: true
+        //         }))
+        //     }
+        //     else{
+        //         this.setState(() => ({
+        //             showMessage2: false
+        //         }))
+        //     }
+        // }
+        // else {
+        //     this.setState(() => ({
+        //         showMessage2: false
+        //     }))
+        //     this.setState(() => ({
+        //         showMessage1: false
+        //     }))
+
+        //     console.log('detalle2', detalle2)
+
+            // let venta = {
+            //     idCliente: this.props.match.params.id[1],
+            //     tipoCliente: document.getElementsByClassName('form-input-id')[0].value,
+            //     pagos: [{
+            //         tipo: document.getElementsByClassName('form-input-dropdown-tipopago-venta')[0].value,
+            //         banco: document.getElementsByClassName('form-input-dropdown-banco-venta')[0].value,
+            //         detalle: {
+            //             detalle1: this.state.detallePago1,
+            //             detalle2: detalle2
+            //         },
+            //         monto: document.getElementsByClassName('form-input-total-venta')[0].value
+            //     }],
+            //     pedidos: [],
+            //     total: document.getElementsByClassName('form-input-total-venta')[0].value
+            // }
+
+            // const numPedidos = document.getElementsByClassName('form-input-dropdown-mineral-venta').length
+    
+            // for (let i = 0; i < numPedidos; i++){
+            //     const indexInState = document.getElementsByClassName('form-input-dropdown-mineral-venta')[i].value
+    
+            //     let pedido = {
+            //         idPresentacionMineral: this.state.minerales[indexInState].idBdPresentacionMineral,
+            //         cantidad: document.getElementsByClassName('form-input-text-cantidad')[i].value,
+            //         precio: document.getElementsByClassName('form-input-text-precio-unitario')[i].value
+            //     }
+    
+            //     // tipoMineral: 'metalico',
+            //     // idBdPresentacionMineral: '',
+            //     // nombre: '',
+            //     // presentacion: '',
+            //     // precio: 0
+    
+            //     venta.pedidos.push(pedido)
+            //     console.log('pedido', pedido)
+    
+        //     }
+    
+        //     console.log(venta)
+
+
+
+
+
+
+
+            // const config = {
+            //     headers: {
+            //       'Content-Type': 'application/x-www-form-urlencoded'
+            //     },
+            //     responseType: 'json',
+            //     data: venta
+            // }
+            
+            // axios.post('http://localhost:3000/createVenta', config)
+            //     .then((res) => {
+            //         console.log(res)
+            //     }).catch((e) => {
+            //         console.log('Error en axios')
+            //     })
+            
+            // setTimeout(function(){ history.push('/venta'); }, 1000);
+        // }
         
         // console.log(document.getElementsByClassName("form-input-dropdown-mineral-venta"));
         // console.log(document.getElementsByClassName("form-input-dropdown-mineral-venta")[0].value);
@@ -346,7 +490,6 @@ export default class VentasForm extends React.Component {
         console.log('total-value', document.getElementsByClassName("form-input-total-venta")[0].value)
     }
     renderOptions = (tipo, indexF) => {
-        console.log('index', indexF)
         if (tipo === 'mineral'){
             let mineral = [];
             return (this.state.minerales.map((optionMin, index) => {
@@ -613,7 +756,7 @@ export default class VentasForm extends React.Component {
             })})
         // let array = [...this.state.pedido]; // make a separate copy of the array
         if (elementIndex !== -1) {
-            console.log('elimino')
+            // console.log('elimino')
             // array.splice(elementIndex, 1);
             // console.log('array', array)
             // this.setState((prevState) => ({
@@ -720,6 +863,7 @@ export default class VentasForm extends React.Component {
     }
     onChangeNumber = (e) => {
         const number = e.target.value;
+        console.log('number', number)
 
         if ((!number) || number.match(/^[0-9\b]+$/)){
             if (e.target.id === 'form-input-tipopagodetalle1-ventas'){
@@ -729,24 +873,72 @@ export default class VentasForm extends React.Component {
                 this.setState({ detallePago2: e.target.value });
             }
         }
+        else if ((document.getElementsByClassName('form-input form-input-dropdown-tipopago-venta')[0].value === 'Tarjeta de Crédito') && (e.target.id === 'form-input-tipopagodetalle2-ventas')){
+            // console.log('entro this state 2')
+            this.setState({ detallePago2: e.target.value });
+            // console.log('this.state.detallePago2', e.target.value)
+            // console.log('value tc', document.getElementById('form-input-tipopagodetalle2-ventas')[0].value)
+        }
     }
-    renderTipoPagoDetallado = () => {
-        const tiposDePagoLength = document.getElementsByClassName('form-input-dropdown-tipopago-venta').length
-        const tiposDePago = document.getElementsByClassName('form-input-dropdown-tipopago-venta')
+    handleOnChangeValidarNumeros=(event,Texto)=>{
+        console.log('valida')
+        const value = event.target.value;
+        const valueTrimmed = value.trim();
+        const minerales= this.state.Minerales;
 
-        if (tiposDePagoLength === 1){
-            if ((tiposDePago[0].value === 'Cheque') || tiposDePago[0].value === 'Transferencia'){
+        if(valueTrimmed){
+            event.target.state='valid';
+            
+
+            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0)  ){
+                document.getElementById(Texto).innerHTML = "Obligatorio";
+                
+            }
+            else{
+                
+                document.getElementById(Texto).innerHTML = "Introduzca un número válido";
+               
+            }
+           
+        }
+        else{
+            event.target.state='invalid';
+            document.getElementById(Texto).innerHTML = "Introduzca un número válido";
+            console.log("invalido");
+        }
+        
+        if(!value){
+            event.target.state='';
+            document.getElementById(Texto).innerHTML = "Obligatorio";
+           
+        }
+    }
+    renderTipoPagoDetallado = (index) => {
+        let tiposDePagoLength = document.getElementsByClassName('form-input-dropdown-tipopago-venta').length
+        let tiposDePago = document.getElementsByClassName('form-input-dropdown-tipopago-venta'+index)
+        // console.log('renderTipoPagoDetallado', index)
+        // console.log('doc', document.getElementsByClassName('form-input-dropdown-tipopago-venta')[index])
+        // console.log('document.getElementsByClassName(form-input-dropdown-tipopago-venta)[index]', document.getElementsByClassName('form-input-dropdown-tipopago-venta'+index))
+        if (document.getElementsByClassName('form-input-dropdown-tipopago-venta'+index)[0]){
+            // console.log(tiposDePago[0].value)
+            tiposDePago = document.getElementsByClassName('form-input-dropdown-tipopago-venta'+index)[0].value
+            // console.log('tiposDePagoDetallado-tiposDePago', tiposDePago)
+            if (document.getElementsByClassName('form-input-dropdown-tipopago-venta'+index)[0]){
+                // console.log('doc', document.getElementsByClassName('form-input-dropdown-tipopago-venta'+index).value)
+            }
+            if ((tiposDePago === 'Cheque') || tiposDePago === 'Transferencia'){
                 return (
-                    <Col md={5}>
+                    <Col md={3}>
                         <Form.Group>
                             <Form.Label className="cliente-description-fields-text">Número de Cuenta</Form.Label>
                             <Form.Control 
-                                type="text" 
-                                className="form-input"
-                                id="form-input-tipopagodetalle2-ventas" 
+                                type="number" 
+                                className="form-input form-input-tipopagodetalle2-ventas"
+                                id={"form-input-tipopagodetalle2-ventas"+index} 
                                 placeholder="Número de cuenta" 
-                                onChange={this.onChangeNumber}  
-                                value={this.state.detallePago2}  
+                                onChange={(e) => this.handleOnChangeValidarNumeros(e, 'form-input-tipopagodetalle2-ventas'+index)}   
+                                min="0"
+                                step=".01"
                             />
                             <Form.Text className="text-muted">
                                 Obligatorio
@@ -758,16 +950,15 @@ export default class VentasForm extends React.Component {
                     </Col>
                 )
             }
-            else if (tiposDePago[0].value === 'Tarjeta de Crédito'){
+            else if (tiposDePago === 'Tarjeta de Crédito'){
                 return (
-                    <Col md={5}>
+                    <Col md={3}>
                         <Form.Group>
                             <Form.Label className="cliente-description-fields-text">Tipo</Form.Label>
                             <Form.Control 
                                 as="select" 
-                                className="form-input"
-                                id="form-input-tipopagodetalle2-ventas"
-                                onChange={this.onChangeNumber}
+                                className="form-input form-input-tipopagodetalle2-ventas"
+                                id={"form-input-tipopagodetalle2-ventas"+index}
                             >
                                 <option>Visa</option>
                                 <option>Master Card</option>
@@ -776,31 +967,64 @@ export default class VentasForm extends React.Component {
                                 Obligatorio
                             </Form.Text> 
                             {
-                                (this.state.showMessage2 === true && <p className="modal-bc-error-mg">¡Error! El cliente no está registrado en el sistema.</p>)
+                                (this.state.showMessage2 === true && <p className="modal-bc-error-mg">Este campo es obligatorio</p>)
                             }
                         </Form.Group>
                     </Col>
                 )
             }
         }
+        else {
+            return (
+                <Col md={3}>
+                    <Form.Group>
+                        <Form.Label className="cliente-description-fields-text">Número de Cuenta</Form.Label>
+                        <Form.Control 
+                            type="number" 
+                            className="form-input form-input-tipopagodetalle2-ventas"
+                            id={"form-input-tipopagodetalle2-ventas"+index}
+                            placeholder="Número de cuenta" 
+                            onChange={(e) => this.handleOnChangeValidarNumeros(e, 'form-input-tipopagodetalle2-ventas'+index)} 
+                            min="0"  
+                        />
+                        <Form.Text className="text-muted">
+                            Obligatorio
+                        </Form.Text> 
+                        {
+                            (this.state.showMessage2 === true && <p className="modal-bc-error-mg">Este campo es obligatorio</p>)
+                        }
+                    </Form.Group>
+                </Col>
+            )
+        }
     }
-    renderTipoPago = () => {
+    renderTipoPago = (index) => {
+        let tiposDePago
         const tiposDePagoLength = document.getElementsByClassName('form-input-dropdown-tipopago-venta').length
-        const tiposDePago = document.getElementsByClassName('form-input-dropdown-tipopago-venta')
+        
+        // console.log('tiposDePago-index', tiposDePago[index])
 
-        if (tiposDePagoLength === 1){
-            if (tiposDePago[0].value === 'Cheque'){
+        // console.log('onChange', document.getElementsByClassName('form-input-dropdown-tipopago-venta')[index].value)
+
+        if (document.getElementsByClassName('form-input-dropdown-tipopago-venta'+index)[0]){
+            
+            tiposDePago = document.getElementsByClassName('form-input-dropdown-tipopago-venta'+index)[0].value
+            if (document.getElementsByClassName('form-input-dropdown-tipopago-venta'+index).value){
+                console.log('doc', document.getElementsByClassName('form-input-dropdown-tipopago-venta'+index).value)
+            }
+            if (tiposDePago === 'Cheque'){
                 return (
-                    <Col md={5}>
+                    <Col md={3}>
                         <Form.Group>
                             <Form.Label className="cliente-description-fields-text">Número de Cheque</Form.Label>
                             <Form.Control 
-                                type="text" 
+                                type="number" 
                                 className="form-input"
-                                id="form-input-tipopagodetalle1-ventas" 
+                                id={"form-input-tipopagodetalle1-ventas"+index} 
                                 placeholder="Número de cheque" 
-                                onChange={this.onChangeNumber}
-                                value={this.state.detallePago1}
+                                onChange={(e) => this.handleOnChangeValidarNumeros(e, 'form-input-tipopagodetalle1-ventas'+index)} 
+                                min="0"
+                                step=".01"
                             />
                             <Form.Text className="text-muted">
                                 Obligatorio
@@ -812,18 +1036,19 @@ export default class VentasForm extends React.Component {
                     </Col>   
                 )
             }
-            else if (tiposDePago[0].value === 'Tarjeta de Débito'){
+            else if (tiposDePago === 'Tarjeta de Débito'){
                 return (
-                    <Col md={5} className="td-ventas-form">
+                    <Col md={4} className="td-ventas-form">
                         <Form.Group>
                             <Form.Label className="cliente-description-fields-text">Número de Tarjeta</Form.Label>
                             <Form.Control 
-                                type="text" 
+                                type="number" 
                                 className="form-input"
-                                id="form-input-tipopagodetalle1-ventas" 
+                                id={"form-input-tipopagodetalle1-ventas"+index} 
                                 placeholder="Número de tarjeta" 
-                                onChange={this.onChangeNumber} 
-                                value={this.state.detallePago1}   
+                                onChange={(e) => this.handleOnChangeValidarNumeros(e, 'form-input-tipopagodetalle1-ventas'+index)} 
+                                min="0"
+                                step=".01"
                             />
                             <Form.Text className="text-muted">
                                 Obligatorio
@@ -835,18 +1060,19 @@ export default class VentasForm extends React.Component {
                     </Col>
                 )
             }
-            else if (tiposDePago[0].value === 'Tarjeta de Crédito'){
+            else if (tiposDePago=== 'Tarjeta de Crédito'){
                 return (
-                    <Col md={5}>
+                    <Col md={3}>
                         <Form.Group>
                             <Form.Label className="cliente-description-fields-text">Número de Tarjeta</Form.Label>
                             <Form.Control 
-                                type="text" 
+                                type="number" 
                                 className="form-input"
-                                id="form-input-tipopagodetalle1-ventas" 
+                                id={"form-input-tipopagodetalle1-ventas"+index} 
                                 placeholder="Número de tarjeta" 
-                                onChange={this.onChangeNumber}
-                                value={this.state.detallePago1}    
+                                onChange={(e) => this.handleOnChangeValidarNumeros(e, 'form-input-tipopagodetalle1-ventas'+index)} 
+                                min="0"  
+                                step=".01"
                             />
                             <Form.Text className="text-muted">
                                 Obligatorio
@@ -858,18 +1084,19 @@ export default class VentasForm extends React.Component {
                     </Col>
                 )
             }
-            else if (tiposDePago[0].value === 'Transferencia'){
+            else if (tiposDePago === 'Transferencia'){
                 return (
-                    <Col md={5}>
+                    <Col md={3}>
                         <Form.Group>
                             <Form.Label className="cliente-description-fields-text">Número de Referencia</Form.Label>
                             <Form.Control 
-                                type="text" 
+                                type="number" 
                                 className="form-input"
-                                id="form-input-tipopagodetalle1-ventas" 
+                                id={"form-input-tipopagodetalle1-ventas"+index} 
                                 placeholder="Número de referencia"
-                                onChange={this.onChangeNumber}
-                                value={this.state.detallePago1}
+                                onChange={(e) => this.handleOnChangeValidarNumeros(e, 'form-input-tipopagodetalle1-ventas'+index)} 
+                                min="0"
+                                step=".01"
                             />
                             <Form.Text className="text-muted">
                                 Obligatorio
@@ -882,10 +1109,167 @@ export default class VentasForm extends React.Component {
                 )
             }
         }
+        else {
+            return (
+                <Col md={3}>
+                    <Form.Group>
+                        <Form.Label className="cliente-description-fields-text">Número de Cheque</Form.Label>
+                        <Form.Control 
+                            type="number" 
+                            className="form-input"
+                            id={"form-input-tipopagodetalle1-ventas"+index} 
+                            placeholder="Número de cheque" 
+                            onChange={(e) => this.handleOnChangeValidarNumeros(e, 'form-input-tipopagodetalle1-ventas'+index)} 
+                            min="0"
+                            step=".01"
+                        />
+                        <Form.Text className="text-muted">
+                            Obligatorio
+                        </Form.Text> 
+                        {
+                            (this.state.showMessage1 === true && <p className="modal-bc-error-mg">Este campo es obligatorio</p>)
+                        }
+                    </Form.Group>
+                </Col>   
+            )
+        }
     }
     goBack = () => {
         history.goBack()
     }
+    deletePago = (index) => {
+        console.log('index deletePago', index)
+        this.setState((prevState) => ({
+            pagosBorrados: prevState.pagosBorrados.concat(index)
+        }));
+    }
+    renderPagos = () => {
+        let numero = 0;
+        let pagosDisponibles = this.state.pagos.length - this.state.pagosBorrados.length
+        const disable = pagosDisponibles > 1 ? false : true;
+        return this.state.pagos.map((item, index) => {
+            if (!this.state.pagosBorrados.includes(index)){
+                numero++;
+             return (<div>
+                <div>
+                    <Row>
+                        <Col md={2}></Col>
+                        <Col md={10}>
+                            <Row>
+                                <Col md={11}>
+                                    <h6 className="horizontal-line-title-ventas-form cliente-title">Pago {numero}</h6>
+                                </Col>
+                                <Col md={1}></Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                    <Row className="div-detalle-tipo-pago-especifico">
+                        <Col md={2}></Col>
+                        <Col md={10}>
+                            <Row >
+                                <Col md={5}>
+                                    <Form.Label className="cliente-description-fields-text">Tipo de Pago</Form.Label>
+                                    <Form.Control 
+                                        as="select" 
+                                        className={"form-input form-input-dropdown-tipopago-venta"+index}
+                                        key={index}
+                                        id={''+index}
+                                        defaultValue="Cheque"
+                                        onChange={() => this.setState(() => ({
+                                            prueba: false
+                                        }))}
+                                    >
+                                        <option value="Cheque">Cheque</option>
+                                        <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
+                                        <option value="Tarjeta de Débito">Tarjeta de Débito</option>
+                                        <option value="Transferencia">Transferencia</option>
+                                    </Form.Control>
+                                </Col>
+                                <Col md={1}></Col>
+                                <Col md={5}>
+                                    <Form.Label className="cliente-description-fields-text">Banco</Form.Label>
+                                    <Form.Control 
+                                        as="select" 
+                                        className={"form-input form-input-dropdown-banco-venta"+index}
+                                        key={index}
+                                        id={''+index}
+                                    >
+                                        <option>Banesco</option>
+                                        <option>Mercantil</option>
+                                        <option>Provincial</option>
+                                    </Form.Control>
+                                </Col>
+                                <Col md={1}>
+                                <Button
+                                    variant="outline-danger"
+                                    className="btn-block"
+                                    disabled={disable}
+                                    onClick={() => this.deletePago(index)}
+                                >
+                                    X
+                                </Button>
+                            </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                </div>
+
+                <div>
+                    <Row>
+                        <Col md={2}></Col>
+                        <Col md={10} className="div-detalle-tipo-pago">
+                            <Row >
+                            {
+                                this.renderTipoPago(index)
+                            }
+                            <Col md={1}></Col>
+                            {
+                                this.renderTipoPagoDetallado(index)
+                            }
+                            <Col md={1}></Col>
+                            <Col md={3}>
+                                <Form.Label className="cliente-description-fields-text">Monto</Form.Label>
+                                <Row>
+                                    <Col md={12}>
+                                        <Form.Group>
+                                            <InputGroup className="MyInputGroup">
+                                                <Form.Control type="number" 
+                                                    className={"form-input form-input-text-monto-pago-detallado"+index} 
+                                                    key={index} 
+                                                    id={''+index}
+                                                    min="0"
+                                                />
+                                            </InputGroup>
+                                            {
+                                                (this.state.showMessage2 === true && <p className="modal-bc-error-mg">Este campo es obligatorio</p>)
+                                            }
+                                        </Form.Group>
+                                        <Form.Text className="text-muted">
+                                            Obligatorio
+                                        </Form.Text>
+                                    </Col>
+                                </Row>
+                            </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                    
+                </div>
+
+            </div>
+        )}})
+    }
+    addPago = () => {
+        const pago = {
+            tipoPago: '',
+            cantidad: 0
+        };
+
+        this.setState((prevState) => ({
+            pagos: prevState.pagos.concat(pago)
+        }));
+    }
+
     render(){
 
         return (
@@ -893,12 +1277,18 @@ export default class VentasForm extends React.Component {
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario={'Andrea Da Silva'}/>
                 <Container className="pagecontent">
+                <ModalAdvertencia
+                    show={this.state.modalShowEliminar}
+                    onHide={this.modalErrorClose}
+                    infoeliminar={this.state.mensajeError}
+                    mensaje={''}
+                />
                     <Row>
                         <Col md={2}></Col>
                         <Col md={10}>
                             <Row>
                                 <Col md={11}>
-                                    <h4 className="horizontal-line-title-ventas-form cliente-title">Detalle de Venta</h4>
+                                    <h3 className="horizontal-line-title-ventas-form cliente-title">Detalle de Venta</h3>
                                 </Col>
                                 <Col md={1}></Col>
                             </Row>
@@ -909,7 +1299,7 @@ export default class VentasForm extends React.Component {
                         <Col md={10}>
                             <Row>
                                 <Col md={11}>
-                                    <h6 className="horizontal-line-title-ventas-form cliente-title">Información del Cliente</h6>
+                                    <h5 className="horizontal-line-title-ventas-form cliente-title">Información del Cliente</h5>
                                 </Col>
                                 <Col md={1}></Col>
                             </Row>
@@ -928,7 +1318,7 @@ export default class VentasForm extends React.Component {
                                     </Col>
                                     <Col md={1}></Col>
                                     <Col md={5}>
-                                        <Form.Group controlId="formBasicEmail">
+                                        <Form.Group>
                                             <Form.Label className="cliente-description-fields-text">Nombre del Cliente</Form.Label>
                                             <Form.Control type="text" className="form-input" value={this.state.nombre} disabled={true} placeholder="Introduzca su primer apellido" />
                                         </Form.Group>
@@ -944,7 +1334,7 @@ export default class VentasForm extends React.Component {
                         <Col md={10}>
                             <Row>
                                 <Col md={11}>
-                                    <h6 className="horizontal-line-title-ventas-form cliente-title">Detalle de Pago</h6>
+                                    <h5 className="horizontal-line-title-ventas-form cliente-title">Detalle de Pago</h5>
                                 </Col>
                                 <Col md={1}></Col>
                             </Row>
@@ -952,54 +1342,27 @@ export default class VentasForm extends React.Component {
                     </Row>
 
                     <div>
-                        <Row >
-                            <Col md={2}></Col>
-                            <Col md={10}>
-                                <Row >
-                                    <Col md={5}>
-                                        <Form.Label className="cliente-description-fields-text">Tipo de Pago</Form.Label>
-                                        <Form.Control 
-                                            as="select" 
-                                            className="form-input form-input-dropdown-tipopago-venta"
-                                            onChange={() => this.setState(() => ({
-                                                prueba: false
-                                            }))}
-                                        >
-                                            <option>Cheque</option>
-                                            <option>Tarjeta de Crédito</option>
-                                            <option>Tarjeta de Débito</option>
-                                            <option>Transferencia</option>
-                                        </Form.Control>
-                                    </Col>
-                                    <Col md={1}></Col>
-                                    <Col md={5}>
-                                        <Form.Label className="cliente-description-fields-text">Banco</Form.Label>
-                                        <Form.Control 
-                                            as="select" 
-                                            className="form-input form-input-dropdown-banco-venta"
-                                        >
-                                            <option>Banesco</option>
-                                            <option>Mercantil</option>
-                                            <option>Provincial</option>
-                                        </Form.Control>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
+                        {this.renderPagos()}
                     </div>
 
                     <div>
-                        <Row>
+                        <Row className="div-content-form div-content-form-end-rc">
                             <Col md={2}></Col>
-                            <Col md={10} className="div-detalle-tipo-pago">
-                                <Row >
-                                {
-                                    this.renderTipoPago()
-                                }
-                                <Col md={1}></Col>
-                                {
-                                    this.renderTipoPagoDetallado()
-                                }
+                            <Col md={10}>
+                                <Row>
+                                    <Col md={1}></Col>
+                                    <Col md={5}>
+                                        
+                                    </Col>
+                                    <Col md={1}></Col>
+                                    <Col md={5}>
+                                        <Button 
+                                            className="ventas-form-btn btn-block"
+                                            onClick={this.addPago}
+                                        >
+                                            Agregar
+                                        </Button>
+                                    </Col>
                                 </Row>
                             </Col>
                         </Row>
@@ -1012,7 +1375,7 @@ export default class VentasForm extends React.Component {
                         <Col md={10}>
                             <Row>
                                 <Col md={11}>
-                                    <h6 className="horizontal-line-title-ventas-form cliente-title">Detalle de Pedido</h6>
+                                    <h5 className="horizontal-line-title-ventas-form cliente-title">Detalle de Pedido</h5>
                                 </Col>
                                 <Col md={1}></Col>
                             </Row>
@@ -1033,7 +1396,7 @@ export default class VentasForm extends React.Component {
                         <Col md={10}>
                             <Row>
                                 <Col md={11}>
-                                    <h6 className="horizontal-line-ventas-form"></h6>
+                                    <h5 className="horizontal-line-ventas-form"></h5>
                                 </Col>
                                 <Col md={1}></Col>
                             </Row>
@@ -1102,7 +1465,7 @@ export default class VentasForm extends React.Component {
                                 <Row>
                                     <Col md={5}>
                                         <Button 
-                                            className="ccargo-btn btn-block div-ventas-pedido-form"
+                                            className="modal-ventasform-volver-button btn-block div-ventas-pedido-form"
                                             onClick={this.goBack}
                                         >
                                             Volver
@@ -1111,7 +1474,7 @@ export default class VentasForm extends React.Component {
                                     <Col md={2}></Col>
                                     <Col md={5}>
                                         <Button 
-                                            className="ccargo-btn btn-block div-ventas-pedido-form"
+                                            className="modal-ventasform-enviar-button btn-block div-ventas-pedido-form"
                                             onClick={this.onSubmit}
                                         >
                                             Enviar

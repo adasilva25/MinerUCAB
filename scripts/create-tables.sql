@@ -327,7 +327,7 @@ CREATE TABLE MU_EXPLOTACION (
 	Duracion INTEGER NOT NULL,
 	Fecha_inicio DATE,
 	Fecha_fin DATE,
-	fk_venta INTEGER NOT NULL,
+	fk_venta INTEGER,
 	fk_estatus INTEGER NOT NULL,
 	CONSTRAINT pk_explotacion PRIMARY KEY (Clave),
 	CONSTRAINT fk_venta_explotacion FOREIGN KEY (fk_venta) 

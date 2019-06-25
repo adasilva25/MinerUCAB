@@ -7,10 +7,56 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import OpcionesLocales from '../../components/OpcionesLocales';
 import OpcionesGlobales from '../../components/OpcionesGlobales';
+import axios from 'axios';
+// https://www.wlaurance.com/2018/09/node-postgres-insert-multiple-rows/
+// https://node-postgres.com/features/queries
 
-
-export default class RegistrarClienteJuridico extends React.Component {             
+export default class RegistrarClienteJuridico extends React.Component { 
+    state = {
+        nombre: '',
+        rif: '',
+        correo: '',
+        tlf: '',
+        disable: false
+    }   
+    componentDidMount = () => {
+        if (this.props.match.params.accion !== 'CR'){
+            if (this.props.match.params.accion === 'CO'){
+                this.setState({ disable: true });
+            }
+            const config = {
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                responseType: 'json'
+            }
+            
+            axios.get(`http://localhost:3000/getClienteJuridicoById/${this.props.match.params.id}`, config)
+                .then((res) => {
+                    console.log(res);
+                    this.setState({ nombre: res.data[0].nombre });
+                    this.setState({ area_trabajo: res.data[0].nombre });
+                    this.setState({ rif: res.data[0].rif });
+                    this.setState({ correo: res.data[0].email });
+                    this.setState({ tlf: res.data[0].telefono });
+                }).catch((e) => {
+                    console.log('Error en axios')
+                })
+        }
+    }         
     render(){
+        let title;
+
+        if (this.props.match.params.accion === 'CO'){
+            title = 'Consultar'
+        }
+        else if(this.props.match.params.accion === 'CR'){
+            title = 'Crear'
+        }
+        else if(this.props.match.params.accion === 'M'){
+            title = 'Modificar'
+        }
+
         return (
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
@@ -21,7 +67,7 @@ export default class RegistrarClienteJuridico extends React.Component {
                         <Col md={9}>
                             <Row>
                                 <Col md={11}>
-                                    <h5 className="horizontal-line-title cliente-title">Registrar Cliente Jurídico</h5>
+                                    <h5 className="horizontal-line-title cliente-title">{title} Cliente Jurídico</h5>
                                 </Col>
                                 <Col md={1}></Col>
                             </Row>
@@ -47,47 +93,37 @@ export default class RegistrarClienteJuridico extends React.Component {
                                     <Col md={5}>
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label className="cliente-description-fields-text">Nombre de la Empresa</Form.Label>
-                                            <Form.Control type="text" className="form-input" placeholder="Introduzca el nombre de la empresa" />
-                                            <Form.Text className="text-muted">
-                                                Este campo es obligatorio
-                                            </Form.Text>
+                                            <Form.Control 
+                                                type="text" 
+                                                className="form-input" 
+                                                placeholder="Introduzca el nombre de la empresa" 
+                                                value={this.state.nombre}
+                                            />
+                                            {!this.state.disable && <Form.Text className="text-muted"> Obligatorio</Form.Text>}
                                         </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
-                                    <Col md={5}>
-                                        <Form.Group controlId="exampleForm.ControlTextarea1">
-                                            <Form.Label className="cliente-description-fields-text">Área de Trabajo</Form.Label>
-                                            <Form.Control as="textarea" rows="1" className="form-input-juridico-textarea" placeholder="Introduzca el área de trabajo de la empresa"/>
-                                        </Form.Group>
-                                    </Col>
-                                    <Col md={1}></Col>
-                                </Form.Row>
-                            </Col>
-                            <Col md={1}></Col>
-                        </Row>
-                    </div>
-                    <div>
-                        <Row className="div-content-form">
-                            <Col md={2}></Col>
-                            <Col md={9}>
-                                <Form.Row>
                                     <Col md={5}>
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label className="cliente-description-fields-text">RIF</Form.Label>
                                             <Row className="div-content-date">
-                                                <Form.Control as="select" className="form-input form-ci-type">
+                                                <Form.Control as="select" 
+                                                    className="form-input form-ci-type" 
+                                                    disabled={this.state.disable}>
                                                     <option>J</option>
                                                 </Form.Control>   
-                                                <Form.Control type="text" className="form-input form-ci-number" placeholder="Introduzca el RIF de la empresa"/>                                       
+                                                <Form.Control 
+                                                    type="text" 
+                                                    className="form-input form-ci-number" 
+                                                    placeholder="Introduzca el RIF de la empresa"
+                                                    disabled={this.state.disable}
+                                                    value={this.state.rif}
+                                                />                                       
                                             </Row>  
-                                            <Form.Text className="text-muted">
-                                                Este campo es obligatorio
-                                            </Form.Text> 
-                                        </Form.Group>   
+                                            {!this.state.disable && <Form.Text className="text-muted"> Obligatorio</Form.Text>}
+                                        </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
-                                    <Col md={6}>
-                                    </Col>
                                 </Form.Row>
                             </Col>
                             <Col md={1}></Col>
@@ -112,17 +148,27 @@ export default class RegistrarClienteJuridico extends React.Component {
                                     <Col md={5}>
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label className="cliente-description-fields-text">Correo Electrónico</Form.Label>
-                                            <Form.Control type="email" className="form-input" placeholder="Introduzca su correo electrónico" />
-                                            <Form.Text className="text-muted">
-                                                Este campo es obligatorio
-                                            </Form.Text>
+                                            <Form.Control 
+                                                type="email" 
+                                                className="form-input" 
+                                                placeholder="Introduzca su correo electrónico"
+                                                value={this.state.correo} 
+                                                disabled={this.state.disable}
+                                            />
+                                            {!this.state.disable && <Form.Text className="text-muted"> Obligatorio</Form.Text>}
                                         </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
                                     <Col md={5}> 
                                         <Form.Group controlId="formBasicEmail">
                                             <Form.Label className="cliente-description-fields-text">Número Telefónico</Form.Label>
-                                            <Form.Control type="text" className="form-input" placeholder="Introduzca un teléfono de contacto" />
+                                            <Form.Control 
+                                                type="text" 
+                                                className="form-input" 
+                                                placeholder="Introduzca un teléfono de contacto" 
+                                                value={this.state.tlf} 
+                                                disabled={this.state.disable}
+                                            />
                                         </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
@@ -154,6 +200,7 @@ export default class RegistrarClienteJuridico extends React.Component {
                                                 <Form.Control 
                                                     as="select" 
                                                     className="form-input"
+                                                    disabled={this.state.disable}
                                                 >
                                                     <option>Sucre</option>
                                                     <option>Distrito Capital</option>
@@ -168,6 +215,7 @@ export default class RegistrarClienteJuridico extends React.Component {
                                                 <Form.Control 
                                                     as="select"
                                                     className="form-input"
+                                                    disabled={this.state.disable}
                                                 >
                                                     <option>Caracas</option>
                                                     <option>Cumaná</option>
@@ -186,6 +234,7 @@ export default class RegistrarClienteJuridico extends React.Component {
                                                 <Form.Control 
                                                     as="select" 
                                                     className="form-input"
+                                                    disabled={this.state.disable}
                                                 >
                                                     <option>Sucre</option>
                                                     <option>Baruta</option>

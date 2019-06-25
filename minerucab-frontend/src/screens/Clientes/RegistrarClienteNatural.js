@@ -22,10 +22,14 @@ export default class RegistrarClienteNatural extends React.Component {
         ano: '',
         tlf: '',
         ci: '',
-        correo: ''
+        correo: '',
+        disable: false
     }
     componentDidMount = () => {
         if (this.props.match.params.accion !== 'CR'){
+            if (this.props.match.params.accion === 'CO'){
+                this.setState({ disable: true });
+            }
             const config = {
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded'
@@ -36,10 +40,20 @@ export default class RegistrarClienteNatural extends React.Component {
             axios.get(`http://localhost:3000/getClienteById/${this.props.match.params.id}`, config)
                 .then((res) => {
                     console.log(res);
-                    this.setState({ primerNombre: res.data[0].nombre });
-                    this.setState({ primerApellido: res.data[0].apellido });
+                    this.setState({ primerNombre: res.data[0].p_nombre });
+                    this.setState({ segundoNombre: res.data[0].s_nombre });
+                    this.setState({ primerApellido: res.data[0].p_apellido });
+                    this.setState({ segundoApellido: res.data[0].s_apellido });
                     this.setState({ ci: res.data[0].ci });
-                    this.setState({ tlf: res.data[0].tlf });
+                    this.setState({ correo: res.data[0].email });
+                    this.setState({ tlf: res.data[0].telefono });
+                    const date = new Date(res.data[0].fecha_nacimiento)
+                    const dia = date.getDate()
+                    const mes = (date.getMonth() + 1)
+                    const ano = date.getFullYear()
+                    this.setState({ dia });
+                    this.setState({ mes });
+                    this.setState({ ano });
                 }).catch((e) => {
                     console.log('Error en axios')
                 })
@@ -150,6 +164,17 @@ export default class RegistrarClienteNatural extends React.Component {
         }
     }
     render(){
+        let title;
+
+        if (this.props.match.params.accion === 'CO'){
+            title = 'Consultar'
+        }
+        else if(this.props.match.params.accion === 'CR'){
+            title = 'Crear'
+        }
+        else if(this.props.match.params.accion === 'M'){
+            title = 'Modificar'
+        }
         return (
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
@@ -160,7 +185,7 @@ export default class RegistrarClienteNatural extends React.Component {
                         <Col md={9}>
                             <Row>
                                 <Col md={11}>
-                                    <h5 className="horizontal-line-title cliente-title">Registrar Cliente Natural</h5>
+                                    <h5 className="horizontal-line-title cliente-title">{title} Cliente Natural</h5>
                                 </Col>
                                 <Col md={1}></Col>
                             </Row>
@@ -192,7 +217,8 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 id="primerNombre-cliente-natural"
                                                 value={this.state.primerNombre} 
                                                 placeholder="Introduzca su primer nombre"
-                                                autoFocus
+                                                autoFocus={!this.state.disable}
+                                                disabled={this.state.disable}
                                                 onChange={this.onChangeText} 
                                             />
                                             <Form.Text className="text-muted">
@@ -210,6 +236,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 className="form-input" 
                                                 value={this.state.segundoNombre} 
                                                 onChange={this.onChangeText} 
+                                                disabled={this.state.disable}
                                                 placeholder="Introduzca su segundo nombre" 
                                             />
                                         </Form.Group>
@@ -235,6 +262,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 value={this.state.primerApellido} 
                                                 placeholder="Introduzca su primer apellido" 
                                                 onChange={this.onChangeText} 
+                                                disabled={this.state.disable}
                                             />
                                         </Form.Group>
                                         <Form.Text className="text-muted">
@@ -252,6 +280,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 value={this.state.segundoApellido} 
                                                 placeholder="Introduzca su segundo apellido" 
                                                 onChange={this.onChangeText} 
+                                                disabled={this.state.disable}
                                             />
                                         </Form.Group>
                                     </Col>
@@ -270,7 +299,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                         <Form.Group>
                                             <Form.Label className="cliente-description-fields-text">Cédula de Identidad</Form.Label>
                                             <Row className="div-content-date">
-                                                <Form.Control as="select" className="form-input form-ci-type">
+                                                <Form.Control as="select" className="form-input form-ci-type" disabled={this.state.disable}>
                                                     <option>V</option>
                                                     <option>E</option>
                                                     <option>J</option>
@@ -282,6 +311,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                     placeholder="Introduzca su cédula de identidad"
                                                     value={this.state.ci}
                                                     onChange={this.onChangeNumber}
+                                                    disabled={this.state.disable}
                                                 />                                       
                                             </Row>  
                                             <Form.Text className="text-muted">
@@ -301,6 +331,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                         placeholder="DD"
                                                         onChange={this.onChangeNumber} 
                                                         value={this.state.dia}
+                                                        disabled={this.state.disable}
                                                     />                                                    
                                                         <Form.Text className="text-muted">
                                                             _
@@ -312,6 +343,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                         id="mes-cliente-natural"
                                                         onChange={this.onChangeNumber} 
                                                         value={this.state.mes}
+                                                        disabled={this.state.disable}
                                                     />                                                    
                                                         <Form.Text className="text-muted">
                                                             _
@@ -323,6 +355,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                         onChange={this.onChangeNumber} 
                                                         placeholder="YYYY" 
                                                         value={this.state.ano}
+                                                        disabled={this.state.disable}
                                                     />                                            
                                                 </Row>
                                                 <Form.Text className="text-muted">
@@ -361,6 +394,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 placeholder="Introduzca su correo electrónico" 
                                                 value={this.state.correo}
                                                 onChange={this.onChangeText}
+                                                disabled={this.state.disable}
                                             />
                                             <Form.Text className="text-muted">
                                                 Este campo es obligatorio
@@ -377,6 +411,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 className="form-input" 
                                                 placeholder="Introduzca un teléfono de contacto" 
                                                 onChange={this.onChangeNumber}
+                                                disabled={this.state.disable}
                                                 value={this.state.tlf}
                                             />
                                         </Form.Group>
