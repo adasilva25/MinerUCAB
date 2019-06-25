@@ -1,6 +1,26 @@
 require('dotenv').config({ path: '.env.development' });
 const { Client } = require('pg');
 
+/* ------------------------------ CREATE ------------------------------ */
+
+const createUsuario = (claveEmpleado, info) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'INSERT INTO mu_usuario (usuario, contraseña, fk_empleado, fk_rol, fk_estatus)\n\
+                    VALUES ($1, $2, $3, $4, $5)';
+    const values = [info.usuario, info.contrasena, claveEmpleado, info.fk_rol, 1];
+    client.query(text, values)
+    .then((res) => {
+        client.end();
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    })
+}
+
 const getUsuarioById = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
@@ -21,6 +41,7 @@ const getUsuarioById = (req, res) => {
 }
 
 module.exports = {
+    createUsuario,
     getUsuarioById
     // ,[siguientes funciones]
 }

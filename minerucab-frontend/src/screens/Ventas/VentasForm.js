@@ -295,7 +295,7 @@ export default class VentasForm extends React.Component {
     
             }
     
-            console.log(venta)
+            console.log("venta", venta)
 
             const config = {
                 headers: {

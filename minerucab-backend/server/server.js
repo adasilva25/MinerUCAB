@@ -4,7 +4,9 @@
 require('dotenv').config({ path: '.env.jasper-reports' });
 const JasperReports = require('../reports/jasper-reports/jasper-reports-generator');
 const Empleados = require('../database/model/Empleados');
+const EmpleadosValidations = require('../validations/EmpleadosValidations');
 const Minerales = require('../database/model/Minerales');
+const MineralesValidations = require('../validations/MineralesValidations');
 const Presentaciones = require('../database/model/Presentaciones');
 const General = require('../database/model/General');
 const Cargos = require('../database/model/Cargos');
@@ -43,6 +45,9 @@ app.use(function(req, res, next) {
 /* ----------------------------------- POST ----------------------------------- */
 app.post('/createClienteNatural', ClientesNaturales.createClienteNatural);
 app.post('/createVenta', VentasValidations.createVenta);
+app.post('/crearEmpleado', EmpleadosValidations.crearEmpleado);
+app.post('/crearMineralMetalico', MineralesValidations.crearMineralMetalico);
+app.post('/crearMineralNoMetalico', MineralesValidations.crearMineralNoMetalico);
 
 /* ----------------------------------- GET ----------------------------------- */
 
@@ -53,6 +58,7 @@ app.get('/', (req, res) => {
 app.get('/getAllCargos', Cargos.getAllCargos);
 app.get('/getCargoByIdEmpleado/:id', Cargos.getCargoByIdEmpleado);
 app.get('/getAllRoles', Roles.getAllRoles);
+/* -------------------- EMPLEADO -------------------- */
 app.get('/getRolByIdEmpleado/:id', Roles.getRolByIdEmpleado);
 app.get('/getAllEmpleados', Empleados.getAllEmpleados);
 app.get('/getCriticInfoEmpleados', Empleados.getCriticInfoEmpleados)
