@@ -85,7 +85,11 @@ app.get('/getMineralMetalicoById/:id', Minerales.getMineralMetalicoById);
 app.get('/getMineralNoMetalicoById/:id', Minerales.getMineralNoMetalicoById);
 app.get('/getNombreMineralMetalicoById/:id', Minerales.getNombreMineralMetalicoById);
 app.get('/getNombreMineralNoMetalicoById/:id', Minerales.getNombreMineralNoMetalicoById);
+app.get('/getAllComponentesByIdMineralMetalico/:id', Minerales.getAllComponentesByIdMineralMetalico);
+app.get('/getAllComponentesByIdMineralNoMetalico/:id', Minerales.getAllComponentesByIdMineralNoMetalico);
 app.get('/getAllPresentaciones', Presentaciones.getAllPresentaciones);
+app.get('/getAllPresentacionesByIdMineralMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralMetalico);
+app.get('/getAllPresentacionesByIdMineralNoMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralNoMetalico);
 /* -------------------- USUARIOS -------------------- */
 app.get('/getUsuarioById/:id', Usuarios.getUsuarioById);
 /* -------------------- VENTAS -------------------- */

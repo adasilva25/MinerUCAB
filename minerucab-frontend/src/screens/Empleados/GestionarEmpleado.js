@@ -94,6 +94,7 @@ export default class GestionarEmpleado extends React.Component {
         if (this.props.match.params.accion !== 'CR'){
                 axios.get(`http://localhost:3000/getEmpleadoById/${this.props.match.params.id}`, config)
                 .then((res) => {
+                    console.log(res)
                     var d = new Date(res.data[0].fecha_nacimiento,);
                   this.setState(() => ({
                     pnombre: res.data[0].p_nombre,
@@ -240,12 +241,15 @@ export default class GestionarEmpleado extends React.Component {
       console.log("em")
     }
     onSubmit = (e) => {
-        console.log(this.state.pnombre, this.state.snombre, this.state.papellido, this.state.sapellido)
-        console.log(this.state.nacionalidad, this.state.ci, this.state.nacimd, this.state.nacimm, this.state.nacima)
-        console.log(this.state.sexo)
-        console.log(this.state.telefono, this.state.nivel)
-        console.log(this.state.cargo[0].nombre, this.state.rol[0].nombre)
-        console.log(this.state.usuario[0].usuario, this.state.usuario[0].contrasena)
+        console.log(document.getElementById('LugarEstado').value)
+        console.log(document.getElementById('LugarMunicipio').value)
+        console.log(document.getElementById('LugarParroquia').value)
+        //console.log(this.state.pnombre, this.state.snombre, this.state.papellido, this.state.sapellido)
+        //console.log(this.state.nacionalidad, this.state.ci, this.state.nacimd, this.state.nacimm, this.state.nacima)
+        //console.log(this.state.sexo)
+        //console.log(this.state.telefono, this.state.nivel)
+        //console.log(this.state.cargo[0].nombre, this.state.rol[0].nombre)
+        //console.log(this.state.usuario[0].usuario, this.state.usuario[0].contrasena)
     }
     renderTitle = () => {
       if (this.props.match.params.accion === 'CR'){
@@ -570,16 +574,16 @@ export default class GestionarEmpleado extends React.Component {
                                     <Col md={5}>
                                         <Form.Group>
                                             <Form.Label className="cliente-description-fields-text">Nivel de instrucción</Form.Label>
-                                            <Form.Control 
-                                                type="text" 
-                                                className="form-input" 
-                                                id="nivel-empleado"
-                                                value={this.state.nivel}
-                                                disabled={!this.state.modificar}
-                                                onChange={this.onInputChange}
-                                                placeholder="Introduzca el nivel de instrucción"
-                                                autoFocus
-                                            />
+                                            <Form.Control as="select"
+                                            className="form-input form-nivel"
+                                            disabled={!this.state.modificar}
+                                            value={this.state.nivel}>
+                                                <option>Primaria</option>
+                                                <option>Secundaria</option>
+                                                <option>Universitaria</option>
+                                                <option>Superior</option>
+                                                <option>Otro</option>
+                                            </Form.Control>
                                             <Form.Text className="text-muted">
                                                 Este campo es obligatorio
                                             </Form.Text>

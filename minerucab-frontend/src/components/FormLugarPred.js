@@ -18,9 +18,13 @@ export default class FormLugarPred extends React.Component {
         estadoCO: '',
         municipioCO: '',
         parroquiaCO: '',
-        parroquiarendered: 1
+        parroquiarendered: 1,
+        predet: true
     }
     componentDidMount = () => {
+        this.setState(() => ({
+            predet: this.props.predet
+        }))
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -40,13 +44,13 @@ export default class FormLugarPred extends React.Component {
                         estados: prevState.estados.concat(estadosInfo)
                     }));
                 })
-                if(this.props.predet === false){
+                if(this.state.predet === false){
                     $('.dd-e').trigger('click')
                 }
             }).catch((e) => {
                 console.log('Error en axios')
             })
-        if(this.props.predet === true){
+        if(this.state.predet === true){
             axios.get(`http://localhost:3000/getLugarByIdParroquia/${this.props.idParroquia}`, config)
                 .then((res) => {
                     this.setState(() => ({
@@ -159,7 +163,7 @@ export default class FormLugarPred extends React.Component {
             },
             responseType: 'json'
         }
-        if(this.props.predet === false){
+        if(this.state.predet === false){
             axios.get(`http://localhost:3000/getAllMunicipiosByIdEstado/${i.target.value}`, config)
                 .then((res) => {
                     res.data.forEach(element => {
@@ -173,12 +177,12 @@ export default class FormLugarPred extends React.Component {
                             municipios: prevState.municipios.concat(municipiosInfo)
                         }));
                     })
-                    //$('.dd-m').trigger('click')
+                    $('.dd-m').trigger('click')
                 }).catch((e) => {
                     console.log('Error en axios')
                 })
         }
-        if(this.props.predet === true){
+        if(this.state.predet === true){
             this.state.municipios = []
             axios.get(`http://localhost:3000/getAllMunicipiosByIdEstado/${this.state.estadoSel}`, config)
                 .then((res) => {
@@ -209,7 +213,7 @@ export default class FormLugarPred extends React.Component {
             },
             responseType: 'json'
         }
-        if(this.props.predet === false){
+        if(this.state.predet === false){
         axios.get(`http://localhost:3000/getAllParroquiasByIdMunicipio/${i.target.value}`, config)
             .then((res) => {
                 res.data.forEach(element => {
@@ -228,7 +232,7 @@ export default class FormLugarPred extends React.Component {
                 console.log('Error en axios')
             })
         }
-        if(this.props.predet === true){
+        if(this.state.predet === true){
             axios.get(`http://localhost:3000/getAllParroquiasByIdMunicipio/${this.state.municipioSel}`, config)
                 .then((res) => {
                     res.data.forEach(element => {
@@ -249,13 +253,13 @@ export default class FormLugarPred extends React.Component {
     }
 
     renderPred = (tipo) => {
-        if((tipo === 'estado')&&(this.props.predet === true)){
+        if((tipo === 'estado')&&(this.state.predet === true)){
             $(".dd-e").val(this.state.estadoSel).change()
         }
-        if((tipo === 'municipio')&&(this.props.predet === true)){
+        if((tipo === 'municipio')&&(this.state.predet === true)){
             $(".dd-m").val(this.state.municipioSel).change()
         }
-        if((tipo === 'parroquia')&&(this.props.predet === true)){
+        if((tipo === 'parroquia')&&(this.state.predet === true)){
             function test(t,valx,element){
                 setTimeout(function(){
                     if(element.state.parroquiarendered === 1){
@@ -264,7 +268,8 @@ export default class FormLugarPred extends React.Component {
                             //$('.dd-e').trigger('click');
                             //$(".dd-e").val(valx).change()
                         element.setState(() => ({
-                            estadorendered: 0
+                            estadorendered: 0,
+                            predet: false
                         }));
                         }
                     }
@@ -273,7 +278,7 @@ export default class FormLugarPred extends React.Component {
                     }
                 },300);
             }
-            test(this.props.predet,this.state.parroquiaSel,this);
+            test(this.state.predet,this.state.parroquiaSel,this);
             /*console.log($(".dd-p")[0][3])
             $(".dd-p").val(this.state.parroquiaSel).change()*/
             //this.forceUpdate()
@@ -284,7 +289,7 @@ export default class FormLugarPred extends React.Component {
         return ( 
             <div>
                 <Form.Row className="formMargins">
-                    <Form.Group  as={Col} md="4" controlId="formBasicEmail" className="div-ventas-pedido-form inputsPaddingRight">
+                    <Form.Group  as={Col} md="4" controlId="LugarEstado" className="div-ventas-pedido-form inputsPaddingRight">
                         <Form.Label className="cliente-description-fields-text">Estado</Form.Label>
                         {
                             this.renderLugar('estado')
@@ -293,7 +298,7 @@ export default class FormLugarPred extends React.Component {
                             this.renderPred('estado')
                         }
                     </Form.Group>
-                    <Form.Group as={Col} md="4" controlId="formBasicEmail" className="div-ventas-pedido-form inputsPaddingRight">
+                    <Form.Group as={Col} md="4" controlId="LugarMunicipio" className="div-ventas-pedido-form inputsPaddingRight">
                         <Form.Label className="cliente-description-fields-text">Municipio</Form.Label>
                         {
                             this.renderLugar('municipio')
@@ -302,7 +307,7 @@ export default class FormLugarPred extends React.Component {
                             this.renderPred('municipio')
                         }
                     </Form.Group>
-                    <Form.Group as={Col} md="4" controlId="formBasicEmail" className="div-ventas-pedido-form inputsPaddingLeft">
+                    <Form.Group as={Col} md="4" controlId="LugarParroquia" className="div-ventas-pedido-form inputsPaddingLeft">
                         <Form.Label className="cliente-description-fields-text">Parroquia</Form.Label>
                         {
                             this.renderLugar('parroquia')

@@ -33,7 +33,7 @@ export default class ModalRegistrarMineral extends React.Component {
                 <Col md={1}></Col>
                 <Col md={5}>
                   <Button 
-                      onClick={() => history.push('/registrar_mineral_metalico/C')} 
+                      onClick={() => history.push('/gestionar_mineral_metalico/CR')} 
                       className="modal-rcnatural-button btn-block"
                   >
                       Metálico
@@ -41,7 +41,7 @@ export default class ModalRegistrarMineral extends React.Component {
                 </Col>
                 <Col md={5}>
                   <Button 
-                  onClick={() => history.push('/registrar_mineral_no_metalico/C')} 
+                  onClick={() => history.push('/gestionar_mineral_no_metalico/CR')} 
                     className="modal-rcjuridico-button btn-block"
                   >
                     No metálico

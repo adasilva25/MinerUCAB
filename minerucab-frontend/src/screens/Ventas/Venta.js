@@ -107,7 +107,7 @@ export default class Venta extends React.Component {
                                 <Col md={10}>
                                     <Row>
                                         <Col md={12}>
-                                            <h6 className="horizontal-line-title-ventas-form cliente-title">Ventas de Clientes Jurídicos</h6>
+                                            <h6 className="horizontal-line-title-ventas-form cliente-title">Ventas de Clientes Juridicos</h6>
                                         </Col>
                                     </Row>
                                 </Col>
