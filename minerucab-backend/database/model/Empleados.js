@@ -1,29 +1,28 @@
-// const DAOPostgreSQLConnection = require('../postgresql/psql-connection');
-
-// const Pool = require('pg').Pool
-// const pool = new Pool({
-//   user: 'andreadasilva',
-//   host: 'localhost',
-//   database: 'testdb',
-//   port: 5432,
-// })
-
-// const getAllUsers = (req, res) => {
-//     // const client = DAOPostgreSQLConnection();
-//     pool.query('SELECT * FROM test_table;', (error, results) => {
-//         if (error){
-//             throw error;
-//         }
-//         console.log('Completed!', results.rows[0].id)
-//         // client.end();
-//         res.status(200).json(results.rows)
-//     })
-// }
-
 require('dotenv').config({ path: '.env.development' });
 const { Client } = require('pg');
 
 // FORMATO  CONNECTION STRING postgressql://YourUserName:YourPassword@localhost:5432/YourDatabase
+
+/* ------------------------------ CREATE ------------------------------ */
+
+const createEmpleado = (info, callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'INSERT INTO mu_empleado (ci, p_nombre, s_nombre, p_apellido, s_apellido, fecha_nacimiento, sexo, nivel_de_instruccion, telefono, fk_lugar, fk_cargo, fk_estatus)\n\
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING Clave';
+    const values = [info.ci, info.pnombre, info.snombre, info.papellido, info.sapellido, info.fecha_nacimiento, info.sexo, info.nivel, info.telefono, info.fk_lugar, info.fk_cargo, info.fk_estatus];
+    client.query(text, values)
+    .then((res) => {
+        client.end();
+        callback(res.rows[0].clave)
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    })
+}
 
 const getAllEmpleados = (req, res) => {
     const client = new Client({
@@ -122,6 +121,7 @@ const deleteEmpleadoById = (req, res) => {
 }
 
 module.exports = {
+    createEmpleado,
     getAllEmpleados,
     getCriticInfoEmpleados,
     getEmpleadoByCedula,

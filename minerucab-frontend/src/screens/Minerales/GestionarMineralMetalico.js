@@ -16,13 +16,13 @@ import $ from 'jquery'
 export default class GestionarMineralMetalico extends React.Component {  
 	state = {
         nombre: '',
-        dureza: '',
+        dureza: 1,
         descripcion: '',
         presentaciones: [],
         presentacionesmin: [],
         componentes: [],
         componentesmin: [],
-        modificar: true
+        modificar: true,
     }
     componentDidMount = () => {
     	const config = {
@@ -32,6 +32,26 @@ export default class GestionarMineralMetalico extends React.Component {
             responseType: 'json'
         }
 
+        if(this.props.match.params.accion === 'CR'){
+            this.setState(() => ({
+                presentacionesmin: [{
+                    presentacion: 1,
+                    nombre: 'Liquido',
+                    precio: 1,
+                    presShow: true,
+                    numero: 1,
+                    numeroV:1,
+                }],
+                componentesmin: [{
+                    mineral: 1,
+                    nombre: 'Aluminio',
+                    porcentaje: 1,
+                    compShow: true,
+                    numero: 1,
+                    numeroV:1,
+                }]
+            }))
+        }
         if(this.props.match.params.accion === 'CO'){
             this.setState(() => ({
                 modificar: false,
@@ -43,8 +63,10 @@ export default class GestionarMineralMetalico extends React.Component {
                 .then((res) => {
                     res.data.forEach(element => {
                         let presentacionInfo = {
+                            clave: 1,
                             nombre: ''
                         }
+                        presentacionInfo.clave = element.clave;
                         presentacionInfo.nombre = element.nombre;
                         this.setState((prevState) => ({
                             presentaciones: prevState.presentaciones.concat(presentacionInfo)
@@ -58,8 +80,10 @@ export default class GestionarMineralMetalico extends React.Component {
                 .then((res) => {
                     res.data.forEach(element => {
                         let componenteInfo = {
+                            clave: 1,
                             nombre: ''
                         }
+                        componenteInfo.clave = element.clave;
                         componenteInfo.nombre = element.nombre;
                         this.setState((prevState) => ({
                             componentes: prevState.componentes.concat(componenteInfo)
@@ -69,28 +93,25 @@ export default class GestionarMineralMetalico extends React.Component {
                     console.log('Error en axios')
                 })
         }
-
         //Consultar o modificar (necesito informacion)
         if (this.props.match.params.accion !== 'CR'){
             axios.get(`http://localhost:3000/getMineralMetalicoById/${this.props.match.params.id}`, config)
                 .then((res) => {
-                    console.log(res)
                   this.setState(() => ({
                     nombre: res.data[0].nombre,
                     dureza: res.data[0].dureza,
                     descripcion: res.data[0].descripcion,
                   }));
-                  axios.get(`http://localhost:3000/getAllPresentacionesByIdMineralMetalico/${this.props.match.params.id}`, config)
+                axios.get(`http://localhost:3000/getAllPresentacionesByIdMineralMetalico/${this.props.match.params.id}`, config)
                     .then((res) => {
-                        console.log("presentaciones", res)
                         res.data.forEach(element => {
                             let presInfo = {
                                 presentacion: 1,
                                 nombre: '',
                                 precio: 0,
                                 presShow: true,
-                                numero: 1,
-                                numeroV:1,
+                                numero: this.state.presentacionesmin.length+1,
+                                numeroV: this.state.presentacionesmin.length+1,
                             }
                             presInfo.presentacion = element.clave;
                             presInfo.nombre = element.nombre;
@@ -102,17 +123,16 @@ export default class GestionarMineralMetalico extends React.Component {
                     }).catch((e) => {
                          console.log('Error en axios')
                     })
-                  axios.get(`http://localhost:3000/getAllComponentesByIdMineralMetalico/${this.props.match.params.id}`, config)
+                axios.get(`http://localhost:3000/getAllComponentesByIdMineralMetalico/${this.props.match.params.id}`, config)
                     .then((res) => {
-                        console.log("componentes", res)
                         res.data.forEach(element => {
                             let compInfo = {
                                 mineral: 1,
                                 nombre: '',
                                 porcentaje: 1,
                                 compShow: true,
-                                numero: 1,
-                                numeroV:1,
+                                numero: this.state.componentesmin.length+1,
+                                numeroV: this.state.componentesmin.length+1,
                             }
                             compInfo.mineral = element.clave;
                             compInfo.nombre = element.nombre;
@@ -129,77 +149,75 @@ export default class GestionarMineralMetalico extends React.Component {
               })
         }
     }
-    onChangeText = (e) => {
-        const text = e.target.value;
-        
-        if (!text || text.match(/^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/)) {
-            if (e.target.id === 'nombre-mineral-metalico'){
-                this.setState({ nombre: e.target.value.trim() });
-            }
-            if (e.target.id === 'descripcion-mineral-metalico'){
-                this.setState({ descripcion: e.target.value.trim() });
-            }
-        }
-    }
-    onChangeNumber = (e) => {
-        const number = e.target.value;
-
-        if ((!number) || number.match(/^[0-9\b]+$/)){
-            console.log('number', number)
-            if (e.target.id === 'dureza-mineral-metalico'){
-                this.setState({ dureza: e.target.value });
-            }
-            else if (e.target.id === 'porcentaje-mineral-metalico'){
-                this.setState({ porcentaje: e.target.value });
-            }
-            else if (e.target.id === 'precio-mineral-metalico'){
-                this.setState({ precio: e.target.value });
-            }
-        }
-    }
     addPresentacionesMin = (e) => {
         var presentacAux = this.state.presentacionesmin;
         var nuevaPresentacion = {
             presentacion: 1,
+            nombre: 'Liquido',
             precio: 1,
             presShow: true,
             numero: 1,
             numeroV:1,
         };
-        for (var i = presentacAux.length - 1; i >= 0; i--) {
-            if(presentacAux[i].numero!=0){
-                nuevaPresentacion.numero=presentacAux[i].numero+1;
-                break;
-            }
-        }
-        nuevaPresentacion.numeroV=presentacAux[presentacAux.length-1].numeroV+1;
 
-        this.setState((prevState) => ({
-            presentacionesmin: prevState.presentacionesmin.concat(nuevaPresentacion),
-        }));
+        if(this.state.presentacionesmin.length === 0){
+            this.setState(() => ({
+                presentacionesmin: [{
+                    presentacion: 1,
+                    nombre: 'Liquido',
+                    precio: 1,
+                    presShow: true,
+                    numero: 1,
+                    numeroV:1,
+                }],
+            }));
+        }else{
+            for (var i = presentacAux.length - 1; i >= 0; i--) {
+                if(presentacAux[i].numero!=0){
+                    nuevaPresentacion.numero=presentacAux[i].numero+1;
+                    break;
+                }
+            }
+            nuevaPresentacion.numeroV=presentacAux[presentacAux.length-1].numeroV+1;
+            this.setState((prevState) => ({
+                presentacionesmin: prevState.presentacionesmin.concat(nuevaPresentacion),
+            }));
+        }
     }
     addComponentesMin = (e) => {
         var componenteAux = this.state.componentesmin;
         var nuevoComponente = {
             mineral: 1,
+            nombre: 'Aluminio',
             porcentaje: 1,
             compShow:true,
             numero: 1,
             numeroV:1,
         };
-        for (var i = componenteAux.length - 1; i >= 0; i--) {
-            if(componenteAux[i].numero!=0){
-                nuevoComponente.numero=componenteAux[i].numero+1;
-                break;
-            }
-        }
-        nuevoComponente.numeroV=componenteAux[componenteAux.length-1].numeroV+1;
 
-        this.setState((prevState) => ({
-            componentesmin: prevState.componentesmin.concat(nuevoComponente),
-        }));
-        //const seleccionados = document.getElementsByClassName('form-input-dropdown-mineral-presentacion')[0].value
-        //console.log(seleccionados)
+        if(this.state.componentesmin.length === 0){
+            this.setState(() => ({
+                componentesmin: [{
+                    mineral: 1,
+                    nombre: 'Arcilla',
+                    porcentaje: 1,
+                    compShow:true,
+                    numero: 1,
+                    numeroV:1,
+                }],
+            }));
+        }else{
+            for (var i = componenteAux.length - 1; i >= 0; i--) {
+                if(componenteAux[i].numero!=0){
+                    nuevoComponente.numero=componenteAux[i].numero+1;
+                    break;
+                }
+            }
+            nuevoComponente.numeroV=componenteAux[componenteAux.length-1].numeroV+1;
+            this.setState((prevState) => ({
+                componentesmin: prevState.componentesmin.concat(nuevoComponente),
+            }));
+        }
     }
     deleteComponentesMin = (ind) => {
         var componentesMinAux = this.state.componentesmin;
@@ -243,10 +261,6 @@ export default class GestionarMineralMetalico extends React.Component {
         /*this.state.componentesmin.splice(ind,1);
         console.log(this.state.componentesmin)*/
     }
-    selectedOption = (e) => {  
-    	console.log(e.target.value);
-    	//this.setState.presentacionesSelec=
-	}
     renderOptions = (tipo, indexF) => {
         if(tipo === 'presentacion'){
             let presentacion = [];
@@ -261,7 +275,7 @@ export default class GestionarMineralMetalico extends React.Component {
                 })
                 if (existe === 0){
                     presentacion.push(optionPre.nombre);
-                    return(<option value={optionPre.nombre} id={optionPre.nombre}>{optionPre.nombre}</option>)
+                    return(<option value={optionPre.clave} id={optionPre.nombre}>{optionPre.nombre}</option>)
                 }
             }));
         }
@@ -276,7 +290,7 @@ export default class GestionarMineralMetalico extends React.Component {
                 })
                 if (existe === 0){
                     componente.push(optionPre.nombre);
-                    return(<option value={optionPre.nombre} id={optionPre.nombre}>{optionPre.nombre}</option>)
+                    return(<option value={optionPre.clave} id={optionPre.nombre}>{optionPre.nombre}</option>)
                 }
             }));
         }
@@ -337,7 +351,9 @@ export default class GestionarMineralMetalico extends React.Component {
     			                        key={index} 
     			                        id={''+index}
     			                        className="form-input form-input-dropdown-mineral-met-presentacion"
-    			                        onChange={this.selectedOption}>
+    			                        onChange={(e) => this.onDropdownChange(e, index, 'presentacion')} 
+                                        value={option.presentacion}
+                                    >
     			                        {
     			                            this.renderOptions('presentacion')
     			                        }
@@ -350,11 +366,12 @@ export default class GestionarMineralMetalico extends React.Component {
     		                                    <Form.Control
     		                                    	type="number"
     		                                    	step="0.01"
-    		                                        className="form-input form-input-text-precio" 
+    		                                        className="form-input form-input-text-precio-min-met" 
     		                                        key={index} 
-    		                                        defaultValue={1}
     		                                        id={''+index}
     		                                        min="0"
+                                                    value={option.precio}
+                                                    onChange={(e) => this.onDropdownChange(e, index, 'presentacion')} 
     		                                    />
     		                                    <InputGroup.Append>
     		                                        <InputGroup.Text className="input-append-ventas-form" key={index}>$</InputGroup.Text>
@@ -435,9 +452,10 @@ export default class GestionarMineralMetalico extends React.Component {
                                         as="select" 
                                         key={index} 
                                         id={''+index}
-                                        defaultValue={this.componente}
+                                        value={option.mineral}
                                         className="form-input form-input-dropdown-min-met-componente"
-                                        onChange={this.selectedOption}>
+                                        onChange={(e) => this.onDropdownChange(e, index, 'componente')}
+                                    >
                                         {
                                             this.renderOptions('componente')
                                         }
@@ -449,12 +467,13 @@ export default class GestionarMineralMetalico extends React.Component {
                                             <InputGroup className="MyInputGroup InputGroupPorcentajeCompone">
                                                 <Form.Control 
                                                     type="number" 
-                                                    className="form-input" 
-                                                    id='porcentaje-compone-min-met'
-                                                    defaultValue={1}
+                                                    className="form-input form-input-text-porcentaje-min-met" 
+                                                    id={''+index}
+                                                    value={option.porcentaje}
                                                     step="0.01"
                                                     min="0"
                                                     max="100"
+                                                    onChange={(e) => this.onDropdownChange(e, index, 'componente')}
                                                 />
                                                 <InputGroup.Append>
                                                     <InputGroup.Text className="input-append-ventas-form">%</InputGroup.Text>
@@ -481,6 +500,172 @@ export default class GestionarMineralMetalico extends React.Component {
                     </Form.Row>
                 )
             })
+        }
+    }
+    onDropdownChange = (e, indexMap, tipo) => {
+        if(tipo === 'presentacion'){
+            if (e.target.className === 'form-input form-input-dropdown-mineral-met-presentacion form-control'){
+                this.state.presentacionesmin.forEach(element => {
+                    if((element.numeroV-1).toString() === e.target.id){
+                        element.presentacion = this.state.presentaciones[e.target.value-1].clave
+                        element.nombre = this.state.presentaciones[e.target.value-1].nombre
+                    }
+                })
+                this.setState({aux: [
+                    ...this.state.presentacionesmin.filter((item, index) => index === indexMap)
+                ]})
+            }else if (e.target.className === 'form-input form-input-text-precio-min-met form-control'){
+                this.state.presentacionesmin.forEach(element => {
+                    if((element.numeroV-1).toString() === e.target.id){
+                        element.precio = e.target.value
+                    }
+                })
+                this.setState({aux: [
+                    ...this.state.presentacionesmin.filter((item, index) => index === indexMap)
+                ]})
+            }
+        }
+        if(tipo === 'componente'){
+            if (e.target.className === 'form-input form-input-dropdown-min-met-componente form-control'){
+                this.state.componentesmin.forEach(element => {
+                    if((element.numeroV-1).toString() === e.target.id){
+                        element.mineral = this.state.componentes[e.target.value-1].clave
+                        element.nombre = this.state.componentes[e.target.value-1].nombre
+                    }
+                })
+                this.setState({auxi: [
+                    ...this.state.componentesmin.filter((item, index) => index === indexMap)
+                ]})
+            }else if (e.target.className === 'form-input form-input-text-porcentaje-min-met form-control'){
+                this.state.componentesmin.forEach(element => {
+                    if((element.numeroV-1).toString() === e.target.id){
+                        element.porcentaje = e.target.value
+                    }
+                })
+                this.setState({aux: [
+                    ...this.state.presentacionesmin.filter((item, index) => index === indexMap)
+                ]})
+            }
+        }
+    }
+    onInputChange = (e) => {
+        const modif = e.target.value;
+
+        //Solo letras
+        if (!modif || modif.match(/^[ñA-Za-zÁ-Úá-ú _]*[ñA-Za-zÁ-Úá-ú][ñA-Za-zÁ-Úá-ú _]*$/)) {
+            if (e.target.id === 'nombre-mineral-metalico'){
+                this.setState(() => ({
+                    nombre: modif
+                }));
+            }
+        }
+
+        //Solo numeros
+        if ((!modif) || modif.match(/^[1-9]\d*(\.\d+)?$/)){
+            if (e.target.id === 'dureza-mineral-metalico'){
+                this.setState(() => ({
+                    dureza: modif
+                }));
+            }
+        }
+
+        //Cualquier caracter
+        if (e.target.id === 'descripcion-mineral-metalico'){
+            this.setState(() => ({
+                descripcion: modif
+            }));
+        }
+    }
+    onSubmit = () => {
+        console.log("nombre", this.state.nombre)
+        console.log("descripcion", this.state.descripcion)
+        console.log("dureza", this.state.dureza)
+        console.log("presentaciones", this.state.presentacionesmin)
+        console.log("componentes", this.state.componentesmin)
+        let repetido = 0
+        var tienepres = false
+        for (let i=0; i<this.state.presentacionesmin.length; i++){
+            for (let k=1; k<this.state.presentacionesmin.length; k++){
+                if((i!=k) && (this.state.presentacionesmin[i].presentacion === this.state.presentacionesmin[k].presentacion) && (this.state.presentacionesmin[i].presShow === true) && (this.state.presentacionesmin[k].presShow === true)){
+                    repetido = 1;
+                }
+            }
+            if(this.state.presentacionesmin[i].presShow === true){
+                tienepres = true
+            }
+        }
+        var tienecomp = false
+        for (let i=0; i<this.state.componentesmin.length; i++){
+            for (let k=1; k<this.state.componentesmin.length; k++){
+                if((i!=k) && (this.state.componentesmin[i].mineral === this.state.componentesmin[k].mineral) && (this.state.componentesmin[i].compShow === true) && (this.state.componentesmin[k].compShow === true)){
+                    repetido = 1;
+                }
+            }
+            if(this.state.componentesmin[i].compShow === true){
+                tienecomp = true
+            }
+        }
+        if(repetido === 1){
+            alert("Existe una presentación o un mineral repetido. Revise e intente de nuevo.")
+        }else if(repetido === 0){
+            if((this.state.nombre.length>0)&&(this.state.dureza>0)&&(this.state.dureza<=100)){
+                var desc
+                if((this.state.descripcion === null) || (this.state.descripcion.length===0)){
+                    desc = null
+                }else{
+                    desc = this.state.descripcion
+                }
+                let mineral = {
+                    nombre: this.state.nombre,
+                    dureza: parseFloat(this.state.dureza),
+                    descripcion: desc,
+                    tienec: tienecomp,
+                    componentes: [],
+                    tienep: tienepres,
+                    presentaciones: [],
+                }
+    
+                for (let i = 0; i < this.state.presentacionesmin.length; i++){
+                    if(this.state.presentacionesmin[i].presShow === true){
+                        let presentacion = {
+                            idPresentacion: this.state.presentacionesmin[i].presentacion,
+                            precio: parseFloat(this.state.presentacionesmin[i].precio)
+                        }
+            
+                        mineral.presentaciones.push(presentacion)
+                    }
+                }
+
+                for (let i = 0; i < this.state.componentesmin.length; i++){
+                    if(this.state.componentesmin[i].compShow === true){
+                        let componente = {
+                            idComponente: this.state.componentesmin[i].mineral,
+                            porcentaje: parseFloat(this.state.componentesmin[i].porcentaje)
+                        }
+            
+                        mineral.componentes.push(componente)
+                    }
+                }
+
+                if(this.props.match.params.accion === 'CR'){
+                    const config = {
+                        headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        responseType: 'json',
+                        data: mineral
+                    }
+                    
+                    axios.post('http://localhost:3000/crearMineralMetalico', config)
+                        .then((res) => {
+                        }).catch((e) => {
+                            console.log('Error en axios')
+                        })
+                    history.push('/home');
+                }
+            }else{
+                alert("Existen campos invalidos. Revise e intente de nuevo.")
+            }
         }
     }
     render(){
@@ -528,7 +713,7 @@ export default class GestionarMineralMetalico extends React.Component {
                                                 value={this.state.nombre} 
                                                 placeholder="Introduzca el nombre del mineral"
                                                 autoFocus
-                                                onChange={this.onChangeText} 
+                                                onChange={this.onInputChange} 
                                                 disabled={!this.state.modificar}
                                             />
                                             <Form.Text className="text-muted">
@@ -555,11 +740,12 @@ export default class GestionarMineralMetalico extends React.Component {
     	                                                type="number" 
     	                                                className="form-input" 
     	                                                id='dureza-mineral-metalico'
-    	                                                defaultValue={this.state.dureza}
+    	                                                value={this.state.dureza}
                                                         step="0.01"
                                                         min="0"
                                                         max="100"
                                                         disabled={!this.state.modificar}
+                                                        onChange={this.onInputChange}
     	                                            />
                                                     <InputGroup.Append>
                                                         <InputGroup.Text className="input-append-ventas-form">%</InputGroup.Text>
@@ -582,7 +768,7 @@ export default class GestionarMineralMetalico extends React.Component {
                                                 className="form-input" 
                                                 value={this.state.descripcion} 
                                                 placeholder="Introduzca la descripción" 
-                                                onChange={this.onChangeText} 
+                                                onChange={this.onInputChange} 
                                                 disabled={!this.state.modificar}
                                             />
                                         </Form.Group>
@@ -632,15 +818,15 @@ export default class GestionarMineralMetalico extends React.Component {
                             <Col md={2}></Col>
                             <Col md={10}>
                                 <Row>
-                                    <Col md={7}></Col>
-                                    <Col md={5}>
+                                    <Col md={9}></Col>
+                                    <Col md={3}>
                                         {
                                             (this.props.match.params.accion !== 'CO') &&
                                             <Button 
                                                 className="ventas-form-btn btn-block"
                                                 onClick={this.addPresentacionesMin}
                                             >
-                                                Agregar
+                                                +
                                             </Button>
                                         }
                                     </Col>
@@ -687,15 +873,15 @@ export default class GestionarMineralMetalico extends React.Component {
                             <Col md={2}></Col>
                             <Col md={10}>
                                 <Row>
-                                    <Col md={7}></Col>
-                                    <Col md={5}>
+                                    <Col md={9}></Col>
+                                    <Col md={3}>
                                         {
                                             (this.props.match.params.accion !== 'CO') &&
                                             <Button 
                                                 className="ventas-form-btn btn-block"
                                                 onClick={this.addComponentesMin}
                                             >
-                                                Agregar
+                                                +
                                             </Button>
                                         }
                                     </Col>

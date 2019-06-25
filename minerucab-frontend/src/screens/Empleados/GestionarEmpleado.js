@@ -19,37 +19,45 @@ import $ from 'jquery'
 
 export default class GestionarEmpleado extends React.Component {  
 	state = {
-        poseeusuario: true,
-		cargos: [],
-		roles: [],
-		accordionKey:[],
-        modificar: true,
         pnombre: '',
         snombre: '',
         papellido: '',
         sapellido: '',
-        nacionalidad: '',
+        nacionalidad: 'V',
         ci: '',
-        sexo: '',
         nacimd: '',
         nacimm: '',
         nacima: '',
-        nivel: '',
+        sexo: 'F',
         telefono: '',
-        pred: false,
         parroquia: '',
-        cargo: [{
+        cargo: {
+            clave: 1,
+        },
+        nivel: 'Primaria',
+        estatus: '',
+
+		cargos: [],
+		roles: [],
+		accordionKey:[],
+        modificar: true,
+        pred: false,
+
+        poseeusuario: true,
+        claveUsuario: '',
+        usuario: '',
+        contrasena: '',
+        rol: {
+            clave: 1,
+        },
+        /*cargo: [{
             clave: '',
             nombre: '',
         }],
         rol: [{
             clave: '',
             nombre: '',
-        }],
-        usuario: [{
-            usuario: '',
-            contrasena: '',
-        }]
+        }]*/
     }
     componentDidMount = () => {
     	const config = {
@@ -64,9 +72,11 @@ export default class GestionarEmpleado extends React.Component {
                 .then((res) => {
                     res.data.forEach(element => {
                         let cargoInfo = {
+                            clave: '',
                             nombre: ''
                         }
                         cargoInfo.nombre = element.nombre;
+                        cargoInfo.clave = element.clave;
                         this.setState((prevState) => ({
                             cargos: prevState.cargos.concat(cargoInfo)
                         }));
@@ -79,9 +89,11 @@ export default class GestionarEmpleado extends React.Component {
                 .then((res) => {
                     res.data.forEach(element => {
                         let rolInfo = {
-                            nombre: ''
+                            clave: '',
+                            nombre: '',
                         }
                         rolInfo.nombre = element.nombre;
+                        rolInfo.clave = element.clave;
                         this.setState((prevState) => ({
                             roles: prevState.roles.concat(rolInfo)
                         }));
@@ -94,7 +106,6 @@ export default class GestionarEmpleado extends React.Component {
         if (this.props.match.params.accion !== 'CR'){
                 axios.get(`http://localhost:3000/getEmpleadoById/${this.props.match.params.id}`, config)
                 .then((res) => {
-                    console.log(res)
                     var d = new Date(res.data[0].fecha_nacimiento,);
                   this.setState(() => ({
                     pnombre: res.data[0].p_nombre,
@@ -109,7 +120,8 @@ export default class GestionarEmpleado extends React.Component {
                     nacima: d.getFullYear(),
                     nivel: res.data[0].nivel_de_instruccion,
                     telefono: res.data[0].telefono,
-                    parroquia: res.data[0].fk_lugar
+                    parroquia: res.data[0].fk_lugar,
+                    estatus: res.data[0].fk_estatus
                   }))
                   this.state.pred=true;
               }).catch((e) => {
@@ -118,10 +130,10 @@ export default class GestionarEmpleado extends React.Component {
               axios.get(`http://localhost:3000/getCargoByIdEmpleado/${this.props.match.params.id}`, config)
                 .then((res) => {
                   this.setState(() => ({
-                    cargo: [{
+                    cargo: {
                         clave: res.data[0].clave,
                         nombre: res.data[0].nombre,
-                    }]
+                    }
                   }));
               }).catch((e) => {
                   console.log('Error en axios')
@@ -135,30 +147,28 @@ export default class GestionarEmpleado extends React.Component {
                     }
                     else{
                         this.setState(() => ({
-                            usuario: [{
-                                clave: res.data[0].clave,
-                                usuario: res.data[0].usuario,
-                                contrasena: res.data[0].contrasena,
-                            }]
+                            claveUsuario: res.data[0].clave,
+                            usuario: res.data[0].usuario,
+                            contrasena: res.data[0].contrasena,
                           }));
                     }
-              }).catch((e) => {
-                  console.log('Error en axios')
-              })
-              if(this.state.poseeusuario === false){
-                axios.get(`http://localhost:3000/getRolByIdEmpleado/${this.props.match.params.id}`, config)
-                .then((res) => {
-                  this.setState(() => ({
-                    rol: [{
-                        clave: res.data[0].clave,
-                        nombre: res.data[0].nombre,
-                    }]
-                  }));
+                    if(this.state.poseeusuario === true){
+                        axios.get(`http://localhost:3000/getRolByIdEmpleado/${this.props.match.params.id}`, config)
+                        .then((res) => {
+                          this.setState(() => ({
+                            rol: {
+                                clave: res.data[0].clave,
+                                nombre: res.data[0].nombre,
+                            }
+                          }));
+                      }).catch((e) => {
+                          console.log('Error en axios')
+                      })
+                  }
               }).catch((e) => {
                   console.log('Error en axios')
               })
             }
-        }
 
         //Si consulto
         if (this.props.match.params.accion === 'CO'){
@@ -206,16 +216,19 @@ export default class GestionarEmpleado extends React.Component {
     renderType = (tipo, index) => {
         if(this.props.match.params.accion === 'CO'){
             if(tipo === 'cargo'){
-                return(<Form.Control type="text" className="form-input" value={this.state.cargo[0].nombre} disabled={true} autoFocus/>)
+                return(<Form.Control type="text" className="form-input" value={this.state.cargo.nombre} disabled={true} autoFocus/>)
             }else if(tipo === 'rol'){
-                return(<Form.Control type="text" className="form-input" value={this.state.rol[0].nombre} disabled={true} autoFocus/>)
+                return(<Form.Control type="text" className="form-input" value={this.state.rol.nombre} disabled={true} autoFocus/>)
             }
         }else{
             if(tipo === 'cargo'){
                 return(
                     <Form.Control 
                         as="select" 
+                        id="cargo-empleado"
                         className="form-input form-input-dropdown-cargo-empleado">
+                        value={this.state.cargo.clave}
+                        onClick={this.onInputChange}
                         {
                             this.renderOptions('cargo')
                         }
@@ -226,7 +239,10 @@ export default class GestionarEmpleado extends React.Component {
                 return(
                     <Form.Control 
                         as="select" 
-                        className="form-input form-input-dropdown-rol-empleado">
+                        id="rol-usuario"
+                        className="form-input form-input-dropdown-rol-usuario">
+                        value={this.state.rol.clave}
+                        onClick={this.onInputChange}
                         {
                             this.renderOptions('rol')
                         }
@@ -236,20 +252,177 @@ export default class GestionarEmpleado extends React.Component {
         }
     } 
     onInputChange = (e) => {
-      const modif = e.target.value;
-      this.setState(() => ({ modif }));
-      console.log("em")
+        const modif = e.target.value;
+        //Solo letras
+        if (!modif || modif.match(/^[ñA-Za-zÁ-Úá-ú _]*[ñA-Za-zÁ-Úá-ú][ñA-Za-zÁ-Úá-ú _]*$/)) {
+            if (e.target.id === 'p-nombre-empleado'){
+                this.setState(() => ({
+                    pnombre: modif
+                }));
+            }
+            if (e.target.id === 's-nombre-empleado'){
+                this.setState(() => ({
+                    snombre: modif
+                }));
+            }
+            if (e.target.id === 'p-apellido-empleado'){
+                this.setState(() => ({
+                    papellido: modif
+                }));
+            }
+            if (e.target.id === 's-apellido-empleado'){
+                this.setState(() => ({
+                    sapellido: modif
+                }));
+            }
+        }
+
+        //Solo numeros
+        if ((!modif) || modif.match(/^[0-9\b]+$/)){
+            if (e.target.id === 'ci-empleado'){
+                this.setState(() => ({
+                    ci: modif
+                }));
+            }
+            if (e.target.id === 'dia-empleado'){
+                this.setState(() => ({
+                    nacimd: modif
+                }));
+            }
+            if (e.target.id === 'mes-empleado'){
+                this.setState(() => ({
+                    nacimm: modif
+                }));
+            }
+            if (e.target.id === 'ano-empleado'){
+                this.setState(() => ({
+                    nacima: modif
+                }));
+            }
+            if (e.target.id === 'telefono-empleado'){
+                this.setState(() => ({
+                    telefono: modif
+                }));
+            }
+        }
+
+        //Cualquier caracter
+        if (e.target.id === 'usuario-usuario'){
+            this.setState(() => ({
+                usuario: modif
+            }));
+        }
+        if (e.target.id === 'contrasena-usuario'){
+            this.setState(() => ({
+                contrasena: modif
+            }));
+        }
+
+        //Dropdown
+        if (e.target.id === 'nac-empleado'){
+            this.setState(() => ({
+                nacionalidad: modif
+            }));
+        }
+        if (e.target.id === 'sexo-empleado'){
+            this.setState(() => ({
+                sexo: modif
+            }));
+        }
+        if (e.target.id === 'nivel-empleado'){
+            this.setState(() => ({
+                nivel: modif
+            }));
+        }
+        if (e.target.id === 'estatus-empleado'){
+            this.setState(() => ({
+                estatus: modif
+            }));
+        }
+        if (e.target.id === 'cargo-empleado'){
+            this.setState(() => ({
+                cargo: {
+                    clave: modif
+                }
+            }));
+        }
+        if (e.target.id === 'rol-usuario'){
+            this.setState(() => ({
+                rol: {
+                    clave: modif
+                }
+            }));
+        }
     }
     onSubmit = (e) => {
-        console.log(document.getElementById('LugarEstado').value)
-        console.log(document.getElementById('LugarMunicipio').value)
-        console.log(document.getElementById('LugarParroquia').value)
-        //console.log(this.state.pnombre, this.state.snombre, this.state.papellido, this.state.sapellido)
-        //console.log(this.state.nacionalidad, this.state.ci, this.state.nacimd, this.state.nacimm, this.state.nacima)
-        //console.log(this.state.sexo)
-        //console.log(this.state.telefono, this.state.nivel)
-        //console.log(this.state.cargo[0].nombre, this.state.rol[0].nombre)
-        //console.log(this.state.usuario[0].usuario, this.state.usuario[0].contrasena)
+        if((this.state.pnombre.length>0)&&(this.state.papellido.length>0)&&(this.state.ci.length>0)
+            &&(this.state.nacimd>0)&&(this.state.nacimd<=31)&&(this.state.nacimm>0)&&(this.state.nacimm<=12)
+            &&(this.state.nacima>0)&&(this.state.nacimd<=2019)&&(this.state.telefono.length>0)){
+            var sex
+            if(this.state.sexo === 'M'){
+                sex = 'Masculino'
+            }else if(this.state.sexo === "F"){
+                sex = 'Femenino'
+            }
+            var segn
+            if((this.state.snombre === null) || (this.state.snombre.length===0)){
+                segn = null
+            }else{
+                segn = this.state.snombre
+            }
+            var sega
+            if((this.state.sapellido === null) || (this.state.sapellido.length===0)){
+                sega = null
+            }else{
+                sega = this.state.sapellido
+            }
+            var user
+            if((this.state.usuario.length>0)&&(this.state.contrasena.length>0)){
+                user = true
+            }else{
+                user = false
+            }
+            let empleado = {
+                pnombre: this.state.pnombre,
+                snombre: segn,
+                papellido: this.state.papellido,
+                sapellido: sega,
+                ci: this.state.nacionalidad+this.state.ci,
+                fecha_nacimiento: this.state.nacima.toString()+'-'+this.state.nacimm.toString()+'-'+this.state.nacimd.toString(),
+                sexo: sex,
+                nivel: this.state.nivel,
+                telefono: this.state.telefono.toString(),
+                fk_estatus: document.getElementById('estatus-empleado').value,
+                fk_cargo: document.getElementById('cargo-empleado').value,
+                fk_lugar: document.getElementById('LugarParroquia').value,
+                usuarioasoc: user,
+                usuario: this.state.usuario,
+                contrasena: this.state.contrasena,
+                fk_rol:document.getElementById('rol-usuario').value,
+            }
+
+            if(this.props.match.params.accion === 'CR'){
+                const config = {
+                    headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    responseType: 'json',
+                    data: empleado
+                }
+                
+                axios.post('http://localhost:3000/crearEmpleado', config)
+                    .then((res) => {
+                    }).catch((e) => {
+                        console.log('Error en axios')
+                    })
+                history.push('/home');
+            }
+
+        }
+        else{
+            alert("Existen campos invalidos. Revise e intente de nuevo.")
+        }
+
     }
     renderTitle = () => {
       if (this.props.match.params.accion === 'CR'){
@@ -271,11 +444,13 @@ export default class GestionarEmpleado extends React.Component {
         }
     }
     renderPred = (tipo) => {
-        if((tipo === 'cargo')){
-            $(".form-input-dropdown-cargo-empleado").val(this.state.cargo[0].nombre).change()
-        }
-        if((tipo === 'rol')){
-            $(".form-input-dropdown-rol-empleado").val(this.state.rol[0].nombre).change()
+        if(this.props.match.params.accion !== 'CR'){
+            if((tipo === 'cargo')){
+                $(".form-input-dropdown-cargo-empleado").val(this.state.cargo.clave).change()
+            }
+            if((tipo === 'rol')){
+                $(".form-input-dropdown-rol-usuario").val(this.state.rol.clave).change()
+            }
         }
     }
     accordionf(e){
@@ -436,9 +611,12 @@ export default class GestionarEmpleado extends React.Component {
                                             <Row className="div-content-date">
                                                 <Form.Control
                                                 as="select"
+                                                id="nac-empleado"
                                                 className="form-input form-ci-type"
                                                 disabled={!this.state.modificar}
-                                                value={this.state.nacionalidad}>
+                                                value={this.state.nacionalidad}
+                                                onChange={this.onInputChange}
+                                                >
                                                     <option>V</option>
                                                     <option>E</option>
                                                 </Form.Control>   
@@ -517,9 +695,12 @@ export default class GestionarEmpleado extends React.Component {
                                         <Form.Group>
                                             <Form.Label className="cliente-description-fields-text">Sexo</Form.Label>
 	                                            <Form.Control as="select"
+                                                id="sexo-empleado"
                                                 className="form-input form-sex-type"
                                                 disabled={!this.state.modificar}
-                                                value={this.state.sexo}>
+                                                value={this.state.sexo}
+                                                onChange={this.onInputChange}
+                                                >
                                                     <option>M</option>
                                                     <option>F</option>
                                                     <option>O</option>
@@ -575,18 +756,18 @@ export default class GestionarEmpleado extends React.Component {
                                         <Form.Group>
                                             <Form.Label className="cliente-description-fields-text">Nivel de instrucción</Form.Label>
                                             <Form.Control as="select"
+                                            id="nivel-empleado"
                                             className="form-input form-nivel"
                                             disabled={!this.state.modificar}
-                                            value={this.state.nivel}>
+                                            value={this.state.nivel}
+                                            onChange={this.onInputChange}
+                                            >
                                                 <option>Primaria</option>
                                                 <option>Secundaria</option>
                                                 <option>Universitaria</option>
                                                 <option>Superior</option>
                                                 <option>Otro</option>
                                             </Form.Control>
-                                            <Form.Text className="text-muted">
-                                                Este campo es obligatorio
-                                            </Form.Text>
                                         </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
@@ -600,6 +781,35 @@ export default class GestionarEmpleado extends React.Component {
                                         }
                                     </Col>
                                     <Col md={1}></Col>
+                                </Form.Row>
+                            </Col>
+                            <Col md={1}></Col>
+                        </Row>
+                    </div>
+                    <div>
+                        <Row className="div-content-form">
+                            <Col md={2}></Col>
+                            <Col md={9}>
+                                <Form.Row>
+                                    <Col md={3}></Col>
+                                    <Col md={4}>
+                                        <Form.Group>
+                                            <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
+                                            <Form.Control
+                                            as="select"
+                                            id="estatus-empleado"
+                                            className="form-input form-estatus"
+                                            disabled={!this.state.modificar}
+                                            value={this.state.estatus}
+                                            onChange={this.onInputChange}
+                                            >
+                                                <option value={1}>Activo</option>
+                                                <option value={2}>Inactivo</option>
+                                                <option value={3}>Ocupado</option>
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col md={5}></Col>
                                 </Form.Row>
                             </Col>
                             <Col md={1}></Col>
@@ -635,9 +845,9 @@ export default class GestionarEmpleado extends React.Component {
 							                                            <Form.Label className="cliente-description-fields-text">Usuario</Form.Label>
 							                                            <Form.Control 
 							                                                type="text" 
-							                                                className="form-input" 
+							                                                className="form-input form-user" 
 							                                                id="usuario-usuario"
-							                                                value={this.state.usuario[0].usuario}
+							                                                value={this.state.usuario}
                                                                             disabled={!this.state.modificar}
                                                                             onChange={this.onInputChange} 
 							                                                placeholder="Usuario"
@@ -651,9 +861,9 @@ export default class GestionarEmpleado extends React.Component {
 							                                            <Form.Label className="cliente-description-fields-text">Contraseña</Form.Label>
 							                                            <Form.Control 
 							                                                type="password"
-							                                                className="form-input" 
-							                                                id="contrasena-empleado"
-							                                                value={this.state.usuario[0].contrasena}
+							                                                className="form-input form-passw" 
+							                                                id="contrasena-usuario"
+							                                                value={this.state.contrasena}
                                                                             disabled={!this.state.modificar}
                                                                             onChange={this.onInputChange}
 							                                                placeholder="Contraseña"
