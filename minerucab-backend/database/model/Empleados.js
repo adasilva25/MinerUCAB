@@ -42,6 +42,7 @@ const getAllEmpleados = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -59,6 +60,7 @@ const getCriticInfoEmpleados = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -77,6 +79,7 @@ const getEmpleadoByCedula = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -95,6 +98,7 @@ const getEmpleadoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -113,6 +117,7 @@ const deleteEmpleadoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 

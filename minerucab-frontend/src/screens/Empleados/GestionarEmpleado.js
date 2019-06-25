@@ -308,7 +308,7 @@ export default class GestionarEmpleado extends React.Component {
         return (
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
-                <OpcionesLocales Usuario='Andrea Da Silva'/>
+                <OpcionesLocales Usuario='Alba Sánchez'/>
                 <Container>
                     <Row>
                         <Col md={2}></Col>

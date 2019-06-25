@@ -1,11 +1,14 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 // https://react-bootstrap.github.io/components/buttons/
-import Form from 'react-bootstrap/Form'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import FormLugar from '../../components/FormLugar';
+import FormLugarPred from '../../components/FormLugarPred';
 import {history} from '../../routers/History';
+import ModalAdvertencia from '../../components/ModalAdvertencia';
 import OpcionesLocales from '../../components/OpcionesLocales';
 import OpcionesGlobales from '../../components/OpcionesGlobales';
 import axios from 'axios';
@@ -23,13 +26,14 @@ export default class RegistrarClienteNatural extends React.Component {
         tlf: '',
         ci: '',
         correo: '',
-        disable: false
+        tipo_ci: '',
+        fk_lugar: '',
+        disable: false,
+        mensajeError: '',
+        modalShowEliminar: false
     }
     componentDidMount = () => {
         if (this.props.match.params.accion !== 'CR'){
-            if (this.props.match.params.accion === 'CO'){
-                this.setState({ disable: true });
-            }
             const config = {
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded'
@@ -44,9 +48,11 @@ export default class RegistrarClienteNatural extends React.Component {
                     this.setState({ segundoNombre: res.data[0].s_nombre });
                     this.setState({ primerApellido: res.data[0].p_apellido });
                     this.setState({ segundoApellido: res.data[0].s_apellido });
-                    this.setState({ ci: res.data[0].ci });
+                    this.setState({ ci: res.data[0].ci.slice(1) });
+                    this.setState({ tipo_ci: res.data[0].ci[0] });
                     this.setState({ correo: res.data[0].email });
                     this.setState({ tlf: res.data[0].telefono });
+                    this.setState({ fk_lugar: res.data[0].fk_lugar });
                     const date = new Date(res.data[0].fecha_nacimiento)
                     const dia = date.getDate()
                     const mes = (date.getMonth() + 1)
@@ -54,90 +60,133 @@ export default class RegistrarClienteNatural extends React.Component {
                     this.setState({ dia });
                     this.setState({ mes });
                     this.setState({ ano });
+                    if (this.props.match.params.accion !== 'CR'){
+                        document.getElementsByClassName('form-ci-type')[0].value = this.state.tipo_ci
+                        if (this.props.match.params.accion === 'CO'){
+                            this.setState({ disable: true });
+                        }
+                    }
                 }).catch((e) => {
                     console.log('Error en axios')
+                    this.setState({ mensajeError: 'Hubo un error conectando a la base de datos. Por favor valide los parámetros enviados' })
+                    this.modalErrorOpen()
                 })
         }
     }
+    modalErrorClose = () => {
+        this.setState({ modalShowEliminar: false });
+    }
+    modalErrorOpen = () => {
+        this.setState({ modalShowEliminar: true })
+    };
     onSubmit = (e) => {
         const info = {
-            primerNombre: '',
-            segundoNombre: '',
-            primerApellido: '',
-            segundoApellido: '',
+            p_nombre: '',
+            s_nombre: '',
+            p_apellido: '',
+            s_apellido: '',
             ci: '',
-            fecha: '',
-            correo: '',
-            tlf: '',
-            estado: '',
-            municipio: '',
-            parroquia: ''
-        };
+            fecha_nacimiento: '',
+            email: '',
+            telefono: '',
+            fk_lugar: ''
+        }
 
-        // info.primerNombre = document.getElementById('primerNombre-cliente-natural').value;
-        // info.segundoNombre = document.getElementById('segundoNombre-cliente-natural').value;
-        // info.primerApellido = document.getElementById('primerApellido-cliente-natural').value;
-        // info.segundoApellido = document.getElementById('segundoApellido-cliente-natural').value;
-        // info.ci = document.getElementById('ci-cliente-natural').value;
-        // info.fecha = document.getElementById('dia-cliente-natural').value + '-' + document.getElementById('mes-cliente-natural').value + '-' + document.getElementById('ano-cliente-natural').value;
-        // info.correo = document.getElementById('correo-cliente-natural').value;
-        // info.tlf = document.getElementById('tlf-cliente-natural').value;
-        // info.estado = document.getElementById('estado-cliente-natural').value;
-        // info.municipio = document.getElementById('municipio-cliente-natural').value;
-        // info.parroquia = document.getElementById('parroquia-cliente-natural').value;
+        if ((this.state.primerNombre.length > 0) && (this.state.primerApellido.length > 0) &&
+            (this.state.ci.length > 0) && (this.state.dia.toString().length > 0) && (this.state.mes.toString().length > 0) &&
+            (this.state.ano.toString().length > 0) && (this.state.correo.length > 0) && (this.state.tlf.length > 0)){
+                console.log('paso el if')
+                info.p_nombre = this.state.primerNombre[0].toUpperCase() + this.state.primerNombre.substring(1,this.state.primerNombre.length).toLowerCase();
 
-        console.log('info', info);
-
-        if ((this.state.primerNombre.length > 0) || (this.state.segundoNombre.length > 0) || 
-            (this.state.primerApellido.length > 0) || (this.state.segundoApellido.length > 0) ||
-            (this.state.ci.length > 0) || (this.state.dia.length > 0) || (this.state.mes.length > 0) ||
-            (this.state.ano.length > 0) || (this.state.correo.length > 0) || (this.state.tlf > 0)){
+                if ((this.state.segundoNombre === '') || (this.state.segundoNombre === null)){
+                    info.s_nombre = null;
+                }   
+                else{
+                    info.s_nombre = this.state.segundoNombre[0].toUpperCase() + this.state.segundoNombre.substring(1,this.state.segundoNombre.length).toLowerCase();
+                }
                 
-                info.primerNombre = this.state.primerNombre;
-                info.segundoNombre = this.state.segundoNombre;
-                info.primerApellido = this.state.primerApellido;
-                info.segundoApellido = this.state.segundoApellido;
-                info.ci = this.state.ci;
-                info.fecha = this.state.dia + '-' + this.state.mes + '-' + this.state.ano;
-                info.correo = this.state.correo;
-                info.tlf = this.state.tlf;
-                info.estado = document.getElementById('estado-cliente-natural').value;
-                info.municipio = document.getElementById('municipio-cliente-natural').value;
-                info.parroquia = document.getElementById('parroquia-cliente-natural').value;
+                info.p_apellido = this.state.primerApellido[0].toUpperCase() + this.state.primerApellido.substring(1,this.state.primerApellido.length).toLowerCase();
+                
+                if ((this.state.segundoApellido === '') || (this.state.segundoApellido === null)){
+                    info.s_apellido = null;
+                }   
+                else{
+                    info.s_apellido = this.state.segundoApellido[0].toUpperCase() + this.state.segundoApellido.substring(1,this.state.segundoApellido.length).toLowerCase();
+                }
+                
+                info.ci = document.getElementsByClassName('form-ci-type')[0].value + this.state.ci;
+                info.fecha_nacimiento = this.state.mes + '-' + this.state.dia + '-' + this.state.ano;
+                info.email = this.state.correo;
+                info.telefono = this.state.tlf;
+                info.fk_lugar = document.getElementById('LugarParroquia').value;
 
                 console.log('info', info);
 
-                // const config = {
-                //     headers: {
-                //       'Content-Type': 'application/x-www-form-urlencoded'
-                //     },
-                //     responseType: 'json',
-                //     data: info
-                // }
-                
-                // axios.post('http://localhost:3000/createClienteNatural', config)
-                //     .then((res) => {
-                //         console.log(res)
-                //     }).catch((e) => {
-                //         console.log('Error en axios')
-                //     })
-            }
+                if ((this.state.dia > 31) || (this.state.dia < 1) || (this.state.mes > 12) || (this.state.mes < 1) || (this.state.ano > 2019)){
+                    this.setState({ mensajeError: '¡Fecha inválida!' })
+                    this.modalErrorOpen()
+                }
+                else {
+                    const config = {
+                        headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        responseType: 'json',
+                        data: info
+                    }
+                    
+                    if (this.props.match.params.accion === 'CR'){
+                        axios.post('http://localhost:3000/createClienteNatural', config)
+                            .then((res) => {
+                                console.log(res)
+                                history.push('/cliente')
+                            }).catch((e) => {
+                                console.log('catch', e)
+                                this.setState({ mensajeError: 'Hubo un error registrando el cliente. Por favor, intente de nuevo y valide sus campos' })
+                                this.modalErrorOpen()
+                            })
+                    }
+                    else if (this.props.match.params.accion === 'M'){
+                        info.clave = this.props.match.params.id;
+                        axios.put('http://localhost:3000/updateClienteNaturalById', config)
+                        .then((res) => {
+                            console.log(res)
+                            history.push('/cliente')
+                        }).catch((e) => {
+                            console.log(e)
+                            this.setState({ mensajeError: 'Hubo un error actualizando los datos del cliente. Por favor, intente de nuevo y valide sus campos' })
+                            this.modalErrorOpen()
+                        })
+                    }
+                }
+        }
+        else {
+            console.log(this.state)
+            console.log('this.state.primerNombre.length', this.state.primerNombre.length)
+            console.log('this.state.primerApellido.length', this.state.primerApellido.length)
+            console.log('this.state.ci', this.state.ci.length)
+            console.log('this.state.dia.length', this.state.dia.length)
+            console.log('this.state.mes.length', this.state.mes.length)
+            console.log('this.state.ano.length', this.state.ano.length)
+            this.setState({ mensajeError: 'Existen campos obligatorios vacíos' })
+            this.modalErrorOpen()
+        }
     }
     onChangeText = (e) => {
         const text = e.target.value;
         
-        if (!text || text.match(/^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/)) {
+        if (!text || text.match(/^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/) ) {
             if (e.target.id === 'primerNombre-cliente-natural'){
-                this.setState({ primerNombre: e.target.value.trim() });
+                this.setState({ primerNombre: e.target.value });
             }
             if (e.target.id === 'segundoNombre-cliente-natural'){
-                this.setState({ segundoNombre: e.target.value.trim() });
+                this.setState({ segundoNombre: e.target.value });
             }
             if (e.target.id === 'primerApellido-cliente-natural'){
-                this.setState({ primerApellido: e.target.value.trim() });
+                this.setState({ primerApellido: e.target.value });
             }
             if (e.target.id === 'segundoApellido-cliente-natural'){
-                this.setState({ segundoApellido: e.target.value.trim() });
+                this.setState({ segundoApellido: e.target.value });
             }
         }
     }
@@ -145,15 +194,20 @@ export default class RegistrarClienteNatural extends React.Component {
         const number = e.target.value;
 
         if ((!number) || number.match(/^[0-9\b]+$/)){
-            console.log('number', number)
             if (e.target.id === 'dia-cliente-natural'){
-                this.setState({ dia: e.target.value });
+                if ((e.target.value.length < 3)){
+                    this.setState({ dia: e.target.value });
+                }
             }
             else if (e.target.id === 'mes-cliente-natural'){
-                this.setState({ mes: e.target.value });
+                if ((e.target.value.length < 3)){
+                    this.setState({ mes: e.target.value });
+                }
             }
             else if (e.target.id === 'ano-cliente-natural'){
-                this.setState({ ano: e.target.value });
+                if ((e.target.value.length < 5)){
+                    this.setState({ ano: e.target.value });
+                }
             }
             else if (e.target.id === 'ci-cliente-natural'){
                 this.setState({ ci: e.target.value });
@@ -163,6 +217,16 @@ export default class RegistrarClienteNatural extends React.Component {
             }
         }
     }
+    renderLugar = () => {
+        if(this.props.match.params.accion !== 'CR'){
+            if (this.state.fk_lugar){
+                return (<FormLugarPred idParroquia={this.state.fk_lugar} predet={true} accion={this.props.match.params.accion}/>)
+            }
+        }
+        else{
+            return (<FormLugar />) //predet={false}
+        }
+    }
     render(){
         let title;
 
@@ -170,7 +234,7 @@ export default class RegistrarClienteNatural extends React.Component {
             title = 'Consultar'
         }
         else if(this.props.match.params.accion === 'CR'){
-            title = 'Crear'
+            title = 'Registrar'
         }
         else if(this.props.match.params.accion === 'M'){
             title = 'Modificar'
@@ -180,6 +244,12 @@ export default class RegistrarClienteNatural extends React.Component {
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario='Andrea Da Silva'/>
                 <Container>
+                <ModalAdvertencia
+                    show={this.state.modalShowEliminar}
+                    onHide={this.modalErrorClose}
+                    infoeliminar={this.state.mensajeError}
+                    mensaje={''}
+                />
                     <Row>
                         <Col md={2}></Col>
                         <Col md={9}>
@@ -221,9 +291,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 disabled={this.state.disable}
                                                 onChange={this.onChangeText} 
                                             />
-                                            <Form.Text className="text-muted">
-                                                Este campo es obligatorio
-                                            </Form.Text>
+                                            {!this.state.disable && <Form.Text className="text-muted"> Obligatorio</Form.Text>}
                                         </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
@@ -237,7 +305,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 value={this.state.segundoNombre} 
                                                 onChange={this.onChangeText} 
                                                 disabled={this.state.disable}
-                                                placeholder="Introduzca su segundo nombre" 
+                                                placeholder={title !== 'Consultar' ? "Introduzca su segundo nombre" : ''}
                                             />
                                         </Form.Group>
                                     </Col>
@@ -265,9 +333,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 disabled={this.state.disable}
                                             />
                                         </Form.Group>
-                                        <Form.Text className="text-muted">
-                                            Este campo es obligatorio
-                                        </Form.Text> 
+                                        {!this.state.disable && <Form.Text className="text-muted"> Obligatorio</Form.Text>}
                                     </Col>
                                     <Col md={1}></Col>
                                     <Col md={5}>
@@ -278,7 +344,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 id="segundoApellido-cliente-natural"
                                                 className="form-input" 
                                                 value={this.state.segundoApellido} 
-                                                placeholder="Introduzca su segundo apellido" 
+                                                placeholder={title !== 'Consultar' ? "Introduzca su segundo apellido" : ''}
                                                 onChange={this.onChangeText} 
                                                 disabled={this.state.disable}
                                             />
@@ -302,7 +368,6 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 <Form.Control as="select" className="form-input form-ci-type" disabled={this.state.disable}>
                                                     <option>V</option>
                                                     <option>E</option>
-                                                    <option>J</option>
                                                 </Form.Control>   
                                                 <Form.Control 
                                                     type="text" 
@@ -314,9 +379,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                     disabled={this.state.disable}
                                                 />                                       
                                             </Row>  
-                                            <Form.Text className="text-muted">
-                                                Este campo es obligatorio
-                                            </Form.Text> 
+                                            {!this.state.disable && <Form.Text className="text-muted"> Obligatorio</Form.Text>}
                                         </Form.Group>   
                                     </Col>
                                     <Col md={1}></Col>
@@ -358,9 +421,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                         disabled={this.state.disable}
                                                     />                                            
                                                 </Row>
-                                                <Form.Text className="text-muted">
-                                                    Este campo es obligatorio
-                                                </Form.Text>
+                                                {!this.state.disable && <Form.Text className="text-muted"> Obligatorio</Form.Text>}
                                         </Form.Group>
                                     </Col>
                                 </Form.Row>
@@ -393,12 +454,10 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 id='correo-cliente-natural'
                                                 placeholder="Introduzca su correo electrónico" 
                                                 value={this.state.correo}
-                                                onChange={this.onChangeText}
+                                                onChange={(e) => this.setState({ correo: e.target.value.trim() })}
                                                 disabled={this.state.disable}
                                             />
-                                            <Form.Text className="text-muted">
-                                                Este campo es obligatorio
-                                            </Form.Text>
+                                            {!this.state.disable && <Form.Text className="text-muted"> Obligatorio</Form.Text>}
                                         </Form.Group>
                                     </Col>
                                     <Col md={1}></Col>
@@ -415,6 +474,7 @@ export default class RegistrarClienteNatural extends React.Component {
                                                 value={this.state.tlf}
                                             />
                                         </Form.Group>
+                                        {!this.state.disable && <Form.Text className="text-muted"> Obligatorio</Form.Text>}
                                     </Col>
                                     <Col md={1}></Col>
                                 </Form.Row>
@@ -434,66 +494,12 @@ export default class RegistrarClienteNatural extends React.Component {
                         </Col>
                     </Row>
                     <div>
-                        <Row className="div-content-form div-content-form-end-rc">
+                        <Row>
                             <Col md={2}></Col>
-                            <Col md={9}>
-                            <Form.Row>
-                            <Col md={12}>
-                                <Form.Row className="div-ventas-pedido-form">
-                                    <Col md={3}>
-                                        <Form.Label className="cliente-description-fields-text">Estado</Form.Label>
-                                        <Form.Control 
-                                            as="select" 
-                                            className="form-input"
-                                            id='estado-cliente-natural'
-                                        >
-                                            <option>Sucre</option>
-                                            <option>Distrito Capital</option>
-                                            <option>Amazonas</option>
-                                            <option>Apure</option>
-                                            <option>Barinas</option>
-                                        </Form.Control>
-                                    </Col>
-                                    <Col md={1}></Col>
-                                    <Col md={3}>
-                                        <Form.Label className="cliente-description-fields-text">Municipio</Form.Label>
-                                        <Form.Control 
-                                            as="select"
-                                            className="form-input"
-                                            id='municipio-cliente-natural'
-                                        >
-                                            <option>Caracas</option>
-                                            <option>Cumaná</option>
-                                            <option>San Fernando de Apure</option>
-                                            <option>Tucupita</option>
-                                            <option>Portuguesa</option>
-                                            <option>Guanare</option>
-                                            <option>Barinas</option>
-                                            <option>La Guaira</option>
-                                            <option>Barquisimeto</option>
-                                        </Form.Control>
-                                    </Col>
-                                    <Col md={1}></Col>
-                                    <Col md={3}>
-                                        <Form.Label className="cliente-description-fields-text">Parroquia</Form.Label>
-                                        <Form.Control 
-                                            as="select" 
-                                            className="form-input"
-                                            id='parroquia-cliente-natural'
-                                        >
-                                            <option>Sucre</option>
-                                            <option>Baruta</option>
-                                            <option>Chacao</option>
-                                            <option>Libertador</option>
-                                            <option>Guaicaipuro</option>
-                                        </Form.Control>
-                                    </Col>
-                                </Form.Row>
-
-                                    </Col>
-                                </Form.Row>
+                            <Col md={8}>
+                                {this.renderLugar()}
                             </Col>
-                            <Col md={1}></Col>
+                            <Col md={2}></Col>
                         </Row>
                     </div>
                     <div className="div-content-form">
@@ -501,16 +507,20 @@ export default class RegistrarClienteNatural extends React.Component {
                             <Col md={2}></Col>
                             <Col md={9}>
                                 <Row>
-                                    <Col md={5}>
-                                    </Col>
-                                    <Col md={2}></Col>
+                                    <Col md={1}></Col>
                                     <Col md={5}>
                                         <Button 
-                                            className="ccargo-btn btn-block"
-                                            onClick={this.onSubmit}
-                                        >
-                                            Enviar
+                                            className="modal-ventasform-volver-button btn-block" 
+                                            onClick={() => history.goBack()}
+                                        > 
+                                            Volver 
                                         </Button>
+                                    </Col>
+                                    <Col md={1}></Col>
+                                    <Col md={5}>
+                                    {
+                                        this.props.match.params.accion !== 'CO' && (<Button className="modal-ventasform-enviar-button btn-block" onClick={this.onSubmit}> Enviar </Button>)
+                                    }
                                     </Col>
                                 </Row>
                             </Col>

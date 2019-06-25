@@ -33,7 +33,7 @@ export default class ModalRegistrarCliente extends React.Component {
                 <Col md={1}></Col>
                 <Col md={5}>
                   <Button 
-                      onClick={() => history.push('/registrar_cliente_natural/C')} 
+                      onClick={() => history.push('/registrar_cliente_natural/CR')} 
                       className="modal-rcnatural-button btn-block"
                   >
                       Cliente Natural
@@ -41,7 +41,7 @@ export default class ModalRegistrarCliente extends React.Component {
                 </Col>
                 <Col md={5}>
                   <Button 
-                  onClick={() => history.push('/registrar_cliente_juridico/C')} 
+                  onClick={() => history.push('/registrar_cliente_juridico/CR')} 
                     className="modal-rcjuridico-button btn-block"
                   >
                     Cliente Jurídico

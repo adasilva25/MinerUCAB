@@ -31,7 +31,20 @@ const createClienteNatural = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
-    console.log(req.body.data);
+    client.connect();
+    const text = 'INSERT INTO MU_CLIENTE_NATURAL (CI, P_nombre, S_nombre, P_apellido, S_apellido, Fecha_nacimiento, Email, Telefono, fk_lugar) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);';
+    const values = [req.body.data.ci, req.body.data.p_nombre, req.body.data.s_nombre, req.body.data.p_apellido, req.body.data.s_apellido, req.body.data.fecha_nacimiento, req.body.data.email, req.body.data.telefono, req.body.data.fk_lugar];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error.stack);
+        res.status(500).json({ error: error.toString() });
+        client.end();
+    })
 }
 
 /* ------------------------------ READ ------------------------------ */
@@ -49,6 +62,7 @@ const getAllClientes = (req, res) => {
     })
     .catch((error) => {
         console.log(error);
+        res.status(500).json({ error: error.toString() });
         client.end();
     })
 }
@@ -67,6 +81,7 @@ const getClienteByCedula = (req, res) => {
     })
     .catch((error) => {
         console.log(error);
+        res.status(500).json({ error: error.toString() });
         client.end();
     })
 }
@@ -85,6 +100,7 @@ const getClienteById = (req, res) => {
     })
     .catch((error) => {
         console.log(error);
+        res.status(500).json({ error: error.toString() });
         client.end();
     })
 }
@@ -103,13 +119,38 @@ const getClienteNombreApellidoById = (req, res) => {
     })
     .catch((error) => {
         console.log(error);
+        res.status(500).json({ error: error.toString() });
         client.end();
     })
 }
 
-const deleteClienteById = (req, res) => {
+/* ------------------------------ UPDATE ------------------------------ */
+
+const updateClienteNaturalById = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    console.log(req.body.data)
+    client.connect();
+    const text = 'UPDATE MU_CLIENTE_NATURAL SET P_nombre = ($1), S_nombre = ($2), P_apellido = ($3), S_apellido = ($4), CI = ($5), Fecha_nacimiento = ($6), Email = ($7), Telefono = ($8), fk_lugar = ($9) WHERE Clave = ($10);';
+    const values = [req.body.data.p_nombre, req.body.data.s_nombre, req.body.data.p_apellido, req.body.data.s_apellido, req.body.data.ci, req.body.data.fecha_nacimiento, req.body.data.email, req.body.data.telefono, req.body.data.fk_lugar, req.body.data.clave];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error: error.toString() });
+        client.end();
+    })
+}
+
+/* ------------------------------ DELETE ------------------------------ */
+
+const deleteClienteById = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     client.connect();
     const text = 'DELETE FROM MU_CLIENTE_NATURAL WHERE Clave = ($1);';
@@ -121,6 +162,7 @@ const deleteClienteById = (req, res) => {
     })
     .catch((error) => {
         console.log(error);
+        res.status(500).json({ error: error.toString() });
         client.end();
     })
 }
@@ -130,7 +172,8 @@ module.exports = {
     getAllClientes,
     getClienteByCedula,
     getClienteById,
-    deleteClienteById,
-    getClienteNombreApellidoById
+    getClienteNombreApellidoById,
+    updateClienteNaturalById,
+    deleteClienteById
     // ,[siguientes funciones]
 }

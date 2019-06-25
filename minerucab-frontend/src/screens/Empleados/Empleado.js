@@ -45,7 +45,7 @@ export default class Cliente extends React.Component {
         return (
             <div>
                 <OpcionesGlobales active="Home"/>
-                <OpcionesLocales />
+                <OpcionesLocales Usuario='Alba Sánchez'/>
                 <ModalYesNo
                     show={this.state.modalShowEliminar}
                     onHide={this.modalEliminarClose}

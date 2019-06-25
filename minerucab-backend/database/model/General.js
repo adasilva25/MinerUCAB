@@ -16,6 +16,7 @@ const getAllTableColumns = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 

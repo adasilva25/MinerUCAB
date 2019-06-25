@@ -22,6 +22,7 @@ const createDetalleVenta = (values) => {
     .catch((e) => {
         console.error(e.stack);
         client.end();
+        res.status(500).json({ error: error.toString() });
     }) 
 }
 
@@ -41,6 +42,7 @@ const getDetalleVentaByIdVenta = (req, response) => {
     .catch((e) => {
         console.error(e.stack);
         client.end();
+        res.status(500).json({ error: error.toString() });
     }) 
 }
 

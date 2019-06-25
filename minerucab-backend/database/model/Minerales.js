@@ -15,6 +15,7 @@ const getAllMineralesMetalicos = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -32,6 +33,7 @@ const getAllMineralesNoMetalicos = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -49,6 +51,7 @@ const getAllMineralesMetalicosConPresentacion = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -66,6 +69,7 @@ const getAllMineralesNoMetalicosConPresentacion = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -84,6 +88,7 @@ const getMineralMetalicoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -102,6 +107,7 @@ const getMineralNoMetalicoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -120,6 +126,7 @@ const getNombreMineralMetalicoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -138,6 +145,7 @@ const getNombreMineralNoMetalicoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -156,6 +164,7 @@ const getAllComponentesByIdMineralMetalico = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -174,6 +183,7 @@ const getAllComponentesByIdMineralNoMetalico = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -192,6 +202,7 @@ const deleteMineralMetalicoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -210,6 +221,7 @@ const deleteMineralNoMetalicoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 

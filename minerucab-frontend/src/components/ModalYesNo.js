@@ -19,8 +19,7 @@ export default class ModalComponent extends React.Component {
     axios.delete(this.props.urleliminar, config)
       .then((res) => {
         console.log(res);
-        this.props.onHide
-        history.push('/home')
+        history.goBack(this.props.urlOrigen)
       })
       .catch((e) => {
         console.log(e)

@@ -6,15 +6,13 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ModalRegistrarCliente from '../../components/ModalRegistrarCliente';
-import ModalYesNoClienteNatural from '../../components/ModalYesNo';
-import ModalYesNoClienteJuridico from '../../components/ModalYesNo';
+import ModalYesNo from '../../components/ModalYesNo';
 import axios from 'axios';
 
 export default class Cliente extends React.Component {
     state = { 
-        modalShowEliminarClienteNatural: false,
+        modalShowEliminar: false,
         modalShowCrearCliente: false,
-        modalShowEliminarClienteJuridico: false,
         infoEliminar: '',
         idEliminar: 0,
         urlEliminar: '',
@@ -45,10 +43,10 @@ export default class Cliente extends React.Component {
                 console.log('Error con el nombre - apellido por el id cliente');
             })
     };
-    modalEliminarClienteJuridicoClose = () => {
-        this.setState({ modalShowEliminarClienteJuridico: false, reload: true });
+    modalEliminarClose = () => {
+        this.setState({ modalShowEliminar: false, reload: true });
     }
-    modalEliminarClienteJuridicoOpen = (i) => {
+    modalEliminarOpen = (boton) => {
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -56,20 +54,44 @@ export default class Cliente extends React.Component {
             responseType: 'json'
         }
         
-        axios.get(`http://localhost:3000/getClienteNombreById/${i}`, config)
-            .then((res) => {
-                console.log('res', res)
-                this.setState({ infoEliminar: `${res.data[0].nombre}` })
-                this.setState(
-                    { 
-                        modalShowEliminarClienteJuridico: true, 
-                        idEliminar: i
-                    }
-                )
-            })
-            .catch((e) => {
-                console.log('Error con el nombre - apellido por el id cliente');
-            })
+        if (boton.className.baseVal.includes('clientesjurídicos')){
+            console.log('juridico', boton.className.baseVal)
+            console.log(boton.id)
+            this.setState({ urlEliminar: `http://localhost:3000/deleteClienteJuridicoById/${boton.id}` });
+
+            axios.get(`http://localhost:3000/getClienteNombreById/${boton.id}`, config)
+                .then((res) => {
+                    console.log("res", res)
+                    this.setState({ infoEliminar: `${res.data[0].nombre}` })
+                    this.setState(
+                        { 
+                            modalShowEliminar: true
+                        }
+                    )
+                    console.log("juridico", boton.id)
+                })
+                .catch((e) => {
+                    console.log('Error con el nombre por el id mineral no metalico');
+                })
+        }
+        else if(boton.className.baseVal.includes('clientesnaturales')){
+            console.log('natural')
+            this.setState({ urlEliminar: `http://localhost:3000/deleteClienteById/${boton.id}` });
+            
+            axios.get(`http://localhost:3000/getClienteNombreApellidoById/${boton.id}`, config)
+                .then((res) => {
+                    this.setState({ infoEliminar: `${res.data[0].p_nombre + ' ' + res.data[0].p_apellido} ` })
+                    this.setState(
+                        { 
+                            modalShowEliminar: true
+                        }
+                    )
+                    console.log("natural", boton.id)
+                })
+                .catch((e) => {
+                    console.log('Error con el nombre por el id mineral metalico');
+                })
+        }
     };
     modalCrearClienteClose = () => this.setState({ modalShowCrearCliente: false });
     modalCrearClienteOpen = () => {
@@ -88,19 +110,13 @@ export default class Cliente extends React.Component {
                     onHide={this.modalCrearClienteClose}
                     mensaje={'Existen empleados asociados al cargo Dibujante, reasigne los empleados a otro cargo para poder continuar'}
                 />
-                <ModalYesNoClienteNatural
-                    show={this.state.modalShowEliminarClienteNatural}
-                    onHide={this.modalEliminarClienteNaturalClose}
+                <ModalYesNo
+                    show={this.state.modalShowEliminar}
+                    onHide={this.modalEliminarClose}
                     mensaje={'¿Está seguro que desea eliminar el cliente'}
                     infoeliminar={this.state.infoEliminar}
-                    urleliminar={`http://localhost:3000/deleteClienteById/${this.state.idEliminar}`}
-                />
-                <ModalYesNoClienteJuridico
-                    show={this.state.modalShowEliminarClienteJuridico}
-                    onHide={this.modalEliminarClienteJuridicoClose}
-                    mensaje={'¿Está seguro que desea eliminar el cliente'}
-                    infoeliminar={this.state.infoEliminar}
-                    urleliminar={`http://localhost:3000/deleteClienteJuridicoById/${this.state.idEliminar}`}
+                    urleliminar={this.state.urlEliminar}
+                    urlOrigen={'/cliente'}
                 />
                 <Container className="pagecontent ">
                     <div className="pagecontent">
@@ -143,12 +159,12 @@ export default class Cliente extends React.Component {
                                             modificar={true}
                                             consultar={true}
                                             eliminar={true}
-                                            modalEliminar={this.modalEliminarClienteNaturalOpen}
+                                            modalEliminar={this.modalEliminarOpen}
                                             modalCrear={this.modalCrearClienteOpen}
                                             reload={this.state.reload}
                                             checktable={false}
                                             textoSingular={'cliente'}
-                                            textoPlural={'clientes'}
+                                            textoPlural={'clientes naturales'}
                                             size={270}
                                         />
                                     </Col>
@@ -181,12 +197,12 @@ export default class Cliente extends React.Component {
                                             modificar={true}
                                             consultar={true}
                                             eliminar={true}
-                                            modalEliminar={this.modalEliminarClienteJuridicoOpen}
+                                            modalEliminar={this.modalEliminarOpen}
                                             modalCrear={this.modalCrearClienteOpen}
                                             reload={this.state.reload}
                                             checktable={false}
                                             textoSingular={'cliente'}
-                                            textoPlural={'clientes'}
+                                            textoPlural={'clientes jurídicos'}
                                             size={270}
                                             selectCheck={this.selectCheck}
                                         />

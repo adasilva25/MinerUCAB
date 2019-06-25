@@ -1,34 +1,33 @@
 // https://stackoverflow.com/questions/40844297/what-is-difference-between-axios-and-fetch
 // https://www.thepolyglotdeveloper.com/2015/01/parse-xml-response-nodejs/
+// https://stackify.com/node-js-error-handling/
 
 require('dotenv').config({ path: '.env.jasper-reports' });
-const JasperReports = require('../reports/jasper-reports/jasper-reports-generator');
-const Empleados = require('../database/model/Empleados');
-const Minerales = require('../database/model/Minerales');
-const Presentaciones = require('../database/model/Presentaciones');
-const General = require('../database/model/General');
 const Cargos = require('../database/model/Cargos');
-const ClientesNaturales = require('../database/model/ClientesNaturales');
 const ClientesJuridicos = require('../database/model/ClientesJuridicos');
+const ClientesNaturales = require('../database/model/ClientesNaturales');
 const DetalleVentas = require('../database/model/DetalleVentas');
+const Empleados = require('../database/model/Empleados');
+const General = require('../database/model/General');
+const JasperReports = require('../reports/jasper-reports/jasper-reports-generator');
+const Lugares = require('../database/model/Lugares');
+const Maquinarias = require('../database/model/Maquinarias');
+const Minerales = require('../database/model/Minerales');
 const PagosValidations = require('../validations/PagosValidations');
+const Presentaciones = require('../database/model/Presentaciones');
 const Roles = require('../database/model/Roles');
+const TiposMaquinaria = require('../database/model/TiposMaquinaria');
+const Usuarios = require('../database/model/Usuarios')
 const Ventas = require('../database/model/Ventas');
 const VentasValidations = require('../validations/VentasValidations');
-const Usuarios = require('../database/model/Usuarios')
-const Lugares = require('../database/model/Lugares');
-const TiposMaquinaria = require('../database/model/TiposMaquinaria');
+
 const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 
 app.use(express.json())
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-)
+app.use( bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'));
 app.use(function(req, res, next) {
@@ -41,8 +40,14 @@ app.use(function(req, res, next) {
 
 
 /* ----------------------------------- POST ----------------------------------- */
+/* -------------------- CLIENTES -------------------- */
 app.post('/createClienteNatural', ClientesNaturales.createClienteNatural);
+app.post('/createClienteJuridico', ClientesJuridicos.createClienteJuridico);
+/* -------------------- MAQUINARIAS -------------------- */
+app.post('/createMaquinaria', Maquinarias.createMaquinaria);
+/* -------------------- VENTAS -------------------- */
 app.post('/createVenta', VentasValidations.createVenta);
+
 
 /* ----------------------------------- GET ----------------------------------- */
 
@@ -58,7 +63,7 @@ app.get('/getAllEmpleados', Empleados.getAllEmpleados);
 app.get('/getCriticInfoEmpleados', Empleados.getCriticInfoEmpleados)
 app.get('/getEmpleadoByCedula/:cedula', Empleados.getEmpleadoByCedula);
 app.get('/getEmpleadoById/:id', Empleados.getEmpleadoById);
-/* -------------------- CLIENTE -------------------- */
+/* -------------------- CLIENTES -------------------- */
 app.get('/getClienteNombreApellidoById/:id', ClientesNaturales.getClienteNombreApellidoById);
 app.get('/getAllClientes', ClientesNaturales.getAllClientes);
 app.get('/getAllClientesJuridicos', ClientesJuridicos.getAllClientesJuridicos);
@@ -75,7 +80,8 @@ app.get('/getAllMunicipiosByIdEstado/:id', Lugares.getAllMunicipiosByIdEstado);
 app.get('/getAllParroquiasByIdMunicipio/:id', Lugares.getAllParroquiasByIdMunicipio);
 app.get('/getLugarByIdParroquia/:id', Lugares.getLugarByIdParroquia);
 /* -------------------- MAQUINARIAS -------------------- */
-app.get('/getAllTiposMaquinaria', TiposMaquinaria.getAllTiposMaquinaria);
+app.get('/getAllMaquinarias', Maquinarias.getAllMaquinarias);
+app.get('/getMaquinariaById/:id', Maquinarias.getMaquinariaById);
 /* -------------------- MINERALES -------------------- */
 app.get('/getAllMineralesMetalicos', Minerales.getAllMineralesMetalicos);
 app.get('/getAllMineralesNoMetalicos', Minerales.getAllMineralesNoMetalicos);
@@ -90,6 +96,8 @@ app.get('/getAllComponentesByIdMineralNoMetalico/:id', Minerales.getAllComponent
 app.get('/getAllPresentaciones', Presentaciones.getAllPresentaciones);
 app.get('/getAllPresentacionesByIdMineralMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralMetalico);
 app.get('/getAllPresentacionesByIdMineralNoMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralNoMetalico);
+/* -------------------- TIPOS DE MAQUINARIAS -------------------- */
+app.get('/getAllTiposMaquinaria', TiposMaquinaria.getAllTiposMaquinaria);
 /* -------------------- USUARIOS -------------------- */
 app.get('/getUsuarioById/:id', Usuarios.getUsuarioById);
 /* -------------------- VENTAS -------------------- */
@@ -104,6 +112,13 @@ app.get('/getPagosTarjetaDebitoDeVenta/:id', PagosValidations.getPagosTarjetaDeb
 app.get('/getPagosTransferenciaDeVenta/:id', PagosValidations.getPagosTransferenciaDeVenta);
 
 
+/* ----------------------------------- UPDATE ----------------------------------- */
+/* -------------------- CLIENTES -------------------- */
+app.put('/updateClienteNaturalById', ClientesNaturales.updateClienteNaturalById);
+app.put('/updateClienteJuridicoById', ClientesJuridicos.updateClienteJuridicoById);
+/* -------------------- MAQUINARIAS -------------------- */
+app.put('/updateMaquinariaById/:id', Maquinarias.updateMaquinariaById)
+
 
 /* ----------------------------------- DELETE ----------------------------------- */
 /* -------------------- CLIENTES -------------------- */
@@ -111,6 +126,8 @@ app.delete('/deleteClienteById/:id', ClientesNaturales.deleteClienteById);
 app.delete('/deleteClienteJuridicoById/:id', ClientesJuridicos.deleteClienteJuridicoById);
 /* -------------------- EMPLEADO -------------------- */
 app.delete('/deleteEmpleadoById/:id', Empleados.deleteEmpleadoById)
+/* -------------------- MAQUINARIAS -------------------- */
+app.delete('/deleteMaquinariaById/:id', Maquinarias.deleteMaquinariaById)
 /* -------------------- MINERALES -------------------- */
 app.delete('/deleteMineralMetalicoById/:id', Minerales.deleteMineralMetalicoById);
 app.delete('/deleteMineralNoMetalicoById/:id', Minerales.deleteMineralNoMetalicoById);
