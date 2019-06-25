@@ -21,8 +21,8 @@ const insertDetalleVenta = (claveVenta, info) => {
 }
 
 const insertPagos = (claveVenta, info) => {
-    let values = [];
     info.pagos.forEach(item => {
+        let values = [];
         let value = []
         value.push(item.banco);
         console.log('typeof', typeof item.detalle.detalle1)
@@ -40,6 +40,7 @@ const insertPagos = (claveVenta, info) => {
             console.log('tc')
             value.push(item.detalle.detalle1);
             value.push(item.detalle.detalle2);
+            console.log('item.detalle.detalle2', item.detalle.detalle2)
             values.push(value)
             TipoPago.createTipoPagoTC(values, function (claveTipoPago) {
                 Pago.createPagoTC(item.monto, claveVenta, claveTipoPago)
@@ -81,14 +82,14 @@ const createVenta = (req, res, next) => {
         Ventas.createVentaClienteNatural(info.total, info.idCliente, 8, function (claveVenta) {
             insertDetalleVenta(claveVenta, info)
             insertPagos(claveVenta, info)
-            res.status(200)
+            res.status(200).json({operacion: 'exito'})
         })
     }
     else if (info.tipoCliente[0] === 'J'){
         Ventas.createVentaClienteJuridico(info.total, info.idCliente, 8, function (claveVenta) {
             insertDetalleVenta(claveVenta, info)
             insertPagos(claveVenta, info)
-            res.status(200)
+            res.status(200).json({operacion: 'exito'})
         })
     }
 }

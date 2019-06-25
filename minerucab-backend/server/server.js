@@ -67,9 +67,10 @@ app.get('/getEmpleadoById/:id', Empleados.getEmpleadoById);
 /* -------------------- CLIENTE -------------------- */
 app.get('/getClienteNombreApellidoById/:id', ClientesNaturales.getClienteNombreApellidoById);
 app.get('/getAllClientes', ClientesNaturales.getAllClientes);
+app.get('/getAllClientesJuridicos', ClientesJuridicos.getAllClientesJuridicos);
 app.get('/getClienteByCedula/:cedula', ClientesNaturales.getClienteByCedula);
 app.get('/getClienteByRIF/:rif', ClientesJuridicos.getClienteByRIF);
-app.get('/getClienteNombreById/:cedula', ClientesJuridicos.getClienteNombreById);
+app.get('/getClienteNombreById/:id', ClientesJuridicos.getClienteNombreById);
 app.get('/getClienteById/:id', ClientesNaturales.getClienteById);
 app.get('/getClienteJuridicoById/:id', ClientesJuridicos.getClienteJuridicoById);
 /* -------------------- DETALLES DE VENTAS -------------------- */
@@ -113,6 +114,7 @@ app.get('/getPagosTransferenciaDeVenta/:id', PagosValidations.getPagosTransferen
 /* ----------------------------------- DELETE ----------------------------------- */
 /* -------------------- CLIENTES -------------------- */
 app.delete('/deleteClienteById/:id', ClientesNaturales.deleteClienteById);
+app.delete('/deleteClienteJuridicoById/:id', ClientesJuridicos.deleteClienteJuridicoById);
 /* -------------------- EMPLEADO -------------------- */
 app.delete('/deleteEmpleadoById/:id', Empleados.deleteEmpleadoById)
 /* -------------------- MINERALES -------------------- */

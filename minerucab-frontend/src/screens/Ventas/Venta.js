@@ -15,11 +15,16 @@ export default class Venta extends React.Component {
         super(props);
     }  
     state = { 
-      modalShow: false
+        modalShow: false,
+        modalShowEliminar: false
     };                        
     modalClose = () => this.setState({ modalShow: false });
     modalOpen = () => {
         this.setState({ modalShow: true });
+    }
+    modalEliminarClose = () => this.setState({ modalShowEliminar: false });
+    modalEliminarOpen = () => {
+        this.setState({ modalShowEliminar: true });
     }
     goBack = () => {
         history.goBack()
@@ -32,10 +37,6 @@ export default class Venta extends React.Component {
             <ModalBuscarCliente
               show={this.state.modalShow}
               onHide={this.modalClose}
-              content=
-                {
-                    'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beerlabore wes anderson cred nesciunt sapiente ea proident.'
-                }
             />
             <ModalYesNo
               show={this.state.modalShowEliminar}
@@ -83,7 +84,7 @@ export default class Venta extends React.Component {
                                       urlModificar={'/registrar_cliente_juridico'}
                                       urlConsultar={'/consultar_ventas'}
                                       urlEliminar={'/home'}
-                                      agregar={true}
+                                      agregar={false}
                                       modificar={true}
                                       consultar={true}
                                       eliminar={true}

@@ -12,24 +12,44 @@ const createClienteJuridico = (req, res) => {
     console.log(req.body.data);
 }
 
+/* ------------------------------ DELETE ------------------------------ */
+
+const deleteClienteJuridicoById = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'DELETE FROM MU_CLIENTE_JURIDICO WHERE Clave = ($1);';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+    })
+}
+
 /* ------------------------------ READ ------------------------------ */
 
-// const getAllClientes = (req, res) => {
-//     const client = new Client({
-//         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
-//     });
-//     client.connect();
-//     client.query('SELECT Clave, p_nombre AS "Nombre", p_apellido AS "Apellido", CI AS "Cédula" FROM MU_CLIENTE_NATURAL;')
-//     .then((response) => {
-//         client.end();
-//         // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
-//         res.status(200).json(response.rows)
-//     })
-//     .catch((error) => {
-//         console.log(error);
-//         client.end();
-//     })
-// }
+const getAllClientesJuridicos = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
+    });
+    client.connect();
+    client.query('SELECT Clave, nombre AS "Nombre", RIF "RIF", Telefono "Teléfono", Email "Email" FROM MU_CLIENTE_JURIDICO;')
+    .then((response) => {
+        client.end();
+        // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+    })
+}
 
 const getClienteByRIF = (req, res) => {
     const client = new Client({
@@ -104,6 +124,8 @@ const getClienteNombreById = (req, res) => {
 // }
 
 module.exports = {
+    deleteClienteJuridicoById,
+    getAllClientesJuridicos,
     getClienteNombreById,
     getClienteByRIF,
     getClienteJuridicoById

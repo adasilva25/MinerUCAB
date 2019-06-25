@@ -49,6 +49,7 @@ export default class ModalBuscarCliente extends React.Component {
           console.log(res)
           if (res.status === 200 && res.data.length === 1){
             history.push(`/gestionar_ventas/${tipoCi+res.data[0].clave}`);
+            usuarioValido = true;
           } 
       }).catch((e) => {
           console.log('Error en axios')
@@ -130,14 +131,14 @@ export default class ModalBuscarCliente extends React.Component {
             <Button 
               variant="link" 
               className="modal-bc-link-create bc-link-create-btn"
-              onClick={()=>history.push('/registrar_cliente_natural')}
+              onClick={()=>history.push('/registrar_cliente_natural/CR')}
             >
               Registrar un nuevo cliente natural
             </Button>
             <Button 
               variant="link" 
               className="modal-bc-link-create bc-link-create-btn"
-              onClick={()=>history.push('/registrar_cliente_juridico')}
+              onClick={()=>history.push('/registrar_cliente_juridico/CR')}
             >
               Registrar un nuevo cliente jurídico
             </Button>
