@@ -1178,6 +1178,9 @@ export default class RegistrarYacimiento extends React.Component {
                     ano:null
                 }
             },
+            estatus:{
+                id:null,
+            },
             minerales:[{
                 id:0,
                 total: 0,
@@ -1234,6 +1237,7 @@ export default class RegistrarYacimiento extends React.Component {
         this.state.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value;
         this.state.yacimiento.descripcion*/
         //console.log('NOMBRE YACIMEITNO',incompleto);
+        info.estatus.id = 1 ;
 
         info.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value.trim();
         info.yacimiento.descripcion = document.getElementById("YacimientosDescripcionYacimiento").value.trim();
@@ -2222,7 +2226,7 @@ export default class RegistrarYacimiento extends React.Component {
                     <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[3]} onClick={() => this.accordionf(3)} className="accordion borderacc">
-                                <FormTitulo titulo="Información de explotación" />
+                                <FormTitulo titulo="Configuración de explotación" />
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
