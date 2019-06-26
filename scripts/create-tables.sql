@@ -306,8 +306,6 @@ CREATE TABLE MU_EMPRESA (
 		REFERENCES MU_LUGAR (Clave) ON DELETE CASCADE
 );
 
---------------------------------------------------------------------------------------------------------------------------------------------
-
 CREATE TABLE MU_MINERAL_EMPRESA (
 	Clave SERIAL,
 	Precio_venta DECIMAL NOT NULL,
@@ -323,6 +321,8 @@ CREATE TABLE MU_MINERAL_EMPRESA (
 		REFERENCES MU_EMPRESA (Clave) ON DELETE CASCADE
 );
 
+--------------------------------------------------------------------------------------------
+
 CREATE TABLE MU_EXPLOTACION (
 	Clave SERIAL,
 	Costo_total DECIMAL NOT NULL,
@@ -336,40 +336,6 @@ CREATE TABLE MU_EXPLOTACION (
 		REFERENCES MU_VENTA (Clave) ON DELETE CASCADE,
 	CONSTRAINT fk_estatus_explotacion FOREIGN KEY (fk_estatus) 
 		REFERENCES MU_ESTATUS (Clave) ON DELETE CASCADE
-);
-
-CREATE TABLE MU_ETAPA (
-	Clave SERIAL,
-	Nombre VARCHAR(100) NOT NULL,
-	Costo_total DECIMAL NOT NULL,
-	Duracion INTEGER NOT NULL,
-	Fecha_inicio DATE,
-	Fecha_fin DATE,
-	Fecha_fin_real DATE,
-	fk_estatus INTEGER NOT NULL,
-	fk_explotacion INTEGER NOT NULL,
-	CONSTRAINT pk_etapa PRIMARY KEY (Clave),
-	CONSTRAINT fk_estatus_etapa FOREIGN KEY (fk_estatus) 
-		REFERENCES MU_ESTATUS (Clave) ON DELETE CASCADE,
-	CONSTRAINT fk_explotacion_etapa FOREIGN KEY (fk_explotacion)
-		REFERENCES MU_EXPLOTACION (Clave) ON DELETE CASCADE
-);
-
-CREATE TABLE MU_FASE (
-	Clave SERIAL,
-	Nombre VARCHAR(30) NOT NULL,
-	Costo DECIMAL NOT NULL,
-	Duracion INTEGER NOT NULL,
-	Fecha_inicio DATE,
-	Fecha_fin DATE,
-	Fecha_fin_real DATE,
-	fk_estatus INTEGER NOT NULL,
-	fk_etapa INTEGER NOT NULL,
-	CONSTRAINT pk_etapa_fase PRIMARY KEY (Clave),
-	CONSTRAINT fk_estatus_fase FOREIGN KEY (fk_estatus) 
-		REFERENCES MU_ESTATUS (Clave) ON DELETE CASCADE,
-	CONSTRAINT fk_etapa_fase FOREIGN KEY (fk_etapa)
-		REFERENCES MU_ETAPA (Clave) ON DELETE CASCADE
 );
 
 CREATE TABLE MU_YACIMIENTO (
@@ -414,6 +380,40 @@ CREATE TABLE MU_YACIMIENTO_MINERAL (
 		REFERENCES MU_MINERAL_NO_METALICO (Clave) ON DELETE CASCADE,
 	CONSTRAINT fk_yacimiento_yacimiento_mineral FOREIGN KEY (fk_yacimiento) 
 		REFERENCES MU_YACIMIENTO (Clave) ON DELETE CASCADE
+);
+
+CREATE TABLE MU_ETAPA (
+	Clave SERIAL,
+	Nombre VARCHAR(100) NOT NULL,
+	Costo_total DECIMAL NOT NULL,
+	Duracion INTEGER NOT NULL,
+	Fecha_inicio DATE,
+	Fecha_fin DATE,
+	Fecha_fin_real DATE,
+	fk_estatus INTEGER NOT NULL,
+	fk_explotacion INTEGER NOT NULL,
+	CONSTRAINT pk_etapa PRIMARY KEY (Clave),
+	CONSTRAINT fk_estatus_etapa FOREIGN KEY (fk_estatus) 
+		REFERENCES MU_ESTATUS (Clave) ON DELETE CASCADE,
+	CONSTRAINT fk_explotacion_etapa FOREIGN KEY (fk_explotacion)
+		REFERENCES MU_EXPLOTACION (Clave) ON DELETE CASCADE
+);
+
+CREATE TABLE MU_FASE (
+	Clave SERIAL,
+	Nombre VARCHAR(30) NOT NULL,
+	Costo DECIMAL NOT NULL,
+	Duracion INTEGER NOT NULL,
+	Fecha_inicio DATE,
+	Fecha_fin DATE,
+	Fecha_fin_real DATE,
+	fk_estatus INTEGER NOT NULL,
+	fk_etapa INTEGER NOT NULL,
+	CONSTRAINT pk_etapa_fase PRIMARY KEY (Clave),
+	CONSTRAINT fk_estatus_fase FOREIGN KEY (fk_estatus) 
+		REFERENCES MU_ESTATUS (Clave) ON DELETE CASCADE,
+	CONSTRAINT fk_etapa_fase FOREIGN KEY (fk_etapa)
+		REFERENCES MU_ETAPA (Clave) ON DELETE CASCADE
 );
 
 CREATE TABLE MU_CARGO_FASE (
