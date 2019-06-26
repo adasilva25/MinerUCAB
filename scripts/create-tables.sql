@@ -78,7 +78,7 @@ CREATE TABLE MU_MINERAL_NO_METALICO (
 	Clave SERIAL,
 	Nombre VARCHAR(30) NOT NULL,
 	Descripcion VARCHAR(100),
-	Uso VARCHAR(80) NOT NULL,
+	Uso VARCHAR(150) NOT NULL,
 	CONSTRAINT pk_clave_mineral_no_metalico PRIMARY KEY (Clave)
 );
 

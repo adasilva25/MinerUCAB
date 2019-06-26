@@ -268,7 +268,7 @@ INSERT INTO MU_PRESENTACION_MINERAL (Precio, fk_presentacion, fk_mineral_metalic
     (63509.47,  6,  12, null),
     (38808.42,  4,  10, null),
     (5565.59,   5,  7,  null),
-    (69352.67,  2,  2,  null);
+    (69352.67,  2,  2,  null),
     (800,       5,  NULL,   6),
     (2000,      6,  NULL,   9),
     (2500,      3,  NULL,   9),
@@ -278,10 +278,10 @@ INSERT INTO MU_PRESENTACION_MINERAL (Precio, fk_presentacion, fk_mineral_metalic
     (87037.84,  1,  null,   7),
     (44656.08,  3,  null,   13),
     (28250.9,   6,  null,   3),
-    (89952.43,  5,  null,   8),,
+    (89952.43,  5,  null,   8),
     (80584.89,  5,  null,   12),
     (8915.7,    4,  null,   12),
-    (31175.23,  1,  null,   10),
+    (31175.23,  1,  null,   10);
 
 -------------------------------------    ROL_PRIVILEGIO     -------------------------------------
 INSERT INTO MU_ROL_PRIVILEGIO(fk_rol, fk_privilegio) VALUES
@@ -299,7 +299,7 @@ INSERT INTO MU_MINERAL_MINERAL (porcentaje, fk_mineral_metalico_compuesto, fk_mi
     (37.91, null, null, 4, 13), (87.66, null, null, 1, 11), (96.5, null, null, 3, 2),
     (85.37, null, null, 7, 6), (54.2, null, null, 12, 8), (6.75, null, null, 4, 8),
     (68.2, null, null, 9, 1), (61.83, null, null, 4, 11), (25, null, null, 8, 10),
-    (25, null, null, 8, 12), (25, null, null, 8, 13), (25, null, null, 8, 18),;
+    (25, null, null, 8, 12), (25, null, null, 8, 13), (25, null, null, 8, 18);
 
 -------------------------------------    MAQUINARIA     -------------------------------------
 INSERT INTO MU_MAQUINARIA (Identificador, Fecha_adquisicion, fk_tipo_maquinaria, fk_estatus) VALUES
