@@ -321,8 +321,6 @@ CREATE TABLE MU_MINERAL_EMPRESA (
 		REFERENCES MU_EMPRESA (Clave) ON DELETE CASCADE
 );
 
---------------------------------------------------------------------------------------------
-
 CREATE TABLE MU_EXPLOTACION (
 	Clave SERIAL,
 	Costo_total DECIMAL NOT NULL,
@@ -346,7 +344,7 @@ CREATE TABLE MU_YACIMIENTO (
 	Tamaño DECIMAL NOT NULL,
 	fk_lugar INTEGER NOT NULL,
 	fk_estatus INTEGER NOT NULL,
-	fk_explotacion INTEGER NOT NULL,
+	fk_explotacion INTEGER,
 	CONSTRAINT pk_yacimiento PRIMARY KEY (Clave),
 	CONSTRAINT fk_lugar_yacimiento FOREIGN KEY (fk_lugar) 
 		REFERENCES MU_LUGAR (Clave) ON DELETE CASCADE,
@@ -355,6 +353,8 @@ CREATE TABLE MU_YACIMIENTO (
 	CONSTRAINT fk_explotacion_yacimiento FOREIGN KEY (fk_explotacion) 
 		REFERENCES MU_EXPLOTACION (Clave) ON DELETE CASCADE
 );
+
+--------------------------------------------------------------------------------------------
 
 CREATE TABLE MU_YACIMIENTO_TIPO_YACIMIENTO (
 	Clave SERIAL,

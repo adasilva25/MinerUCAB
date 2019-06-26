@@ -3048,7 +3048,154 @@ INSERT INTO MU_EXPLOTACION (costo_total, duracion, fecha_inicio, fecha_fin, fk_v
     (90000, 30*9, '2018-09-01', '2019-05-01', 93, 8), (90000, 30*9, '2018-09-01', '2019-05-01', 94, 8), 
     (90000, 30*9, '2018-10-01', '2019-06-01', 95, 8), (90000, 30*9, '2018-10-01', '2019-06-01', 96, 8);
 
--------------------------------------    ALIADOS     -------------------------------------
+-------------------------------------    YACIMIENTO     -------------------------------------
+INSERT INTO MU_YACIMIENTO (nombre, descripcion, fecha_registro, tamaño, fk_lugar, fk_estatus, fk_explotacion) VALUES
+    --  AMAZONAS --
+    ('Yacimiento 1', 'nec sem duis aliquam convallis', '1980-01-01', 40784, 384, 2, 1),
+    ('Yacimiento 2', 'id ligula', '1980-01-01', 43812, 384, 2, 2),
+    ('Yacimiento 3', 'etiam vel augue vestibulum', '1980-01-01', 49698, 384, 2, 3),
+    ('Yacimiento 4', 'mattis pulvinar nulla pede ullamcorper', '1980-01-01', 40323, 384, 2, 4),
+    -- ANZOATEGUI --
+    ('Yacimiento 5', 'pede', '1980-01-01', 38766, 392, 2, 5),
+    ('Yacimiento 6', 'at nunc commodo', '1980-01-01', 19435, 392, 2, 6),
+    ('Yacimiento 7', 'cum sociis natoque', '1980-01-01', 48849, 392, 2, 7),
+    ('Yacimiento 8', 'augue vestibulum ante ipsum primis', '1980-01-01', 40347, 392, 2, 8),
+    -- APURE --
+    ('Yacimiento 9', 'lectus', '1980-01-01', 44777, 450, 2, 9),
+    ('Yacimiento 10', 'nunc commodo placerat', '1980-01-01', 12669, 450, 2, 10),
+    ('Yacimiento 11', 'velit', '1980-01-01', 42283, 450, 2, 11),
+    ('Yacimiento 12', 'nulla facilisi cras', '1980-01-01', 31858, 450, 2, 12),
+    -- ARAGUA --
+    ('Yacimiento 13', 'massa tempor convallis nulla', '1980-01-01', 41301, 507, 2, 13),
+    ('Yacimiento 14', 'quam nec', '1980-01-01', 38136, 507, 2, 14),
+    ('Yacimiento 15', 'convallis morbi odio', '1980-01-01', 25116, 507, 2, 15),
+    ('Yacimiento 16', 'tempus sit amet sem fusce', '1980-01-01', 47976, 507, 2, 16),
+    -- BARINAS --
+    ('Yacimiento 17', 'amet', '1980-01-01', 35211, 531, 2, 17),
+    ('Yacimiento 18', 'sagittis', '1980-01-01', 25232, 531, 2, 18),
+    ('Yacimiento 19', 'sed magna at nunc commodo', '1980-01-01', 11531, 531, 2, 19),
+    ('Yacimiento 20', 'pede', '1980-01-01', 27436, 531, 2, 20),
+    -- BOLÍVAR --
+    ('Yacimiento 21', 'eget semper', '1980-01-01', 47316, 581, 2, 21),
+    ('Yacimiento 22', 'diam', '1980-01-01', 39234, 581, 2, 22),
+    ('Yacimiento 23', 'nulla ut erat', '1980-01-01', 17314, 581, 2, 23),
+    ('Yacimiento 24', 'pede lobortis ligula sit amet', '1980-01-01', 17218, 581, 2, 24),
+    -- CARABOBO --
+    ('Yacimiento 25', 'suspendisse potenti', '1980-01-01', 42642, 645, 2, 25),
+    ('Yacimiento 26', 'nullam molestie nibh in lectus', '1980-01-01', 29824, 645, 2, 26),
+    ('Yacimiento 27', 'adipiscing lorem', '1980-01-01', 17732, 645, 2, 27),
+    ('Yacimiento 28', 'amet eros suspendisse accumsan', '1980-01-01', 41075, 645, 2, 28),
+    -- COJEDES --
+    ('Yacimiento 29', 'hendrerit at', '1980-01-01', 24399, 661, 2, 29),
+    ('Yacimiento 30', 'blandit', '1980-01-01', 32638, 661, 2, 30),
+    ('Yacimiento 31', 'quis lectus', '1980-01-01', 10901, 661, 2, 31),
+    ('Yacimiento 32', 'duis bibendum morbi non', '1980-01-01', 20667, 661, 2, 32),
+    -- DELTA AMACURO --
+    ('Yacimiento 33', 'volutpat sapien arcu sed', '1980-01-01', 22198, 691, 2, 33),
+    ('Yacimiento 34', 'nisl venenatis lacinia aenean', '1980-01-01', 43278, 691, 2, 34),
+    ('Yacimiento 35', 'arcu sed augue', '1980-01-01', 39274, 691, 2, 35),
+    ('Yacimiento 36', 'a pede posuere nonummy', '1980-01-01', 22621, 691, 2, 36),
+    -- FALCÓN --
+    ('Yacimiento 37', 'sem duis', '1980-01-01', 37917, 694, 2, 37),
+    ('Yacimiento 38', 'ac', '1980-01-01', 11688, 694, 2, 38),
+    ('Yacimiento 39', 'luctus et ultrices', '1980-01-01', 35247, 694, 2, 39),
+    ('Yacimiento 40', 'donec pharetra magna vestibulum', '1980-01-01', 27269, 694, 2, 40),
+    -- GUÁRICO --
+    ('Yacimiento 41', 'magna bibendum imperdiet nullam', '1980-01-01', 15792, 780, 2, 41),
+    ('Yacimiento 42', 'consectetuer', '1980-01-01', 17578, 780, 2, 42),
+    ('Yacimiento 43', 'libero ut', '1980-01-01', 49651, 780, 2, 43),
+    ('Yacimiento 44', 'donec odio justo sollicitudin ut', '1980-01-01', 22489, 780, 2, 44),
+    -- LARA --
+    ('Yacimiento 45', 'est congue elementum', '1980-01-01', 46789, 822, 2, 45),
+    ('Yacimiento 46', 'ac enim in tempor turpis', '1980-01-01', 40959, 822, 2, 46),
+    ('Yacimiento 47', 'enim lorem ipsum', '1980-01-01', 24114, 822, 2, 47),
+    ('Yacimiento 48', 'phasellus in', '1980-01-01', 41476, 822, 2, 48),
+    -- MÉRIDA --
+    ('Yacimiento 49', 'nulla', '1980-01-01', 29518, 927, 2, 49),
+    ('Yacimiento 50', 'ligula sit amet eleifend pede', '1980-01-01', 49805, 927, 2, 50),
+    ('Yacimiento 51', 'elementum pellentesque', '1980-01-01', 46679, 927, 2, 51),
+    ('Yacimiento 52', 'hac habitasse platea dictumst', '1980-01-01', 15638, 927, 2, 52),
+    -- MIRANDA --
+    ('Yacimiento 53', 'sapien iaculis', '1980-01-01', 28361, 970, 2, 53),
+    ('Yacimiento 54', 'amet cursus id turpis', '1980-01-01', 37029, 970, 2, 54),
+    ('Yacimiento 55', 'ac est', '1980-01-01', 34312, 970, 2, 55),
+    ('Yacimiento 56', 'luctus rutrum nulla tellus', '1980-01-01', 11131, 970, 2, 56),
+    -- MONAGAS --
+    ('Yacimiento 57', 'sit amet erat nulla', '1980-01-01', 24080, 1015, 2, 57),
+    ('Yacimiento 58', 'in quam fringilla rhoncus', '1980-01-01', 33676, 1015, 2, 58),
+    ('Yacimiento 59', 'adipiscing lorem vitae mattis', '1980-01-01', 28790, 1015, 2, 59),
+    ('Yacimiento 60', 'feugiat non pretium', '1980-01-01', 38254, 1015, 2, 60),
+    -- NUEVA ESPARTA --
+    ('Yacimiento 61', 'nam', '1980-01-01', 36484, 1059, 2, 61),
+    ('Yacimiento 62', 'bibendum felis sed interdum', '1980-01-01', 14453, 1059, 2, 62),
+    ('Yacimiento 63', 'est quam pharetra', '1980-01-01', 34134, 1059, 2, 63),
+    ('Yacimiento 64', 'interdum eu', '1980-01-01', 45190, 1059, 2, 64),
+    -- PORTUGUESA --
+    ('Yacimiento 65', 'aliquet maecenas', '1980-01-01', 19459, 1082, 2, 65),
+    ('Yacimiento 66', 'lacinia aenean sit', '1980-01-01', 33921, 1082, 2, 66),
+    ('Yacimiento 67', 'convallis eget eleifend luctus', '1980-01-01', 23813, 1082, 2, 67),
+    ('Yacimiento 68', 'pellentesque', '1980-01-01', 17109, 1082, 2, 68),
+    -- SUCRE --
+    ('Yacimiento 69', 'sapien non mi', '1980-01-01', 48778, 1127, 2, 69),
+    ('Yacimiento 70', 'ante nulla justo aliquam quis', '1980-01-01', 46910, 1127, 2, 70),
+    ('Yacimiento 71', 'sed interdum', '1980-01-01', 18732, 1127, 2, 71),
+    ('Yacimiento 72', 'justo nec condimentum neque sapien', '1980-01-01', 45374, 1127, 2, 72),
+    -- TÁCHIRA --
+    ('Yacimiento 73', 'ante vestibulum ante ipsum', '1980-01-01', 15982, 1239, 2, 73),
+    ('Yacimiento 74', 'libero non mattis', '1980-01-01', 49584, 1239, 2, 74),
+    ('Yacimiento 75', 'natoque penatibus et', '1980-01-01', 15600, 1239, 2, 75),
+    ('Yacimiento 76', 'in tempor turpis', '1980-01-01', 29002, 1239, 2, 76),
+    -- TRUJILLO --
+    ('Yacimiento 77', 'nulla ac enim in tempor', '1980-01-01', 16511, 1254, 2, 77),
+    ('Yacimiento 78', 'varius ut blandit non interdum', '1980-01-01', 14639, 1254, 2, 78),
+    ('Yacimiento 79', 'habitasse platea dictumst maecenas', '1980-01-01', 24445, 1254, 2, 79),
+    ('Yacimiento 80', 'id pretium iaculis', '1980-01-01', 20398, 1254, 2, 80),
+    -- VARGAS --
+    ('Yacimiento 81', 'gravida', '1980-01-01', 40358, 1346, 2, 81),
+    ('Yacimiento 82', 'arcu sed', '1980-01-01', 43651, 1346, 2, 82),
+    ('Yacimiento 83', 'bibendum imperdiet', '1980-01-01', 32780, 1346, 2, 83),
+    ('Yacimiento 84', 'congue vivamus metus arcu adipiscing', '1980-01-01', 19458, 1346, 2, 84),
+    -- YARACUY --
+    ('Yacimiento 85', 'faucibus cursus urna ut', '1980-01-01', 19485, 1349, 2, 85),
+    ('Yacimiento 86', 'primis in faucibus orci', '1980-01-01', 24781, 1349, 2, 86),
+    ('Yacimiento 87', 'enim in tempor turpis nec', '1980-01-01', 43286, 1349, 2, 87),
+    ('Yacimiento 88', 'magna', '1980-01-01', 22586, 1349, 2, 88),
+    -- ZULIA --
+    ('Yacimiento 89', 'interdum eu tincidunt in leo', '1980-01-01', 22559, 1373, 2, 89),
+    ('Yacimiento 90', 'nam', '1980-01-01', 34464, 1373, 2, 90),
+    ('Yacimiento 91', 'mi integer', '1980-01-01', 46155, 1373, 2, 91),
+    ('Yacimiento 92', 'nunc purus', '1980-01-01', 39067, 1373, 2, 92),
+    -- DISTRITO CAPITAL --
+    ('Yacimiento 93', 'pellentesque ultrices phasellus id', '1980-01-01', 20143, 1494, 2, 93),
+    ('Yacimiento 94', 'nec', '1980-01-01', 10521, 1494, 2, 94),
+    ('Yacimiento 95', 'aenean fermentum donec', '1980-01-01', 19953, 1494, 2, 95),
+    ('Yacimiento 96', 'turpis adipiscing lorem', '1980-01-01', 42767, 1494, 2, 96),
+    -- Sin explotacion --
+    ('Yacimiento 97', 'quam', '1980-01-01', 12671, 384, 2, null),
+    ('Yacimiento 98', 'vel augue vestibulum rutrum rutrum', '1980-01-01', 38990, 392, 2, null),
+    ('Yacimiento 99', 'morbi', '1980-01-01', 16644, 450, 2, null),
+    ('Yacimiento 100', 'sit amet turpis elementum ligula', '1980-01-01', 48436, 507, 2, null),
+    ('Yacimiento 101', 'nunc vestibulum ante ipsum primis', '1980-01-01', 45085, 531, 2, null),
+    ('Yacimiento 102', 'convallis', '1980-01-01', 17697, 581, 2, null),
+    ('Yacimiento 103', 'odio elementum eu', '1980-01-01', 15692, 645, 2, null),
+    ('Yacimiento 104', 'nunc vestibulum ante', '1980-01-01', 10146, 661, 2, null),
+    ('Yacimiento 105', 'luctus tincidunt nulla', '1980-01-01', 21437, 691, 2, null),
+    ('Yacimiento 106', 'vel enim', '1980-01-01', 28402, 694, 2, null),
+    ('Yacimiento 107', 'nisl duis bibendum felis sed', '1980-01-01', 32680, 780, 2, null),
+    ('Yacimiento 108', 'tortor', '1980-01-01', 35485, 822, 2, null),
+    ('Yacimiento 109', 'donec semper sapien', '1980-01-01', 43871, 927, 2, null),
+    ('Yacimiento 110', 'ipsum', '1980-01-01', 32832, 970, 2, null),
+    ('Yacimiento 111', 'pede ac diam cras pellentesque', '1980-01-01', 12063, 1015, 2, null),
+    ('Yacimiento 112', 'sit', '1980-01-01', 20251, 1059, 2, null),
+    ('Yacimiento 113', 'eget tempus', '1980-01-01', 44073, 1082, 2, null),
+    ('Yacimiento 114', 'platea', '1980-01-01', 46687, 1127, 2, null),
+    ('Yacimiento 115', 'libero', '1980-01-01', 46809, 1239, 2, null),
+    ('Yacimiento 116', 'orci luctus', '1980-01-01', 47330, 1254, 2, null),
+    ('Yacimiento 117', 'donec', '1980-01-01', 15088, 1346, 2, null),
+    ('Yacimiento 118', 'vivamus in', '1980-01-01', 47315, 1349, 2, null),
+    ('Yacimiento 119', 'justo', '1980-01-01', 20690, 1373, 2, null),
+    ('Yacimiento 120', 'in purus eu magna vulputate', '1980-01-01', 33712, 1494, 2, null);
+
 -------------------------------------    ALIADOS     -------------------------------------
 -------------------------------------    ALIADOS     -------------------------------------
 -------------------------------------    ALIADOS     -------------------------------------
