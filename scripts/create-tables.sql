@@ -306,6 +306,8 @@ CREATE TABLE MU_EMPRESA (
 		REFERENCES MU_LUGAR (Clave) ON DELETE CASCADE
 );
 
+--------------------------------------------------------------------------------------------------------------------------------------------
+
 CREATE TABLE MU_MINERAL_EMPRESA (
 	Clave SERIAL,
 	Precio_venta DECIMAL NOT NULL,
