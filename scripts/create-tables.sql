@@ -354,8 +354,6 @@ CREATE TABLE MU_YACIMIENTO (
 		REFERENCES MU_EXPLOTACION (Clave) ON DELETE CASCADE
 );
 
---------------------------------------------------------------------------------------------
-
 CREATE TABLE MU_YACIMIENTO_TIPO_YACIMIENTO (
 	Clave SERIAL,
 	fk_yacimiento INTEGER NOT NULL,
@@ -385,7 +383,7 @@ CREATE TABLE MU_YACIMIENTO_MINERAL (
 CREATE TABLE MU_ETAPA (
 	Clave SERIAL,
 	Nombre VARCHAR(100) NOT NULL,
-	Costo_total DECIMAL NOT NULL,
+	Costo_total DECIMAL,
 	Duracion INTEGER NOT NULL,
 	Fecha_inicio DATE,
 	Fecha_fin DATE,
@@ -398,6 +396,8 @@ CREATE TABLE MU_ETAPA (
 	CONSTRAINT fk_explotacion_etapa FOREIGN KEY (fk_explotacion)
 		REFERENCES MU_EXPLOTACION (Clave) ON DELETE CASCADE
 );
+
+--------------------------------------------------------------------------------------------
 
 CREATE TABLE MU_FASE (
 	Clave SERIAL,

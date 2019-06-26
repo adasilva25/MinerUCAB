@@ -1,7 +1,7 @@
 -------------------------------------    ESTATUS     -------------------------------------
 INSERT INTO MU_ESTATUS (Nombre) VALUES 
     ('Activo'), ('Inactivo'), ('Ocupado'), ('En uso'), ('En explotación'), ('Explotado'), ('Procesada'), ('En proceso'),
-    ('En reparación');
+    ('En reparación'), ('Finalizada');
 
 -------------------------------------    HORARIO     -------------------------------------
 INSERT INTO MU_HORARIO (dia, hora_entrada, hora_salida) VALUES
@@ -2909,91 +2909,29 @@ INSERT INTO MU_EMPRESA (RIF, Descripcion, Nombre, fk_lugar) VALUES
 
 -------------------------------------    MINERAL_EMPRESA     -------------------------------------
 INSERT INTO MU_MINERAL_EMPRESA (precio_venta, fk_mineral_no_metalico, fk_mineral_metalico, fk_empresa) VALUES
-    (61544.64, null, 1, 47),
-    (96378.96, null, 1, 44),
-    (10042.26, null, 1, 39),
-    (2268.63, null, 2, 33),
-    (22141.57, null, 2, 30),
-    (80363.86, null, 2, 42),
-    (67576.67, null, 2, 40),
-    (48466.21, null, 2, 48),
-    (38422.5, null, 2, 41),
-    (31350.09, null, 2, 17),
-    (8956.99, null, 4, 15),
-    (60624.37, null, 4, 2),
-    (28588.12, null, 4, 18),
-    (1461.6, null, 5, 4),
-    (35579.95, null, 5, 43),
-    (52247.27, null, 5, 5),
-    (20899.21, null, 5, 7),
-    (54740.54, null, 6, 26),
-    (38412.22, null, 6, 27),
-    (93807.55, null, 6, 33),
-    (21770.53, null, 7, 31),
-    (80745.1, null, 7, 48),
-    (61545.54, null, 7, 32),
-    (82331.64, null, 7, 11),
-    (8791.22, null, 7, 3),
-    (68225.78, null, 8, 25),
-    (22903.67, null, 8, 24),
-    (11221.69, null, 8, 26),
-    (85036.2, null, 9, 47),
-    (96338.71, null, 9, 3),
-    (50581.45, null, 10, 48),
-    (18634.02, null, 10, 23),
-    (86585.77, null, 10, 17),
-    (16356.88, null, 11, 15),
-    (89428.07, null, 11, 47),
-    (71293.92, null, 12, 31),
-    (59172.07, null, 12, 27),
-    (67964.94, null, 13, 3),
-    (72849.28, null, 14, 17),
-    (86579.76, null, 14, 45),
-    (64635.06, null, 14, 19),
-    (2233.3, null, 15, 37),
-    (38403.67, null, 15, 1),
-    (25083.67, null, 16, 46),
-    (52064.2, null, 16, 14),
-    (56545.07, null, 16, 10),
-    (38051.41, 2, null, 33),
-    (35679.99, 2, null, 3),
-    (9573.17, 2, null, 15),
-    (54310.69, 3, null, 34),
-    (54308.93, 5, null, 20),
-    (41478.28, 6, null, 10),
-    (9206.43, 6, null, 39),
-    (53769.58, 6, null, 10),
-    (79991.29, 7, null, 13),
-    (64016.33, 8, null, 31),
-    (56818.17, 8, null, 18),
-    (78883.66, 8, null, 43),
-    (34515.27, 9, null, 36),
-    (78269.29, 11, null, 16),
-    (87983.83, 15, null, 43),
-    (54213.39, 16, null, 40),
-    (68924.2, 16, null, 45),
-    (61636.3, 16, null, 28),
+    (61544.64, null, 1, 47), (96378.96, null, 1, 44), (10042.26, null, 1, 39), (2268.63, null, 2, 33),
+    (22141.57, null, 2, 30), (80363.86, null, 2, 42), (67576.67, null, 2, 40), (48466.21, null, 2, 48),
+    (38422.5, null, 2, 41), (31350.09, null, 2, 17), (8956.99, null, 4, 15), (60624.37, null, 4, 2),
+    (28588.12, null, 4, 18), (1461.6, null, 5, 4), (35579.95, null, 5, 43), (52247.27, null, 5, 5),
+    (20899.21, null, 5, 7), (54740.54, null, 6, 26), (38412.22, null, 6, 27), (93807.55, null, 6, 33),
+    (21770.53, null, 7, 31), (80745.1, null, 7, 48), (61545.54, null, 7, 32), (82331.64, null, 7, 11),
+    (8791.22, null, 7, 3), (68225.78, null, 8, 25), (22903.67, null, 8, 24), (11221.69, null, 8, 26),
+    (85036.2, null, 9, 47), (96338.71, null, 9, 3), (50581.45, null, 10, 48), (18634.02, null, 10, 23),
+    (86585.77, null, 10, 17), (16356.88, null, 11, 15), (89428.07, null, 11, 47), (71293.92, null, 12, 31),
+    (59172.07, null, 12, 27), (67964.94, null, 13, 3), (72849.28, null, 14, 17), (86579.76, null, 14, 45),
+    (64635.06, null, 14, 19), (2233.3, null, 15, 37), (38403.67, null, 15, 1), (25083.67, null, 16, 46),
+    (52064.2, null, 16, 14), (56545.07, null, 16, 10),
+    (38051.41, 2, null, 33), (35679.99, 2, null, 3), (9573.17, 2, null, 15), (54310.69, 3, null, 34),
+    (54308.93, 5, null, 20), (41478.28, 6, null, 10), (9206.43, 6, null, 39), (53769.58, 6, null, 10),
+    (79991.29, 7, null, 13), (64016.33, 8, null, 31), (56818.17, 8, null, 18), (78883.66, 8, null, 43),
+    (34515.27, 9, null, 36), (78269.29, 11, null, 16), (87983.83, 15, null, 43), (54213.39, 16, null, 40),
+    (68924.2, 16, null, 45), (61636.3, 16, null, 28),
     --Empresas que venden vitrita, fusita, durita, clarita
-    (38051.41, 10, null, 1),
-    (35679.99, 12, null, 1),
-    (9573.17, 13, null, 1),
-    (54310.69, 18, null, 1),
-    (54308.93, 10, null, 2),
-    (41478.28, 12, null, 2),
-    (9206.43, 13, null, 2),
-    (53769.58, 18, null, 2),
-    (79991.29, 10, null, 13),
-    (64016.33, 12, null, 13),
-    (56818.17, 13, null, 13),
-    (78883.66, 18, null, 13),
-    (34515.27, 10, null, 36),
-    (78269.29, 12, null, 36),
-    (27646.23, 13, null, 36),
-    (85904.57, 18, null, 36),
-    (44430.51, 10, null, 41),
-    (87983.83, 12, null, 41),
-    (54213.39, 13, null, 41),
-    (68924.2, 18, null, 41),
+    (38051.41, 10, null, 1), (35679.99, 12, null, 1), (9573.17, 13, null, 1), (54310.69, 18, null, 1),
+    (54308.93, 10, null, 2), (41478.28, 12, null, 2), (9206.43, 13, null, 2), (53769.58, 18, null, 2),
+    (79991.29, 10, null, 13), (64016.33, 12, null, 13), (56818.17, 13, null, 13), (78883.66, 18, null, 13),
+    (34515.27, 10, null, 36), (78269.29, 12, null, 36), (27646.23, 13, null, 36), (85904.57, 18, null, 36),
+    (44430.51, 10, null, 41), (87983.83, 12, null, 41), (54213.39, 13, null, 41), (68924.2, 18, null, 41),
     (61636.3, 10, null, 28);
 
 -------------------------------------    EXPLOTACION     -------------------------------------
@@ -3196,10 +3134,348 @@ INSERT INTO MU_YACIMIENTO (nombre, descripcion, fecha_registro, tamaño, fk_luga
     ('Yacimiento 119', 'justo', '1980-01-01', 20690, 1373, 2, null),
     ('Yacimiento 120', 'in purus eu magna vulputate', '1980-01-01', 33712, 1494, 2, null);
 
+-------------------------------------    YACIMIENTO_TIPO_YACIMIENTO     -------------------------------------
+INSERT INTO MU_YACIMIENTO_TIPO_YACIMIENTO (fk_yacimiento, fk_tipo_yacimiento) VALUES
+    (1, 2), (2, 1), (3, 1), (4, 5), (5, 3), (6, 6), (7, 6), (8, 5), (9, 5), (10, 6), (11, 2), (12, 3),
+    (13, 4), (14, 2), (15, 5), (16, 3), (17, 5), (18, 5), (19, 5), (20, 2), (21, 3), (22, 5), (23, 5), (24, 1),
+    (25, 4), (26, 2), (27, 6), (28, 4), (29, 4), (30, 2), (31, 4), (32, 3), (33, 4), (34, 2), (35, 5), (36, 6),
+    (37, 1), (38, 4), (39, 5), (40, 6), (41, 1), (42, 1), (43, 5), (44, 5), (45, 4), (46, 6), (47, 6), (48, 6),
+    (49, 4), (50, 1), (51, 2), (52, 1), (53, 2), (54, 6), (55, 3), (56, 5), (57, 5), (58, 4), (59, 1), (60, 3),
+    (61, 3), (62, 3), (63, 2), (64, 1), (65, 4), (66, 5), (67, 2), (68, 1), (69, 2), (70, 5), (71, 1), (72, 2),
+    (73, 2), (74, 6), (75, 2), (76, 5), (77, 6), (78, 1), (79, 2), (80, 1), (81, 2), (82, 1), (83, 5), (84, 4),
+    (85, 6), (86, 6), (87, 6), (88, 5), (89, 1), (90, 5), (91, 6), (92, 5), (93, 1), (94, 3), (95, 4), (96, 6),
+    (97, 3), (98, 1), (99, 3), (100, 2), (101, 5), (102, 2), (103, 6), (104, 6), (105, 3), (106, 6), (107, 3), (108, 6),
+    (109, 4), (110, 3), (111, 5), (112, 6), (113, 2), (114, 2), (115, 6), (116, 4), (117, 3), (118, 1), (119, 5), (120, 2);
+
+-------------------------------------    YACIMIENTO_MINERAL     -------------------------------------
+INSERT INTO MU_YACIMIENTO_MINERAL (cantidad, fk_mineral_metalico, fk_mineral_no_metalico, fk_yacimiento) VALUES
+    (3104, null, 8, 1), (2598, null, 8, 2), (5831, null, 8, 3), (5494, null, 8, 4),
+    (4739, null, 8, 5), (5742, null, 8, 6), (2314, null, 8, 7), (8336, null, 8, 8),
+    (8846, null, 8, 9), (3240, null, 8, 10), (8405, null, 8, 11), (1989, null, 8, 12),
+    (4074, null, 8, 13), (9070, null, 8, 14), (9968, null, 8, 15), (2520, null, 8, 16),
+    (4338, null, 8, 17), (2331, null, 8, 18), (3849, null, 8, 19), (9017, null, 8, 20),
+    (3559, null, 8, 21), (4271, null, 8, 22), (2588, null, 8, 23), (2861, null, 8, 24),
+    (2800, null, 8, 25), (1581, null, 8, 26), (9444, null, 8, 27), (7428, null, 8, 28),
+    (7485, null, 8, 29), (6420, null, 8, 30), (4420, null, 8, 31), (6918, null, 8, 32),
+    (7075, null, 8, 33), (2250, null, 8, 34), (3637, null, 8, 35), (1946, null, 8, 36),
+    (6252, null, 8, 37), (2439, null, 8, 38), (8435, null, 8, 39), (6110, null, 8, 40),
+    (5552, null, 8, 41), (3186, null, 8, 42), (9817, null, 8, 43), (4484, null, 8, 44),
+    (6202, null, 8, 45), (4663, null, 8, 46), (9018, null, 8, 47), (2117, null, 8, 48),
+    (3580, null, 8, 49), (8355, null, 8, 50), (9671, null, 8, 51), (4656, null, 8, 52),
+    (2501, null, 8, 53), (5322, null, 8, 54), (6084, null, 8, 55), (3738, null, 8, 56),
+    (5472, null, 8, 57), (2083, null, 8, 58), (5900, null, 8, 59), (3537, null, 8, 60),
+    (6936, null, 8, 61), (1964, null, 8, 62), (7689, null, 8, 63), (1589, null, 8, 64),
+    (1776, null, 8, 65), (3782, null, 8, 66), (9877, null, 8, 67), (5178, null, 8, 68),
+    (2373, null, 8, 69), (5313, null, 8, 70), (6656, null, 8, 71), (7377, null, 8, 72),
+    (3651, null, 8, 73), (7270, null, 8, 74), (5813, null, 8, 75), (2357, null, 8, 76),
+    (8407, null, 8, 77), (7589, null, 8, 78), (2413, null, 8, 79), (1649, null, 8, 80),
+    (4164, null, 8, 81), (8974, null, 8, 82), (3868, null, 8, 83), (7724, null, 8, 84),
+    (8623, null, 8, 85), (1807, null, 8, 86), (8301, null, 8, 87), (1575, null, 8, 88),
+    (3182, null, 8, 89), (6578, null, 8, 90), (6307, null, 8, 91), (2023, null, 8, 92),
+    (5354, null, 8, 93), (5716, null, 8, 94), (5463, null, 8, 95), (2991, null, 8, 96),
+    (8168, null, 8, 97), (9868, null, 8, 98), (2668, null, 8, 99), (6874, null, 8, 100),
+    (8669, null, 8, 101), (2970, null, 8, 102), (5911, null, 8, 103), (3580, null, 8, 104),
+    (6562, null, 8, 105), (2720, null, 8, 106), (9841, null, 8, 107), (8255, null, 8, 108),
+    (6814, null, 8, 109), (4364, null, 8, 110), (8501, null, 8, 111), (2221, null, 8, 112),
+    (2819, null, 8, 113), (5266, null, 8, 114), (8569, null, 8, 115), (6539, null, 8, 116),
+    (2521, null, 8, 117), (8891, null, 8, 118), (5055, null, 8, 119), (4967, null, 8, 120);
+
+-------------------------------------    ETAPA     -------------------------------------
+INSERT INTO MU_ETAPA (nombre, costo_total, duracion, fecha_inicio, fecha_fin, fecha_fin_real, fk_estatus, fk_explotacion) VALUES
+    -- Explotacion1 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1980-01-01', '1980-04-01', '1980-04-01', 10, 1),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1980-04-01', '1980-09-01', '1980-09-01', 10, 1),
+    -- Explotacion2 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1980-03-01', '1980-07-01', '1980-07-01', 10, 2),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1980-07-01', '1980-12-01', '1980-12-01', 10, 2),
+    -- Explotacion3 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1981-01-01', '1981-04-01', '1981-04-01', 10, 3),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1981-04-01', '1981-09-01', '1981-09-01', 10, 3),
+    -- Explotacion4 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1981-03-01', '1981-07-01', '1981-07-01', 10, 4),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1981-07-01', '1981-12-01', '1981-12-01', 10, 4),
+    -- Explotacion5 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1982-01-01', '1982-04-01', '1982-04-01', 10, 5),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1982-04-01', '1982-09-01', '1982-09-01', 10, 5),
+    -- Explotacion6 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1982-03-01', '1982-07-01', '1982-07-01', 10, 6),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1982-07-01', '1982-12-01', '1982-12-01', 10, 6),
+    -- Explotacion7 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1983-01-01', '1983-04-01', '1983-04-01', 10, 7),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1983-04-01', '1983-09-01', '1983-09-01', 10, 7),
+    -- Explotacion8 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1983-03-01', '1983-07-01', '1983-07-01', 10, 8),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1983-07-01', '1983-12-01', '1983-12-01', 10, 8),
+    -- Explotacion9 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1984-01-01', '1984-04-01', '1984-04-01', 10, 9),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1984-04-01', '1984-09-01', '1984-09-01', 10, 9),
+    -- Explotacion10 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1984-03-01', '1984-07-01', '1984-07-01', 10, 10),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1984-07-01', '1984-12-01', '1984-12-01', 10, 10),
+    -- Explotacion11 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1985-01-01', '1985-04-01', '1985-04-01', 10, 11),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1985-04-01', '1985-09-01', '1985-09-01', 10, 11),
+    -- Explotacion12 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1985-03-01', '1985-07-01', '1985-07-01', 10, 12),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1985-07-01', '1985-12-01', '1985-12-01', 10, 12),
+    -- Explotacion13 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1986-01-01', '1986-04-01', '1986-04-01', 10, 13),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1986-04-01', '1986-09-01', '1986-09-01', 10, 13),
+    -- Explotacion14 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1986-03-01', '1986-07-01', '1986-07-01', 10, 14),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1986-07-01', '1986-12-01', '1986-12-01', 10, 14),
+    -- Explotacion15 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1987-01-01', '1987-04-01', '1987-04-01', 10, 15),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1987-04-01', '1987-09-01', '1987-09-01', 10, 15),
+    -- Explotacion16 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1987-03-01', '1987-07-01', '1987-07-01', 10, 16),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1987-07-01', '1987-12-01', '1987-12-01', 10, 16),
+    -- Explotacion17 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1988-01-01', '1988-04-01', '1988-04-01', 10, 17),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1988-04-01', '1988-09-01', '1988-09-01', 10, 17),
+    -- Explotacion18 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1988-03-01', '1988-07-01', '1988-07-01', 10, 18),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1988-07-01', '1988-12-01', '1988-12-01', 10, 18),
+    -- Explotacion19 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1989-01-01', '1989-04-01', '1989-04-01', 10, 19),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1989-04-01', '1989-09-01', '1989-09-01', 10, 19),
+    -- Explotacion20 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1989-03-01', '1989-07-01', '1989-07-01', 10, 20),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1989-07-01', '1989-12-01', '1989-12-01', 10, 20),
+    -- Explotacion21 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1990-01-01', '1990-04-01', '1990-04-01', 10, 21),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1990-04-01', '1990-09-01', '1990-09-01', 10, 21),
+    -- Explotacion22 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1990-03-01', '1990-07-01', '1990-07-01', 10, 22),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1990-07-01', '1990-12-01', '1990-12-01', 10, 22),
+    -- Explotacion23 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1991-01-01', '1991-04-01', '1991-04-01', 10, 23),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1991-04-01', '1991-09-01', '1991-09-01', 10, 23),
+    -- Explotacion24 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1991-03-01', '1991-07-01', '1991-07-01', 10, 24),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1991-07-01', '1991-12-01', '1991-12-01', 10, 24),
+    -- Explotacion25 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1992-01-01', '1992-04-01', '1992-04-01', 10, 25),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1992-04-01', '1992-09-01', '1992-09-01', 10, 25),
+    -- Explotacion26 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1992-03-01', '1992-07-01', '1992-07-01', 10, 26),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1992-07-01', '1992-12-01', '1992-12-01', 10, 26),
+    -- Explotacion27 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1993-01-01', '1993-04-01', '1993-04-01', 10, 27),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1993-04-01', '1993-09-01', '1993-09-01', 10, 27),
+    -- Explotacion28 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1993-03-01', '1993-07-01', '1993-07-01', 10, 28),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1993-07-01', '1993-12-01', '1993-12-01', 10, 28),
+    -- Explotacion29 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1994-01-01', '1994-04-01', '1994-04-01', 10, 29),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1994-04-01', '1994-09-01', '1994-09-01', 10, 29),
+    -- Explotacion30 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1994-03-01', '1994-07-01', '1994-07-01', 10, 30),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1994-07-01', '1994-12-01', '1994-12-01', 10, 30),
+    -- Explotacion31 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1995-01-01', '1995-04-01', '1995-04-01', 10, 31),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1995-04-01', '1995-09-01', '1995-09-01', 10, 31),
+    -- Explotacion32 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1995-03-01', '1995-07-01', '1995-07-01', 10, 32),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1995-07-01', '1995-12-01', '1995-12-01', 10, 32),
+    -- Explotacion33 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1996-01-01', '1996-04-01', '1996-04-01', 10, 33),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1996-04-01', '1996-09-01', '1996-09-01', 10, 33),
+    -- Explotacion34 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1996-03-01', '1996-07-01', '1996-07-01', 10, 34),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1996-07-01', '1996-12-01', '1996-12-01', 10, 34),
+    -- Explotacion35 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1997-01-01', '1997-04-01', '1997-04-01', 10, 35),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1997-04-01', '1997-09-01', '1997-09-01', 10, 35),
+    -- Explotacion36 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1997-03-01', '1997-07-01', '1997-07-01', 10, 36),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1997-07-01', '1997-12-01', '1997-12-01', 10, 36),
+    -- Explotacion37 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1998-01-01', '1998-04-01', '1998-04-01', 10, 37),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1998-04-01', '1998-09-01', '1998-09-01', 10, 37),
+    -- Explotacion38 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1998-03-01', '1998-07-01', '1998-07-01', 10, 38),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1998-07-01', '1998-12-01', '1998-12-01', 10, 38),
+    -- Explotacion39 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1999-01-01', '1999-04-01', '1999-04-01', 10, 39),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1999-04-01', '1999-09-01', '1999-09-01', 10, 39),
+    -- Explotacion40 --
+    ('ETAPA 1: Inventario de Información', null, 4, '1999-03-01', '1999-07-01', '1999-07-01', 10, 40),
+    ('ETAPA 2: Geología de Superficie', null, 5, '1999-07-01', '1999-12-01', '1999-12-01', 10, 40),
+    -- Explotacion41 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2000-01-01', '2000-04-01', '2000-04-01', 10, 41),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2000-04-01', '2000-09-01', '2000-09-01', 10, 41),
+    -- Explotacion42 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2000-03-01', '2000-07-01', '2000-07-01', 10, 42),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2000-07-01', '2000-12-01', '2000-12-01', 10, 42),
+    -- Explotacion43 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2001-01-01', '2001-04-01', '2001-04-01', 10, 43),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2001-04-01', '2001-09-01', '2001-09-01', 10, 43),
+    -- Explotacion44 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2001-03-01', '2001-07-01', '2001-07-01', 10, 44),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2001-07-01', '2001-12-01', '2001-12-01', 10, 44),
+    -- Explotacion45 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2002-01-01', '2002-04-01', '2002-04-01', 10, 45),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2002-04-01', '2002-09-01', '2002-09-01', 10, 45),
+    -- Explotacion46 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2002-03-01', '2002-07-01', '2002-07-01', 10, 46),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2002-07-01', '2002-12-01', '2002-12-01', 10, 46),
+    -- Explotacion47 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2003-01-01', '2003-04-01', '2003-04-01', 10, 47),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2003-04-01', '2003-09-01', '2003-09-01', 10, 47),
+    -- Explotacion48 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2003-03-01', '2003-07-01', '2003-07-01', 10, 48),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2003-07-01', '2003-12-01', '2003-12-01', 10, 48),
+    -- Explotacion49 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2004-01-01', '2004-04-01', '2004-04-01', 10, 49),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2004-04-01', '2004-09-01', '2004-09-01', 10, 49),
+    -- Explotacion50 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2004-03-01', '2004-07-01', '2004-07-01', 10, 50),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2004-07-01', '2004-12-01', '2004-12-01', 10, 50),
+    -- Explotacion51 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2005-01-01', '2005-04-01', '2005-04-01', 10, 51),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2005-04-01', '2005-09-01', '2005-09-01', 10, 51),
+    -- Explotacion52 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2005-03-01', '2005-07-01', '2005-07-01', 10, 52),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2005-07-01', '2005-12-01', '2005-12-01', 10, 52),
+    -- Explotacion53 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2006-01-01', '2006-04-01', '2006-04-01', 10, 53),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2006-04-01', '2006-09-01', '2006-09-01', 10, 53),
+    -- Explotacion54 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2006-03-01', '2006-07-01', '2006-07-01', 10, 54),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2006-07-01', '2006-12-01', '2006-12-01', 10, 54),
+    -- Explotacion55 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2007-01-01', '2007-04-01', '2007-04-01', 10, 55),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2007-04-01', '2007-09-01', '2007-09-01', 10, 55),
+    -- Explotacion56 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2007-03-01', '2007-07-01', '2007-07-01', 10, 56),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2007-07-01', '2007-12-01', '2007-12-01', 10, 56),
+    -- Explotacion57 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2008-01-01', '2008-04-01', '2008-04-01', 10, 57),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2008-04-01', '2008-09-01', '2008-09-01', 10, 57),
+    -- Explotacion58 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2008-03-01', '2008-07-01', '2008-07-01', 10, 58),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2008-07-01', '2008-12-01', '2008-12-01', 10, 58),
+    -- Explotacion59 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2009-01-01', '2009-04-01', '2009-04-01', 10, 59),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2009-04-01', '2009-09-01', '2009-09-01', 10, 59),
+    -- Explotacion60 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2009-03-01', '2009-07-01', '2009-07-01', 10, 60),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2009-07-01', '2009-12-01', '2009-12-01', 10, 60),
+    -- Explotacion61 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2010-01-01', '2010-04-01', '2010-04-01', 10, 61),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2010-04-01', '2010-09-01', '2010-09-01', 10, 61),
+    -- Explotacion62 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2010-03-01', '2010-07-01', '2010-07-01', 10, 62),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2010-07-01', '2010-12-01', '2010-12-01', 10, 62),
+    -- Explotacion63 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2011-01-01', '2011-04-01', '2011-04-01', 10, 63),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2011-04-01', '2011-09-01', '2011-09-01', 10, 63),
+    -- Explotacion64 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2011-03-01', '2011-07-01', '2011-07-01', 10, 64),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2011-07-01', '2011-12-01', '2011-12-01', 10, 64),
+    -- Explotacion65 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2012-01-01', '2012-04-01', '2012-04-01', 10, 65),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2012-04-01', '2012-09-01', '2012-09-01', 10, 65),
+    -- Explotacion66 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2012-03-01', '2012-07-01', '2012-07-01', 10, 66),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2012-07-01', '2012-12-01', '2012-12-01', 10, 66),
+    -- Explotacion67 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2013-01-01', '2013-04-01', '2013-04-01', 10, 67),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2013-04-01', '2013-09-01', '2013-09-01', 10, 67),
+    -- Explotacion68 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2013-03-01', '2013-07-01', '2013-07-01', 10, 68),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2013-07-01', '2013-12-01', '2013-12-01', 10, 68),
+    -- Explotacion69 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2014-01-01', '2014-04-01', '2014-04-01', 10, 69),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2014-04-01', '2014-09-01', '2014-09-01', 10, 69),
+    -- Explotacion70 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2014-03-01', '2014-07-01', '2014-07-01', 10, 70),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2014-07-01', '2014-12-01', '2014-12-01', 10, 70),
+    -- Explotacion71 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2015-01-01', '2015-04-01', '2015-04-01', 10, 71),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2015-04-01', '2015-09-01', '2015-09-01', 10, 71),
+    -- Explotacion72 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2015-03-01', '2015-07-01', '2015-07-01', 10, 72),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2015-07-01', '2015-12-01', '2015-12-01', 10, 72),
+    -- Explotacion73 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2016-01-01', '2016-04-01', '2016-04-01', 10, 73),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2016-04-01', '2016-09-01', '2016-09-01', 10, 73),
+    -- Explotacion74 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2016-03-01', '2016-07-01', '2016-07-01', 10, 74),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2016-07-01', '2016-12-01', '2016-12-01', 10, 74),
+    -- Explotacion75 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2017-01-01', '2017-04-01', '2017-04-01', 10, 75),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2017-04-01', '2017-09-01', '2017-09-01', 10, 75),
+    -- Explotacion76 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2017-03-01', '2017-07-01', '2017-07-01', 10, 76),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2017-07-01', '2017-12-01', '2017-12-01', 10, 76),
+    -- Explotacion77 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-01-01', '2018-04-01', '2018-04-01', 10, 77),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-04-01', '2018-09-01', '2018-09-01', 10, 77),
+    -- Explotacion78 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-01-01', '2018-04-01', '2018-04-01', 10, 78),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-04-01', '2018-09-01', '2018-09-01', 10, 78),
+    -- Explotacion79 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-02-01', '2018-05-01', '2018-05-01', 10, 79),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-05-01', '2018-10-01', '2018-10-01', 10, 79),
+    -- Explotacion80 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-02-01', '2018-05-01', '2018-05-01', 10, 80),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-05-01', '2018-10-01', '2018-10-01', 10, 80),
+    -- Explotacion81 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-03-01', '2018-06-01', '2018-06-01', 10, 81),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-06-01', '2018-11-01', '2018-11-01', 10, 81),
+    -- Explotacion82 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-03-01', '2018-06-01', '2018-06-01', 10, 82),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-06-01', '2018-11-01', '2018-11-01', 10, 82),
+    -- Explotacion83 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-04-01', '2018-07-01', '2018-07-01', 10, 83),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-07-01', '2018-12-01', '2018-12-01', 10, 83),
+    -- Explotacion84 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-04-01', '2018-07-01', '2018-07-01', 10, 84),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-07-01', '2018-12-01', '2018-12-01', 10, 84),
+    -- Explotacion85 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-05-01', '2018-08-01', '2018-08-01', 10, 85),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-08-01', '2019-01-01', '2019-01-01', 10, 85),
+    -- Explotacion86 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-05-01', '2018-08-01', '2018-08-01', 10, 86),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-08-01', '2019-01-01', '2019-01-01', 10, 86),
+    -- Explotacion87 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-06-01', '2018-09-01', '2018-09-01', 10, 87),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-09-01', '2019-02-01', '2019-02-01', 10, 87),
+    -- Explotacion88 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-06-01', '2018-09-01', '2018-09-01', 10, 88),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-09-01', '2019-02-01', '2019-02-01', 10, 88),
+    -- Explotacion89 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-07-01', '2018-10-01', '2018-10-01', 10, 89),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-10-01', '2019-03-01', '2019-03-01', 10, 89),
+    -- Explotacion90 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-07-01', '2018-10-01', '2018-10-01', 10, 90),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-10-01', '2019-03-01', '2019-03-01', 10, 90),
+    -- Explotacion91 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-08-01', '2018-11-01', '2018-11-01', 10, 91),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-11-01', '2019-04-01', '2019-04-01', 10, 91),
+    -- Explotacion92 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-08-01', '2018-11-01', '2018-11-01', 10, 92),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-11-01', '2019-04-01', '2019-04-01', 10, 92),
+    -- Explotacion93 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-09-01', '2018-12-01', '2018-12-01', 10, 93),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-12-01', '2019-05-01', '2019-05-01', 10, 93),
+    -- Explotacion94 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-09-01', '2018-12-01', '2018-12-01', 10, 94),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2018-12-01', '2019-05-01', '2019-05-01', 10, 94),
+    -- Explotacion95 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-10-01', '2019-01-01', '2019-01-01', 10, 95),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2019-01-01', '2019-06-01', '2019-06-01', 10, 95),
+    -- Explotacion96 --
+    ('ETAPA 1: Inventario de Información', null, 4, '2018-10-01', '2019-01-01', '2019-01-01', 10, 96),
+    ('ETAPA 2: Geología de Superficie', null, 5, '2019-01-01', '2019-06-01', '2019-06-01', 10, 96);
+
+
 -------------------------------------    ALIADOS     -------------------------------------
 -------------------------------------    ALIADOS     -------------------------------------
 -------------------------------------    ALIADOS     -------------------------------------
 -------------------------------------    ALIADOS     -------------------------------------
--------------------------------------    ALIADOS     -------------------------------------
--------------------------------------    ALIADOS     -------------------------------------
--------------------------------------    ALIADOS     -------------------------------------
+
+
+---RECORDAR: INSERTAR COSTO TOTAL ETAPAS
