@@ -4,7 +4,6 @@
 
 require('dotenv').config({ path: '.env.jasper-reports' });
 const EmpleadosValidations = require('../validations/EmpleadosValidations');
-const General = require('../database/model/General');
 const Cargos = require('../database/model/Cargos');
 const ClientesJuridicos = require('../database/model/ClientesJuridicos');
 const ClientesNaturales = require('../database/model/ClientesNaturales');
