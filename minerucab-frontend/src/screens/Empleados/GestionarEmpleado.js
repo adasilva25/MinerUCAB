@@ -363,6 +363,8 @@ export default class GestionarEmpleado extends React.Component {
                 sex = 'Masculino'
             }else if(this.state.sexo === "F"){
                 sex = 'Femenino'
+            }else if(this.state.sexo === 'O'){
+                sex = 'Otro'
             }
             var segn
             if((this.state.snombre === null) || (this.state.snombre.length===0)){
