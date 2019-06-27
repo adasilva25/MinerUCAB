@@ -32,7 +32,7 @@ import ModalFooter from 'react-bootstrap/ModalFooter'
 
 const $ = require('jquery');
 
-export default class ConsultarExplotacion extends React.Component {
+export default class ModificarExplotacion extends React.Component {
     constructor(props){
         super(props);
 
@@ -338,7 +338,7 @@ export default class ConsultarExplotacion extends React.Component {
                 id:2,
                 duracion:41,
                 costo:0,
-                estatus:8,
+                estatus:1,
                 fechaI:{
                     dia:12,
                     mes:3,
@@ -360,7 +360,7 @@ export default class ConsultarExplotacion extends React.Component {
                 nombre: "diego",
                 duracion:10,
                 costo:30,
-                estatus:8,
+                estatus:1,
                 fechaI:{
                     dia:2,
                     mes:2,
@@ -521,7 +521,7 @@ export default class ConsultarExplotacion extends React.Component {
                 id:4,
                 duracion:31,
                 costo:30,
-                estatus:2,
+                estatus:3,
                 fechaI:{
                     dia:12,
                     mes:3,
@@ -542,7 +542,7 @@ export default class ConsultarExplotacion extends React.Component {
                     id:3,
                     duracion:30,
                     costo:5,
-                    estatus:8,
+                    estatus:4,
                     checkInicialCargos:true,
                     checkInicialtipoMaquiaria:true,
                     fechaI:{
@@ -597,7 +597,7 @@ export default class ConsultarExplotacion extends React.Component {
                     nombre: "Albita",
                     id:4,
                     duracion:1,
-                    estatus:2,
+                    estatus:3,
                     costo:7.2,
                     checkInicialCargos:true,
                     checkInicialtipoMaquiaria:true,
@@ -3224,24 +3224,6 @@ export default class ConsultarExplotacion extends React.Component {
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
 
-                                    <Form.Row className="formMargins">
-                                        <Form.Group as={Col} md="6"  className="inputsPaddingRight">
-                                            <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
-                                            <Form.Control 
-                                            as="select" 
-                                            className="form-input"
-                                            defaultValue={this.state.explotacion.estatus}
-                                            disabled
-                                            >
-                                                <option value={8}>En proceso</option>
-                                                <option value={2}>Inactivo</option>
-                                            </Form.Control>
-                                            <Form.Text className="text-muted">
-                                                Obligatorio
-                                            </Form.Text>    
-                                        </Form.Group>
-                                    </Form.Row>
-
 
                                     <Form.Row className="formMargins" >
                                         <FormFecha idF={"0I"} textoAuxiliar="Obligatorio" dia={(this.state.explotacion.fechaI.dia==0)?"- -":this.state.explotacion.fechaI.dia} mes={(this.state.explotacion.fechaI.mes==0)?"- -":this.state.explotacion.fechaI.mes} ano={(this.state.explotacion.fechaI.ano==0)?"- - - -":this.state.explotacion.fechaI.ano}  titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" textoAuxiliar disabled={true}/>
@@ -3488,23 +3470,6 @@ export default class ConsultarExplotacion extends React.Component {
                                                         <br/>
                                                         <FormTitulo titulo={"Información General de la Etapa "+etapa.numero}/>
                                                         <Form.Row className="formMargins">
-                                                            <Form.Group as={Col} md="6"  className="inputsPaddingRight">
-                                                                <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
-                                                                <Form.Control 
-                                                                as="select" 
-                                                                className="form-input"
-                                                                defaultValue={etapa.estatus}
-                                                                disabled
-                                                                >
-                                                                    <option value={8}>En proceso</option>
-                                                                    <option value={2}>Inactivo</option>
-                                                                </Form.Control>
-                                                                <Form.Text className="text-muted">
-                                                                    Obligatorio
-                                                                </Form.Text>    
-                                                            </Form.Group>
-                                                        </Form.Row>
-                                                        <Form.Row className="formMargins">
                                                             <FormFecha idF={etapa.numero+"I"} titulo="Fecha de Inicio de la Etapa" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(etapa.fechaI.dia==0)?"- -":etapa.fechaI.dia} mes={(etapa.fechaI.mes==0)?"- -":etapa.fechaI.mes} ano={(etapa.fechaI.ano==0)?"- - - -":etapa.fechaI.ano} disabled={true}/>
                                                             <FormFecha idF={etapa.numero+"F"} titulo="Fecha Final de la Etapa" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(etapa.fechaF.dia==0)?"- -":etapa.fechaF.dia} mes={(etapa.fechaF.mes==0)?"- -":etapa.fechaF.mes} ano={(etapa.fechaF.ano==0)?"- - - -":etapa.fechaF.ano} disabled={true}/>            
                                                         </Form.Row>
@@ -3560,23 +3525,6 @@ export default class ConsultarExplotacion extends React.Component {
                                                                         
                                                                         <Container>
                                                                             <br/>
-                                                                            <Form.Row className="formMargins">
-                                                                                <Form.Group as={Col} md="6"  className="inputsPaddingRight">
-                                                                                    <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
-                                                                                    <Form.Control 
-                                                                                    as="select" 
-                                                                                    className="form-input"
-                                                                                    defaultValue={fase.estatus}
-                                                                                    disabled
-                                                                                    >
-                                                                                        <option value={8}>En proceso</option>
-                                                                                        <option value={2}>Inactivo</option>
-                                                                                    </Form.Control>
-                                                                                    <Form.Text className="text-muted">
-                                                                                        Obligatorio
-                                                                                    </Form.Text>    
-                                                                                </Form.Group>
-                                                                            </Form.Row>
                                                                             <Form.Row className="formMargins">
                                                                                 <FormFecha idF={etapa.numero+''+fase.numero+"I"} titulo="Fecha de Inicio de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft" dia={(fase.fechaI.dia==0)?"- -":fase.fechaI.dia} mes={(fase.fechaI.mes==0)?"- -":fase.fechaI.mes} ano={(fase.fechaI.ano==0)?"- - - -":fase.fechaI.ano} disabled={true}/>
                                                                                 <FormFecha idF={etapa.numero+''+fase.numero+"F"} titulo="Fecha Final de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(fase.fechaF.dia==0)?"- -":fase.fechaF.dia} mes={(fase.fechaF.mes==0)?"- -":fase.fechaF.mes} ano={(fase.fechaF.ano==0)?"- - - -":fase.fechaF.ano} disabled={true}/>            
@@ -3647,12 +3595,47 @@ export default class ConsultarExplotacion extends React.Component {
                                                                                                         <br/>
                                                                                                         <div> {'Agregar '+ cargo.nombre + ' :'} </div>
                                                                                                         <br/>
-                                                                                                        
+                                                                                                        <Row>
+                                                                                                            <Col sm={0} md={1}></Col>
+                                                                                                            <Col sm={12} md={10}>
+                                                                                                                <DataTable
+
+                                                                                                                    selectCheck={null}
+                                                                                                                    selectCheck2={this.selectFunctionCheckbox}
+
+                                                                                                                    modificarCheck={cargo.checkInicialEmpleado}
+                                                                                                                    listaModificarCheck={cargo.empleadosId}
+
+                                                                                                                    agregar={false}
+                                                                                                                    modificar={false}
+                                                                                                                    consultar={false}
+                                                                                                                    eliminar={false}
+                                                                                                                    columns={'http://localhost:3000/column_names/mu_empleado'} 
+                                                                                                                    data={'http://localhost:3000/getAllEmpleados'}
+                                                                                                                    size={200}
+
+                                                                                                                    url={'consultar_empleado/:'}
+                                                                                                                    checktable={true}
+                                                                                                                    textoSingular={'empleado'}
+                                                                                                                    textoPlural={'empleados'}
+                                                                                                                    etapa={etapa.numeroV}
+                                                                                                                    fase={fase.numeroV}
+
+                                                                                                                    id={indexcar}
+                                                                                                                    tipo={"E"}
+                                                                                                                    max={(cargo.empleadosShow=='none')?(cargo.cantidad-cargo.empleados.length+1 ): (cargo.cantidad-cargo.empleados.length)}
+                                                                                                                />
+                                                                                                            </Col>
+                                                                                                            <Col sm={0} md={1}></Col>
+                                                                                                        </Row>
                                                                                                         <Container className="containerempleados">
                                                                                                             <br/>
                                                                                                             
                                                                                                             <h4>
-                                                                                                                <Badge variant="secondary">{'Empleados: '+ cargo.cantidad}</Badge> 
+                                                                                                                <Badge variant="secondary">{'Empleados restantes: '+ ((cargo.empleadosShow=='none')?(cargo.cantidad-cargo.empleados.length+1 ): (cargo.cantidad-cargo.empleados.length))}</Badge> 
+                                                                                                            </h4>
+                                                                                                            <h4>
+                                                                                                                <Badge style={{display: cargo.empleadosShow}} variant="secondary">{'Horarios por asignar: '+ this.validarEmpleadosHorarios(etapa.numero,fase.numero,indexcar)}</Badge> 
                                                                                                             </h4>
                                                                                                             <Row>
                                                                                                                 
@@ -3665,7 +3648,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                                                                                                 <div>{empleado.nombre}</div>
                                                                                                                                 <div>{empleado.ci}</div>
                                                                                                                             </div>
-                                                                                                                             <Button className={(empleado.sexo=="Masculino")?"BotonHorarioM":((empleado.sexo=="Femenino")?"BotonHorarioF":"BotonHorarioO")}variant="outline-primary"  onClick={()=>this.horario(etapa.numero,fase.numero,indexcar,indexem)}>Ver Horario</Button>
+                                                                                                                             <Button className={(empleado.sexo=="Masculino")?"BotonHorarioM":((empleado.sexo=="Femenino")?"BotonHorarioF":"BotonHorarioO")}variant="outline-primary"  onClick={()=>this.horario(etapa.numero,fase.numero,indexcar,indexem)}>{"Horario "+this.validarEmpleadoHorario(etapa.numero,fase.numero,indexcar,indexem)}</Button>
                                                                                                                              
 
 
@@ -3701,7 +3684,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                                                                                                                                 </Col>
                                                                                                                                                                 <Form.Group as={Col} sm="8"controlId={"DropdownDia"+horario.dia+etapa.numero+fase.numero+indexcar+indexem}>
                                                                                                                                                                     <Form.Label>{horario.dia}</Form.Label>
-                                                                                                                                                                    <Form.Control as="select" defaultValue={horario.value} disabled> 
+                                                                                                                                                                    <Form.Control as="select" defaultValue={horario.value} > 
                                                                                                                                                                         <option value={0}>No aplica</option>
                                                                                                                                                                         <option value={1}>Turno de Mañana 7:00-12:00</option>
                                                                                                                                                                         <option value={2}>Turno de Tarde 14:00-18:00</option>
@@ -3725,7 +3708,7 @@ export default class ConsultarExplotacion extends React.Component {
 
                                                                                                                                 <Modal.Footer>
                                                                                                                                     <Button variant="primary" onClick={()=>this.horario(etapa.numero,fase.numero,indexcar,indexem)}>
-                                                                                                                                        Volver
+                                                                                                                                      Guardar Cambios
                                                                                                                                     </Button>
                                                                                                                                 </Modal.Footer>
                                                                                                                             </Modal>
@@ -3777,11 +3760,43 @@ export default class ConsultarExplotacion extends React.Component {
                                                                                                         <br/>
                                                                                                         <div> {'Agregar '+ tipoMaquinaria.nombre + ' :'} </div>
                                                                                                         <br/>
-                                                                                                        
+                                                                                                        <Row>
+                                                                                                            <Col sm={0} md={1}></Col>
+                                                                                                            <Col sm={12} md={10}>
+                                                                                                                <DataTable
+
+                                                                                                                    selectCheck={null}
+                                                                                                                    selectCheck2={this.selectFunctionCheckbox}
+
+                                                                                                                    modificarCheck={tipoMaquinaria.checkInicialMaquiaria}
+                                                                                                                    listaModificarCheck={tipoMaquinaria.maquinariasId}
+
+                                                                                                                    agregar={false}
+                                                                                                                    modificar={false}
+                                                                                                                    consultar={false}
+                                                                                                                    eliminar={false}
+                                                                                                                    columns={'http://localhost:3000/column_names/mu_tipo_maquinaria'} 
+                                                                                                                    data={'http://localhost:3000/getAllTiposMaquinaria'}
+                                                                                                                    size={200}
+
+                                                                                                                    url={'consultar_empleado/:'}
+                                                                                                                    checktable={true}
+                                                                                                                    textoSingular={'maquinaria'}
+                                                                                                                    textoPlural={'maquinarias'}
+                                                                                                                    etapa={etapa.numeroV}
+                                                                                                                    fase={fase.numeroV}
+
+                                                                                                                    id={indexTM}
+                                                                                                                    tipo={"M"}
+                                                                                                                    max={((tipoMaquinaria.maquinariasShow=='none')?(tipoMaquinaria.cantidad-tipoMaquinaria.maquinarias.length+1 ): (tipoMaquinaria.cantidad-tipoMaquinaria.maquinarias.length))}
+                                                                                                                />
+                                                                                                            </Col>
+                                                                                                            <Col sm={0} md={1}></Col>
+                                                                                                        </Row>
                                                                                                         <Container className="containerMaquinaria">
                                                                                                             <br/>
                                                                                                             <h4>
-                                                                                                                <Badge className="badgeMaquinaria" variant="secondary">{'Maquinarias: '+ tipoMaquinaria.cantidad}</Badge> 
+                                                                                                                <Badge className="badgeMaquinaria" variant="secondary">{'Maquinarias restantes: '+ ((tipoMaquinaria.maquinariasShow=='none')?(tipoMaquinaria.cantidad-tipoMaquinaria.maquinarias.length+1 ): (tipoMaquinaria.cantidad-tipoMaquinaria.maquinarias.length))}</Badge> 
                                                                                                             </h4>
                                                                                                             <Row>
                                                                                                                 {tipoMaquinaria.maquinarias.map((maquinaria,indexM)=>{             
@@ -3824,9 +3839,11 @@ export default class ConsultarExplotacion extends React.Component {
                         </Card>
                     </Accordion>
                     <div>
-                    
-                    <Button className="RYacimiento-btn btn-block btn-margin-izq-vol" onClick={this.handleOnClickSubmittData}>
-                        Volver
+                    <Button className="RYacimiento-btn btn-block">
+                        Cancelar
+                    </Button>
+                    <Button className="RYacimiento-btn btn-block btn-margin-izq" onClick={this.handleOnClickSubmittData}>
+                        Iniciar Explotación
                     </Button>
                     </div>
                 </Container>
