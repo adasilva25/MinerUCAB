@@ -17,6 +17,7 @@ export default class FormFecha extends React.Component {
         }
     }
 
+
     onClickDashboardPage(){
         history.push('/dashboard');  
     }       
@@ -36,6 +37,7 @@ export default class FormFecha extends React.Component {
             ano: ano
         }));
     }
+
 
 
     render(){

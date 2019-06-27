@@ -31,7 +31,7 @@ export default class DataTable extends React.Component {
         let eliminar = this.props.eliminar === true;
         let checktable = this.props.checktable === true;
         let modificarCheck = this.props.modificarCheck === true;
-        const  listaModificarCheck=this.props.listaModificarCheck;
+        const listaModificarCheck=this.props.listaModificarCheck;
         let urlConsultar = this.props.urlConsultar;
         let urlModificar = this.props.urlModificar;
         let size = this.props.size;
@@ -81,26 +81,21 @@ export default class DataTable extends React.Component {
                         const keys = Object.keys(item);
                         for (let key of keys) {
                             if (columnsSet < keys.length){
-                                console.log('entro', key)
                                 columns.push({
                                     title: key[0].toUpperCase() + key.substring(1,key.length).toLowerCase()
                                 })
                                 columnsSet++;
-                                console.log('columnsSet', columnsSet)
                             }
                             if (columnsSet === keys.length){
-                                console.log('entro en acciones')
                                 columns.push({
                                     title: 'Acciones'
                                 })
                                 columnsSet++;
-                                console.log('columnsSet', columnsSet)
                             }
                             if (typeof item[key] === 'number'){
                                 values.push(item[key].toString());
                             }
                             else if (key.includes('fecha')){
-                                console.log('entro', key)
                                 const date = new Date(item[key])
                                 const dia = date.getDate()
                                 const mes = (date.getMonth() + 1)
@@ -131,7 +126,7 @@ export default class DataTable extends React.Component {
                         columns: columns,
                         "bDestroy": true,
                         //Quitar paging
-                            //paging: false
+                            paging: false,
                         //Quitar searching
                             //searching: false,
                         //Scrollbar
@@ -189,7 +184,9 @@ export default class DataTable extends React.Component {
                                     return checkbox.prop("outerHTML");
                                 
                                 }
-                                else{
+
+                                else {
+
                                     return row[0]
                                 }
                             
@@ -252,7 +249,7 @@ export default class DataTable extends React.Component {
                             }
                         })
 
-
+                        
                         /*$('select[name=dt-dropdown]').on('change', function () {   
                             var selectedid = $(this).children(":selected").attr("id");
                             var rowdata = table.row( $(this).parents('tr') ).data()[0];
@@ -463,8 +460,19 @@ export default class DataTable extends React.Component {
                                             botonesEliminar[i].classList.add(textoPlural.replace(/\s/g,''));
                                         }
                                     }
+                                    else if (textoPlural === 'clientes jurídicos' || textoPlural === 'clientes naturales'){
+                                        if(textoPlural === 'clientes jurídicos' && !botonesEliminar[i].className.baseVal.includes('clientesnaturales')){
+                                            botonesEliminar[i].classList.add(textoPlural.replace(/\s/g,''));
+                                        }
+                                        else if (textoPlural === 'clientes naturales' && !botonesEliminar[i].className.baseVal.includes('clientesjurídicos')){
+                                            botonesEliminar[i].classList.add(textoPlural.replace(/\s/g,''));
+                                        }
+                                    }
                                     botonesEliminar[i].onclick = function() {
                                         if ((this.props.textoPlural === 'minerales metalicos' || this.props.textoPlural === 'minerales no metalicos')){
+                                            this.props.modalEliminar(botonesEliminar[i])
+                                        }
+                                        else if ((this.props.textoPlural === 'clientes jurídicos' || this.props.textoPlural === 'clientes naturales')){
                                             this.props.modalEliminar(botonesEliminar[i])
                                         }
                                         else {
@@ -538,9 +546,6 @@ export default class DataTable extends React.Component {
                     // this.setState({ datatable: table });
 
 
-
-      
-
     }
 
 
@@ -601,7 +606,7 @@ export default class DataTable extends React.Component {
             }
         }
     }
-    
+
     render(){
         return (
             <div>

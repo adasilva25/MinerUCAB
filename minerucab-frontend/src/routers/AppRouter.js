@@ -31,6 +31,9 @@ import GestionarMaquinaria from '../screens/Maquinarias/GestionarMaquinaria';
 import Mineral from '../screens/Minerales/Mineral';
 import GestionarMineralMetalico from '../screens/Minerales/GestionarMineralMetalico';
 import GestionarMineralNoMetalico from '../screens/Minerales/GestionarMineralNoMetalico';
+import SolicitudCompra from '../screens/Compras/SolicitudCompra';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 // history back --> https://stackoverflow.com/questions/19051212/add-a-parameter-with-js-function-window-history-back
 // history props --> https://stackoverflow.com/questions/44121069/how-to-pass-params-with-history-push-link-redirect-in-react-router-v4/45263164#45263164
@@ -46,7 +49,7 @@ const AppRouter = () => (
         <Route path="/dashboard" component={DashboardPage} />
         <Route path="/home" component={HomePage} />
         {/* ------------------------ CARGOS ------------------------ */}
-        /*<Route path="/cargo" component={Cargo} />
+        <Route path="/cargo" component={Cargo} />
         <Route path="/registrar_cargo" component={RegistrarCargo} />
         <Route path="/gestionar_cargos/:accion/:id?" component={GestionarCargos} />*/
         {/* ------------------------ CLIENTES ------------------------ */}
@@ -55,6 +58,8 @@ const AppRouter = () => (
         <Route path="/registrar_cliente_natural/:accion/:id?" component={RegistrarClienteNatural} />
         <Route path="/registrar_cliente_juridico/:accion/:id?" component={RegistrarClienteJuridico} />
         <Route path="/borar_cliente" component={ModalYesNo} />
+        {/* ------------------------ SOLICITUDES DE COMPRA ------------------------ */}
+        <Route path="/solicitud_compra" component={SolicitudCompra} />
         {/* ------------------------ EMPLEADOS ------------------------ */}
         <Route path="/empleado" component={Empleado} />
         <Route path="/gestionar_empleado/:accion/:id?" component={GestionarEmpleado} />
