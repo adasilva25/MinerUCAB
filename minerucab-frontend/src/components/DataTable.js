@@ -122,7 +122,7 @@ export default class DataTable extends React.Component {
                         columns: columns,
                         "bDestroy": true,
                         //Quitar paging
-                            // paging: false,
+                            paging: false,
                         //Quitar searching
                             //searching: false,
                         //Scrollbar
@@ -242,7 +242,7 @@ export default class DataTable extends React.Component {
                             }
                         })
 
-
+                        
                         /*$('select[name=dt-dropdown]').on('change', function () {   
                             var selectedid = $(this).children(":selected").attr("id");
                             var rowdata = table.row( $(this).parents('tr') ).data()[0];
@@ -486,9 +486,6 @@ export default class DataTable extends React.Component {
                     // this.setState({ datatable: table });
 
 
-
-      
-
     }
 
 
@@ -549,7 +546,7 @@ export default class DataTable extends React.Component {
             }
         }
     }
-    
+
     render(){
         return (
             <div>

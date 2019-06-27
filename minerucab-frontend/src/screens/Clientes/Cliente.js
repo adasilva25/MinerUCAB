@@ -104,7 +104,7 @@ export default class Cliente extends React.Component {
         return (
             <div>
                 <OpcionesGlobales active="Home"/>
-                <OpcionesLocales />
+                <OpcionesLocales Usuario={'Andrea Da Silva'}/>
                 <ModalRegistrarCliente
                     show={this.state.modalShowCrearCliente}
                     onHide={this.modalCrearClienteClose}

@@ -46,6 +46,8 @@ app.post('/createClienteNatural', ClientesNaturales.createClienteNatural);
 app.post('/createClienteJuridico', ClientesJuridicos.createClienteJuridico);
 /* -------------------- MAQUINARIAS -------------------- */
 app.post('/createMaquinaria', Maquinarias.createMaquinaria);
+/* -------------------- USUARIOS -------------------- */
+app.post('/validateUser', Usuarios.validateUser)
 /* -------------------- VENTAS -------------------- */
 app.post('/createVenta', VentasValidations.createVenta);
 app.post('/crearEmpleado', EmpleadosValidations.crearEmpleado);

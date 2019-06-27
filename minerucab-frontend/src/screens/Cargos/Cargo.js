@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuBar from '../../components/MenuBar';
+import { connect } from 'react-redux';
 import DataTable from '../../components/DataTable';
 import OpcionesLocales from '../../components/OpcionesLocales';
 import OpcionesGlobales from '../../components/OpcionesGlobales';

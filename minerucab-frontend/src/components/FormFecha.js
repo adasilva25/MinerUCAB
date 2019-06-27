@@ -11,15 +11,6 @@ export default class FormFecha extends React.Component {
     constructor(props){
         super(props);
     }
-
-    onClickDashboardPage(){
-        history.push('/dashboard');  
-    }       
-
-    onClickLoginPage(){
-        history.push('/');  
-    }  
-
     render(){
 
     	var {titulo}=this.props;
