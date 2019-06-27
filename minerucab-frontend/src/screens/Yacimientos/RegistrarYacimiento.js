@@ -1204,11 +1204,13 @@ export default class RegistrarYacimiento extends React.Component {
             etapas: [{
                 nombre: null,
                 duracion:0,
+                estatus:0,
                 costo:0,
                 fases: [{
                     nombre: null,
                     duracion:0,
                     costo:0,
+                    estatus:0,
                     cargos:[{
                         id:0,
                         sueldo:0,
@@ -1330,10 +1332,12 @@ export default class RegistrarYacimiento extends React.Component {
                     nombre: null,
                     duracion:0,
                     costo:0,
+                    estatus:0,
                     fases: [{
                         nombre: null,
                         duracion:0,
                         costo:0,
+                        estatus:0,
                         cargos:[{
                             id:0,
                             sueldo:0,
@@ -1350,6 +1354,7 @@ export default class RegistrarYacimiento extends React.Component {
                 etapa.nombre = document.getElementById('YacimientosNombreEtapa'+etapaR.numeroV).value.trim();
                 etapa.duracion = etapaR.duracion;
                 etapa.costo = etapaR.costo;
+                etapa.estatus = 2;
 
                 etapa.fases.shift();
                 etapaR.fases.forEach((faseR)=>{
@@ -1358,6 +1363,7 @@ export default class RegistrarYacimiento extends React.Component {
                             nombre: null,
                             duracion:0,
                             costo:0,
+                            estatus:0,
                             cargos:[{
                                 id:0,
                                 sueldo:0,
@@ -1373,6 +1379,7 @@ export default class RegistrarYacimiento extends React.Component {
                         fase.nombre = document.getElementById('YacimientosNombreEtapaFase'+etapaR.numeroV+faseR.numeroV).value.trim();
                         fase.duracion = faseR.duracion;
                         fase.costo = faseR.costo;
+                        fase.estatus = 2;
                         
                         fase.cargos.shift();
                         fase.tipoMaquinaria.shift();

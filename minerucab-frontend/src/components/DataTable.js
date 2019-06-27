@@ -47,6 +47,7 @@ export default class DataTable extends React.Component {
         let tipo = this.props.tipo;
         const selectCheck = this.props.selectCheck;
         const selectCheck2 = this.props.selectCheck2;
+        let max = this.props.max;
         // console.log('selectCheck', selectCheck)
         // console.log("inicio",etapa,fase);
         if(etapa !== undefined){
@@ -173,6 +174,7 @@ export default class DataTable extends React.Component {
                                         "type": "checkbox"
                                     });
                                     checkbox.addClass("dt-checkboxes");
+                                   
                                     if(modificarCheck===true){
                                        // console.log("chechboxes",checkbox);
                                         if(listaModificarCheck.includes(Number(row[0]))){
@@ -272,7 +274,7 @@ export default class DataTable extends React.Component {
                        if (checktable === true){
                         // console.log('antes', document.getElementsByClassName('dt-checkboxes'))
                             const checkboxesDT = document.getElementsByClassName('dt-checkboxes')
-                           // console.log("atributos clases",checkboxesDT);
+                          // console.log("atributos clases",checkboxesDT);
                             // console.log('tP', textoPlural)
                             let m = 0;
                                 if (checkboxesDT.length > 0){
@@ -286,15 +288,30 @@ export default class DataTable extends React.Component {
                                         //  FUNCIONA PERFECT
                                         if (checkboxesDT[k].classList.length === 1){
                                             
-                                            checkboxesDT[k].alt = dataSet[m][0];
-                                            checkboxesDT[k].align = dataSet[m][1];
+
                                             // console.log('dataSet', dataSet[m][0])
                                             // console.log('alt', checkboxesDT[k].alt)
 
                                             if(id!=null){
+
+                                                if(tipo=="E"){
+                                                    checkboxesDT[k].alt = dataSet[m][0];//ID
+                                                    checkboxesDT[k].Name = dataSet[m][1];//CI
+                                                    checkboxesDT[k].align = dataSet[m][2]+' '+dataSet[m][4];//NOMBRE
+                                                    checkboxesDT[k].dirName = dataSet[m][7];//SEXO
+                                                    console.log("CIIIIIIIIIIIIIIIIIIIIII",dataSet[m][1]);
+                                                }
+                                                else{
+                                                    checkboxesDT[k].alt = dataSet[m][0];
+                                                    checkboxesDT[k].align = dataSet[m][1];
+                                                }
+                                               
                                                 checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,'')+etapa+fase+id);
                                             }
+
                                             else{
+                                                checkboxesDT[k].alt = dataSet[m][0];
+                                                checkboxesDT[k].align = dataSet[m][1];
                                                 checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,'')+etapa+fase);
                                             }
                                             
@@ -360,13 +377,20 @@ export default class DataTable extends React.Component {
                                 
                                 // console.log('me pones una banderita ahí', table.columns(0).checkboxes.selected()[0], etapa, fase);
                                 
-                                console.log('SELECCIONADO ', e.target.checked) // SELECCIONADO O NO
-                                console.log('ID EN BD ', e.target.alt)   // ID EN BD
-                                console.log('TABLA SELECCIONADA ', e.target.className)
-                                console.log('ETAPA - FASE ', etapa, fase)
+                               /* console.log('SELECCIONADO ', e.target.checked); // SELECCIONADO O NO
+                                console.log('ID EN BD ', e.target.alt);   // ID EN BD
+                                console.log('TABLA SELECCIONADA ', e.target.className);
+                                console.log('ETAPA - FASE ', etapa, fase);
                                 // console.log('selectCheck change', selectCheck)
-                                console.log('className', e.target.className)
-                                selectCheck2(e.target.className,e.target.alt,e.target.align,etapa,fase,id);
+                                console.log('className', e.target.className);
+                                console.log('CIIII2222222222222 ',e.target);
+                                console.log('C3333333333333 ',e.target.Name);*/
+                                
+
+
+
+
+                                selectCheck2(e,e.target.className,e.target.alt,e.target.align,e.target.Name,e.target.dirName,etapa,fase,id);
                                 
                                 // this.props.selectCheck()
                                     
