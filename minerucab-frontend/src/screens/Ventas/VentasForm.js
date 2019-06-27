@@ -1194,9 +1194,16 @@ export default class VentasForm extends React.Component {
                                         key={index}
                                         id={''+index}
                                     >
+                                        <option>BanCaribe</option>
+                                        <option>Banco Activo</option>
+                                        <option>Banco Caroní</option>
+                                        <option>Banco de Venezuela</option>
+                                        <option>Banco Exterior</option>
+                                        <option>Banco Mercantil</option>
                                         <option>Banesco</option>
-                                        <option>Mercantil</option>
-                                        <option>Provincial</option>
+                                        <option>BBVA</option>
+                                        <option>BNC</option>
+                                        <option>BOD</option>
                                     </Form.Control>
                                 </Col>
                                 <Col md={1}>
