@@ -74,9 +74,6 @@ const createVenta = (req, res, next) => {
     console.log(req.body.data.idCliente)
     console.log(req.body.data)
     console.log(new Date().getTime())
-    // const obj = JSON.parse(req.body.data)
-    // console.log(obj)
-    // console.log(obj.pago)
 
     if ((req.body.data.tipoCliente[0] === 'V') || info.tipoCliente[0] === 'E'){
         Ventas.createVentaClienteNatural(info.total, info.idCliente, 8, function (claveVenta) {

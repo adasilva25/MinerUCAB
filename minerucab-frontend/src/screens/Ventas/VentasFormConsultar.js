@@ -1056,7 +1056,7 @@ export default class VentasForm extends React.Component {
         )))
     }
     goBack = () => {
-        history.back()
+        this.props.history.goBack()
     }
     renderTipoPago = (index) => {
         const tipoPago = this.state.pagos[index].tipoPago

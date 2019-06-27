@@ -11,7 +11,7 @@ export default class Actividad extends React.Component {
       super(props);
   }
   routeTo(link){
-    window.open(link,'_self');
+    this.props.history.push(link)
   }
   render(){
       const {act} = this.props;
