@@ -1178,6 +1178,9 @@ export default class RegistrarYacimiento extends React.Component {
                     ano:null
                 }
             },
+            estatus:{
+                id:null,
+            },
             minerales:[{
                 id:0,
                 total: 0,
@@ -1201,11 +1204,13 @@ export default class RegistrarYacimiento extends React.Component {
             etapas: [{
                 nombre: null,
                 duracion:0,
+                estatus:0,
                 costo:0,
                 fases: [{
                     nombre: null,
                     duracion:0,
                     costo:0,
+                    estatus:0,
                     cargos:[{
                         id:0,
                         sueldo:0,
@@ -1234,6 +1239,7 @@ export default class RegistrarYacimiento extends React.Component {
         this.state.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value;
         this.state.yacimiento.descripcion*/
         //console.log('NOMBRE YACIMEITNO',incompleto);
+        info.estatus.id = 1 ;
 
         info.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value.trim();
         info.yacimiento.descripcion = document.getElementById("YacimientosDescripcionYacimiento").value.trim();
@@ -1326,10 +1332,12 @@ export default class RegistrarYacimiento extends React.Component {
                     nombre: null,
                     duracion:0,
                     costo:0,
+                    estatus:0,
                     fases: [{
                         nombre: null,
                         duracion:0,
                         costo:0,
+                        estatus:0,
                         cargos:[{
                             id:0,
                             sueldo:0,
@@ -1346,6 +1354,7 @@ export default class RegistrarYacimiento extends React.Component {
                 etapa.nombre = document.getElementById('YacimientosNombreEtapa'+etapaR.numeroV).value.trim();
                 etapa.duracion = etapaR.duracion;
                 etapa.costo = etapaR.costo;
+                etapa.estatus = 2;
 
                 etapa.fases.shift();
                 etapaR.fases.forEach((faseR)=>{
@@ -1354,6 +1363,7 @@ export default class RegistrarYacimiento extends React.Component {
                             nombre: null,
                             duracion:0,
                             costo:0,
+                            estatus:0,
                             cargos:[{
                                 id:0,
                                 sueldo:0,
@@ -1369,6 +1379,7 @@ export default class RegistrarYacimiento extends React.Component {
                         fase.nombre = document.getElementById('YacimientosNombreEtapaFase'+etapaR.numeroV+faseR.numeroV).value.trim();
                         fase.duracion = faseR.duracion;
                         fase.costo = faseR.costo;
+                        fase.estatus = 2;
                         
                         fase.cargos.shift();
                         fase.tipoMaquinaria.shift();
@@ -2222,7 +2233,7 @@ export default class RegistrarYacimiento extends React.Component {
                     <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[3]} onClick={() => this.accordionf(3)} className="accordion borderacc">
-                                <FormTitulo titulo="Información de explotación" />
+                                <FormTitulo titulo="Configuración de explotación" />
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">

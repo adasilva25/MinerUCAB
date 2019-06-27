@@ -14,6 +14,9 @@ import GestionarCargos from '../screens/Cargos/GestionarCargos';
 import RegistrarYacimiento from '../screens/Yacimientos/RegistrarYacimiento';
 import ModificarYacimiento from '../screens/Yacimientos/ModificarYacimiento';
 import ConsultarYacimiento from '../screens/Yacimientos/ConsultarYacimiento';
+import RegistrarExplotacion from '../screens/Explotaciones/RegistrarExplotacion';
+import ConsultarExplotacion from '../screens/Explotaciones/ConsultarExplotacion';
+import ModificarExplotacion from '../screens/Explotaciones/ModificarExplotacion';
 import {NotFoundPage} from '../components/NotFoundPage';
 import {history} from './History';
 import HomePage from '../screens/Home/HomePage'
@@ -76,6 +79,11 @@ const AppRouter = () => (
         <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />
         <Route path="/modificar_yacimiento" component={ModificarYacimiento} />
         <Route path="/consultar_yacimiento" component={ConsultarYacimiento} />
+        {/* ------------------------ EXPLOTACIÓN ------------------------ */}
+        <Route path="/registrar_explotacion" component={RegistrarExplotacion} />
+        <Route path="/consultar_explotacion" component={ConsultarExplotacion} />
+        <Route path="/modificar_explotacion" component={ModificarExplotacion} />
+
       </Switch>
     </div>
   </Router>
