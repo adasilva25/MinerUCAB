@@ -20,29 +20,28 @@ export default class Maquinaria extends React.Component {
         this.setState({ modalShowEliminar: false, reload: true });
     }
     modalEliminarOpen = (i) => {
-        // console.log(i)
+        console.log(i)
         
-        // const config = {
-        //     headers: {
-        //       'Content-Type': 'application/x-www-form-urlencoded'
-        //     },
-        //     responseType: 'json'
-        // }
+        const config = {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            responseType: 'json'
+        }
         
-        // axios.get(`http://localhost:3000/getClienteNombreApellidoById/${i}`, config)
-        //     .then((res) => {
-        //         this.setState({ infoEliminar: `${res.data[0].nombre} ${res.data[0].apellido}` })
-        //         this.setState
-        //         this.setState(
-        //             { 
-        //                 modalShowEliminar: true, 
-        //                 idEliminar: i
-        //             }
-        //         )
-        //     })
-        //     .catch((e) => {
-        //         console.log('Error con el nombre - apellido por el id cliente');
-        //     })
+        axios.get(`http://localhost:3000/getMaquinariaById/${i}`, config)
+            .then((res) => {
+                this.setState({ infoEliminar: `${res.data[0].identificador}` })
+                this.setState(
+                    { 
+                        modalShowEliminar: true, 
+                        idEliminar: i
+                    }
+                )
+            })
+            .catch((e) => {
+                console.log('Error con el nombre - apellido por el id cliente');
+            })
     };
     render(){
         return (
@@ -55,6 +54,7 @@ export default class Maquinaria extends React.Component {
                     mensaje={'¿Está seguro que desea eliminar la maquinaria'}
                     infoeliminar={this.state.infoEliminar}
                     urleliminar={`http://localhost:3000/deleteClienteById/${this.state.idEliminar}`}
+                    urlOrigen={'/maquinaria'}
                 />
                 <Container className="pagecontent">
                     <div className="pagecontent">
@@ -76,10 +76,9 @@ export default class Maquinaria extends React.Component {
                                     <Col sm={0} md={1}></Col>
                                     <Col sm={12} md={10}>
                                         <DataTable
-                                            columns={'http://localhost:3000/column_names/cliente'} 
-                                            data={'http://localhost:3000/getAllClientes'}
-                                            urlModificar={'/registrar_cliente_natural'}
-                                            urlConsultar={'/registrar_cliente_natural'}
+                                            data={'http://localhost:3000/getAllMaquinarias'}
+                                            urlModificar={'/gestionar_maquinaria'}
+                                            urlConsultar={'/gestionar_maquinaria'}
                                             urlCrear={'/gestionar_maquinaria/CR'}
                                             agregar={true}
                                             modificar={true}

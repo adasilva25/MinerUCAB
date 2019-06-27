@@ -1,11 +1,10 @@
-import React from 'react';
+﻿import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import axios from 'axios';
-import {history} from '../routers/History';
 
 export default class ModalComponent extends React.Component {
   eliminarEnBD = () => {
@@ -19,7 +18,7 @@ export default class ModalComponent extends React.Component {
     axios.delete(this.props.urleliminar, config)
       .then((res) => {
         console.log(res);
-        history.goBack(this.props.urlOrigen)
+        this.props.onHide
       })
       .catch((e) => {
         console.log(e)
@@ -49,24 +48,16 @@ export default class ModalComponent extends React.Component {
         <Modal.Footer className="button">
           <Container>
             <Row>
-              <Col md={2}></Col>
-              <Col md={4}>
-                <Button 
-                    onClick={this.eliminarEnBD} 
-                    className="modal-yes-button btn-block"
-                >
-                    Sí
-                </Button>
-              </Col>
+              <Col md={4}></Col>
               <Col md={4}>
                 <Button 
                   onClick={this.props.onHide} 
                   className="modal-no-button btn-block"
                 >
-                  No
+                  OK
                 </Button>
               </Col>
-              <Col md={2}></Col>
+              <Col md={4}></Col>
             </Row>
           </Container>
         </Modal.Footer>

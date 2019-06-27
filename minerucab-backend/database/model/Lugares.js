@@ -15,6 +15,7 @@ const getAllEstados = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -33,6 +34,7 @@ const getAllMunicipiosByIdEstado = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -51,6 +53,7 @@ const getAllParroquiasByIdMunicipio = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -69,6 +72,7 @@ const getLugarByIdParroquia = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 

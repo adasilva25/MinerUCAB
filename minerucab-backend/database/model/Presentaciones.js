@@ -14,6 +14,7 @@ const getAllPresentaciones = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -32,6 +33,7 @@ const getAllPresentacionesByIdMineralMetalico = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -50,6 +52,7 @@ const getAllPresentacionesByIdMineralNoMetalico = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 

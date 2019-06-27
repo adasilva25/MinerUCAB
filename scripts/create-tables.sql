@@ -27,13 +27,13 @@ CREATE TABLE MU_HORARIO (
 
 CREATE TABLE MU_ROL (
 	Clave SERIAL,
-	Nombre VARCHAR(15) NOT NULL,
+	Nombre VARCHAR(30) NOT NULL,
 	CONSTRAINT pk_clave_rol PRIMARY KEY (Clave)
 );
 
 CREATE TABLE MU_PRIVILEGIO (
 	Clave SERIAL,
-	Nombre VARCHAR(15) NOT NULL,
+	Nombre VARCHAR(40) NOT NULL,
 	Tipo CHAR(1) NOT NULL,
 	CONSTRAINT pk_clave_privilegio PRIMARY KEY (Clave),
 	CONSTRAINT check_tipo_privilegio
@@ -42,33 +42,33 @@ CREATE TABLE MU_PRIVILEGIO (
 
 CREATE TABLE MU_PRESENTACION (
 	Clave SERIAL,
-	Nombre VARCHAR(15) NOT NULL,
+	Nombre VARCHAR(40) NOT NULL,
 	CONSTRAINT pk_clave_presentacion PRIMARY KEY (Clave)
 );
 
 CREATE TABLE MU_CARGO (
 	Clave SERIAL,
-	Nombre VARCHAR(30) NOT NULL,
+	Nombre VARCHAR(50) NOT NULL,
 	Descripcion VARCHAR(100) NOT NULL,
 	CONSTRAINT pk_clave_cargo PRIMARY KEY (Clave)
 );
 
 CREATE TABLE MU_TIPO_MAQUINARIA (
 	Clave SERIAL,
-	Nombre VARCHAR(30) NOT NULL,
+	Nombre VARCHAR(50) NOT NULL,
 	CONSTRAINT pk_clave_tipo_maquinaria PRIMARY KEY (Clave)
 );
 
 CREATE TABLE MU_TIPO_YACIMIENTO (
 	Clave SERIAL,
-	Nombre VARCHAR(15) NOT NULL,
-	Descripcion VARCHAR(100) NOT NULL,
+	Nombre VARCHAR(50) NOT NULL,
+	Descripcion VARCHAR(200) NOT NULL,
 	CONSTRAINT pk_clave_tipo_yacimiento PRIMARY KEY (Clave)
 );
 
 CREATE TABLE MU_MINERAL_METALICO (
 	Clave SERIAL,
-	Nombre VARCHAR(20) NOT NULL,
+	Nombre VARCHAR(50) NOT NULL,
 	Descripcion VARCHAR(100),
 	Dureza DECIMAL NOT NULL,
 	CONSTRAINT pk_clave_mineral_metalico PRIMARY KEY (Clave)
@@ -76,15 +76,15 @@ CREATE TABLE MU_MINERAL_METALICO (
 
 CREATE TABLE MU_MINERAL_NO_METALICO (
 	Clave SERIAL,
-	Nombre VARCHAR(20) NOT NULL,
+	Nombre VARCHAR(30) NOT NULL,
 	Descripcion VARCHAR(100),
-	Uso VARCHAR(80) NOT NULL,
+	Uso VARCHAR(150) NOT NULL,
 	CONSTRAINT pk_clave_mineral_no_metalico PRIMARY KEY (Clave)
 );
 
 CREATE TABLE MU_TIPO_PAGO_CHEQUE (
 	Clave SERIAL,
-	Banco VARCHAR(15) NOT NULL,
+	Banco VARCHAR(100) NOT NULL,
 	Numero_cheque VARCHAR(30) NOT NULL UNIQUE,
 	Numero_cuenta VARCHAR(30) NOT NULL UNIQUE,
 	CONSTRAINT pk_clave_tipo_pago_cheque PRIMARY KEY (Clave)
@@ -92,16 +92,16 @@ CREATE TABLE MU_TIPO_PAGO_CHEQUE (
 
 CREATE TABLE MU_TIPO_PAGO_TARJETA_DEBITO (
 	Clave SERIAL,
-	Banco VARCHAR(15) NOT NULL,
+	Banco VARCHAR(100) NOT NULL,
 	Numero_tarjeta VARCHAR(30) NOT NULL UNIQUE,
 	CONSTRAINT pk_clave_tipo_pago_tarjeta_debito PRIMARY KEY (Clave)
 );
 
 CREATE TABLE MU_TIPO_PAGO_TARJETA_CREDITO (
 	Clave SERIAL,
-	Banco VARCHAR(15) NOT NULL,
-	Numero_tarjeta VARCHAR(30) NOT NULL UNIQUE,
-	Tipo VARCHAR(20) NOT NULL,
+	Banco VARCHAR(100) NOT NULL,
+	Numero_tarjeta VARCHAR(50) NOT NULL UNIQUE,
+	Tipo VARCHAR(50) NOT NULL,
 	CONSTRAINT pk_clave_tipo_pago_tarjeta_credito PRIMARY KEY (Clave),
 	CONSTRAINT check_tipo_tarjeta_credito 
 		CHECK (Tipo IN ('Master Card', 'Visa', 'Otro'))
@@ -109,7 +109,7 @@ CREATE TABLE MU_TIPO_PAGO_TARJETA_CREDITO (
 
 CREATE TABLE MU_TIPO_PAGO_TRANSFERENCIA (
 	Clave SERIAL,
-	Banco VARCHAR(15) NOT NULL,
+	Banco VARCHAR(100) NOT NULL,
 	Numero_referencia VARCHAR(30) NOT NULL,
 	Numero_cuenta VARCHAR(30) NOT NULL,
 	CONSTRAINT pk_clave_tipo_pago_transferencia PRIMARY KEY (Clave)
@@ -118,12 +118,12 @@ CREATE TABLE MU_TIPO_PAGO_TRANSFERENCIA (
 CREATE TABLE MU_CLIENTE_NATURAL (
 	Clave SERIAL,
 	CI VARCHAR(15) NOT NULL UNIQUE,
-	P_nombre VARCHAR(15) NOT NULL,
-	S_nombre VARCHAR(15),
-	P_apellido VARCHAR(15) NOT NULL,
-	S_apellido VARCHAR(15),
+	P_nombre VARCHAR(30) NOT NULL,
+	S_nombre VARCHAR(30),
+	P_apellido VARCHAR(30) NOT NULL,
+	S_apellido VARCHAR(30),
 	Fecha_nacimiento DATE NOT NULL,
-	Email VARCHAR(40) NOT NULL UNIQUE,
+	Email VARCHAR(50) NOT NULL UNIQUE,
 	Telefono VARCHAR(20) NOT NULL,
 	fk_lugar INTEGER NOT NULL,
 	CONSTRAINT pk_clave_cliente_natural PRIMARY KEY (Clave),
@@ -134,9 +134,9 @@ CREATE TABLE MU_CLIENTE_NATURAL (
 CREATE TABLE MU_CLIENTE_JURIDICO (
 	Clave SERIAL,
 	Telefono VARCHAR(20) NOT NULL,
-	Email VARCHAR(40) NOT NULL UNIQUE,
+	Email VARCHAR(50) NOT NULL UNIQUE,
 	RIF VARCHAR(15) NOT NULL UNIQUE,
-	Nombre VARCHAR(15) NOT NULL,
+	Nombre VARCHAR(100) NOT NULL,
 	fk_lugar INTEGER NOT NULL,
 	CONSTRAINT pk_clave_cliente_juridico PRIMARY KEY (Clave),
 	CONSTRAINT fk_lugar_cliente_juridico FOREIGN KEY (fk_lugar) 
@@ -203,10 +203,10 @@ CREATE TABLE MU_MAQUINARIA (
 CREATE TABLE MU_EMPLEADO (
 	Clave SERIAL,
 	CI VARCHAR(15) NOT NULL,
-	P_nombre VARCHAR(15) NOT NULL,
-	S_nombre VARCHAR(15),
-	P_apellido VARCHAR(15) NOT NULL,
-	S_apellido VARCHAR(15),
+	P_nombre VARCHAR(30) NOT NULL,
+	S_nombre VARCHAR(30),
+	P_apellido VARCHAR(30) NOT NULL,
+	S_apellido VARCHAR(30),
 	Fecha_nacimiento DATE NOT NULL,
 	Sexo VARCHAR(10) NOT NULL,
 	Nivel_de_instruccion VARCHAR(15) NOT NULL,
@@ -327,47 +327,13 @@ CREATE TABLE MU_EXPLOTACION (
 	Duracion INTEGER NOT NULL,
 	Fecha_inicio DATE,
 	Fecha_fin DATE,
-	fk_venta INTEGER NOT NULL,
+	fk_venta INTEGER,
 	fk_estatus INTEGER NOT NULL,
 	CONSTRAINT pk_explotacion PRIMARY KEY (Clave),
 	CONSTRAINT fk_venta_explotacion FOREIGN KEY (fk_venta) 
 		REFERENCES MU_VENTA (Clave) ON DELETE CASCADE,
 	CONSTRAINT fk_estatus_explotacion FOREIGN KEY (fk_estatus) 
 		REFERENCES MU_ESTATUS (Clave) ON DELETE CASCADE
-);
-
-CREATE TABLE MU_ETAPA (
-	Clave SERIAL,
-	Nombre VARCHAR(100) NOT NULL,
-	Costo_total DECIMAL NOT NULL,
-	Duracion INTEGER NOT NULL,
-	Fecha_inicio DATE,
-	Fecha_fin DATE,
-	Fecha_fin_real DATE,
-	fk_estatus INTEGER NOT NULL,
-	fk_explotacion INTEGER NOT NULL,
-	CONSTRAINT pk_etapa PRIMARY KEY (Clave),
-	CONSTRAINT fk_estatus_etapa FOREIGN KEY (fk_estatus) 
-		REFERENCES MU_ESTATUS (Clave) ON DELETE CASCADE,
-	CONSTRAINT fk_explotacion_etapa FOREIGN KEY (fk_explotacion)
-		REFERENCES MU_EXPLOTACION (Clave) ON DELETE CASCADE
-);
-
-CREATE TABLE MU_FASE (
-	Clave SERIAL,
-	Nombre VARCHAR(30) NOT NULL,
-	Costo DECIMAL NOT NULL,
-	Duracion INTEGER NOT NULL,
-	Fecha_inicio DATE,
-	Fecha_fin DATE,
-	Fecha_fin_real DATE,
-	fk_estatus INTEGER NOT NULL,
-	fk_etapa INTEGER NOT NULL,
-	CONSTRAINT pk_etapa_fase PRIMARY KEY (Clave),
-	CONSTRAINT fk_estatus_fase FOREIGN KEY (fk_estatus) 
-		REFERENCES MU_ESTATUS (Clave) ON DELETE CASCADE,
-	CONSTRAINT fk_etapa_fase FOREIGN KEY (fk_etapa)
-		REFERENCES MU_ETAPA (Clave) ON DELETE CASCADE
 );
 
 CREATE TABLE MU_YACIMIENTO (
@@ -378,7 +344,7 @@ CREATE TABLE MU_YACIMIENTO (
 	Tamaño DECIMAL NOT NULL,
 	fk_lugar INTEGER NOT NULL,
 	fk_estatus INTEGER NOT NULL,
-	fk_explotacion INTEGER NOT NULL,
+	fk_explotacion INTEGER,
 	CONSTRAINT pk_yacimiento PRIMARY KEY (Clave),
 	CONSTRAINT fk_lugar_yacimiento FOREIGN KEY (fk_lugar) 
 		REFERENCES MU_LUGAR (Clave) ON DELETE CASCADE,
@@ -413,6 +379,42 @@ CREATE TABLE MU_YACIMIENTO_MINERAL (
 	CONSTRAINT fk_yacimiento_yacimiento_mineral FOREIGN KEY (fk_yacimiento) 
 		REFERENCES MU_YACIMIENTO (Clave) ON DELETE CASCADE
 );
+
+CREATE TABLE MU_ETAPA (
+	Clave SERIAL,
+	Nombre VARCHAR(100) NOT NULL,
+	Costo_total DECIMAL,
+	Duracion INTEGER NOT NULL,
+	Fecha_inicio DATE,
+	Fecha_fin DATE,
+	Fecha_fin_real DATE,
+	fk_estatus INTEGER NOT NULL,
+	fk_explotacion INTEGER NOT NULL,
+	CONSTRAINT pk_etapa PRIMARY KEY (Clave),
+	CONSTRAINT fk_estatus_etapa FOREIGN KEY (fk_estatus) 
+		REFERENCES MU_ESTATUS (Clave) ON DELETE CASCADE,
+	CONSTRAINT fk_explotacion_etapa FOREIGN KEY (fk_explotacion)
+		REFERENCES MU_EXPLOTACION (Clave) ON DELETE CASCADE
+);
+
+CREATE TABLE MU_FASE (
+	Clave SERIAL,
+	Nombre VARCHAR(200) NOT NULL,
+	Costo DECIMAL,
+	Duracion INTEGER NOT NULL,
+	Fecha_inicio DATE,
+	Fecha_fin DATE,
+	Fecha_fin_real DATE,
+	fk_estatus INTEGER NOT NULL,
+	fk_etapa INTEGER NOT NULL,
+	CONSTRAINT pk_etapa_fase PRIMARY KEY (Clave),
+	CONSTRAINT fk_estatus_fase FOREIGN KEY (fk_estatus) 
+		REFERENCES MU_ESTATUS (Clave) ON DELETE CASCADE,
+	CONSTRAINT fk_etapa_fase FOREIGN KEY (fk_etapa)
+		REFERENCES MU_ETAPA (Clave) ON DELETE CASCADE
+);
+
+--------------------------------------------------------------------------------------------
 
 CREATE TABLE MU_CARGO_FASE (
 	Clave SERIAL,

@@ -61,6 +61,7 @@ const getVentaById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -78,6 +79,7 @@ const getAllVentasClientesNaturales = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -95,6 +97,7 @@ const getAllVentasClientesJuridicos = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -155,6 +158,7 @@ const deleteVentaById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 

@@ -20,6 +20,7 @@ const createPagoCheque = (monto, fk_venta, fk_tipo_pago_cheque) => {
     .catch((e) => {
         console.error(e.stack);
         client.end();
+        res.status(500).json({ error: e.toString() });
     })
     
 }
@@ -39,6 +40,7 @@ const createPagoTC = (monto, fk_venta, fk_tipo_pago_tarjeta_credito) => {
     .catch((e) => {
         console.error(e.stack);
         client.end();
+        res.status(500).json({ error: e.toString() });
     })
     
 }
@@ -58,6 +60,7 @@ const createPagoTD = (monto, fk_venta, fk_tipo_pago_tarjeta_debito) => {
     .catch((e) => {
         console.error(e.stack);
         client.end();
+        res.status(500).json({ error: e.toString() });
     })
     
 }
@@ -77,6 +80,7 @@ const createPagoTransferencia = (monto, fk_venta, fk_tipo_pago_transferencia) =>
     .catch((e) => {
         console.error(e.stack);
         client.end();
+        res.status(500).json({ error: e.toString() });
     })
     
 }
@@ -97,6 +101,7 @@ const getPagosChequeByIdDeVenta = (claveVenta, callback) => {
     .catch((e) => {
         console.error(e.stack);
         client.end();
+        // res.status(500).json({ error: e.toString() });
     })
 }
 
@@ -116,6 +121,7 @@ const getPagosTarjetaCreditoByIdDeVenta = (claveVenta, callback) => {
     .catch((e) => {
         console.error(e.stack);
         client.end();
+        // res.status(500).json({ error: e.toString() });
     })
 }
 
@@ -135,6 +141,7 @@ const getPagosTarjetaDebitoByIdDeVenta = (claveVenta, callback) => {
     .catch((e) => {
         console.error(e.stack);
         client.end();
+        // res.status(500).json({ error: e.toString() });
     })
 }
 
@@ -154,6 +161,7 @@ const getPagosTransferenciaByIdDeVenta = (claveVenta, callback) => {
     .catch((e) => {
         console.error(e.stack);
         client.end();
+        // res.status(500).json({ error: e.toString() });
     })
 }
 

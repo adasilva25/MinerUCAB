@@ -811,9 +811,9 @@ export default class VentasForm extends React.Component {
                                                     key={index} 
                                                     value={option.cantidad}
                                                     id={''+index}
-                                                    onChange={this.onChangeCantidad}
                                                     alt={1}
                                                     min="0"
+                                                    disabled={true}
                                                 />
                                                 {
                                                     this.createAttribute(index)
@@ -869,7 +869,7 @@ export default class VentasForm extends React.Component {
 
         if ((tipoPago === 'Transferencia') || (tipoPago === 'Cheque')){
             return (
-                <Col md={5}>
+                <Col md={4}>
                     <Form.Group>
                         <Form.Label className="cliente-description-fields-text">Número de Cuenta</Form.Label>
                         <Form.Control 
@@ -888,7 +888,7 @@ export default class VentasForm extends React.Component {
         }
         else if (tipoPago === 'Tarjeta Crédito'){
             return (
-                <Col md={5}>
+                <Col md={4}>
                     <Form.Group>
                         <Form.Label className="cliente-description-fields-text">Tipo</Form.Label>
                         <Form.Control 
@@ -896,8 +896,8 @@ export default class VentasForm extends React.Component {
                             className="form-input"
                             id="form-input-tipopagodetalle2-ventas"
                             disabled={true}
-                            value={this.state.pagos[index].detalle2} 
                         >
+                        <option>{this.state.pagos[index].detalle2}</option>
                         </Form.Control>
                         {
                             (this.state.showMessage2 === true && <p className="modal-bc-error-mg">¡Error! El cliente no está registrado en el sistema.</p>)
@@ -958,6 +958,12 @@ export default class VentasForm extends React.Component {
         // }
     }
     renderTipoPagoDetalle = (index) => {
+        const tipoPago = this.state.pagos[index].tipoPago
+        let colSize = 3;
+        if (tipoPago === 'Tarjeta Débito'){
+            colSize = 5
+            console.log('colSize', colSize)
+        }
         return (
             <div>
                 <Row>
@@ -967,10 +973,33 @@ export default class VentasForm extends React.Component {
                         {
                             this.renderTipoPago(index)
                         }
-                        <Col md={1}></Col>
                         {
                             this.renderTipoPagoDetallado(index)
                         }
+                        {
+                            colSize === 5 && <Col md={1}></Col>
+                        }
+                        <Col md={colSize}>
+                            <Form.Label className="cliente-description-fields-text">Monto</Form.Label>
+                            <Row>
+                                <Col md={12}>
+                                    <Form.Group>
+                                        <InputGroup className="MyInputGroup">
+                                            <Form.Control type="number" 
+                                                className={"form-input form-input-text-monto-pago-detallado"+index} 
+                                                key={index} 
+                                                id={''+index}
+                                                value={this.state.pagos[index].monto}
+                                                disabled={true}
+                                            />
+                                        </InputGroup>
+                                        {
+                                            (this.state.showMessage2 === true && <p className="modal-bc-error-mg">Este campo es obligatorio</p>)
+                                        }
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            </Col>
                         </Row>
                     </Col>
                 </Row>
@@ -981,6 +1010,17 @@ export default class VentasForm extends React.Component {
 
         return (this.state.pagos.map((option, index) => (
             <div>
+                <Row>
+                    <Col md={2}></Col>
+                    <Col md={10}>
+                        <Row>
+                            <Col md={11}>
+                                <h5 className="horizontal-line-title-ventas-form cliente-title">Pago {index+1}</h5>
+                            </Col>
+                            <Col md={1}></Col>
+                        </Row>
+                    </Col>
+                </Row>
                 <Row key={index}>
                     <Col md={2}></Col>
                     <Col md={10}>
@@ -1004,6 +1044,7 @@ export default class VentasForm extends React.Component {
                                     className="form-input form-input-dropdown-banco-venta"
                                     value={option.banco}
                                     key={index}
+                                    disabled={true}
                                 >
                                 </Form.Control>
                             </Col>
@@ -1023,7 +1064,7 @@ export default class VentasForm extends React.Component {
 
         if (tipoPago === 'Cheque'){
             return (
-                <Col md={5}>
+                <Col md={4}>
                     <Form.Group>
                         <Form.Label className="cliente-description-fields-text">Número de Cheque</Form.Label>
                         <Form.Control 
@@ -1061,7 +1102,7 @@ export default class VentasForm extends React.Component {
         }
         else if (tipoPago === 'Tarjeta Crédito'){
             return (
-                <Col md={5}>
+                <Col md={4}>
                     <Form.Group>
                         <Form.Label className="cliente-description-fields-text">Número de Tarjeta</Form.Label>
                         <Form.Control 
@@ -1072,7 +1113,7 @@ export default class VentasForm extends React.Component {
                             value={this.state.pagos[index].detalle1}
                         />
                         {
-                            (this.state.showMessage1 === true && <p className="modal-bc-error-mg">Este campo es obligatorio</p>)
+                            (this.state.showMessage1 === true && <p className="modal-bc-error-mg">Obligatorio</p>)
                         }
                     </Form.Group>
                 </Col>
@@ -1080,7 +1121,7 @@ export default class VentasForm extends React.Component {
         }
         else if (tipoPago === 'Transferencia'){
             return (
-                <Col md={5}>
+                <Col md={4}>
                     <Form.Group>
                         <Form.Label className="cliente-description-fields-text">Número de Referencia</Form.Label>
                         <Form.Control 
@@ -1091,7 +1132,7 @@ export default class VentasForm extends React.Component {
                             value={this.state.pagos[index].detalle1}
                         />
                         {
-                            (this.state.showMessage1 === true && <p className="modal-bc-error-mg">Este campo es obligatorio</p>)
+                            (this.state.showMessage1 === true && <p className="modal-bc-error-mg">Obligatorio</p>)
                         }
                     </Form.Group>
                 </Col>
@@ -1110,7 +1151,7 @@ export default class VentasForm extends React.Component {
                         <Col md={10}>
                             <Row>
                                 <Col md={11}>
-                                    <h4 className="horizontal-line-title-ventas-form cliente-title">Detalle de Venta</h4>
+                                    <h3 className="horizontal-line-title-ventas-form cliente-title">Detalle de Venta</h3>
                                 </Col>
                                 <Col md={1}></Col>
                             </Row>
@@ -1121,7 +1162,7 @@ export default class VentasForm extends React.Component {
                         <Col md={10}>
                             <Row>
                                 <Col md={11}>
-                                    <h6 className="horizontal-line-title-ventas-form cliente-title">Información de Venta</h6>
+                                    <h4 className="horizontal-line-title-ventas-form cliente-title">Información de Venta</h4>
                                 </Col>
                                 <Col md={1}></Col>
                             </Row>
@@ -1155,7 +1196,7 @@ export default class VentasForm extends React.Component {
                         <Col md={10}>
                             <Row>
                                 <Col md={11}>
-                                    <h6 className="horizontal-line-title-ventas-form cliente-title">Información del Cliente</h6>
+                                    <h4 className="horizontal-line-title-ventas-form cliente-title">Información del Cliente</h4>
                                 </Col>
                                 <Col md={1}></Col>
                             </Row>
@@ -1190,7 +1231,7 @@ export default class VentasForm extends React.Component {
                         <Col md={10}>
                             <Row>
                                 <Col md={11}>
-                                    <h6 className="horizontal-line-title-ventas-form cliente-title">Detalle de Pago</h6>
+                                    <h4 className="horizontal-line-title-ventas-form cliente-title">Detalle de Pago</h4>
                                 </Col>
                                 <Col md={1}></Col>
                             </Row>
@@ -1204,7 +1245,7 @@ export default class VentasForm extends React.Component {
                         <Col md={10}>
                             <Row>
                                 <Col md={11}>
-                                    <h6 className="horizontal-line-title-ventas-form cliente-title">Detalle de Pedido</h6>
+                                    <h4 className="horizontal-line-title-ventas-form cliente-title">Detalle de Pedido</h4>
                                 </Col>
                                 <Col md={1}></Col>
                             </Row>

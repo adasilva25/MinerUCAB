@@ -13,6 +13,11 @@
     margin-bottom: 4rem;
 }
 
+.div-detalle-tipo-pago-especifico{
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
 .div-detalle-tipo-pago{
     margin-top: 2.5rem;
     margin-bottom: 1rem;
@@ -53,4 +58,42 @@
     border: none;
     padding: 0;
     font-style: italic;
+}
+
+.btn-primary.modal-ventasform-volver-button{
+    border: 1px solid rgb(233, 42, 42);
+    border-radius: 1.50rem;
+    background-color: #fff;
+    color: rgb(233, 42, 42);
+    width: 40%;
+}
+
+.btn-primary.modal-ventasform-volver-button:focus{
+    box-shadow: inset 0 1px 1px rgb(233, 42, 42), 0 0 8px rgb(233, 42, 42);
+}
+
+.btn.btn-primary.modal-ventasform-volver-button:hover{
+  border: 1px solid rgb(233, 42, 42);
+  background-color: rgb(233, 42, 42);
+  color: #fff;
+  font-weight: 650;
+}
+
+.btn-primary.modal-ventasform-enviar-button{
+    border: 1px solid rgb(25, 177, 63);
+    border-radius: 1.50rem;
+    background-color: #fff;
+    color: rgb(25, 177, 63);
+    width: 40%;
+}
+
+.btn-primary.modal-ventasform-enviar-button:focus{
+    box-shadow: inset 0 1px 1px rgb(25, 177, 63), 0 0 8px rgb(25, 177, 63);
+}
+
+.btn.btn-primary.modal-ventasform-enviar-button:hover{
+  border: 1px solid rgb(25, 177, 63);
+  background-color: rgb(25, 177, 63);
+  color: #fff;
+  font-weight: 650;
 }

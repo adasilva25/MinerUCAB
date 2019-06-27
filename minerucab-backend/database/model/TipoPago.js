@@ -27,10 +27,6 @@ const createTipoPagoCheque = (values, callback) => {
     
 }
 
-const getTipoPagoCheque = () => {
-    
-}
-
 const createTipoPagoTC = (values, callback) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
@@ -83,6 +79,7 @@ const createTipoPagoTransferencia = (values, callback) => {
     .catch((e) => {
         console.error(e.stack);
         client.end();
+        // res.status(500).json({ error: e.toString() });
     })
     
 }

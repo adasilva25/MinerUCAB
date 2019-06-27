@@ -1,5 +1,110 @@
 require('dotenv').config({ path: '.env.development' });
 const { Client } = require('pg');
+const format = require('pg-format');
+
+/* ------------------------------ CREATE ------------------------------ */
+
+const createMineralMetalico = (info, callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'INSERT INTO mu_mineral_metalico(nombre, descripcion, dureza) VALUES ($1, $2, $3) RETURNING Clave';
+    const values = [info.nombre, info.descripcion, info.dureza];
+    client.query(text, values)
+    .then((res) => {
+        client.end();
+        callback(res.rows[0].clave)
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    })
+}
+
+const createMineralNoMetalico = (info, callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'INSERT INTO mu_mineral_no_metalico(nombre, descripcion, uso) VALUES ($1, $2, $3) RETURNING Clave';
+    const values = [info.nombre, info.descripcion, info.uso];
+    client.query(text, values)
+    .then((res) => {
+        client.end();
+        callback(res.rows[0].clave)
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    })
+}
+
+const createPresentacionMineralMet = (values) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = format('INSERT INTO mu_presentacion_mineral (precio, fk_presentacion, fk_mineral_metalico) VALUES %L', values);
+    client.query(text)
+    .then((res) => {
+        client.end();
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    }) 
+}
+
+const createPresentacionMineralNoMet = (values) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = format('INSERT INTO mu_presentacion_mineral (precio, fk_presentacion, fk_mineral_no_metalico) VALUES %L', values);
+    client.query(text)
+    .then((res) => {
+        client.end();
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    }) 
+}
+
+const createComponenteMineralMet = (values) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = format('INSERT INTO mu_mineral_mineral (porcentaje, fk_mineral_metalico_compuesto, fk_mineral_metalico_compone) VALUES %L', values);
+    client.query(text)
+    .then((res) => {
+        client.end();
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    }) 
+}
+
+const createComponenteMineralNoMet = (values) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = format('INSERT INTO mu_mineral_mineral (porcentaje, fk_mineral_no_metalico_compuesto, fk_mineral_no_metalico_compone) VALUES %L', values);
+    client.query(text)
+    .then((res) => {
+        client.end();
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    }) 
+}
+
+/* ------------------------------ SELECT ------------------------------ */
 
 const getAllMineralesMetalicos = (req, res) => {
     const client = new Client({
@@ -15,6 +120,7 @@ const getAllMineralesMetalicos = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -32,6 +138,7 @@ const getAllMineralesNoMetalicos = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -49,6 +156,7 @@ const getAllMineralesMetalicosConPresentacion = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -66,6 +174,7 @@ const getAllMineralesNoMetalicosConPresentacion = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -84,6 +193,7 @@ const getMineralMetalicoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -102,6 +212,7 @@ const getMineralNoMetalicoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -120,6 +231,7 @@ const getNombreMineralMetalicoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -138,6 +250,7 @@ const getNombreMineralNoMetalicoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -156,6 +269,7 @@ const getAllComponentesByIdMineralMetalico = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -174,8 +288,11 @@ const getAllComponentesByIdMineralNoMetalico = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
+
+/* ------------------------------ DELETE ------------------------------ */
 
 const deleteMineralMetalicoById = (req, res) => {
     const client = new Client({
@@ -192,6 +309,7 @@ const deleteMineralMetalicoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -210,10 +328,17 @@ const deleteMineralNoMetalicoById = (req, res) => {
     .catch((error) => {
         console.log(error);
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
 module.exports = {
+    createMineralMetalico,
+    createMineralNoMetalico,
+    createPresentacionMineralMet,
+    createPresentacionMineralNoMet,
+    createComponenteMineralMet,
+    createComponenteMineralNoMet,
     getAllMineralesMetalicos,
     getAllMineralesNoMetalicos,
     getAllMineralesMetalicosConPresentacion,

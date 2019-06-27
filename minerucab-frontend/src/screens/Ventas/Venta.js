@@ -8,6 +8,8 @@ import OpcionesGlobales from '../../components/OpcionesGlobales';
 import ModalYesNo from '../../components/ModalYesNo';
 import ModalBuscarCliente from '../../components/ModalBuscarCliente';
 import DataTable from '../../components/DataTable';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
 import { history } from '../../routers/History';
 
 export default class Venta extends React.Component {
@@ -15,11 +17,16 @@ export default class Venta extends React.Component {
         super(props);
     }  
     state = { 
-      modalShow: false
+        modalShow: false,
+        modalShowEliminar: false
     };                        
     modalClose = () => this.setState({ modalShow: false });
     modalOpen = () => {
         this.setState({ modalShow: true });
+    }
+    modalEliminarClose = () => this.setState({ modalShowEliminar: false });
+    modalEliminarOpen = () => {
+        this.setState({ modalShowEliminar: true });
     }
     goBack = () => {
         history.goBack()
@@ -31,11 +38,7 @@ export default class Venta extends React.Component {
             <OpcionesLocales Usuario={'Andrea Da Silva'}/>
             <ModalBuscarCliente
               show={this.state.modalShow}
-              onHide={this.modalClose}
-              content=
-                {
-                    'Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beerlabore wes anderson cred nesciunt sapiente ea proident.'
-                }
+              onHide={this.modalClose}              
             />
             <ModalYesNo
               show={this.state.modalShowEliminar}
@@ -83,7 +86,7 @@ export default class Venta extends React.Component {
                                       urlModificar={'/registrar_cliente_juridico'}
                                       urlConsultar={'/consultar_ventas'}
                                       urlEliminar={'/home'}
-                                      agregar={true}
+                                      agregar={false}
                                       modificar={true}
                                       consultar={true}
                                       eliminar={true}
@@ -139,26 +142,24 @@ export default class Venta extends React.Component {
                               <Col sm={0} md={1}></Col>
                           </Row>
                       </Container>
+
+                      <Container>
+                        <Row>
+                            <Col md={2}></Col>
+                            <Col md={10}>
+                                <FontAwesomeIcon 
+                                    className="icons icongoback" 
+                                    icon={Icons.faArrowAltCircleLeft}
+                                    onClick={this.goBack}
+                                />
+                            </Col>
+                        </Row>
+                      </Container>
                   </div>
               </Container>
               <div className="container-datatable-juridico">
                 <Row>
-                    <Col md={2}></Col>
-                    <Col md={10}>
-                        <Row>
-                            <Col md={5}>
-                                <Button 
-                                    className="ccargo-btn btn-block div-ventas-pedido-form"
-                                    onClick={this.goBack}
-                                >
-                                    Volver
-                                </Button>
-                            </Col>
-                            <Col md={2}></Col>
-                            <Col md={5}>
-                            </Col>
-                        </Row>
-                    </Col>
+                    
                 </Row>
             </div>
             </div>                 

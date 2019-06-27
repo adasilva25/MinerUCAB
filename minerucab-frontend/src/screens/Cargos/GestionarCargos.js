@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
+import { connect } from 'react-redux';
 // https://react-bootstrap.github.io/components/buttons/
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
