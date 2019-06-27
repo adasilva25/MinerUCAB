@@ -397,12 +397,10 @@ CREATE TABLE MU_ETAPA (
 		REFERENCES MU_EXPLOTACION (Clave) ON DELETE CASCADE
 );
 
---------------------------------------------------------------------------------------------
-
 CREATE TABLE MU_FASE (
 	Clave SERIAL,
 	Nombre VARCHAR(30) NOT NULL,
-	Costo DECIMAL NOT NULL,
+	Costo DECIMAL,
 	Duracion INTEGER NOT NULL,
 	Fecha_inicio DATE,
 	Fecha_fin DATE,
@@ -415,6 +413,8 @@ CREATE TABLE MU_FASE (
 	CONSTRAINT fk_etapa_fase FOREIGN KEY (fk_etapa)
 		REFERENCES MU_ETAPA (Clave) ON DELETE CASCADE
 );
+
+--------------------------------------------------------------------------------------------
 
 CREATE TABLE MU_CARGO_FASE (
 	Clave SERIAL,
