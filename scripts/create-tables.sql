@@ -339,7 +339,7 @@ CREATE TABLE MU_EXPLOTACION (
 CREATE TABLE MU_YACIMIENTO (
 	Clave SERIAL,
 	Nombre VARCHAR(20) NOT NULL,
-	Descripcion VARCHAR(100) NOT NULL,
+	Descripcion VARCHAR(100),
 	Fecha_registro DATE NOT NULL,
 	Tamaño DECIMAL NOT NULL,
 	fk_lugar INTEGER NOT NULL,
@@ -414,34 +414,22 @@ CREATE TABLE MU_FASE (
 		REFERENCES MU_ETAPA (Clave) ON DELETE CASCADE
 );
 
---------------------------------------------------------------------------------------------
-
 CREATE TABLE MU_CARGO_FASE (
 	Clave SERIAL,
 	Cantidad INTEGER NOT NULL,
 	Sueldo DECIMAL NOT NULL,
 	fk_cargo INTEGER NOT NULL,
-	fk_etapa INTEGER NOT NULL,
-	fk_explotacion INTEGER NOT NULL,
 	fk_fase INTEGER NOT NULL,
 	CONSTRAINT pk_cargo_fase PRIMARY KEY (Clave),
-	CONSTRAINT fk_cargo_cargo_fase FOREIGN KEY (fk_cargo) 
-		REFERENCES MU_CARGO (Clave) ON DELETE CASCADE,
-	CONSTRAINT fk_explotacion_cargo_fase FOREIGN KEY (fk_explotacion) 
-		REFERENCES MU_EXPLOTACION (Clave) ON DELETE CASCADE,
+	CONSTRAINT fk_cargo_cargo_fase FOREIGN KEY (fk_cargo) REFERENCES MU_CARGO (Clave) ON DELETE CASCADE,
 	CONSTRAINT fk_fase_cargo_fase FOREIGN KEY (fk_fase) REFERENCES MU_FASE (Clave) ON DELETE CASCADE
 );
 
 CREATE TABLE MU_EMPLEADO_CARGO_FASE (
 	Clave SERIAL,
-	Desempeño VARCHAR(100),
-	fk_cargo INTEGER NOT NULL,
 	fk_cargo_fase INTEGER NOT NULL,
 	fk_empleado INTEGER NOT NULL,
 	fk_estatus INTEGER NOT NULL,
-	fk_etapa INTEGER NOT NULL,
-	fk_fase INTEGER NOT NULL,
-	fk_explotacion INTEGER NOT NULL,
 	CONSTRAINT pk_empleado_cargo_fase PRIMARY KEY (Clave),
 	CONSTRAINT fk_cargo_fase_empleado_cargo_fase FOREIGN KEY (fk_cargo_fase) 
 		REFERENCES MU_CARGO_FASE (Clave) ON DELETE CASCADE,
@@ -453,13 +441,7 @@ CREATE TABLE MU_EMPLEADO_CARGO_FASE (
 
 CREATE TABLE MU_HORARIO_EMPLEADO (
 	Clave SERIAL,
-	fk_cargo INTEGER NOT NULL,
-	fk_cargo_fase INTEGER NOT NULL,
-	fk_empleado INTEGER NOT NULL,
 	fk_empleado_cargo_fase INTEGER NOT NULL,
-	fk_etapa INTEGER NOT NULL,
-	fk_explotacion INTEGER NOT NULL,
-	fk_fase INTEGER NOT NULL,
 	fk_horario INTEGER NOT NULL,
 	CONSTRAINT pk_horario_empleado PRIMARY KEY (Clave),
 	CONSTRAINT fk_empleado_cargo_fase_horario_empleado FOREIGN KEY (fk_empleado_cargo_fase) 
@@ -472,8 +454,6 @@ CREATE TABLE MU_TIPO_MAQUINARIA_FASE (
 	Clave SERIAL,
 	Cantidad INTEGER NOT NULL,
 	Costo DECIMAL NOT NULL,
-	fk_etapa INTEGER NOT NULL,
-	fk_explotacion INTEGER NOT NULL,
 	fk_fase INTEGER NOT NULL,
 	fk_tipo_maquinaria INTEGER NOT NULL,
 	CONSTRAINT pk_tipo_maquinaria_fase PRIMARY KEY (Clave),
@@ -485,11 +465,7 @@ CREATE TABLE MU_TIPO_MAQUINARIA_FASE (
 
 CREATE TABLE MU_MAQUINARIA_TIPO_MAQUINARIA_FASE (
 	Clave SERIAL,
-	fk_etapa INTEGER NOT NULL,
-	fk_explotacion INTEGER NOT NULL,
-	fk_fase INTEGER NOT NULL,
 	fk_maquinaria INTEGER NOT NULL,
-	fk_tipo_maquinaria INTEGER NOT NULL,
 	fk_tipo_maquinaria_fase INTEGER NOT NULL,
 	CONSTRAINT pk_maquinaria_tipo_maquinaria_fase PRIMARY KEY (Clave),
 	CONSTRAINT fk_maquinaria_maquinaria_tipo_maquinaria_fase FOREIGN KEY (fk_maquinaria)
@@ -503,21 +479,14 @@ CREATE TABLE MU_INVENTARIO (
 	Fecha TIMESTAMP NOT NULL,
 	Cantidad_actual DECIMAL NOT NULL,
 	Cantidad_transaccion DECIMAL NOT NULL,
-	fk_explotacion INTEGER,	-- Arco Exclusivo
-	fk_mineral_metalico INTEGER, -- Arco Exclusivo
-	fk_mineral_no_metalico INTEGER,	-- Arco Exclusivo
-	fk_presentacion INTEGER NOT NULL,
+	fk_explotacion INTEGER,	-- Arco Exclusivo (AUMENTA INVENTARIO)
 	fk_presentacion_mineral INTEGER NOT NULL,
-	fk_venta INTEGER,	-- Arco Exclusivo
+	fk_detalle_venta INTEGER,	-- Arco Exclusivo (DISMINUYE INVENTARIO)
 	CONSTRAINT pk_inventario PRIMARY KEY (Clave),
 	CONSTRAINT fk_explotacion_inventario FOREIGN KEY (fk_explotacion) 
 		REFERENCES MU_EXPLOTACION (Clave) ON DELETE CASCADE,
-	CONSTRAINT fk_mineral_metalico_inventario FOREIGN KEY (fk_mineral_metalico)
-		REFERENCES MU_MINERAL_METALICO (Clave) ON DELETE CASCADE,
-	CONSTRAINT fk_mineral_no_metalico_inventario FOREIGN KEY (fk_mineral_no_metalico)
-		REFERENCES MU_MINERAL_NO_METALICO (Clave) ON DELETE CASCADE,
-	CONSTRAINT fk_venta_inventario FOREIGN KEY (fk_venta) 
-		REFERENCES MU_VENTA (Clave) ON DELETE CASCADE,
+	CONSTRAINT fk_detalle_venta_inventario FOREIGN KEY (fk_detalle_venta) 
+		REFERENCES MU_DETALLE_VENTA (Clave) ON DELETE CASCADE,
 	CONSTRAINT fk_presentacion_mineral_inventario FOREIGN KEY (fk_presentacion_mineral)
 		REFERENCES MU_PRESENTACION_MINERAL (Clave) ON DELETE CASCADE
 );
@@ -542,18 +511,11 @@ CREATE TABLE MU_DETALLE_SOLICITUD_COMPRA (
 	Clave SERIAL,
 	Cantidad DECIMAL NOT NULL,
 	Precio DECIMAL NOT NULL,
-	fk_empresa INTEGER NOT NULL,
 	fk_mineral_empresa INTEGER NOT NULL,
-	fk_mineral_metalico INTEGER,
-	fk_mineral_no_metalico INTEGER,
 	fk_solicitud_compra INTEGER NOT NULL,
 	CONSTRAINT pk_detalle_solicitud_compra PRIMARY KEY (Clave),
 	CONSTRAINT fk_mineral_empresa_detalle_solicitud_compra FOREIGN KEY (fk_mineral_empresa)
 		REFERENCES MU_MINERAL_EMPRESA (Clave) ON DELETE CASCADE,
-	CONSTRAINT fk_mineral_metalico_detalle_solicitud_compra FOREIGN KEY (fk_mineral_metalico)
-		REFERENCES MU_MINERAL_METALICO (Clave) ON DELETE CASCADE,
-	CONSTRAINT fk_mineral_no_metalico_detalle_solicitud_compra FOREIGN KEY (fk_mineral_no_metalico)
-		REFERENCES MU_MINERAL_NO_METALICO (Clave) ON DELETE CASCADE,
 	CONSTRAINT fk_solicitud_compra_detalle_solicitud_compra FOREIGN KEY (fk_solicitud_compra)
 		REFERENCES MU_SOLICITUD_COMPRA (Clave) ON DELETE CASCADE
 );

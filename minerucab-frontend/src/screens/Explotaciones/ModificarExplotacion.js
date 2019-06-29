@@ -2057,12 +2057,12 @@ export default class ModificarExplotacion extends React.Component {
         let dia = (this.state.explotacion.fechaI.dia<10)? "0"+this.state.explotacion.fechaI.dia: this.state.explotacion.fechaI.dia;
         let mes = (this.state.explotacion.fechaI.mes<10)? "0"+this.state.explotacion.fechaI.mes: this.state.explotacion.fechaI.mes;
         
-        info.explotacion.fechaI = mes+'-'+dia+'-'+this.state.explotacion.fechaI.ano;
+        info.explotacion.fechaI = this.state.explotacion.fechaI.ano+'-'+mes+'-'+dia;
 
         dia = (this.state.explotacion.fechaF.dia<10)? "0"+this.state.explotacion.fechaF.dia: this.state.explotacion.fechaF.dia;
         mes = (this.state.explotacion.fechaF.mes<10)? "0"+this.state.explotacion.fechaF.mes: this.state.explotacion.fechaF.mes;
         
-        info.explotacion.fechaF = mes+'-'+dia+'-'+this.state.explotacion.fechaF.ano;
+        info.explotacion.fechaF = this.state.explotacion.fechaF.ano+'-'+mes+'-'+dia;
 
 
 
@@ -2105,20 +2105,17 @@ export default class ModificarExplotacion extends React.Component {
                 dia = (etapaR.fechaI.dia<10)? "0"+etapaR.fechaI.dia: etapaR.fechaI.dia;
                 mes = (etapaR.fechaI.mes<10)? "0"+etapaR.fechaI.mes: etapaR.fechaI.mes;
 
-                etapa.fechaI = mes+'-'+dia+'-'+etapaR.fechaI.ano;
+                etapa.fechaI = etapaR.fechaI.ano+'-'+mes+'-'+dia;
 
                 dia = (etapaR.fechaF.dia<10)? "0"+etapaR.fechaF.dia: etapaR.fechaF.dia;
                 mes = (etapaR.fechaF.mes<10)? "0"+etapaR.fechaF.mes: etapaR.fechaF.mes;
                 
-                etapa.fechaF = mes+'-'+dia+'-'+etapaR.fechaF.ano;
+                etapa.fechaF = etapaR.fechaF.ano+'-'+mes+'-'+dia;
 
 
-                if(etapaR.numero==1){
-                    etapa.estatus = 8;
-                }
-                else{
-                    etapa.estatus = 2;
-                }
+                
+                etapa.estatus = 2;
+                
                 
 
                 etapa.fases.shift();
@@ -2152,19 +2149,15 @@ export default class ModificarExplotacion extends React.Component {
                         dia = (faseR.fechaI.dia<10)? "0"+faseR.fechaI.dia: faseR.fechaI.dia;
                         mes = (faseR.fechaI.mes<10)? "0"+faseR.fechaI.mes: faseR.fechaI.mes;
 
-                        fase.fechaI = mes+'-'+dia+'-'+faseR.fechaI.ano;
+                        fase.fechaI = faseR.fechaI.ano+'-'+mes+'-'+dia;
 
                         dia = (faseR.fechaF.dia<10)? "0"+faseR.fechaF.dia: faseR.fechaF.dia;
                         mes = (faseR.fechaF.mes<10)? "0"+faseR.fechaF.mes: faseR.fechaF.mes;
                         
-                        fase.fechaF = mes+'-'+dia+'-'+faseR.fechaF.ano;
+                        fase.fechaF = faseR.fechaF.ano+'-'+mes+'-'+dia;
 
-                        if((etapaR.numero==1) && (faseR.numero==1)){
-                            fase.estatus = 8;
-                        }
-                        else{
-                            fase.estatus = 2 ;
-                        }
+                        fase.estatus = 2 ;
+                        
                         
 
 

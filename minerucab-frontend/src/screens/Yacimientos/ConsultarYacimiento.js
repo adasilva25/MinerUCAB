@@ -19,6 +19,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Accordion from 'react-bootstrap/Accordion'
 import FormLugarPred from '../../components/FormLugarPred'
 import Card from 'react-bootstrap/Card'
+import axios from 'axios';
 
 // https://www.w3schools.com/jquery/html_removeclass.asp
 
@@ -141,7 +142,7 @@ export default class ConsultarYacimiento extends React.Component {
                 descripcion:"muy mineraloso",
                 area:300,
                 tipo:"Autóctono",
-                tipoId:3,
+                tipoId:3,   // ES LA PRIMARIA DE MU_TIPO_YACIMIENTO?
                 ubicacion:{
                     estado:"Sucre",
                     municipio:"Sucre",
@@ -183,6 +184,7 @@ export default class ConsultarYacimiento extends React.Component {
                 
             }],
             explotacion:{
+                id: 0,
                 duracion:0,
                 costo:0,
             },
@@ -293,9 +295,6 @@ export default class ConsultarYacimiento extends React.Component {
             }]
         }
 
-        
-        console.log(info);
-
         let state={
             eliminadosFases: [],
             actualizar:true,
@@ -389,78 +388,265 @@ export default class ConsultarYacimiento extends React.Component {
                 }]
             }]
         }
-        state.yacimiento.id=info.yacimiento.id;
-        state.yacimiento.nombre=info.yacimiento.nombre;
-        state.yacimiento.descripcion = info.yacimiento.descripcion;
-        state.yacimiento.area = info.yacimiento.area;
-        state.yacimiento.tipo = info.yacimiento.tipo;
-        state.yacimiento.tipoId = info.yacimiento.tipoId;
-        state.yacimiento.ubicacion.estado = info.yacimiento.ubicacion.estado;
-        state.yacimiento.ubicacion.municipio = info.yacimiento.ubicacion.municipio;
-        state.yacimiento.ubicacion.parroquia = info.yacimiento.ubicacion.parroquia;
-        state.yacimiento.ubicacion.idParroquia = info.yacimiento.ubicacion.idParroquia;
-        state.yacimiento.fecha.dia = info.yacimiento.fecha.dia;
-        state.yacimiento.fecha.mes = info.yacimiento.fecha.mes;
-        state.yacimiento.fecha.ano = info.yacimiento.fecha.ano;
 
-        state.explotacion.id = info.explotacion.id;
-        state.explotacion.duracion = info.explotacion.duracion;
-        state.explotacion.costo = info.explotacion.costo;
+        const config = {
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            responseType: 'json'
+        }
 
-        state.estatus.id = info.estatus.id;
-        state.estatus.nombre = info.estatus.nombre;
-
-
-        state.Minerales.shift();
-        for(let i=0; i<info.minerales.length; i++){
-
-            
-            state.mineralId.push(info.minerales[i].id);
-
-            let mineral={
-                nombre:null,
-                id:-1,
-                total: 0,
-                accordionKey:0,
+        axios.get(`http://localhost:3000/getAllYacimientoInfoById/${this.props.match.params.id}`, config)
+            .then((res) => {
+                console.log('will mount', res)
                 
+                const date = new Date(res.data[0].fecha_registro)
+                const dia = date.getDate()
+                const mes = (date.getMonth() + 1)
+                const ano = date.getFullYear()
+
+                info.yacimiento.id = this.props.match.params.id
+                info.yacimiento.nombre = res.data[0].nombre;
+                info.yacimiento.descripcion = res.data[0].descripcion;
+                info.yacimiento.area = res.data[0].area;
+                info.yacimiento.ubicacion.estado = res.data[0].estado
+                info.yacimiento.ubicacion.municipio = res.data[0].municipio
+                info.yacimiento.ubicacion.parroquia = res.data[0].parroquia
+                info.yacimiento.ubicacion.idParroquia = res.data[0].idparroquia
+                info.yacimiento.fecha.dia = dia;
+                info.yacimiento.fecha.mes = mes;
+                info.yacimiento.fecha.ano = ano;
+
+                info.estatus.id = res.data[0].clave_estatus;
+                info.estatus.nombre = res.data[0].estatus;
+
+                info.explotacion.id = res.data[0].clave_explotacion;
+                info.explotacion.duracion = res.data[0].duracion_explotacion;
+                info.explotacion.costo = res.data[0].costo_explotacion;
+
+
+                state.estatus.id = res.data[0].clave_estatus;
+                state.estatus.nombre = res.data[0].estatus;
+
+                state.yacimiento.id=info.yacimiento.id;
+                state.yacimiento.nombre=info.yacimiento.nombre;
+                state.yacimiento.descripcion = info.yacimiento.descripcion;
+                state.yacimiento.area = info.yacimiento.area;
+                state.yacimiento.ubicacion.estado = info.yacimiento.ubicacion.estado;
+                state.yacimiento.ubicacion.municipio = info.yacimiento.ubicacion.municipio;
+                state.yacimiento.ubicacion.parroquia = info.yacimiento.ubicacion.parroquia;
+                state.yacimiento.ubicacion.idParroquia = info.yacimiento.ubicacion.idParroquia;
+                state.yacimiento.fecha.dia = dia;
+                state.yacimiento.fecha.mes = mes;
+                state.yacimiento.fecha.ano = ano;
+
+                state.explotacion.id = info.explotacion.id;
+                state.explotacion.duracion = info.explotacion.duracion;
+                state.explotacion.costo = info.explotacion.costo;
+                
+                axios.get(`http://localhost:3000/getTipoYacimientoByIdYacimiento/${this.props.match.params.id}`, config)
+                .then((res) => {
+                    console.log('will mount', res)
+                    info.yacimiento.tipo = res.data[0].nombre_tipo_yacimiento
+                    info.yacimiento.tipoId = res.data[0].clave_tipo_yacimiento;
+                    
+                    state.yacimiento.tipo = info.yacimiento.tipo;
+                    state.yacimiento.tipoId = info.yacimiento.tipoId;
+                    
+                    this.setState(() => ({
+                        yacimiento: state.yacimiento,
+                        explotacion: state.explotacion,
+                        estatus: state.estatus
+                    }));
+                    console.log('state', this.state.yacimiento)
+
+                }).catch((e) => {
+                    console.log('Error en axios')
+                })
+
+
+            }).catch((e) => {
+                console.log('Error en axios')
+            })
+
+        axios.get(`http://localhost:3000/getAllMineralesMetalicosByIdYacimiento/${this.props.match.params.id}`, config)
+            .then((res) => {
+                if (res.data.length > 0){
+                    let mineralesMetalicos = []
+                    res.data.forEach((item) => {
+                        let mineral = {}
+                        mineral.id = item.clave_mineral_metalico;
+                        mineral.total = item.cantidad_mineral_metalico;
+                        mineral.nombre = item.nombre_mineral_metalico;
+                        mineralesMetalicos.push(mineral)
+                    })
+                    console.log('mm', mineralesMetalicos)
+                    info.minerales = mineralesMetalicos;
+
+                    state.Minerales.shift();
+
+                    for(let i=0; i<info.minerales.length; i++){
+
+                        
+                        state.mineralId.push(info.minerales[i].id);
+
+                        let mineral={
+                            nombre:null,
+                            id:-1,
+                            total: 0,
+                            accordionKey:0,
+                            
+                        }
+
+                        mineral.nombre=info.minerales[i].nombre;
+                        mineral.id=info.minerales[i].id;
+                        mineral.total=info.minerales[i].total;
+
+                        state.Minerales.push(mineral);
+                    }
+                }
+            }).catch((e) => {
+                console.log('Error en axios')
+            })
+
+        axios.get(`http://localhost:3000/getAllMineralesNoMetalicosByIdYacimiento/${this.props.match.params.id}`, config)
+        .then((res) => {
+            console.log(res.data.length)
+            if (res.data.length > 0){
+                let mineralesNoMetalicos = []
+                res.data.forEach((item) => {
+                    let mineral = {}
+                    mineral.id = item.clave_mineral_metalico;
+                    mineral.total = item.cantidad_mineral_metalico;
+                    mineral.nombre = item.nombre_mineral_metalico;
+                    mineralesNoMetalicos.push(mineral)
+                })
+
+                info.mineralesNoMetalicos = mineralesNoMetalicos;
+
+                console.log('nm', info.mineralesNoMetalicos)
+
+                state.MineralesNoMetalicos.shift();
+                for(let i=0; i<info.mineralesNoMetalicos.length; i++){
+                    state.mineralNoMetalicoId.push(info.mineralesNoMetalicos[i].id);
+
+                    let mineral={
+                        nombre:null,
+                        id:-1,
+                        total: 0,
+                        accordionKey:0,
+                        
+                    }
+
+                    mineral.nombre=info.mineralesNoMetalicos[i].nombre;
+                    mineral.id=info.mineralesNoMetalicos[i].id;
+                    mineral.total=Number(info.mineralesNoMetalicos[i].total);
+
+                    state.MineralesNoMetalicos.push(mineral);
+                }
             }
 
-            mineral.nombre=info.minerales[i].nombre;
-            mineral.id=info.minerales[i].id;
-            mineral.total=info.minerales[i].total;
+        }).catch((e) => {
+            console.log('Error en axios')
+        })
+
+        axios.get(`http://localhost:3000/getEtapas/${this.props.match.params.id}`, config)
+        .then((res) => {
+            console.log(res.data.length)
+            if (res.data.length > 0){
+                let mineralesNoMetalicos = []
+                res.data.forEach((item) => {
+                    let mineral = {}
+                    mineral.id = item.clave_mineral_metalico;
+                    mineral.total = item.cantidad_mineral_metalico;
+                    mineral.nombre = item.nombre_mineral_metalico;
+                    mineralesNoMetalicos.push(mineral)
+                })
+
+                info.mineralesNoMetalicos = mineralesNoMetalicos;
+
+                console.log('nm', info.mineralesNoMetalicos)
+
+                state.MineralesNoMetalicos.shift();
+                for(let i=0; i<info.mineralesNoMetalicos.length; i++){
+                    state.mineralNoMetalicoId.push(info.mineralesNoMetalicos[i].id);
+
+                    let mineral={
+                        nombre:null,
+                        id:-1,
+                        total: 0,
+                        accordionKey:0,
+                        
+                    }
+
+                    mineral.nombre=info.mineralesNoMetalicos[i].nombre;
+                    mineral.id=info.mineralesNoMetalicos[i].id;
+                    mineral.total=Number(info.mineralesNoMetalicos[i].total);
+
+                    state.MineralesNoMetalicos.push(mineral);
+                }
+            }
+
+        }).catch((e) => {
+            console.log('Error en axios')
+        })
+
+            
+
+        console.log('info', info);
+
+
+
+        // state.Minerales.shift();
+        // for(let i=0; i<info.minerales.length; i++){
+
+            
+        //     state.mineralId.push(info.minerales[i].id);
+
+        //     let mineral={
+        //         nombre:null,
+        //         id:-1,
+        //         total: 0,
+        //         accordionKey:0,
+                
+        //     }
+
+        //     mineral.nombre=info.minerales[i].nombre;
+        //     mineral.id=info.minerales[i].id;
+        //     mineral.total=info.minerales[i].total;
 
             
 
             
             
-            state.Minerales.push(mineral);
-        }
+        //     state.Minerales.push(mineral);
+        // }
         
 
 
-        state.MineralesNoMetalicos.shift();
-        for(let i=0; i<info.mineralesNoMetalicos.length; i++){
+        // state.MineralesNoMetalicos.shift();
+        // for(let i=0; i<info.mineralesNoMetalicos.length; i++){
 
            
-            state.mineralNoMetalicoId.push(info.mineralesNoMetalicos[i].id);
+        //     state.mineralNoMetalicoId.push(info.mineralesNoMetalicos[i].id);
 
-            let mineral={
-                nombre:null,
-                id:-1,
-                total: 0,
-                accordionKey:0,
+        //     let mineral={
+        //         nombre:null,
+        //         id:-1,
+        //         total: 0,
+        //         accordionKey:0,
                 
-            }
+        //     }
 
-            mineral.nombre=info.mineralesNoMetalicos[i].nombre;
-            mineral.id=info.mineralesNoMetalicos[i].id;
-            mineral.total=Number(info.mineralesNoMetalicos[i].total);
+        //     mineral.nombre=info.mineralesNoMetalicos[i].nombre;
+        //     mineral.id=info.mineralesNoMetalicos[i].id;
+        //     mineral.total=Number(info.mineralesNoMetalicos[i].total);
 
             
 
            
-            state.MineralesNoMetalicos.push(mineral);
-        }
+        //     state.MineralesNoMetalicos.push(mineral);
+        // }
 
 
 
@@ -635,9 +821,6 @@ export default class ConsultarYacimiento extends React.Component {
         console.log("estado inicial",state.mineralId);
         this.setState(() => ({
             eliminar: state.eliminar,
-            yacimiento: state.yacimiento,
-            estatus: state.estatus,
-            explotacion: state.explotacion,
             mineralId: state.mineralId,
             Minerales: state.Minerales,
             mineralNoMetalicoId: state.mineralNoMetalicoId,
@@ -710,10 +893,6 @@ export default class ConsultarYacimiento extends React.Component {
             });
         }
     }*/
-
-
-
-   
     
     accordionf(e){
       //  console.log(this.state.accordionKey[e],e);
@@ -969,7 +1148,7 @@ export default class ConsultarYacimiento extends React.Component {
                                         </Form.Group>
                                         <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,"YacimientosDescripcionYacimientoText","Introduzca una descripción válida")} controlId="YacimientosDescripcionYacimiento" className="inputsPaddingLeft">
                                             <Form.Label className="cliente-description-fields-text">Descripción</Form.Label>
-                                            <Form.Control disabled as="textarea" rows="1" className="form-input-juridico-textarea" defaultValue={this.state.yacimiento.descripcion} placeholder="Introduzca una descripción"/>
+                                            <Form.Control disabled as="textarea" rows="1" className="form-input-juridico-textarea" value={this.state.yacimiento.descripcion} placeholder="Introduzca una descripción"/>
                                             <Form.Text className="text-muted" id="YacimientosDescripcionYacimientoText">
                                                 Obligatorio
                                             </Form.Text>
@@ -997,12 +1176,10 @@ export default class ConsultarYacimiento extends React.Component {
                                         <Form.Group as={Col} md="6" controlId="YacimientosTipoYacimiento"  className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Tipo de Yacimiento</Form.Label>
                                             <Form.Control disabled 
-                                            as="select" 
+                                            type="text" 
                                             className="form-input"
-                                            defaultValue={this.state.yacimiento.tipo}
+                                            value={this.state.yacimiento.tipo}
                                             >
-                                                <option value="Alóctono">Alóctono</option>
-                                                <option value="Autóctono">Autóctono</option>
                                             </Form.Control >
                                             <Form.Text className="text-muted">
                                                 Obligatorio
@@ -1020,7 +1197,7 @@ export default class ConsultarYacimiento extends React.Component {
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
-                                    <FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>
+                                    {this.state.yacimiento.ubicacion.idParroquia && (<FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>)}
                                 </Card.Body>
                             </Accordion.Collapse>
                         </Card>
@@ -1058,7 +1235,7 @@ export default class ConsultarYacimiento extends React.Component {
                                                                         <Form.Group as={Col} md="12"  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
-                                                                                <Form.Control disabled type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
+                                                                                <Form.Control disabled type="text" className="form-input" value={mineral.total} placeholder="Introduzca cantidad" /> 
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>
@@ -1115,7 +1292,7 @@ export default class ConsultarYacimiento extends React.Component {
                                                                         <Form.Group as={Col} md="12"  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
-                                                                                <Form.Control disabled type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
+                                                                                <Form.Control disabled type="text" className="form-input" value={mineral.total} placeholder="Introduzca cantidad" /> 
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>
@@ -1164,7 +1341,7 @@ export default class ConsultarYacimiento extends React.Component {
                                         <Form.Group as={Col} md="6" controlId={'YacimientosCostoInfoExplotacion'} className="inputsPaddingLeft">
                                             <Form.Label className="cliente-description-fields-text">Costo Total de la Explotación</Form.Label>
                                             <InputGroup className="MyInputGroup">
-                                                <Form.Control disabled type="text" className="form-input" placeholder={this.state.explotacion.costo} disabled  /> 
+                                                <Form.Control disabled type="text" className="form-input" value={this.state.explotacion.costo} disabled  /> 
                                                     <InputGroup.Append>
                                                         <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
                                                     </InputGroup.Append>
