@@ -1440,7 +1440,20 @@ export default class RegistrarYacimiento extends React.Component {
         }else if(verifMaquinaria===1){
             alert("Debe indicar la cantidad de los tipos de maquinaria escogidos con su respectivo costo")
         }else{
-            //Insert en bases aqui
+            const config = {
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                responseType: 'json',
+                data: info
+            }
+            
+            axios.post('http://localhost:3000/crearConfiguracionYacimiento', config)
+                .then((res) => {
+                }).catch((e) => {
+                    console.log('Error en axios')
+                })
+            history.push('/home');
         }
     }
 

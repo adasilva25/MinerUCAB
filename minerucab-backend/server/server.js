@@ -22,6 +22,7 @@ const TiposYacimiento = require('../database/model/TiposYacimiento');
 const Usuarios = require('../database/model/Usuarios')
 const Ventas = require('../database/model/Ventas');
 const VentasValidations = require('../validations/VentasValidations');
+const YacimientosValidations = require('../validations/YacimientosValidations');
 
 const express = require('express');
 const app = express();
@@ -54,6 +55,8 @@ app.post('/createVenta', VentasValidations.createVenta);
 app.post('/crearEmpleado', EmpleadosValidations.crearEmpleado);
 app.post('/crearMineralMetalico', MineralesValidations.crearMineralMetalico);
 app.post('/crearMineralNoMetalico', MineralesValidations.crearMineralNoMetalico);
+/* -------------------- YacimientosValidations -------------------- */
+app.post('/crearConfiguracionYacimiento', YacimientosValidations.crearConfiguracionYacimiento);
 
 
 /* ----------------------------------- GET ----------------------------------- */
