@@ -43,7 +43,11 @@ export default class DataTable extends React.Component {
         const modalEliminar = this.props.modalEliminar;
         let etapa = this.props.etapa;
         let fase = this.props.fase;
-        const selectCheck = this.props.selectCheck
+        let id = this.props.id;
+        let tipo = this.props.tipo;
+        const selectCheck = this.props.selectCheck;
+        const selectCheck2 = this.props.selectCheck2;
+        let max = this.props.max;
         // console.log('selectCheck', selectCheck)
         // console.log("inicio",etapa,fase);
         if(etapa !== undefined){
@@ -122,7 +126,7 @@ export default class DataTable extends React.Component {
                         columns: columns,
                         "bDestroy": true,
                         //Quitar paging
-                            // paging: false,
+                            paging: false,
                         //Quitar searching
                             //searching: false,
                         //Scrollbar
@@ -165,6 +169,7 @@ export default class DataTable extends React.Component {
                                         "type": "checkbox"
                                     });
                                     checkbox.addClass("dt-checkboxes");
+                                   
                                     if(modificarCheck===true){
                                        // console.log("chechboxes",checkbox);
                                         if(listaModificarCheck.includes(Number(row[0]))){
@@ -179,7 +184,9 @@ export default class DataTable extends React.Component {
                                     return checkbox.prop("outerHTML");
                                 
                                 }
+
                                 else {
+
                                     return row[0]
                                 }
                             
@@ -242,7 +249,7 @@ export default class DataTable extends React.Component {
                             }
                         })
 
-
+                        
                         /*$('select[name=dt-dropdown]').on('change', function () {   
                             var selectedid = $(this).children(":selected").attr("id");
                             var rowdata = table.row( $(this).parents('tr') ).data()[0];
@@ -263,102 +270,155 @@ export default class DataTable extends React.Component {
                         });*/
                        if (checktable === true){
                         // console.log('antes', document.getElementsByClassName('dt-checkboxes'))
-                        const checkboxesDT = document.getElementsByClassName('dt-checkboxes')
-                       // console.log("atributos clases",checkboxesDT);
-                        // console.log('tP', textoPlural)
-                        let m = 0;
-                            if (checkboxesDT.length > 0){
-                               // console.log('datatable', this.$el)
-                                for (let k = 0; k < checkboxesDT.length; k++){
-                                    // console.log('entroLETK')
-                                    // console.log(checkboxesDT[k].alt);
+                            const checkboxesDT = document.getElementsByClassName('dt-checkboxes')
+                          // console.log("atributos clases",checkboxesDT);
+                            // console.log('tP', textoPlural)
+                            let m = 0;
+                                if (checkboxesDT.length > 0){
+                                   // console.log('datatable', this.$el)
+                                    for (let k = 0; k < checkboxesDT.length; k++){
+                                        // console.log('entroLETK')
+                                        // console.log(checkboxesDT[k].alt);
 
-                                    // console.log('classList', checkboxesDT[k].classList.length)
+                                        // console.log('classList', checkboxesDT[k].classList.length)
 
-                                    //  FUNCIONA PERFECT
-                                    if (checkboxesDT[k].classList.length === 1){
-                                        
-                                        checkboxesDT[k].alt = dataSet[m][0];
-                                        checkboxesDT[k].align = dataSet[m][1];
-                                        // console.log('dataSet', dataSet[m][0])
-                                        // console.log('alt', checkboxesDT[k].alt)
-                                        checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,'')+etapa+fase);
+                                        //  FUNCIONA PERFECT
+                                        if (checkboxesDT[k].classList.length === 1){
+                                            
 
-                                        m++;
+                                            // console.log('dataSet', dataSet[m][0])
+                                            // console.log('alt', checkboxesDT[k].alt)
+
+                                            if(id!=null){
+
+                                                if(tipo=="E"){
+                                                    checkboxesDT[k].alt = dataSet[m][0];//ID
+                                                    checkboxesDT[k].Name = dataSet[m][1];//CI
+                                                    checkboxesDT[k].align = dataSet[m][2]+' '+dataSet[m][4];//NOMBRE
+                                                    checkboxesDT[k].dirName = dataSet[m][7];//SEXO
+                                                   
+                                                }
+                                                else{
+                                                    checkboxesDT[k].alt = dataSet[m][0];
+                                                    checkboxesDT[k].align = dataSet[m][1];
+                                                }
+                                               
+                                                checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,'')+etapa+fase+id);
+                                            }
+
+                                            else{
+                                                checkboxesDT[k].alt = dataSet[m][0];
+                                                checkboxesDT[k].align = dataSet[m][1];
+                                                checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,'')+etapa+fase);
+                                            }
+                                            
+
+                                            m++;
+                                        }
+
+                                        //      ANTERIOR EN CASO DE EMERGENCIA
+                                        // if (textoPlural === 'cargos' || textoPlural === 'minerales' || textoPlural === 'tipos de maquinaria'){
+                                        //     if(textoPlural === 'cargos' && !checkboxesDT[k].className.includes('minerales') && !checkboxesDT[k].className.includes('tipos de maquinaria')){
+                                        //         checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,''));
+                                        //     }
+                                        //     else if (textoPlural === 'minerales' && !checkboxesDT[k].className.includes('cargos') && !checkboxesDT[k].className.includes('tipos de maquinaria')){
+                                        //         checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,''));
+                                        //     }
+                                        //     else if (textoPlural === 'tipos de maquinaria' && !checkboxesDT[k].className.includes('minerales') && !checkboxesDT[k].className.includes('cargos')){
+                                        //         checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,''));
+                                        //     }
+                                        // }
                                     }
-
-                                    //      ANTERIOR EN CASO DE EMERGENCIA
-                                    // if (textoPlural === 'cargos' || textoPlural === 'minerales' || textoPlural === 'tipos de maquinaria'){
-                                    //     if(textoPlural === 'cargos' && !checkboxesDT[k].className.includes('minerales') && !checkboxesDT[k].className.includes('tipos de maquinaria')){
-                                    //         checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,''));
-                                    //     }
-                                    //     else if (textoPlural === 'minerales' && !checkboxesDT[k].className.includes('cargos') && !checkboxesDT[k].className.includes('tipos de maquinaria')){
-                                    //         checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,''));
-                                    //     }
-                                    //     else if (textoPlural === 'tipos de maquinaria' && !checkboxesDT[k].className.includes('minerales') && !checkboxesDT[k].className.includes('cargos')){
-                                    //         checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,''));
-                                    //     }
-                                    // }
                                 }
-                            }
-                       
-                            
-                        $('.dt-checkboxes').ready(function(){
-                            // console.log('dt-checkboxes', document.getElementsByClassName('dt-checkboxes'))
-                            // const checks = document.getElementsByClassName('dt-checkboxes');
-                            // checks[0].classList.add('hola');
-                            // console.log(checks[0])
-
-                            // for (let i = 0; i < checks.length; i++){
-                            //     console.log('long inicial', checks[i].classList.length)
-                            //     if (checks[i].length === 1){
-                            //         checks[i].id = (this.props.textoPlural.replace(/\s/g,''));
-                            //     }
-                            //     console.log('long final', checks[i].classList.length)
-                            //     console.log('classes values', checks[i].classList)
-                            //     // if (textoPlural === 'cargos' || textoPlural === 'minerales' || textoPlural === 'tipos de maquinaria'){
-                            //     //     if(textoPlural === 'cargos' && !checks[i].className.includes('minerales') && !checks[i].className.includes('tipos de maquinaria')){
-                            //     //         checks[i].classList.add(textoPlural.replace(/\s/g,''));
-                            //     //     }
-                            //     //     else if (textoPlural === 'minerales' && !checks[i].className.includes('cargos') && !checks[i].className.includes('tipos de maquinaria')){
-                            //     //         checks[i].classList.add(textoPlural.replace(/\s/g,''));
-                            //     //     }
-                            //     //     else if (textoPlural === 'tipos de maquinaria' && !checks[i].className.includes('minerales') && !checks[i].className.includes('cargos')){
-                            //     //         checks[i].classList.add(textoPlural.replace(/\s/g,''));
-                            //     //     }
-                            //     // }
-                            // }
-                        })
-                       
-                        const textoPrueba = textoPlural.replace(/\s/g,'')
-                        if (textoPrueba === 'cargos12'){
-                            this.props.nombreDT(table)
-                        }
-                        $('.dt-checkboxes.'+textoPrueba+etapa+fase).on('change', function(e){
-                            var form = this;
-                            // console.log('jquery', $('.dt-checkboxes'))
-                            // console.log('dt-checkboxes list', document.getElementsByClassName('dt-checkboxes'))
-                            // console.log(table.column(0).checkboxes)
-                            
-                            // console.log('length', document.getElementsByClassName('dt-checkboxes').length)
-                            
-                            // console.log('me pones una banderita ahí', table.columns(0).checkboxes.selected()[0], etapa, fase);
-                            
-                            console.log('SELECCIONADO ', e.target.checked) // SELECCIONADO O NO
-                            console.log('ID EN BD ', e.target.alt)   // ID EN BD
-                            console.log('TABLA SELECCIONADA ', e.target.className)
-                            console.log('ETAPA - FASE ', etapa, fase)
-                            // console.log('selectCheck change', selectCheck)
-                            console.log('className', e.target.className)
-                            selectCheck(e.target.className,e.target.alt,e.target.align,etapa,fase);
-                            
-                            // this.props.selectCheck()
+                           
                                 
-                        })
+                            $('.dt-checkboxes').ready(function(){
+                                // console.log('dt-checkboxes', document.getElementsByClassName('dt-checkboxes'))
+                                // const checks = document.getElementsByClassName('dt-checkboxes');
+                                // checks[0].classList.add('hola');
+                                // console.log(checks[0])
 
-                        // console.log(document.getElementsByClassName('dt-checkboxes'))
-                        
-                       }
+                                // for (let i = 0; i < checks.length; i++){
+                                //     console.log('long inicial', checks[i].classList.length)
+                                //     if (checks[i].length === 1){
+                                //         checks[i].id = (this.props.textoPlural.replace(/\s/g,''));
+                                //     }
+                                //     console.log('long final', checks[i].classList.length)
+                                //     console.log('classes values', checks[i].classList)
+                                //     // if (textoPlural === 'cargos' || textoPlural === 'minerales' || textoPlural === 'tipos de maquinaria'){
+                                //     //     if(textoPlural === 'cargos' && !checks[i].className.includes('minerales') && !checks[i].className.includes('tipos de maquinaria')){
+                                //     //         checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                                //     //     }
+                                //     //     else if (textoPlural === 'minerales' && !checks[i].className.includes('cargos') && !checks[i].className.includes('tipos de maquinaria')){
+                                //     //         checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                                //     //     }
+                                //     //     else if (textoPlural === 'tipos de maquinaria' && !checks[i].className.includes('minerales') && !checks[i].className.includes('cargos')){
+                                //     //         checks[i].classList.add(textoPlural.replace(/\s/g,''));
+                                //     //     }
+                                //     // }
+                                // }
+                            })
+                           
+                            const textoPrueba = textoPlural.replace(/\s/g,'')
+                            if (textoPrueba === 'cargos12'){
+                                this.props.nombreDT(table)
+                            }
+                            if(id!=null){
+                                $('.dt-checkboxes.'+textoPrueba+etapa+fase+id).on('change', function(e){
+                                var form = this;
+                                // console.log('jquery', $('.dt-checkboxes'))
+                                // console.log('dt-checkboxes list', document.getElementsByClassName('dt-checkboxes'))
+                                // console.log(table.column(0).checkboxes)
+                                
+                                // console.log('length', document.getElementsByClassName('dt-checkboxes').length)
+                                
+                                // console.log('me pones una banderita ahí', table.columns(0).checkboxes.selected()[0], etapa, fase);
+                                
+                               /* console.log('SELECCIONADO ', e.target.checked); // SELECCIONADO O NO
+                                console.log('ID EN BD ', e.target.alt);   // ID EN BD
+                                console.log('TABLA SELECCIONADA ', e.target.className);
+                                console.log('ETAPA - FASE ', etapa, fase);
+                                // console.log('selectCheck change', selectCheck)
+                                console.log('className', e.target.className);
+                                console.log('CIIII2222222222222 ',e.target);
+                                console.log('C3333333333333 ',e.target.Name);*/
+                                
+
+
+
+
+                                selectCheck2(e,e.target.className,e.target.alt,e.target.align,e.target.Name,e.target.dirName,etapa,fase,id);
+                                
+                                // this.props.selectCheck()
+                                    
+                                })
+                            }
+                            else{
+
+                                $('.dt-checkboxes.'+textoPrueba+etapa+fase).on('change', function(e){
+                                var form = this;
+                                // console.log('jquery', $('.dt-checkboxes'))
+                                // console.log('dt-checkboxes list', document.getElementsByClassName('dt-checkboxes'))
+                                // console.log(table.column(0).checkboxes)
+                                
+                                // console.log('length', document.getElementsByClassName('dt-checkboxes').length)
+                                
+                                // console.log('me pones una banderita ahí', table.columns(0).checkboxes.selected()[0], etapa, fase);
+                                
+                                console.log('SELECCIONADO ', e.target.checked) // SELECCIONADO O NO
+                                console.log('ID EN BD ', e.target.alt)   // ID EN BD
+                                console.log('TABLA SELECCIONADA ', e.target.className)
+                                console.log('ETAPA - FASE ', etapa, fase)
+                                // console.log('selectCheck change', selectCheck)
+                                console.log('className', e.target.className)
+                                selectCheck(e.target.className,e.target.alt,e.target.align,etapa,fase);
+                                
+                                // this.props.selectCheck()
+                                    
+                                })
+
+                            }
+                        }
                        
                                 // var actualRows=[];
                                 // var i=0;
@@ -486,9 +546,6 @@ export default class DataTable extends React.Component {
                     // this.setState({ datatable: table });
 
 
-
-      
-
     }
 
 
@@ -549,7 +606,7 @@ export default class DataTable extends React.Component {
             }
         }
     }
-    
+
     render(){
         return (
             <div>

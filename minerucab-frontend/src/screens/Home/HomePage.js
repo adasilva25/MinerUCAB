@@ -1,14 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 // https://react-bootstrap.github.io/components/buttons/
 import {history} from '../../routers/History';
 import SetActividades from '../../components/SetActividades'
 import OpcionesLocales from '../../components/OpcionesLocales'
 import OpcionesGlobales from '../../components/OpcionesGlobales'
 import Container from 'react-bootstrap/Container'
-import ModalBuscarCliente from '../../components/ModalBuscarCliente';
 
 
-export default class HomePage extends React.Component {
+export class HomePage extends React.Component {
     state = { 
         modalShow: false
     };
@@ -18,12 +18,6 @@ export default class HomePage extends React.Component {
     modalClose = () => this.setState({ modalShow: false });
     modalOpen = () => {
         this.setState({ modalShow: true });
-    }
-    onClickDashboardPage(){
-        history.push('/dashboard');  
-    }  
-    onClickLoginPage(){
-        history.push('/');  
     }  
     render(){
 
@@ -116,10 +110,13 @@ export default class HomePage extends React.Component {
             }
         }
 
-        var opciones = "Andrea Da Silva";
+        var opciones = "Diego Gutiérrez";
 
         return ( 
             <div className="contain pagecontent" id="Content">
+            {
+                console.log('user', this.props.user)
+            }
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario={opciones}/>
                 <div id="Content" className="contain pagecontent">
@@ -127,7 +124,7 @@ export default class HomePage extends React.Component {
                         <Container fluid={true} className="containerSetActividades">
                             {actividad.map((act,index)=>{
                                 return(
-                                    <SetActividades actividades1={act} key={index} 
+                                    <SetActividades actividades1={act} key={index} history={this.props.history}
                                     />
                                 );
                             })}
@@ -139,3 +136,11 @@ export default class HomePage extends React.Component {
     }
 
 }
+
+const mapStateToProps = (state, props) => { // esto pasa a ser un prop
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(HomePage)

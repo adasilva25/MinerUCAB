@@ -1540,9 +1540,9 @@ INSERT INTO MU_EMPLEADO (CI, P_nombre, S_nombre, P_apellido, S_apellido, Fecha_n
 -------------------------------------    USUARIO     -------------------------------------
 --Los 200 primeros empleados--
 INSERT INTO MU_USUARIO (usuario, contraseña, fk_empleado, fk_rol, fk_estatus) VALUES
-    ('kjado0', 'QOWvQ5a6r7', 1, 3, 1),
-    ('nplastow1', 'vOM16TLhpa2', 2, 3, 1),
-    ('nstiffkins2', 'pOQhZsv', 3, 2, 1),
+    ('adasilva', 'andreita123', 1, 3, 1),
+    ('asanchez', 'albita123', 2, 3, 1),
+    ('ygutierrez', 'yeyito123', 3, 2, 1),
     ('agoldston3', 'ryHs7X2KjUX', 4, 5, 1),
     ('ccrudginton4', 'NAvQfnY', 5, 3, 1),
     ('nlundie5', '156yXf6CJ75', 6, 2, 1),

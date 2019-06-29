@@ -87,7 +87,7 @@ export default class Cliente extends React.Component {
                                             checktable={false}
                                             textoSingular={'empleado'}
                                             textoPlural={'empleados'}
-                                            size={270}
+                                            size={500}
                                             //selectCheck={this.selectCheck}
                                         />
                                     </Col>

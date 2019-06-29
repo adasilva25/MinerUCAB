@@ -11,15 +11,7 @@ export default class FormTitulo extends React.Component {
     constructor(props){
         super(props);
         this.titleText = this.titleText.bind(this);
-    }
-
-    onClickDashboardPage(){
-        history.push('/dashboard');  
-    }       
-
-    onClickLoginPage(){
-        history.push('/');  
-    }  
+    } 
  
 	titleText(titulo,Size){
 		if (Size == "BIG"){

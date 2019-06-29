@@ -14,6 +14,9 @@ import GestionarCargos from '../screens/Cargos/GestionarCargos';
 import RegistrarYacimiento from '../screens/Yacimientos/RegistrarYacimiento';
 import ModificarYacimiento from '../screens/Yacimientos/ModificarYacimiento';
 import ConsultarYacimiento from '../screens/Yacimientos/ConsultarYacimiento';
+import RegistrarExplotacion from '../screens/Explotaciones/RegistrarExplotacion';
+import ConsultarExplotacion from '../screens/Explotaciones/ConsultarExplotacion';
+import ModificarExplotacion from '../screens/Explotaciones/ModificarExplotacion';
 import {NotFoundPage} from '../components/NotFoundPage';
 import {history} from './History';
 import HomePage from '../screens/Home/HomePage'
@@ -29,6 +32,8 @@ import Mineral from '../screens/Minerales/Mineral';
 import GestionarMineralMetalico from '../screens/Minerales/GestionarMineralMetalico';
 import GestionarMineralNoMetalico from '../screens/Minerales/GestionarMineralNoMetalico';
 import SolicitudCompra from '../screens/Compras/SolicitudCompra';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 // history back --> https://stackoverflow.com/questions/19051212/add-a-parameter-with-js-function-window-history-back
 // history props --> https://stackoverflow.com/questions/44121069/how-to-pass-params-with-history-push-link-redirect-in-react-router-v4/45263164#45263164
@@ -44,7 +49,7 @@ const AppRouter = () => (
         <Route path="/dashboard" component={DashboardPage} />
         <Route path="/home" component={HomePage} />
         {/* ------------------------ CARGOS ------------------------ */}
-        /*<Route path="/cargo" component={Cargo} />
+        <Route path="/cargo" component={Cargo} />
         <Route path="/registrar_cargo" component={RegistrarCargo} />
         <Route path="/gestionar_cargos/:accion/:id?" component={GestionarCargos} />*/
         {/* ------------------------ CLIENTES ------------------------ */}
@@ -74,6 +79,11 @@ const AppRouter = () => (
         <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />
         <Route path="/modificar_yacimiento" component={ModificarYacimiento} />
         <Route path="/consultar_yacimiento" component={ConsultarYacimiento} />
+        {/* ------------------------ EXPLOTACIÓN ------------------------ */}
+        <Route path="/registrar_explotacion" component={RegistrarExplotacion} />
+        <Route path="/consultar_explotacion" component={ConsultarExplotacion} />
+        <Route path="/modificar_explotacion" component={ModificarExplotacion} />
+
       </Switch>
     </div>
   </Router>

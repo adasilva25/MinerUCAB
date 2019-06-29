@@ -26,6 +26,7 @@ export default class SetActividades extends React.Component {
                                     <Actividad 
                                         act={actividad1} 
                                         key={index1}
+                                        history={this.props.history}
                                     />
                                 );
                             })}

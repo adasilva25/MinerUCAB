@@ -175,6 +175,10 @@ button:focus.FocusLI {
 .formTitulo:hover{
 	background-color: lavender;
 }
+.formMarginsE{
+	margin-top: 5%;
+	margin-bottom: 0%;
+}
 
 /*------------------Registrar Yacimiento--------------------*/
 
@@ -312,6 +316,186 @@ invalidText{
 }
 input[data-state="valid"] {
   border-color: hsl(120, 76%, 50%);
+
+}
+
+/*--------Imagenes registrar ecplotacion--------*/
+
+.empleadosImage{
+	/*box-shadow: 10px 101x 17px -9px rgba(0,0,0,0.75);*/
+	filter: drop-shadow(10px 10px 12px #2228); 
+	transform:scale(0.5);
+	transition: all .2s ease-in-out;
+	padding-left: 0%;
+	width: 200%;
+	margin-bottom: -10%;
+
+}
+.empleadosImage:hover{
+	filter: drop-shadow(17px 15px 17px #2224); 
+	transform:scale(0.7);
+	z-index: 2;
+
+}
+
+.empleadosImageOtro{
+	/*box-shadow: 10px 101x 17px -9px rgba(0,0,0,0.75);*/
+	filter: drop-shadow(10px 10px 12px #2228); 
+	transform:scale(0.45);
+	transition: all .2s ease-in-out;
+	padding-left: 0%;
+	width: 200%;
+	margin-bottom: -10%;
+
+}
+.empleadosImageOtro:hover{
+	filter: drop-shadow(17px 15px 17px #2224); 
+	transform:scale(0.6);
+	z-index: 2;
+
+}
+
+.empleadasImage{
+	/*box-shadow: 10px 101x 17px -9px rgba(0,0,0,0.75);*/
+	filter: drop-shadow(10px 10px 12px #2228); 
+	transform:scale(0.55);
+	transition: all .2s ease-in-out;
+	margin-top:2%;
+	padding-left: 7%;
+	width: 200%;
+	margin-bottom: -10%;
+
+
+}
+.empleadasImage:hover{
+	filter: drop-shadow(17px 15px 17px #2224); 
+	transform:scale(0.8);
+	z-index: 2;
+
+}
+
+
+
+.containerempleados{
+	padding-left: 1%;
+	margin-bottom:10%
+	
+}
+
+.textoEmpleadas{
+	text-align: center;
+	font-weight: 200;
+	font-size: 200%;
+	margin-top: 3%;
+	margin-left: -17%;
+	width: 135%;
+
+
+}
+
+.textoEmpleados{
+	text-align: center;
+	font-weight: 200;
+	font-size: 200%;
+	margin-top: 3%;
+	width: 120%;
+}
+.textoEmpleadosOtro{
+	text-align: center;
+	font-weight: 200;
+	font-size: 210%;
+	margin-top: 3%;
+	margin-left: -3%;
+	width: 135%;
+}
+
+.BotonHorarioM{
+	width: 150%;
+    font-size: 250%;
+    margin-left: -13%;
+    transform:none !important;
+}
+.BotonHorarioM:hover{
+	
+    transform:none !important;
+}
+.BotonHorarioF{
+	width: 150%;
+    font-size: 250%;
+    margin-left: -20%;
+    transform:none !important;
+}
+.BotonHorarioF:hover{
+	
+    transform:none !important;
+}
+
+.maquinaria{
+	filter: drop-shadow(10px 10px 12px #2228); 
+	transform:scale(0.43);
+	transition: all .2s ease-in-out;
+	padding-left: 0%;
+	width: 200%;
+	margin-bottom: -10%;
+}
+.maquinaria:hover{
+	filter: drop-shadow(17px 15px 17px #2224); 
+	transform:scale(0.5);
+	z-index: 2;
+}
+.maquinariaText{
+	text-align: center;
+	font-weight: 200;
+	font-size: 200%;
+	margin-top: 3%;
+	width: 120%;
+}
+.containerMaquinaria{
+	   padding-left: 0%;
+    margin-left: -8%;
+    margin-bottom: 10%;
+}
+.badgeMaquinaria{
+	margin-left: 10%;
+}
+
+
+.TextoModal{
+	text-align: left;
+	font-weight: 200;
+	font-size: 150%;
+	width: 135%;
+	margin-left: 0%;
+	padding-left: 0%;
+	padding-right: 40%;
+}
+
+.TextoModalF{
+	text-align: center;
+	font-weight: 200;
+	font-size: 150%;
+	width: 135%;
+	margin-left: 0%;
+	padding-left: 0%;
+    padding-right: 70%;
+}
+.HorariosCont{
+	padding-left: 10%;
+
+}
+.modalS{
+	width: 200%
+}
+@media (min-width: 992px) {
+  .modal-lg {
+    width: 200%;
+  }
+}
+@media (min-width: 768px) {
+  .modal-xl {
+    width: 90%;
+   max-width:900px;
+  }
 }
 /*-----------------------------------------Responsive stuff--------------------------------------------*/
 
@@ -351,6 +535,68 @@ input[data-state="valid"] {
   	justify-content: center;
   	padding-left: 27%;
   }
+  .empleadasImage{
+	/*box-shadow: 10px 101x 17px -9px rgba(0,0,0,0.75);*/
+	
+	padding-left: 15%;
+	margin-bottom:-30%
+	/*margin-left: 40%;*/
+
+	}
+	.empleadosImageOtro{
+	/*box-shadow: 10px 101x 17px -9px rgba(0,0,0,0.75);*/
+		padding-left: 15%;
+		margin-bottom:-30%
+
+	}	
+	.empleadosImage{
+	/*box-shadow: 10px 101x 17px -9px rgba(0,0,0,0.75);*/
+	
+	
+	margin-bottom:-30%
+	/*margin-left: 40%;*/
+
+	}
+
+	.textoEmpleadas{
+	
+		font-weight: 200;
+		font-size: 200%;
+		margin-top: 3%;
+		margin-left: -15%;
+		width: 300%;
+
+
+	}
+
+	.textoEmpleados{
+		font-weight: 200;
+		font-size: 200%;
+		margin-left: 10%;
+		width: 200%;
+	}
+	.textoEmpleadosOtro{
+		font-weight: 200;
+		font-size: 210%;
+		margin-top: 3%;
+		margin-left: 60%;
+		width: 350%;
+	}
+
+
+	.containerempleados{
+		margin-bottom: 20%;
+	}
+
+	.BotonHorarioM{
+		
+	    margin-left: 34%;
+	}
+	.BotonHorarioF{
+		
+	    width: 300%;
+    	margin-left: -17%;
+	}
 }
 
 @media screen and (max-width: 768px) {
@@ -362,6 +608,18 @@ input[data-state="valid"] {
   	justify-content: center;
   	padding-left:  20%;
   }
+  .empleadasImage{
+	/*box-shadow: 10px 101x 17px -9px rgba(0,0,0,0.75);*/
+	margin-top: 7%;
+	padding-left: 17%
+
+	}
+	.empleadosImageOtro{
+	/*box-shadow: 10px 101x 17px -9px rgba(0,0,0,0.75);*/
+		margin-top: -1%;
+		padding-left: 17%
+
+	}	
 }
 
 @media screen and (max-width:576px) {
@@ -374,4 +632,6 @@ input[data-state="valid"] {
   	justify-content: center;
   	padding-left:  10%;
   }
+
+
 }

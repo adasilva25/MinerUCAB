@@ -38,7 +38,7 @@ export default class Venta extends React.Component {
             <OpcionesLocales Usuario={'Andrea Da Silva'}/>
             <ModalBuscarCliente
               show={this.state.modalShow}
-              onHide={this.modalClose}
+              onHide={this.modalClose}              
             />
             <ModalYesNo
               show={this.state.modalShowEliminar}
