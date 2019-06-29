@@ -71,11 +71,6 @@ export default class ConsultarYacimiento extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
                 
             }],
             mineralNoMetalicoId:[],
@@ -85,11 +80,6 @@ export default class ConsultarYacimiento extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
             }],
             etapas: [{
                 nombre: "Etapa 1",
@@ -172,71 +162,25 @@ export default class ConsultarYacimiento extends React.Component {
                 id:1,
                 total: 5,
                 nombre:"Epale",
-                componentes:[{
-                    id:1,
-                    nombre:"Carbon",
-                    total:5
-                }, 
-                {
-                    id:2,
-                    nombre:"Bauxita",
-                    total:2
-                }]
+                
             },
             {
                 id:8,
                 total: 8,
                 nombre:"Epale2",
-                componentes:[{
-                    nombre:"Clarita",
-                    id:12,
-                    total:52
-                }, 
-                {
-                    nombre:"Vitrita",
-                    id:1,
-                    total:17
-                },
-                {
-                    nombre:"Durita",
-                    id:4,
-                    total:8
-                }]
+                
             }],
             mineralesNoMetalicos:[{
                 id:1,
                 total: 5,
                 nombre:"ICabron",
-                componentes:[{
-                    id:1,
-                    nombre:"ICarbon",
-                    total:5
-                }, 
-                {
-                    id:2,
-                    nombre:"Bauxita",
-                    total:2
-                }]
+                
             },
             {
                 id:8,
                 total: 8,
                 nombre:"Alumina",
-                componentes:[{
-                    nombre:"Adamantium",
-                    id:12,
-                    total:52
-                }, 
-                {
-                    nombre:"Peludito",
-                    id:34,
-                    total:5
-                },
-                {
-                    nombre:"Moradita",
-                    id:54,
-                    total:7
-                }]
+                
             }],
             explotacion:{
                 duracion:0,
@@ -393,12 +337,6 @@ export default class ConsultarYacimiento extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
-                
             }],
             mineralNoMetalicoId:[],
             mineralNoMetalicoShow:'inline',
@@ -407,11 +345,6 @@ export default class ConsultarYacimiento extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
             }],
             etapas: [{
                 nombre: "Etapa 1",
@@ -480,7 +413,7 @@ export default class ConsultarYacimiento extends React.Component {
         state.Minerales.shift();
         for(let i=0; i<info.minerales.length; i++){
 
-            console.log(info.minerales[i].componentes.length);
+            
             state.mineralId.push(info.minerales[i].id);
 
             let mineral={
@@ -488,11 +421,6 @@ export default class ConsultarYacimiento extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
                 
             }
 
@@ -502,21 +430,8 @@ export default class ConsultarYacimiento extends React.Component {
 
             
 
-            mineral.componentes.shift();
-            for(let j=0; j<info.minerales[i].componentes.length; j++){
-                let componente={
-                    nombre:null,
-                    id:0,
-                    total:0
-                }
-
-                componente.id=info.minerales[i].componentes[j].id;
-                componente.nombre=info.minerales[i].componentes[j].nombre;
-                componente.total=info.minerales[i].componentes[j].total;
-
-                mineral.componentes.push(componente);
-                console.log("length",info.minerales[i].componentes.length);
-            }
+            
+            
             state.Minerales.push(mineral);
         }
         
@@ -525,7 +440,7 @@ export default class ConsultarYacimiento extends React.Component {
         state.MineralesNoMetalicos.shift();
         for(let i=0; i<info.mineralesNoMetalicos.length; i++){
 
-            console.log(info.mineralesNoMetalicos[i].componentes.length);
+           
             state.mineralNoMetalicoId.push(info.mineralesNoMetalicos[i].id);
 
             let mineral={
@@ -533,11 +448,6 @@ export default class ConsultarYacimiento extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
                 
             }
 
@@ -547,21 +457,7 @@ export default class ConsultarYacimiento extends React.Component {
 
             
 
-            mineral.componentes.shift();
-            for(let j=0; j<info.mineralesNoMetalicos[i].componentes.length; j++){
-                let componente={
-                    nombre:null,
-                    id:0,
-                    total:0
-                }
-
-                componente.id=info.mineralesNoMetalicos[i].componentes[j].id;
-                componente.nombre=info.mineralesNoMetalicos[i].componentes[j].nombre;
-                componente.total=Number(info.mineralesNoMetalicos[i].componentes[j].total);
-
-                mineral.componentes.push(componente);
-                console.log("length",info.mineralesNoMetalicos[i].componentes.length);
-            }
+           
             state.MineralesNoMetalicos.push(mineral);
         }
 
@@ -1155,25 +1051,7 @@ export default class ConsultarYacimiento extends React.Component {
                                                             <Accordion.Collapse eventKey={1} >
                                                                 <Card.Body className="BodyAcc">
                                                                     <Form.Row className="formMargins">
-                                                                    {mineral.componentes.map((componente,indexComp)=>{
-                                                                            
-                                                                        return(
-                                                                            
-                                                                                <Form.Group as={Col} md="3" controlId={'YacimientosMineralComponente'+mineral.id+componente.id} className="inputsPaddingRight">
-                                                                                    <Form.Label className="cliente-description-fields-text">{componente.nombre}</Form.Label>
-                                                                                    <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control disabled type="text" className="form-input" defaultValue={componente.total} placeholder="Introduzca cantidad" /> 
-                                                                                        <InputGroup.Append>
-                                                                                            <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
-                                                                                        </InputGroup.Append>
-                                                                                    </InputGroup>
-                                                                                    <Form.Text className="text-muted" id={'YacimientosTextMineralComponente'+mineral.id+componente.id}>
-                                                                                        Obligatorio
-                                                                                    </Form.Text>    
-                                                                                </Form.Group>
-                                                                            
-                                                                        );
-                                                                    })}
+                                                                    
                                                                     </Form.Row>
                                                                     <Form.Row className="formMargins">
                                                                         <Form.Group as={Col} md="12"  className="inputsPaddingRight">
@@ -1230,25 +1108,7 @@ export default class ConsultarYacimiento extends React.Component {
                                                             <Accordion.Collapse eventKey={1} >
                                                                 <Card.Body className="BodyAcc">
                                                                     <Form.Row className="formMargins">
-                                                                    {mineral.componentes.map((componente,indexComp)=>{
-                                                                            
-                                                                        return(
-                                                                            
-                                                                                <Form.Group as={Col} md="3"  controlId={'YacimientosMineralNoMetalicoComponente'+mineral.id+componente.id} className="inputsPaddingRight">
-                                                                                    <Form.Label className="cliente-description-fields-text">{componente.nombre}</Form.Label>
-                                                                                    <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control disabled type="text" className="form-input" defaultValue={componente.total} placeholder="Introduzca cantidad" /> 
-                                                                                        <InputGroup.Append>
-                                                                                            <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
-                                                                                        </InputGroup.Append>
-                                                                                    </InputGroup>
-                                                                                    <Form.Text className="text-muted" id={'YacimientosTextMineralNoMetalicoComponente'+mineral.id+componente.id}>
-                                                                                        Obligatorio
-                                                                                    </Form.Text>    
-                                                                                </Form.Group>
-                                                                            
-                                                                        );
-                                                                    })}
+                                                                    
                                                                     </Form.Row>
                                                                     <Form.Row className="formMargins">
                                                                         <Form.Group as={Col} md="12"  className="inputsPaddingRight">

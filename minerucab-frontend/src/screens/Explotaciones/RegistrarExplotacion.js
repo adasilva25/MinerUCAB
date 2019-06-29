@@ -85,11 +85,7 @@ export default class RegistrarExplotacion extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
+                
                 
             }],
             mineralNoMetalicoId:[],
@@ -99,11 +95,7 @@ export default class RegistrarExplotacion extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
+                
             }],
             etapas: [{
                 nombre: "Etapa 1",
@@ -246,71 +238,25 @@ export default class RegistrarExplotacion extends React.Component {
                 id:1,
                 total: 5,
                 nombre:"Epale",
-                componentes:[{
-                    id:1,
-                    nombre:"Carbon",
-                    total:5
-                }, 
-                {
-                    id:2,
-                    nombre:"Bauxita",
-                    total:2
-                }]
+               
             },
             {
                 id:8,
                 total: 8,
                 nombre:"Epale2",
-                componentes:[{
-                    nombre:"Clarita",
-                    id:12,
-                    total:52
-                }, 
-                {
-                    nombre:"Vitrita",
-                    id:1,
-                    total:17
-                },
-                {
-                    nombre:"Durita",
-                    id:4,
-                    total:8
-                }]
+                
             }],
             mineralesNoMetalicos:[{
                 id:1,
                 total: 5,
                 nombre:"ICabron",
-                componentes:[{
-                    id:1,
-                    nombre:"ICarbon",
-                    total:5
-                }, 
-                {
-                    id:2,
-                    nombre:"Bauxita",
-                    total:2
-                }]
+               
             },
             {
                 id:8,
                 total: 8,
                 nombre:"Alumina",
-                componentes:[{
-                    nombre:"Adamantium",
-                    id:12,
-                    total:52
-                }, 
-                {
-                    nombre:"Peludito",
-                    id:34,
-                    total:5
-                },
-                {
-                    nombre:"Moradita",
-                    id:54,
-                    total:7
-                }]
+                
             }],
             explotacion:{
                 duracion:41,
@@ -469,11 +415,7 @@ export default class RegistrarExplotacion extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
+               
                 
             }],
             mineralNoMetalicoId:[],
@@ -483,11 +425,7 @@ export default class RegistrarExplotacion extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
+               
             }],
             etapas: [{
                 nombre: "Etapa 1",
@@ -618,7 +556,7 @@ export default class RegistrarExplotacion extends React.Component {
         state.Minerales.shift();
         for(let i=0; i<info.minerales.length; i++){
 
-            console.log(info.minerales[i].componentes.length);
+           
             state.mineralId.push(info.minerales[i].id);
 
             let mineral={
@@ -626,11 +564,7 @@ export default class RegistrarExplotacion extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
+                
                 
             }
 
@@ -640,21 +574,7 @@ export default class RegistrarExplotacion extends React.Component {
 
             
 
-            mineral.componentes.shift();
-            for(let j=0; j<info.minerales[i].componentes.length; j++){
-                let componente={
-                    nombre:null,
-                    id:0,
-                    total:0
-                }
-
-                componente.id=info.minerales[i].componentes[j].id;
-                componente.nombre=info.minerales[i].componentes[j].nombre;
-                componente.total=info.minerales[i].componentes[j].total;
-
-                mineral.componentes.push(componente);
-                console.log("length",info.minerales[i].componentes.length);
-            }
+            
             state.Minerales.push(mineral);
         }
         
@@ -663,7 +583,7 @@ export default class RegistrarExplotacion extends React.Component {
         state.MineralesNoMetalicos.shift();
         for(let i=0; i<info.mineralesNoMetalicos.length; i++){
 
-            console.log(info.mineralesNoMetalicos[i].componentes.length);
+           
             state.mineralNoMetalicoId.push(info.mineralesNoMetalicos[i].id);
 
             let mineral={
@@ -671,11 +591,7 @@ export default class RegistrarExplotacion extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
+                
                 
             }
 
@@ -685,21 +601,7 @@ export default class RegistrarExplotacion extends React.Component {
 
             
 
-            mineral.componentes.shift();
-            for(let j=0; j<info.mineralesNoMetalicos[i].componentes.length; j++){
-                let componente={
-                    nombre:null,
-                    id:0,
-                    total:0
-                }
-
-                componente.id=info.mineralesNoMetalicos[i].componentes[j].id;
-                componente.nombre=info.mineralesNoMetalicos[i].componentes[j].nombre;
-                componente.total=Number(info.mineralesNoMetalicos[i].componentes[j].total);
-
-                mineral.componentes.push(componente);
-                console.log("length",info.mineralesNoMetalicos[i].componentes.length);
-            }
+           
             state.MineralesNoMetalicos.push(mineral);
         }
 
@@ -2283,40 +2185,7 @@ export default class RegistrarExplotacion extends React.Component {
 
 
 
-    handleOnChangeMineralComponentes=(event,minNUm,compNUm,minIndx,compIndx)=>{
-        const value = event.target.value;
-        const valueTrimmed = value.trim();
-        const minerales= this.state.Minerales;
-
-
-        if(valueTrimmed){
-            event.target.state='valid';
-            console.log("validoMineralCompo",document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML);
-
-            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0)  ){
-                document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML = "Obligatorio";
-                minerales[minIndx].componentes[compIndx].total =Number(valueTrimmed);
-            }
-            else{
-                
-                document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML = "Introduzca un número válido";
-               
-            }
-           
-        }
-        else{
-            event.target.state='invalid';
-            document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML = "Introduzca un número válido";
-              console.log("invalido");
-        }
-        
-        if(!value){
-            event.target.state='';
-            document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML = "Obligatorio";
-            minerales[minIndx].componentes[compIndx].total = -1;
-        }
-    }
-
+   
     handleOnChangeMineral=(event,minNUm)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
@@ -2352,39 +2221,6 @@ export default class RegistrarExplotacion extends React.Component {
 
 
 
-    handleOnChangeMineralNoMetalicoComponentes=(event,minNUm,compNUm,minIndx,compIndx)=>{
-        const value = event.target.value;
-        const valueTrimmed = value.trim();
-        const minerales= this.state.MineralesNoMetalicos;
-
-
-        if(valueTrimmed){
-            event.target.state='valid';
-            console.log("validoMineralCompo",document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML);
-
-            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0)  ){
-                document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML = "Obligatorio";
-                minerales[minIndx].componentes[compIndx].total =Number(valueTrimmed);
-            }
-            else{
-                
-                document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML = "Introduzca un número válido";
-               
-            }
-           
-        }
-        else{
-            event.target.state='invalid';
-            document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML = "Introduzca un número válido";
-              console.log("invalido");
-        }
-        
-        if(!value){
-            event.target.state='';
-            document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML = "Obligatorio";
-            minerales[minIndx].componentes[compIndx].total = -1;
-        }
-    }
 
 
     handleOnChangeMineralNo=(event,minNUm)=>{
@@ -2926,22 +2762,7 @@ export default class RegistrarExplotacion extends React.Component {
                                                             <Accordion.Collapse eventKey={1} >
                                                                 <Card.Body className="BodyAcc">
                                                                     <Form.Row className="formMargins">
-                                                                    {mineral.componentes.map((componente,indexComp)=>{
-                                                                            
-                                                                        return(
-                                                                            
-                                                                                <Form.Group as={Col} md="3" onChange={(evt)=>this.handleOnChangeMineralComponentes(evt,mineral.id,componente.id,indexMin,indexComp)} controlId={'YacimientosMineralComponente'+mineral.id+componente.id} className="inputsPaddingRight">
-                                                                                    <Form.Label className="cliente-description-fields-text">{componente.nombre}</Form.Label>
-                                                                                    <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control disabled type="text" className="form-input" defaultValue={componente.total} placeholder="Introduzca cantidad" /> 
-                                                                                        <InputGroup.Append>
-                                                                                            <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
-                                                                                        </InputGroup.Append>
-                                                                                    </InputGroup> 
-                                                                                </Form.Group>
-                                                                            
-                                                                        );
-                                                                    })}
+                                                                    
                                                                     </Form.Row>
                                                                     <Form.Row className="formMargins">
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineral(evt,mineral.id)} controlId={'YacimientosTotalMineral'+mineral.id}  className="inputsPaddingRight">
@@ -2995,22 +2816,7 @@ export default class RegistrarExplotacion extends React.Component {
                                                             <Accordion.Collapse eventKey={1} >
                                                                 <Card.Body className="BodyAcc">
                                                                     <Form.Row className="formMargins">
-                                                                    {mineral.componentes.map((componente,indexComp)=>{
-                                                                            
-                                                                        return(
-                                                                            
-                                                                                <Form.Group as={Col} md="3" onChange={(evt)=>this.handleOnChangeMineralNoMetalicoComponentes(evt,mineral.id,componente.id,indexMin,indexComp)} controlId={'YacimientosMineralNoMetalicoComponente'+mineral.id+componente.id} className="inputsPaddingRight">
-                                                                                    <Form.Label className="cliente-description-fields-text">{componente.nombre}</Form.Label>
-                                                                                    <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control disabled type="text" className="form-input" defaultValue={componente.total} placeholder="Introduzca cantidad" /> 
-                                                                                        <InputGroup.Append>
-                                                                                            <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
-                                                                                        </InputGroup.Append>
-                                                                                    </InputGroup> 
-                                                                                </Form.Group>
-                                                                            
-                                                                        );
-                                                                    })}
+                                                                    
                                                                     </Form.Row>
                                                                     <Form.Row className="formMargins">
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineralNoMetalico(evt,mineral.id)} controlId={'YacimientosTotalMineralNoMetalico'+mineral.id}  className="inputsPaddingRight">

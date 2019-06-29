@@ -296,7 +296,7 @@ export default class DataTable extends React.Component {
                                                     checkboxesDT[k].Name = dataSet[m][1];//CI
                                                     checkboxesDT[k].align = dataSet[m][2]+' '+dataSet[m][4];//NOMBRE
                                                     checkboxesDT[k].dirName = dataSet[m][7];//SEXO
-                                                    console.log("CIIIIIIIIIIIIIIIIIIIIII",dataSet[m][1]);
+                                                   
                                                 }
                                                 else{
                                                     checkboxesDT[k].alt = dataSet[m][0];

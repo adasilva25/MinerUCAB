@@ -62,11 +62,7 @@ export default class RegistrarYacimiento extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
+                
                 
             }],
             MineralesNoMetalicos:[{
@@ -74,11 +70,7 @@ export default class RegistrarYacimiento extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    id:0,
-                    total:0
-                }]
+               
                 
             }],
             etapas: [{
@@ -764,9 +756,7 @@ export default class RegistrarYacimiento extends React.Component {
 
             if(minerales[i].id == id){
                
-                for(let j=0; j<minerales[i].componentes.length; j++){
-                    document.getElementById('YacimientosMineralComponente'+minerales[i].id+minerales[i].componentes[j].id).value='';  
-                }
+                
                 document.getElementById('YacimientosTotalMineral'+id).value='';
 
                 //minerales.splice(i,1);
@@ -788,23 +778,13 @@ export default class RegistrarYacimiento extends React.Component {
                 id:'',
                 total: 0,
                 accordionKey:0,
-                componentes:[]
+               
             }
             
 
             mineral.nombre=name;
             mineral.id=id;
-            for(var k=0; k<this.state.explotacion.costo; k++){
-                let componente={
-                    nombre:'',
-                    id:0,
-                    total:''
-                }
-                componente.nombre='Componente '+id;
-                componente.id = id+k;//EPALEEPALEARRIBARRIBA
-                mineral.componentes.push(componente);
-               // console.log(k,"k",componetesNombres[k]);
-            }
+           
             minerales.push(mineral);
         }
         if(minerales.length===0){
@@ -814,10 +794,7 @@ export default class RegistrarYacimiento extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    total:''
-                }]    
+                  
             };
             minerales.push(mineral);
         }
@@ -827,14 +804,7 @@ export default class RegistrarYacimiento extends React.Component {
             Minerales: minerales
         }));
 
-        if(eliminado){
-            for(let i=0; i<this.state.Minerales.length;i++){
-                for(let j=0; j<this.state.Minerales[i].componentes.length; j++){
-                    document.getElementById('YacimientosMineralComponente'+minerales[i].id+minerales[i].componentes[j].id).value = this.state.Minerales[i].componentes[j].total;
-                    
-                }
-            }
-        }
+       
 
 
         console.log(minerales);
@@ -883,9 +853,7 @@ export default class RegistrarYacimiento extends React.Component {
 
             if(MineralesNoMetalicos[i].id == id){
                
-                for(let j=0; j<MineralesNoMetalicos[i].componentes.length; j++){
-                    document.getElementById('YacimientosMineralNoMetalicoComponente'+MineralesNoMetalicos[i].id+MineralesNoMetalicos[i].componentes[j].id).value='';  
-                }
+                
                 document.getElementById('YacimientosTotalMineralNoMetalico'+id).value='';
 
                 //MineralesNoMetalicos.splice(i,1);
@@ -907,23 +875,13 @@ export default class RegistrarYacimiento extends React.Component {
                 id:'',
                 total: 0,
                 accordionKey:0,
-                componentes:[]
+              
             }
             
 
             mineral.nombre=name;
             mineral.id=id;
-            for(var k=0; k<this.state.explotacion.costo; k++){
-                let componente={
-                    nombre:'',
-                    id:0,
-                    total:''
-                }
-                componente.nombre='Componente '+id;
-                componente.id = id+k;//EPALEEPALEARRIBARRIBA
-                mineral.componentes.push(componente);
-               // console.log(k,"k",componetesNombres[k]);
-            }
+            
             MineralesNoMetalicos.push(mineral);
         }
         if(MineralesNoMetalicos.length===0){
@@ -933,10 +891,7 @@ export default class RegistrarYacimiento extends React.Component {
                 id:-1,
                 total: 0,
                 accordionKey:0,
-                componentes:[{
-                    nombre:null,
-                    total:''
-                }]    
+                 
             };
             MineralesNoMetalicos.push(mineral);
         }
@@ -946,14 +901,7 @@ export default class RegistrarYacimiento extends React.Component {
             MineralesNoMetalicos: MineralesNoMetalicos
         }));
 
-        if(eliminado){
-            for(let i=0; i<this.state.MineralesNoMetalicos.length;i++){
-                for(let j=0; j<this.state.MineralesNoMetalicos[i].componentes.length; j++){
-                    document.getElementById('YacimientosMineralNoMetalico'+MineralesNoMetalicos[i].id+MineralesNoMetalicos[i].componentes[j].id).value = this.state.MineralesNoMetalicos[i].componentes[j].total;
-                    
-                }
-            }
-        }
+        
 
 
         console.log(MineralesNoMetalicos);
@@ -1184,18 +1132,12 @@ export default class RegistrarYacimiento extends React.Component {
             minerales:[{
                 id:0,
                 total: 0,
-                componentes:[{
-                    id:0,
-                    total:0
-                }]
+               
             }],
             mineralesNoMetalicos:[{
                 id:0,
                 total: 0,
-                componentes:[{
-                    id:0,
-                    total:0
-                }]
+                
             }],
             explotacion:{
                 duracion:0,
@@ -1258,25 +1200,12 @@ export default class RegistrarYacimiento extends React.Component {
             let mineral={
                 id:0,
                 total: 0,
-                componentes:[{
-                    id:0,
-                    total:0
-                }]
+               
             }
            
             mineral.id=Number(this.state.Minerales[i].id);
             mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
-            mineral.componentes.shift();
-            for(let k=0; k<this.state.Minerales[i].componentes.length; k++){
-                let componente = {
-                    id:0,
-                    total:0
-                }
-
-                componente.id = Number(this.state.Minerales[i].componentes[k].id);
-                componente.total = Number(document.getElementById("YacimientosMineralComponente"+mineral.id+componente.id).value.trim());
-                mineral.componentes.push(componente);
-            }
+            
 
             if(mineral.id != -1){
                 info.minerales.push(mineral);
@@ -1292,25 +1221,12 @@ export default class RegistrarYacimiento extends React.Component {
             let mineral={
                 id:0,
                 total: 0,
-                componentes:[{
-                    id:0,
-                    total:0
-                }]
+                
             }
            
             mineral.id=Number(this.state.MineralesNoMetalicos[i].id);
             mineral.total=Number(document.getElementById("YacimientosTotalMineralNoMetalico"+mineral.id).value.trim());
-            mineral.componentes.shift();
-            for(let k=0; k<this.state.MineralesNoMetalicos[i].componentes.length; k++){
-                let componente = {
-                    id:0,
-                    total:0
-                }
-
-                componente.id = Number(this.state.MineralesNoMetalicos[i].componentes[k].id);
-                componente.total = Number(document.getElementById("YacimientosMineralNoMetalicoComponente"+mineral.id+componente.id).value.trim());
-                mineral.componentes.push(componente);
-            }
+            
 
             if(mineral.id != -1){
                 info.mineralesNoMetalicos.push(mineral);
@@ -1757,39 +1673,7 @@ export default class RegistrarYacimiento extends React.Component {
 
 
 
-    handleOnChangeMineralComponentes=(event,minNUm,compNUm,minIndx,compIndx)=>{
-        const value = event.target.value;
-        const valueTrimmed = value.trim();
-        const minerales= this.state.Minerales;
-
-
-        if(valueTrimmed){
-            event.target.state='valid';
-            console.log("validoMineralCompo",document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML);
-
-            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0)  ){
-                document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML = "Obligatorio";
-                minerales[minIndx].componentes[compIndx].total =Number(valueTrimmed);
-            }
-            else{
-                
-                document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML = "Introduzca un número válido";
-               
-            }
-           
-        }
-        else{
-            event.target.state='invalid';
-            document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML = "Introduzca un número válido";
-              console.log("invalido");
-        }
-        
-        if(!value){
-            event.target.state='';
-            document.getElementById('YacimientosTextMineralComponente'+minNUm+compNUm).innerHTML = "Obligatorio";
-            minerales[minIndx].componentes[compIndx].total = -1;
-        }
-    }
+    
 
 
     handleOnChangeMineral=(event,minNUm)=>{
@@ -1828,40 +1712,6 @@ export default class RegistrarYacimiento extends React.Component {
 
 
 
-
-    handleOnChangeMineralNoMetalicoComponentes=(event,minNUm,compNUm,minIndx,compIndx)=>{
-        const value = event.target.value;
-        const valueTrimmed = value.trim();
-        const minerales= this.state.MineralesNoMetalicos;
-
-
-        if(valueTrimmed){
-            event.target.state='valid';
-            console.log("validoMineralCompo",document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML);
-
-            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0)  ){
-                document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML = "Obligatorio";
-                minerales[minIndx].componentes[compIndx].total =Number(valueTrimmed);
-            }
-            else{
-                
-                document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML = "Introduzca un número válido";
-               
-            }
-           
-        }
-        else{
-            event.target.state='invalid';
-            document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML = "Introduzca un número válido";
-              console.log("invalido");
-        }
-        
-        if(!value){
-            event.target.state='';
-            document.getElementById('YacimientosTextMineralNoMetalicoComponente'+minNUm+compNUm).innerHTML = "Obligatorio";
-            minerales[minIndx].componentes[compIndx].total = -1;
-        }
-    }
 
 
     handleOnChangeMineralNoMetalico=(event,minNUm)=>{
@@ -2091,25 +1941,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                             <Accordion.Collapse eventKey={1} >
                                                                 <Card.Body className="BodyAcc">
                                                                     <Form.Row className="formMargins">
-                                                                    {mineral.componentes.map((componente,indexComp)=>{
-                                                                            
-                                                                        return(
-                                                                            
-                                                                                <Form.Group as={Col} md="3" onChange={(evt)=>this.handleOnChangeMineralComponentes(evt,mineral.id,componente.id,indexMin,indexComp)} controlId={'YacimientosMineralComponente'+mineral.id+componente.id} className="inputsPaddingRight">
-                                                                                    <Form.Label className="cliente-description-fields-text">{componente.nombre}</Form.Label>
-                                                                                    <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
-                                                                                        <InputGroup.Append>
-                                                                                            <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
-                                                                                        </InputGroup.Append>
-                                                                                    </InputGroup>
-                                                                                    <Form.Text className="text-muted" id={'YacimientosTextMineralComponente'+mineral.id+componente.id}>
-                                                                                        Obligatorio
-                                                                                    </Form.Text>    
-                                                                                </Form.Group>
-                                                                            
-                                                                        );
-                                                                    })}
+                                                                    
                                                                     </Form.Row>
                                                                     <Form.Row className="formMargins">
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineral(evt,mineral.id)} controlId={'YacimientosTotalMineral'+mineral.id}  className="inputsPaddingRight">
@@ -2182,25 +2014,7 @@ export default class RegistrarYacimiento extends React.Component {
                                                             <Accordion.Collapse eventKey={1} >
                                                                 <Card.Body className="BodyAcc">
                                                                     <Form.Row className="formMargins">
-                                                                    {mineral.componentes.map((componente,indexComp)=>{
-                                                                            
-                                                                        return(
-                                                                            
-                                                                                <Form.Group as={Col} md="3" onChange={(evt)=>this.handleOnChangeMineralNoMetalicoComponentes(evt,mineral.id,componente.id,indexMin,indexComp)} controlId={'YacimientosMineralNoMetalicoComponente'+mineral.id+componente.id} className="inputsPaddingRight">
-                                                                                    <Form.Label className="cliente-description-fields-text">{componente.nombre}</Form.Label>
-                                                                                    <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control type="text" className="form-input" placeholder="Introduzca cantidad" /> 
-                                                                                        <InputGroup.Append>
-                                                                                            <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
-                                                                                        </InputGroup.Append>
-                                                                                    </InputGroup>
-                                                                                    <Form.Text className="text-muted" id={'YacimientosTextMineralNoMetalicoComponente'+mineral.id+componente.id}>
-                                                                                        Obligatorio
-                                                                                    </Form.Text>    
-                                                                                </Form.Group>
-                                                                            
-                                                                        );
-                                                                    })}
+                                                                    
                                                                     </Form.Row>
                                                                     <Form.Row className="formMargins">
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineralNoMetalico(evt,mineral.id)} controlId={'YacimientosTotalMineralNoMetalico'+mineral.id}  className="inputsPaddingRight">
