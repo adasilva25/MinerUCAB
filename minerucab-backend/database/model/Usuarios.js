@@ -42,6 +42,45 @@ const createUsuario = (claveEmpleado, info) => {
     })
 }
 
+const insertUsuario = (req, res, next) => {
+    const info = req.body.data;
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'INSERT INTO mu_usuario (usuario, contraseña, fk_empleado, fk_rol, fk_estatus)\n\
+                    VALUES ($1, $2, $3, $4, $5)';
+    const values = [info.usuario, info.contrasena, info.empleadoid, info.fk_rol, 1];
+    client.query(text, values)
+    .then((res) => {
+        client.end();
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    })
+}
+
+const updateUsuarioById = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    console.log(req.body.data)
+    client.connect();
+    const text = 'UPDATE MU_USUARIO SET usuario=($1), "contraseña"=($2), fk_empleado=($3), fk_rol=($4) WHERE Clave = ($5);';
+    const values = [req.body.data.usuario, req.body.data.contrasena, req.body.data.empleadoid, req.body.data.fk_rol, req.body.data.claveusuario];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error: error.toString() });
+        client.end();
+    })
+}
+
 /* ------------------------------ READ ------------------------------ */
 
 const getUsuarioById = (req, res) => {
@@ -64,9 +103,31 @@ const getUsuarioById = (req, res) => {
     })
 }
 
+const deleteUsuarioById = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'DELETE FROM MU_USUARIO WHERE clave = ($1);';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
 module.exports = {
     createUsuario,
+    insertUsuario,
     getUsuarioById,
-    validateUser
+    updateUsuarioById,
+    validateUser,
+    deleteUsuarioById,
     // ,[siguientes funciones]
 }
