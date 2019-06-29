@@ -491,8 +491,6 @@ CREATE TABLE MU_INVENTARIO (
 		REFERENCES MU_PRESENTACION_MINERAL (Clave) ON DELETE CASCADE
 );
 
---------------------------------------------------------------------------------------------
-
 CREATE TABLE MU_SOLICITUD_COMPRA (
 	Clave SERIAL,
 	Total DECIMAL NOT NULL,
@@ -513,18 +511,11 @@ CREATE TABLE MU_DETALLE_SOLICITUD_COMPRA (
 	Clave SERIAL,
 	Cantidad DECIMAL NOT NULL,
 	Precio DECIMAL NOT NULL,
-	fk_empresa INTEGER NOT NULL,
 	fk_mineral_empresa INTEGER NOT NULL,
-	fk_mineral_metalico INTEGER,
-	fk_mineral_no_metalico INTEGER,
 	fk_solicitud_compra INTEGER NOT NULL,
 	CONSTRAINT pk_detalle_solicitud_compra PRIMARY KEY (Clave),
 	CONSTRAINT fk_mineral_empresa_detalle_solicitud_compra FOREIGN KEY (fk_mineral_empresa)
 		REFERENCES MU_MINERAL_EMPRESA (Clave) ON DELETE CASCADE,
-	CONSTRAINT fk_mineral_metalico_detalle_solicitud_compra FOREIGN KEY (fk_mineral_metalico)
-		REFERENCES MU_MINERAL_METALICO (Clave) ON DELETE CASCADE,
-	CONSTRAINT fk_mineral_no_metalico_detalle_solicitud_compra FOREIGN KEY (fk_mineral_no_metalico)
-		REFERENCES MU_MINERAL_NO_METALICO (Clave) ON DELETE CASCADE,
 	CONSTRAINT fk_solicitud_compra_detalle_solicitud_compra FOREIGN KEY (fk_solicitud_compra)
 		REFERENCES MU_SOLICITUD_COMPRA (Clave) ON DELETE CASCADE
 );
