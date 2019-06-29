@@ -18,6 +18,7 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
+import axios from 'axios';
 
 // https://www.w3schools.com/jquery/html_removeclass.asp
 
@@ -42,7 +43,6 @@ export default class RegistrarYacimiento extends React.Component {
                 descripcion:null,
                 area:null,
                 tipo:null,
-                tipoId:null,
                 ubicacion:{
                     estado:null,
                     municipio:null,
@@ -109,7 +109,8 @@ export default class RegistrarYacimiento extends React.Component {
                     }]
 
                 }]
-            }]
+            }],
+            tipoYac: [],
         }
 
         this.handleOnClickAEtapa = this.handleOnClickAEtapa.bind(this);
@@ -123,14 +124,55 @@ export default class RegistrarYacimiento extends React.Component {
         }));
     }
 
-
-
     componentWillMount=()=>{
         var date= new Date();
-        console.log("Dia",date.getDay());
-        this.state.yacimiento.fecha.dia=date.getDay();
+        this.state.yacimiento.fecha.dia=date.getDate();
         this.state.yacimiento.fecha.mes=date.getMonth()+1;
         this.state.yacimiento.fecha.ano=date.getFullYear();
+
+        const config = {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            responseType: 'json'
+        }
+        axios.get('http://localhost:3000/getAllTiposYacimiento', config)
+            .then((res) => {
+                res.data.forEach(element => {
+                    let tipoYacInfo = {
+                        clave: '',
+                        nombre: ''
+                    }
+                    tipoYacInfo.nombre = element.nombre;
+                    tipoYacInfo.clave = element.clave;
+                    this.setState((prevState) => ({
+                        tipoYac: prevState.tipoYac.concat(tipoYacInfo)
+                    }));
+                })
+                console.log(this.state.tipoYac)
+            }).catch((e) => {
+                console.log('Error en axios')
+            })
+    }
+
+    renderOptions = (tipo, indexF) => {
+        if(tipo === 'tipoYacimiento'){
+            let tipoYacimiento = [];
+            return (this.state.tipoYac.map((optionPre, index) => {
+                let existe = 0;
+                //TODOS console.log("this.state.presentaciones",this.state.presentaciones)
+                tipoYacimiento.forEach(element => {
+                    //console.log(element, index)
+                    if (optionPre.nombre === element){
+                        existe = 1;
+                    }
+                })
+                if (existe === 0){
+                    tipoYacimiento.push(optionPre.nombre);
+                    return(<option value={optionPre.clave} id={optionPre.nombre}>{optionPre.nombre}</option>)
+                }
+            }));
+        }
     }
     
     accordionf(e){
@@ -178,7 +220,6 @@ export default class RegistrarYacimiento extends React.Component {
             this.setState({accordionKey: 1});
         }*/
     }
-
 
     accordionM(i){
        // console.log(this.state.Minerales[i].accordionKey,i);
@@ -283,7 +324,6 @@ export default class RegistrarYacimiento extends React.Component {
         }*/
     }
 
-
     accordionTM(i,etapaNum,faseNum){
       ///  console.log(this.state.TipoMaquinaria[i].accordionKey,i);
        // console.log(this.state.TipoMaquinaria[i].accordionKey, "holoooA");
@@ -319,7 +359,6 @@ export default class RegistrarYacimiento extends React.Component {
             this.setState({accordionKey: 1});
         }*/
     }
-
 
     onSelectFase(etapa_num, Key){
         var etapa1= this.state.etapas.findIndex(x => x.numero === etapa_num );
@@ -382,8 +421,6 @@ export default class RegistrarYacimiento extends React.Component {
         //this.eliminarActivoEtapa();
     }
 
-    
-
     handleOnClickAFase(etapa_num){
         var Etapa= this.state.etapas;
         var fase1= this.state.etapas[etapa_num-1].fases;
@@ -441,7 +478,6 @@ export default class RegistrarYacimiento extends React.Component {
         console.log(this.state.etapas);
         this.eliminarActivoFase(etapa_num,1);
     }
-
 
     handleOnClickEFase(etapaNum,faseNum){
 
@@ -630,7 +666,6 @@ export default class RegistrarYacimiento extends React.Component {
         // classList.remove('cool', 'make', 'me')
 
         // checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,'')+etapa+fase);
-
     }
 
     handleOnClickEEtapa(etapaNum){
@@ -664,8 +699,6 @@ export default class RegistrarYacimiento extends React.Component {
         this.actualizarDuracion();
     }
 
-
-
     eliminarActivoEtapa=()=>{
 
         let i=0;
@@ -685,9 +718,7 @@ export default class RegistrarYacimiento extends React.Component {
             eliminar:activar
         }));
         console.log('Eliminar Etapa',activar,i);
-       
     }
-
 
     eliminarActivoFase=(etapaNum,e)=>{
 
@@ -712,10 +743,8 @@ export default class RegistrarYacimiento extends React.Component {
         this.setState(() => ({
             etapas: etapas
         }));
-         console.log('Eliminar Fase',activar,i);
-        
+         console.log('Eliminar Fase',activar,i);  
     }
-
 
     selectMinerales = (id,name,et,fa) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         console.log('entroMinerales', id)
@@ -812,8 +841,6 @@ export default class RegistrarYacimiento extends React.Component {
        // console.log(minerales[0].componentes[1]);
     };
 
-
-
     selectMineralesNoMetalicos = (id,name,et,fa) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         console.log('entroMineralesNoMetalicos', id)
 
@@ -909,9 +936,6 @@ export default class RegistrarYacimiento extends React.Component {
        // console.log(minerales[0].componentes[1]);
     };
 
-
-
-
     selectCargos = (id,name,etapaNum,faseNum) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         // console.log('entroCargos', id,etapaNum,faseNum);
         var etapas1 = this.state.etapas;
@@ -987,10 +1011,7 @@ export default class RegistrarYacimiento extends React.Component {
         this.actualizarCostos();
 
         console.log(cargos);
-        
     };
-
-
 
     selectTipoMaquinaria = (id,name,etapaNum,faseNum) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         console.log('entroTipoMaquinaria', id)
@@ -1071,14 +1092,11 @@ export default class RegistrarYacimiento extends React.Component {
         this.actualizarCostos();
 
        console.log(tiposMaquinaria);
-        
     };
 
-
     nombreDT = (nombre) => {
-     console.log('fino')
+        console.log('fino')
     }
-
 
     selectFunctionCheckbox = (classN,id, name, etapaNum,faseNum) => {
         // console.log('selectFunctionCheckbox', boton.alt)
@@ -1103,45 +1121,34 @@ export default class RegistrarYacimiento extends React.Component {
         }
     }
 
-
-
     handleOnClickSubmittData=()=>{
-
 
         const info = {
             yacimiento:{
+                estatus:null,
                 nombre:null,
                 descripcion:null,
                 area:null,
                 tipo:null,
-                tipoId:null,
                 ubicacion:{
                     estado:null,
                     municipio:null,
                     parroquia:null
                 },
-                fecha:{
-                    dia:null,
-                    mes:null,
-                    ano:null
-                }
-            },
-            estatus:{
-                id:null,
+                fecha:null
             },
             minerales:[{
                 id:0,
-                total: 0,
-               
+                total: 0,             
             }],
             mineralesNoMetalicos:[{
                 id:0,
-                total: 0,
-                
+                total: 0,   
             }],
             explotacion:{
                 duracion:0,
                 costo:0,
+                estatus:0
             },
             etapas: [{
                 nombre: null,
@@ -1167,81 +1174,57 @@ export default class RegistrarYacimiento extends React.Component {
             }]
         }
 
-
-        
-        
-
-       /* let incompleto = document.getElementById("YacimientosNombreYacimiento").value.trim(); 
-        if(!incompleto){
-            console.log('COMPLETO');
-        }*/
-      /*  if(document.getElementById("YacimientosNombreYacimiento").value.trim){
-
-        }
-        this.state.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value;
-        this.state.yacimiento.descripcion*/
-        //console.log('NOMBRE YACIMEITNO',incompleto);
-        info.estatus.id = 1 ;
-
+        info.yacimiento.estatus = 1 ;
         info.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value.trim();
-        info.yacimiento.descripcion = document.getElementById("YacimientosDescripcionYacimiento").value.trim();
+        if(document.getElementById("YacimientosDescripcionYacimiento").value.trim().length===0){
+            info.yacimiento.descripcion=null
+        }else{
+            info.yacimiento.descripcion = document.getElementById("YacimientosDescripcionYacimiento").value.trim();
+        }
         info.yacimiento.area = Number(document.getElementById("YacimientosTamañoYacimiento").value.trim());
-        info.yacimiento.tipo = document.getElementById("YacimientosTipoYacimiento").value.trim();
-        info.yacimiento.tipoId = this.state.yacimiento.tipoId;
+        info.yacimiento.tipo = parseInt(document.getElementById("YacimientosTipoYacimiento").value);
         info.yacimiento.ubicacion.estado = Number(document.getElementById("LugarEstado").value.trim());
         info.yacimiento.ubicacion.municipio = Number(document.getElementById("LugarMunicipio").value.trim());
         info.yacimiento.ubicacion.parroquia = Number(document.getElementById("LugarParroquia").value.trim());
-        info.yacimiento.fecha.dia = Number(document.getElementById("FechaDia").value.trim());
-        info.yacimiento.fecha.mes = Number(document.getElementById("FechaMes").value.trim());
-        info.yacimiento.fecha.ano = Number(document.getElementById("FechaAno").value.trim());
+        info.yacimiento.fecha = Number(document.getElementById("FechaAno").value.trim()).toString()+'-'+Number(document.getElementById("FechaMes").value.trim()).toString()+'-'+Number(document.getElementById("FechaDia").value.trim()).toString();
 
         info.minerales.shift();
         for(let i=0; i<this.state.Minerales.length; i++){
             let mineral={
                 id:0,
                 total: 0,
-               
             }
-           
             mineral.id=Number(this.state.Minerales[i].id);
             mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
-            
-
             if(mineral.id != -1){
                 info.minerales.push(mineral);
             }
             else{
                 info.minerales.shift();
-            }
-            
+            }  
         }
         
         info.mineralesNoMetalicos.shift();
         for(let i=0; i<this.state.MineralesNoMetalicos.length; i++){
             let mineral={
                 id:0,
-                total: 0,
-                
+                total: 0,    
             }
-           
             mineral.id=Number(this.state.MineralesNoMetalicos[i].id);
             mineral.total=Number(document.getElementById("YacimientosTotalMineralNoMetalico"+mineral.id).value.trim());
-            
-
             if(mineral.id != -1){
                 info.mineralesNoMetalicos.push(mineral);
             }
             else{
                 info.mineralesNoMetalicos.shift();
             }
-            
         }
 
+        info.explotacion.estatus = 2;
         info.explotacion.duracion = this.state.explotacion.duracion;
         info.explotacion.costo = this.state.explotacion.costo;
 
         info.etapas.shift();
-        
         this.state.etapas.forEach((etapaR)=>{
             if(etapaR.numero != 0){
                 let etapa= {
@@ -1355,18 +1338,111 @@ export default class RegistrarYacimiento extends React.Component {
                 else{
                     info.etapas.shift();
                 }
-                
-
-
             }
         });
 
         console.log(info);
-
+        //Verificaciones
+        var verifMineral = 0
+        for(let i=0; i<info.minerales.length; i++){
+            if((isNaN(info.minerales[i].total))||(info.minerales[i].total<=0)){
+                verifMineral=1
+            }
+        }
+        for(let i=0; i<info.mineralesNoMetalicos.length; i++){
+            if((isNaN(info.mineralesNoMetalicos[i].total))||(info.mineralesNoMetalicos[i].total<=0)){
+                verifMineral=1
+            }
+        }
+        var verifFase = 0
+        for(let i=0; i<info.etapas.length; i++){
+            if(info.etapas[i].fases.length===0){
+                verifFase=1
+            }
+        }
+        var verifFaseDuracion = 0
+        for(let i=0; i<info.etapas.length; i++){
+            for(let k=0; k<info.etapas[i].fases.length; k++){
+                if((isNaN(info.etapas[i].fases[k].duracion))||(info.etapas[i].fases[k].duracion<=0)){
+                    verifFaseDuracion=1
+                }
+            }
+        }
+        var verifNombre = 0
+        for(let i=0; i<info.etapas.length; i++){
+            for(let k=0; k<info.etapas.length; k++){
+                if(i!=k){
+                    if((info.etapas[i].nombre===info.etapas[k].nombre)){
+                        verifNombre = 1
+                    }
+                }
+            }
+        }
+        for(let i=0; i<info.etapas.length; i++){
+            for(let j=0; j<info.etapas[i].fases.length; j++){
+                for(let k=0; k<info.etapas[i].fases.length; k++){
+                    if(j!=k){
+                        if(info.etapas[i].fases[j].nombre===info.etapas[i].fases[k].nombre){
+                            verifNombre = 1
+                        }
+                    }
+                }
+            }
+        }
+        var verifCargoFase = 0;
+        var verifCantidadCargo = 0;
+        var verifMaquinaria = 0;
+        for(let i=0; i<info.etapas.length; i++){
+            for(let j=0; j<info.etapas[i].fases.length; j++){
+                for(let k=0; k<info.etapas[i].fases[j].cargos.length; k++){
+                    if(info.etapas[i].fases[j].cargos[k].id<0){
+                        verifCargoFase = 1
+                    }else{
+                        if((info.etapas[i].fases[j].cargos[k].cantidad==0)||(info.etapas[i].fases[j].cargos[k].sueldo==0)){
+                            verifCantidadCargo = 1
+                        }
+                    }
+                }
+                for(let m=0; m<info.etapas[i].fases[j].tipoMaquinaria.length; m++){
+                    if(info.etapas[i].fases[j].tipoMaquinaria[m].id>0){
+                        if((info.etapas[i].fases[j].tipoMaquinaria[m].cantidad==0)||(info.etapas[i].fases[j].tipoMaquinaria[m].costo==0)){
+                                verifMaquinaria = 1
+                        }
+                    }
+                }
+            }
+        }
+            //Yacimientos
+        if(info.yacimiento.nombre.length===0){
+            alert("Introduzca el nombre del yacimiento")
+        }else if((isNaN(info.yacimiento.area))||(info.yacimiento.area<=0)){
+            alert("Introduzca el tamaño del yacimiento")
+            //Minerales
+        }else if((info.minerales.length===0)&&(info.mineralesNoMetalicos.length===0)){
+            alert("El yacimiento debe tener al menos un mineral")
+        }else if(verifMineral===1){
+            alert("Introduzca la cantidad de los minerales")
+            //Etapas
+        }else if(info.etapas.length===0){
+            alert("Cada etapa debe tener un nombre asociado")
+            //Fases
+        }else if(verifFase===1){
+            alert("Cada fase debe tener un nombre asociado")
+        }else if(verifFaseDuracion===1){
+            alert("Introduzca la duración de cada una de las fases")
+        }else if(verifNombre===1){
+            alert("Las etapas y las fases de una misma etapa no pueden tener el mismo nombre")
+            //Cargos
+        }else if(verifCargoFase===1){
+            alert("Todas las fases deben tener al menos un cargo asociado")
+        }else if(verifCantidadCargo===1){
+            alert("Debe indicar la cantidad de los cargos escogidos con su respectivo sueldo")
+        }else if(verifMaquinaria===1){
+            alert("Debe indicar la cantidad de los tipos de maquinaria escogidos con su respectivo costo")
+        }else{
+            //Insert en bases aqui
+        }
     }
-
-
-
 
     handleOnChangeCostoTipoMaq=(event,etapaNum,faseNum,tipoMaqNum)=>{
         const value = event.target.value;
@@ -1410,9 +1486,6 @@ export default class RegistrarYacimiento extends React.Component {
             etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].costo=0;
             this.actualizarCostos();
         }
-        
-         
-
     }
 
     handleOnChangeCantidadTipoMaq=(event,etapaNum,faseNum,tipoMaqNum)=>{
@@ -1456,12 +1529,7 @@ export default class RegistrarYacimiento extends React.Component {
             etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].cantidad=0;
             this.actualizarCostos();
         }
-        
-
     }
-
-
-
 
     handleOnChangeSueldoCargo=(event,etapaNum,faseNum,cargoNum)=>{
         const value = event.target.value;
@@ -1507,10 +1575,6 @@ export default class RegistrarYacimiento extends React.Component {
         }
     }
 
-
-
-
-
     handleOnChangeCantidadCargo=(event,etapaNum,faseNum,cargoNum)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
@@ -1552,8 +1616,6 @@ export default class RegistrarYacimiento extends React.Component {
             etapas1[etapaNum-1].fases[faseNum-1].cargos[cargoNum].cantidad=0;
             this.actualizarCostos();
         }
-        
-
     }
 
     actualizarCostos=()=>{
@@ -1592,10 +1654,6 @@ export default class RegistrarYacimiento extends React.Component {
         }));
         console.log('CostoTotal', this.state.explotacion.costo);
     }
-
-
-
-
 
     handleOnChangeDuracionFase=(event,etapaNum,faseNum)=>{
         const value = event.target.value;
@@ -1638,12 +1696,7 @@ export default class RegistrarYacimiento extends React.Component {
             etapas1[etapaNum-1].fases[faseNum-1].duracion=0;
             this.actualizarDuracion();
         }
-        
-
     }
-
-
-
 
     actualizarDuracion=()=>{
         let etapas1 = this.state.etapas;
@@ -1668,13 +1721,7 @@ export default class RegistrarYacimiento extends React.Component {
                     
         }));
         console.log('Duracion Total', this.state.explotacion.duracion);
-
     }
-
-
-
-    
-
 
     handleOnChangeMineral=(event,minNUm)=>{
         const value = event.target.value;
@@ -1709,11 +1756,6 @@ export default class RegistrarYacimiento extends React.Component {
         }
     }
 
-
-
-
-
-
     handleOnChangeMineralNoMetalico=(event,minNUm)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
@@ -1747,9 +1789,6 @@ export default class RegistrarYacimiento extends React.Component {
         }
     }
 
-
-    
-
     handleOnChangeValidarNumeros=(event,Texto)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
@@ -1781,7 +1820,7 @@ export default class RegistrarYacimiento extends React.Component {
         }
     }
 
-     handleOnChangeValidarTexto=(event,Texto,Mensaje)=>{
+    handleOnChangeValidarTexto=(event,Texto,Mensaje)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
 
@@ -1809,7 +1848,6 @@ export default class RegistrarYacimiento extends React.Component {
            
         }
     }
-
 
     render(){
         
@@ -1849,7 +1887,6 @@ export default class RegistrarYacimiento extends React.Component {
                                         </Form.Group>   
                                     </Form.Row>
                                           
-                                    
                                     <Form.Row className="formMargins">
                                         <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarNumeros(evt,"YacimientosTamañoYacimientoText")} controlId="YacimientosTamañoYacimiento"  className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Área</Form.Label>
@@ -1867,19 +1904,23 @@ export default class RegistrarYacimiento extends React.Component {
                                     </Form.Row>
 
                                     <Form.Row className="formMargins">
+                                        <Form.Group as={Col} md="3"></Form.Group>
                                         <Form.Group as={Col} md="6" controlId="YacimientosTipoYacimiento"  className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Tipo de Yacimiento</Form.Label>
                                             <Form.Control 
                                             as="select" 
                                             className="form-input"
+                                            value={this.state.tipoYac.clave}
                                             >
-                                                <option>Alóctono</option>
-                                                <option>Autóctono</option>
+                                                {
+                                                    this.renderOptions('tipoYacimiento')
+                                                }
                                             </Form.Control>
                                             <Form.Text className="text-muted">
                                                 Obligatorio
                                             </Form.Text>    
                                         </Form.Group>
+                                        <Form.Group as={Col} md="3"></Form.Group>
                                     </Form.Row>
                                 </Card.Body>
                             </Accordion.Collapse>

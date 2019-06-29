@@ -18,6 +18,7 @@ const PagosValidations = require('../validations/PagosValidations');
 const Presentaciones = require('../database/model/Presentaciones');
 const Roles = require('../database/model/Roles');
 const TiposMaquinaria = require('../database/model/TiposMaquinaria');
+const TiposYacimiento = require('../database/model/TiposYacimiento');
 const Usuarios = require('../database/model/Usuarios')
 const Ventas = require('../database/model/Ventas');
 const VentasValidations = require('../validations/VentasValidations');
@@ -105,6 +106,8 @@ app.get('/getAllPresentacionesByIdMineralMetalico/:id', Presentaciones.getAllPre
 app.get('/getAllPresentacionesByIdMineralNoMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralNoMetalico);
 /* -------------------- TIPOS DE MAQUINARIAS -------------------- */
 app.get('/getAllTiposMaquinaria', TiposMaquinaria.getAllTiposMaquinaria);
+/* -------------------- TIPOS DE YACIMIENTOS -------------------- */
+app.get('/getAllTiposYacimiento', TiposYacimiento.getAllTiposYacimiento);
 /* -------------------- USUARIOS -------------------- */
 app.get('/getUsuarioById/:id', Usuarios.getUsuarioById);
 /* -------------------- VENTAS -------------------- */
