@@ -2651,7 +2651,7 @@ export default class RegistrarExplotacion extends React.Component {
 
 
                                     <Form.Row className="formMargins" >
-                                        <FormFecha idF={"0I"} onChangeF={this.handleOnChangeFecha}  titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" textoAuxiliar disabled={false}/>
+                                        <FormFecha idF={"0I"} onChangeF={this.handleOnChangeFecha}  titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={false}/>
                                         
                                         <FormFecha idF={"0F"} titulo="Fecha Final de explotación" clase="inputsPaddingLeft" textoAuxiliar="Calculado" dia={(this.state.explotacion.fechaF.dia==0)?"- -":this.state.explotacion.fechaF.dia} mes={(this.state.explotacion.fechaF.mes==0)?"- -":this.state.explotacion.fechaF.mes} ano={(this.state.explotacion.fechaF.ano==0)?"- - - -":this.state.explotacion.fechaF.ano} disabled={true}/>    
                                     </Form.Row>
