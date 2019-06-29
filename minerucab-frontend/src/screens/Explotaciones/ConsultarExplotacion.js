@@ -56,7 +56,12 @@ export default class ConsultarExplotacion extends React.Component {
                     dia:0,
                     mes:0,
                     ano:0
-                }
+                },
+                fechaFR:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                },
             },
             yacimiento:{
                 id:null,
@@ -3066,6 +3071,7 @@ export default class ConsultarExplotacion extends React.Component {
                                             >
                                                 <option value={8}>En proceso</option>
                                                 <option value={2}>Inactivo</option>
+                                                <option value={10}>Finalizada</option>
                                             </Form.Control>
                                             <Form.Text className="text-muted">
                                                 Obligatorio
@@ -3299,6 +3305,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                                 >
                                                                     <option value={8}>En proceso</option>
                                                                     <option value={2}>Inactivo</option>
+                                                                    <option value={10}>Finalizada</option>
                                                                 </Form.Control>
                                                                 <Form.Text className="text-muted">
                                                                     Obligatorio
@@ -3372,6 +3379,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                                                     >
                                                                                         <option value={8}>En proceso</option>
                                                                                         <option value={2}>Inactivo</option>
+                                                                                        <option value={10}>Finalizada</option>
                                                                                     </Form.Control>
                                                                                     <Form.Text className="text-muted">
                                                                                         Obligatorio

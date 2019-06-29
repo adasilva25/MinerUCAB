@@ -46,6 +46,7 @@ export default class ModificarExplotacion extends React.Component {
             explotacion:{
                 id:null,
                 duracion:0,
+                finalizar:false,
                 costo:0,
                 fechaI:{
                     dia:0,
@@ -56,7 +57,12 @@ export default class ModificarExplotacion extends React.Component {
                     dia:0,
                     mes:0,
                     ano:0
-                }
+                },
+                fechaFR:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                },
             },
             yacimiento:{
                 id:null,
@@ -101,6 +107,7 @@ export default class ModificarExplotacion extends React.Component {
             etapas: [{
                 nombre: "Etapa 1",
                 nombreV:null,
+                finalizar:false,
                 id:null,
                 estatus:null,
                 duracion:0,
@@ -130,6 +137,7 @@ export default class ModificarExplotacion extends React.Component {
                     nombreV:null,
                     id:null,
                     duracion:0,
+                    finalizar:false,
                     estatus:null,
                     costo:0,
                     faseShow:true,
@@ -592,6 +600,7 @@ export default class ModificarExplotacion extends React.Component {
             explotacion:{
                 id:null,
                 duracion:0,
+                finalizar:false,
                 costo:0,
                 fechaI:{
                     dia:0,
@@ -653,6 +662,7 @@ export default class ModificarExplotacion extends React.Component {
                 nombre: "Etapa 1",
                 nombreV:null,
                 id:null,
+                finalizar:false,
                 estatus:null,
                 duracion:0,
                 costo:0,
@@ -680,6 +690,7 @@ export default class ModificarExplotacion extends React.Component {
                     nombre: "Fase 1",
                     nombreV:null,
                     id:null,
+                    finalizar:false,
                     duracion:0,
                     estatus:null,
                     costo:0,
@@ -796,6 +807,10 @@ export default class ModificarExplotacion extends React.Component {
         state.explotacion.costo = info.explotacion.costo;
         state.explotacion.estatus = info.explotacion.estatus;
 
+        if(state.explotacion.estatus==10){
+            state.explotacion.finalizar=true;
+        }
+
 
         state.explotacion.fechaI.dia =  info.explotacion.fechaI.dia;
         state.explotacion.fechaI.mes =  info.explotacion.fechaI.mes;
@@ -883,6 +898,7 @@ export default class ModificarExplotacion extends React.Component {
                 nombreV:null,
                 id:null,
                 estatus:null,
+                finalizar:false,
                 duracion:0,
                 costo:0,
                 etapaShow:true,
@@ -910,6 +926,7 @@ export default class ModificarExplotacion extends React.Component {
                     nombreV:null,
                     id:null,
                     duracion:0,
+                    finalizar:false,
                     estatus:null,
                     costo:0,
                     faseShow:true,
@@ -1017,6 +1034,10 @@ export default class ModificarExplotacion extends React.Component {
             etapa.costo= info.etapas[i].costo;
             etapa.estatus= info.etapas[i].estatus;
 
+            if(etapa.estatus==10){
+                etapa.finalizar = true;
+            }
+
             etapa.fechaI.dia =  info.etapas[i].fechaI.dia;
             etapa.fechaI.mes =  info.etapas[i].fechaI.mes;
             etapa.fechaI.ano =  info.etapas[i].fechaI.ano;
@@ -1039,6 +1060,7 @@ export default class ModificarExplotacion extends React.Component {
                     duracion:0,
                     estatus:null,
                     costo:0,
+                    finalizar:false,
                     faseShow:true,
                     cargoShow:'inline',
                     tipoMaquinariaShow:'inline',
@@ -1146,6 +1168,10 @@ export default class ModificarExplotacion extends React.Component {
                 fase.duracion=info.etapas[i].fases[j].duracion;
                 fase.costo= info.etapas[i].fases[j].costo;
                 fase.estatus = info.etapas[i].fases[j].estatus;
+
+                if(fase.estatus==10){
+                    fase.finalizar = true;
+                }
                  
                 fase.fechaI.dia =  info.etapas[i].fases[j].fechaI.dia;
                 fase.fechaI.mes =  info.etapas[i].fases[j].fechaI.mes;
@@ -3050,6 +3076,24 @@ export default class ModificarExplotacion extends React.Component {
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
 
+                                    <Form.Row className="formMargins">
+                                        <Form.Group as={Col} md="6"  className="inputsPaddingRight">
+                                            <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
+                                            <Form.Control 
+                                            as="select" 
+                                            className="form-input"
+                                            defaultValue={this.state.explotacion.estatus}
+                                            disabled={(this.state.finalizar==true):true?((this.state.explotacion.estatus==10)true:false?)}
+                                            >
+                                                <option value={8}>En proceso</option>
+                                                <option value={2}>Inactivo</option>
+                                                <option value={10}>Finalizada</option>
+                                            </Form.Control>
+                                            <Form.Text className="text-muted">
+                                                Obligatorio
+                                            </Form.Text>    
+                                        </Form.Group>
+                                    </Form.Row>
 
                                     <Form.Row className="formMargins" >
                                         <FormFecha idF={"0I"} textoAuxiliar="Obligatorio" dia={(this.state.explotacion.fechaI.dia==0)?"- -":this.state.explotacion.fechaI.dia} mes={(this.state.explotacion.fechaI.mes==0)?"- -":this.state.explotacion.fechaI.mes} ano={(this.state.explotacion.fechaI.ano==0)?"- - - -":this.state.explotacion.fechaI.ano}  titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" textoAuxiliar disabled={true}/>
@@ -3099,6 +3143,7 @@ export default class ModificarExplotacion extends React.Component {
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
 
+                    
 
                                     <Form.Row className="formMargins">
                                         <Form.Group as={Col} md="6" controlId="YacimientosNombreYacimiento" className="inputsPaddingRight">
@@ -3266,6 +3311,25 @@ export default class ModificarExplotacion extends React.Component {
                                                         <br/>
                                                         <FormTitulo titulo={"Información General de la Etapa "+etapa.numero}/>
                                                         <Form.Row className="formMargins">
+                                                            <Form.Group as={Col} md="6"  className="inputsPaddingRight">
+                                                                <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
+                                                                <Form.Control 
+                                                                as="select" 
+                                                                className="form-input"
+                                                                defaultValue={etapa.estatus}
+                                                                disabled={(etapa.finalizar==true)true:?((etapa.estatus==10):true?false)}
+                                                                >
+                                                                    <option value={8}>En proceso</option>
+                                                                    <option value={2}>Inactivo</option>
+                                                                    <option value={10}>Finalizada</option>
+                                                                </Form.Control>
+                                                                <Form.Text className="text-muted">
+                                                                    Obligatorio
+                                                                </Form.Text>    
+                                                            </Form.Group>
+                                                        </Form.Row>
+
+                                                        <Form.Row className="formMargins">
                                                             <FormFecha idF={etapa.numero+"I"} titulo="Fecha de Inicio de la Etapa" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(etapa.fechaI.dia==0)?"- -":etapa.fechaI.dia} mes={(etapa.fechaI.mes==0)?"- -":etapa.fechaI.mes} ano={(etapa.fechaI.ano==0)?"- - - -":etapa.fechaI.ano} disabled={true}/>
                                                             <FormFecha idF={etapa.numero+"F"} titulo="Fecha Final de la Etapa" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(etapa.fechaF.dia==0)?"- -":etapa.fechaF.dia} mes={(etapa.fechaF.mes==0)?"- -":etapa.fechaF.mes} ano={(etapa.fechaF.ano==0)?"- - - -":etapa.fechaF.ano} disabled={true}/>            
                                                         </Form.Row>
@@ -3321,6 +3385,24 @@ export default class ModificarExplotacion extends React.Component {
                                                                         
                                                                         <Container>
                                                                             <br/>
+                                                                            <Form.Row className="formMargins">
+                                                                                <Form.Group as={Col} md="6"  className="inputsPaddingRight">
+                                                                                    <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
+                                                                                    <Form.Control 
+                                                                                    as="select" 
+                                                                                    className="form-input"
+                                                                                    defaultValue={fase.estatus}
+                                                                                    disabled={(fase.finalizar==true)?true:((fase.estatus==10):true?false)}
+                                                                                    >
+                                                                                        <option value={8}>En proceso</option>
+                                                                                        <option value={2}>Inactivo</option>
+                                                                                        <option value={10}>Finalizada</option>
+                                                                                    </Form.Control>
+                                                                                    <Form.Text className="text-muted">
+                                                                                        Obligatorio
+                                                                                    </Form.Text>    
+                                                                                </Form.Group>
+                                                                            </Form.Row>
                                                                             <Form.Row className="formMargins">
                                                                                 <FormFecha idF={etapa.numero+''+fase.numero+"I"} titulo="Fecha de Inicio de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft" dia={(fase.fechaI.dia==0)?"- -":fase.fechaI.dia} mes={(fase.fechaI.mes==0)?"- -":fase.fechaI.mes} ano={(fase.fechaI.ano==0)?"- - - -":fase.fechaI.ano} disabled={true}/>
                                                                                 <FormFecha idF={etapa.numero+''+fase.numero+"F"} titulo="Fecha Final de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(fase.fechaF.dia==0)?"- -":fase.fechaF.dia} mes={(fase.fechaF.mes==0)?"- -":fase.fechaF.mes} ano={(fase.fechaF.ano==0)?"- - - -":fase.fechaF.ano} disabled={true}/>            
