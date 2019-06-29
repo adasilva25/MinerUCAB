@@ -41,8 +41,8 @@ const createVentaClienteJuridico = (total, fk_cliente, fk_estatus, callback) => 
         // return res.rows[0].clave;
     })
     .catch((e) => {
-        console.error(e.stack);
         client.end();
+        console.error(e.stack);
     })
 }
 
@@ -117,8 +117,8 @@ const getFkClienteNaturalEnVentaById = (claveVenta, callback) => {
         callback(response.rows[0].fk_cliente_natural)
     })
     .catch((error) => {
-        console.log(error);
         client.end();
+        console.log(error);
     })
 }
 
@@ -138,8 +138,8 @@ const getFkClienteJuridicoEnVentaById = (claveVenta, callback) => {
         callback(response.rows[0].fk_cliente_juridico)
     })
     .catch((error) => {
-        console.log(error);
         client.end();
+        console.log(error);
     })
 }
 

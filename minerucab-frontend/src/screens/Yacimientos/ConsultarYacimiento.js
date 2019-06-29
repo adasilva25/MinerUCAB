@@ -293,6 +293,7 @@ export default class ConsultarYacimiento extends React.Component {
             }]
         }
 
+        
         console.log(info);
 
         let state={

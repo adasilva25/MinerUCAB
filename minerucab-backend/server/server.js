@@ -21,6 +21,7 @@ const TiposMaquinaria = require('../database/model/TiposMaquinaria');
 const Usuarios = require('../database/model/Usuarios')
 const Ventas = require('../database/model/Ventas');
 const VentasValidations = require('../validations/VentasValidations');
+const Yacimientos = require('../database/model/Yacimientos');
 
 const express = require('express');
 const app = express();
@@ -117,6 +118,9 @@ app.get('/getPagosChequeDeVenta/:id', PagosValidations.getPagosChequeDeVenta);
 app.get('/getPagosTarjetaCreditoDeVenta/:id', PagosValidations.getPagosTarjetaCreditoDeVenta);
 app.get('/getPagosTarjetaDebitoDeVenta/:id', PagosValidations.getPagosTarjetaDebitoDeVenta);
 app.get('/getPagosTransferenciaDeVenta/:id', PagosValidations.getPagosTransferenciaDeVenta);
+/* -------------------- YACIMIENTOS -------------------- */
+app.get('/getAllYacimientos', Yacimientos.getAllYacimientos)
+
 
 
 /* ----------------------------------- UPDATE ----------------------------------- */
