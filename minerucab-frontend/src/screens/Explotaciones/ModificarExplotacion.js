@@ -292,7 +292,7 @@ export default class ModificarExplotacion extends React.Component {
                 id:2,
                 duracion:41,
                 costo:0,
-                estatus:2,
+                estatus:8,
                 fechaI:{
                     dia:12,
                     mes:3,
@@ -314,7 +314,7 @@ export default class ModificarExplotacion extends React.Component {
                 nombre: "diego",
                 duracion:10,
                 costo:30,
-                estatus:1,
+                estatus:2,
                 fechaI:{
                     dia:2,
                     mes:2,
@@ -333,7 +333,7 @@ export default class ModificarExplotacion extends React.Component {
                 fases: [{
                     id:1,
                     nombre: "andrea",
-                    estatus:10,
+                    estatus:2,
                     duracion:2,
                     costo:4,
                     checkInicialCargos:true,
@@ -475,7 +475,7 @@ export default class ModificarExplotacion extends React.Component {
                 id:4,
                 duracion:31,
                 costo:30,
-                estatus:3,
+                estatus:8,
                 fechaI:{
                     dia:12,
                     mes:3,
@@ -493,10 +493,10 @@ export default class ModificarExplotacion extends React.Component {
                 },
                 fases: [{
                     nombre: "Sanchéz",
-                    id:3,
+                    id:8,
                     duracion:30,
                     costo:5,
-                    estatus:4,
+                    estatus:2,
                     checkInicialCargos:true,
                     checkInicialtipoMaquiaria:true,
                     fechaI:{
@@ -551,7 +551,7 @@ export default class ModificarExplotacion extends React.Component {
                     nombre: "Albita",
                     id:4,
                     duracion:1,
-                    estatus:3,
+                    estatus:10,
                     costo:7.2,
                     checkInicialCargos:true,
                     checkInicialtipoMaquiaria:true,
@@ -3109,6 +3109,8 @@ export default class ModificarExplotacion extends React.Component {
             let etapas = this.state.etapas;
             let explotacion = this.state.explotacion;
 
+            etapas[etapaNum-1].fases[faseNum-1].estatus=value;
+
             let etapasFinalizadas=true;
             let etapasInactivas=true;
             etapas.forEach((etapa)=>{
@@ -3116,7 +3118,7 @@ export default class ModificarExplotacion extends React.Component {
                 let fasesInactivas=true;
                 etapa.fases.forEach((fase)=>{
                     if(fase.estatus!=10){
-                        fasesFinaizadas=false;
+                        fasesFinalizadas=false;
                     }
                     if(fase.estatus!=2){
                         fasesInactivas=false;
@@ -3124,17 +3126,17 @@ export default class ModificarExplotacion extends React.Component {
                 });
 
                 if(fasesInactivas==true){
-                    etapas.estatus=2;
+                    etapa.estatus=2;
 
                 }else if(fasesFinalizadas==true){
-                    etapas.estatus=10;
+                    etapa.estatus=10;
                 }
                 else{
-                    etapas.estatus=8;
+                    etapa.estatus=8;
                 }
 
                 if(etapa.estatus!=10){
-                    etapasFinaizadas=false;
+                    etapasFinalizadas=false;
                 }
                 if(etapa.estatus!=2){
                     etapasInactivas=false;
@@ -3152,6 +3154,8 @@ export default class ModificarExplotacion extends React.Component {
             else{
                 explotacion.estatus=8;
             }
+
+            console.log("Explotacion",explotacion,"Etapas",etapas);
 
             this.setState(() => ({
                 etapas: etapas,
@@ -3188,8 +3192,8 @@ export default class ModificarExplotacion extends React.Component {
                                             <Form.Control 
                                             as="select" 
                                             className="form-input"
-                                            defaultValue={this.state.explotacion.estatus}
-                                            disabled={(this.state.explotacion.finalizar==true)?true:false}
+                                            value={this.state.explotacion.estatus}
+                                            disabled={true}
                                             >
                                                 <option value={8}>En proceso</option>
                                                 <option value={2}>Inactivo</option>
@@ -3426,7 +3430,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                 <Form.Control 
                                                                 as="select" 
                                                                 className="form-input"
-                                                                defaultValue={etapa.estatus}
+                                                                value={etapa.estatus}
                                                                 disabled={(etapa.finalizar==true)?true:false}
                                                                 >
                                                                     <option value={8}>En proceso</option>
@@ -3508,7 +3512,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                                     className="form-input"
                                                                                     defaultValue={fase.estatus}
                                                                                     disabled={(fase.finalizar==true)?true:false}
-                                                                                    onChange={(evt)=>this.almacenarEstatus(evt)}
+                                                                                    onChange={(evt)=>this.almacenarEstatus(evt,etapa.numero,fase.numero)}
                                                                                     >
                                                                                         <option value={8}>En proceso</option>
                                                                                         <option value={2}>Inactivo</option>
