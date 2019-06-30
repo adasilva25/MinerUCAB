@@ -44,12 +44,14 @@ export default class GestionarEmpleado extends React.Component {
         pred: false,
 
         poseeusuario: true,
-        claveUsuario: '',
+        claveUsuario: 1,
         usuario: '',
         contrasena: '',
         rol: {
             clave: 1,
         },
+        cpredet: false,
+        rpredet: false
         /*cargo: [{
             clave: '',
             nombre: '',
@@ -135,6 +137,9 @@ export default class GestionarEmpleado extends React.Component {
                         nombre: res.data[0].nombre,
                     }
                   }));
+                  this.setState(() => ({
+                    cpredet:true
+                  }))
               }).catch((e) => {
                   console.log('Error en axios')
               })
@@ -161,6 +166,9 @@ export default class GestionarEmpleado extends React.Component {
                                 nombre: res.data[0].nombre,
                             }
                           }));
+                          this.setState(() => ({
+                            rpredet:true
+                          }))
                       }).catch((e) => {
                           console.log('Error en axios')
                       })
@@ -228,9 +236,12 @@ export default class GestionarEmpleado extends React.Component {
                         id="cargo-empleado"
                         className="form-input form-input-dropdown-cargo-empleado">
                         value={this.state.cargo.clave}
-                        onClick={this.onInputChange}
+                        onChange={(e) => this.handleChange(e)}
                         {
                             this.renderOptions('cargo')
+                        }
+                        {
+                            this.renderPred('cargo')
                         }
                     </Form.Control>
                 )
@@ -252,6 +263,7 @@ export default class GestionarEmpleado extends React.Component {
         }
     } 
     onInputChange = (e) => {
+        console.log("entro")
         const modif = e.target.value;
         //Solo letras
         if (!modif || modif.match(/^[ñA-Za-zÁ-Úá-ú _]*[ñA-Za-zÁ-Úá-ú][ñA-Za-zÁ-Úá-ú _]*$/)) {
@@ -385,6 +397,7 @@ export default class GestionarEmpleado extends React.Component {
                 user = false
             }
             let empleado = {
+                empleadoid: this.props.match.params.id,
                 pnombre: this.state.pnombre,
                 snombre: segn,
                 papellido: this.state.papellido,
@@ -398,10 +411,12 @@ export default class GestionarEmpleado extends React.Component {
                 fk_cargo: document.getElementById('cargo-empleado').value,
                 fk_lugar: document.getElementById('LugarParroquia').value,
                 usuarioasoc: user,
+                claveusuario: parseInt(this.state.claveUsuario),
                 usuario: this.state.usuario,
                 contrasena: this.state.contrasena,
                 fk_rol:document.getElementById('rol-usuario').value,
             }
+            console.log(empleado)
 
             if(this.props.match.params.accion === 'CR'){
                 const config = {
@@ -419,7 +434,66 @@ export default class GestionarEmpleado extends React.Component {
                     })
                 history.push('/home');
             }
-
+            if(this.props.match.params.accion === 'M'){
+                const config = {
+                    headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    responseType: 'json',
+                    data: empleado
+                }
+                axios.put('http://localhost:3000/updateEmpleadoById', config)
+                .then((res) => {
+                    console.log(res)
+                    if((this.state.poseeusuario===true)&&(empleado.usuarioasoc===true)){
+                        const config = {
+                            headers: {
+                              'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            responseType: 'json',
+                            data: empleado
+                        }
+                        axios.put('http://localhost:3000/updateUsuarioById', config)
+                        .then((res) => {
+                            console.log(res)
+                        }).catch((e) => {
+                            console.log(e)
+                        })
+                    }else if((this.state.poseeusuario===false)&&(empleado.usuarioasoc===true)){
+                        const config = {
+                            headers: {
+                              'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            responseType: 'json',
+                            data: empleado
+                        }
+                        axios.post('http://localhost:3000/insertUsuario', config)
+                            .then((res) => {
+                                console.log(res)
+                            }).catch((e) => {
+                                console.log(e)
+                            })
+                    }else if((this.state.poseeusuario===true)&&(empleado.usuarioasoc===false)){
+                        const config = {
+                            headers: {
+                              'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            responseType: 'json'
+                        }
+                        axios.delete(`http://localhost:3000/deleteUsuarioById/${this.state.claveUsuario}`, config)
+                            .then((res) => {
+                              console.log(res);
+                            })
+                            .catch((e) => {
+                              console.log(e)
+                            })
+                    }
+                    history.push('/home')
+                }).catch((e) => {
+                    console.log(e)
+                    history.push('/home')
+                })
+            }
         }
         else{
             alert("Existen campos invalidos. Revise e intente de nuevo.")
@@ -447,10 +521,10 @@ export default class GestionarEmpleado extends React.Component {
     }
     renderPred = (tipo) => {
         if(this.props.match.params.accion !== 'CR'){
-            if((tipo === 'cargo')){
+            if((tipo === 'cargo')&&(this.state.cpredet===false)){
                 $(".form-input-dropdown-cargo-empleado").val(this.state.cargo.clave).change()
             }
-            if((tipo === 'rol')){
+            if((tipo === 'rol')&&(this.state.rpredet===false)){
                 $(".form-input-dropdown-rol-usuario").val(this.state.rol.clave).change()
             }
         }
@@ -777,9 +851,6 @@ export default class GestionarEmpleado extends React.Component {
                                         <Form.Label className="cliente-description-fields-text">Cargo</Form.Label>
 					                    {
                                             this.renderType('cargo')
-                                        }
-                                        {
-                                            this.renderPred('cargo')
                                         }
                                     </Col>
                                     <Col md={1}></Col>

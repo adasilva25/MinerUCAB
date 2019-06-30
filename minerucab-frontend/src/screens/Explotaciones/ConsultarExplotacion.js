@@ -47,6 +47,7 @@ export default class ConsultarExplotacion extends React.Component {
                 id:null,
                 duracion:0,
                 costo:0,
+                finalizar:false,
                 fechaI:{
                     dia:0,
                     mes:0,
@@ -56,7 +57,12 @@ export default class ConsultarExplotacion extends React.Component {
                     dia:0,
                     mes:0,
                     ano:0
-                }
+                },
+                fechaFR:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                },
             },
             yacimiento:{
                 id:null,
@@ -103,6 +109,7 @@ export default class ConsultarExplotacion extends React.Component {
                 nombreV:null,
                 id:null,
                 estatus:null,
+                finalizar:false,
                 duracion:0,
                 costo:0,
                 etapaShow:true,
@@ -130,6 +137,7 @@ export default class ConsultarExplotacion extends React.Component {
                     nombreV:null,
                     id:null,
                     duracion:0,
+                    finalizar:false,
                     estatus:null,
                     costo:0,
                     faseShow:true,
@@ -284,7 +292,7 @@ export default class ConsultarExplotacion extends React.Component {
                 id:2,
                 duracion:41,
                 costo:0,
-                estatus:8,
+                estatus:10,
                 fechaI:{
                     dia:12,
                     mes:3,
@@ -325,7 +333,7 @@ export default class ConsultarExplotacion extends React.Component {
                 fases: [{
                     id:1,
                     nombre: "andrea",
-                    estatus:2,
+                    estatus:10,
                     duracion:10,
                     costo:4,
                     checkInicialCargos:true,
@@ -467,7 +475,7 @@ export default class ConsultarExplotacion extends React.Component {
                 id:4,
                 duracion:31,
                 costo:30,
-                estatus:2,
+                estatus:10,
                 fechaI:{
                     dia:12,
                     mes:3,
@@ -592,6 +600,7 @@ export default class ConsultarExplotacion extends React.Component {
             explotacion:{
                 id:null,
                 duracion:0,
+                finalizar:false,
                 costo:0,
                 fechaI:{
                     dia:0,
@@ -654,6 +663,7 @@ export default class ConsultarExplotacion extends React.Component {
                 nombreV:null,
                 id:null,
                 estatus:null,
+                finalizar:false,
                 duracion:0,
                 costo:0,
                 etapaShow:true,
@@ -682,6 +692,7 @@ export default class ConsultarExplotacion extends React.Component {
                     id:null,
                     duracion:0,
                     estatus:null,
+                    finalizar:false,
                     costo:0,
                     faseShow:true,
                     cargoShow:'inline',
@@ -796,6 +807,10 @@ export default class ConsultarExplotacion extends React.Component {
         state.explotacion.costo = info.explotacion.costo;
         state.explotacion.estatus = info.explotacion.estatus;
 
+        if(state.explotacion.estatus==10){
+            state.explotacion.finalizar=true;
+        }
+
 
         state.explotacion.fechaI.dia =  info.explotacion.fechaI.dia;
         state.explotacion.fechaI.mes =  info.explotacion.fechaI.mes;
@@ -884,6 +899,7 @@ export default class ConsultarExplotacion extends React.Component {
                 id:null,
                 estatus:null,
                 duracion:0,
+                finalizar:false,
                 costo:0,
                 etapaShow:true,
                 numero: 1,
@@ -913,6 +929,7 @@ export default class ConsultarExplotacion extends React.Component {
                     estatus:null,
                     costo:0,
                     faseShow:true,
+                    finalizar:false,
                     cargoShow:'inline',
                     tipoMaquinariaShow:'inline',
                     numero:1,
@@ -1017,6 +1034,10 @@ export default class ConsultarExplotacion extends React.Component {
             etapa.costo= info.etapas[i].costo;
             etapa.estatus= info.etapas[i].estatus;
 
+            if(etapa.estatus==10){
+                etapa.finalizar = true;
+            }
+
             etapa.fechaI.dia =  info.etapas[i].fechaI.dia;
             etapa.fechaI.mes =  info.etapas[i].fechaI.mes;
             etapa.fechaI.ano =  info.etapas[i].fechaI.ano;
@@ -1044,6 +1065,7 @@ export default class ConsultarExplotacion extends React.Component {
                     tipoMaquinariaShow:'inline',
                     numero:1,
                     numeroV:1,
+                    finalizar:false,
                     cargosId:[],
                     checkInicialCargos:true,
                     tipoMaquinariaId:[],
@@ -1146,6 +1168,10 @@ export default class ConsultarExplotacion extends React.Component {
                 fase.duracion=info.etapas[i].fases[j].duracion;
                 fase.costo= info.etapas[i].fases[j].costo;
                 fase.estatus = info.etapas[i].fases[j].estatus;
+
+                if(fase.estatus==10){
+                    fase.finalizar = true;
+                }
                  
                 fase.fechaI.dia =  info.etapas[i].fases[j].fechaI.dia;
                 fase.fechaI.mes =  info.etapas[i].fases[j].fechaI.mes;
@@ -3066,6 +3092,7 @@ export default class ConsultarExplotacion extends React.Component {
                                             >
                                                 <option value={8}>En proceso</option>
                                                 <option value={2}>Inactivo</option>
+                                                <option value={10}>Finalizada</option>
                                             </Form.Control>
                                             <Form.Text className="text-muted">
                                                 Obligatorio
@@ -3075,10 +3102,14 @@ export default class ConsultarExplotacion extends React.Component {
 
 
                                     <Form.Row className="formMargins" >
-                                        <FormFecha idF={"0I"} textoAuxiliar="Obligatorio" dia={(this.state.explotacion.fechaI.dia==0)?"- -":this.state.explotacion.fechaI.dia} mes={(this.state.explotacion.fechaI.mes==0)?"- -":this.state.explotacion.fechaI.mes} ano={(this.state.explotacion.fechaI.ano==0)?"- - - -":this.state.explotacion.fechaI.ano}  titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" textoAuxiliar disabled={true}/>
+                                        <FormFecha idF={"0I"} textoAuxiliar="Obligatorio" dia={(this.state.explotacion.fechaI.dia==0)?"- -":this.state.explotacion.fechaI.dia} mes={(this.state.explotacion.fechaI.mes==0)?"- -":this.state.explotacion.fechaI.mes} ano={(this.state.explotacion.fechaI.ano==0)?"- - - -":this.state.explotacion.fechaI.ano}  titulo="Fecha de Inicio de explotación"  clase="inputsPaddingLeft"  disabled={true}/>
                                         
                                         <FormFecha idF={"0F"} titulo="Fecha Final de explotación" clase="inputsPaddingLeft" textoAuxiliar="Calculado" dia={(this.state.explotacion.fechaF.dia==0)?"- -":this.state.explotacion.fechaF.dia} mes={(this.state.explotacion.fechaF.mes==0)?"- -":this.state.explotacion.fechaF.mes} ano={(this.state.explotacion.fechaF.ano==0)?"- - - -":this.state.explotacion.fechaF.ano} disabled={true}/>    
                                         
+                                    </Form.Row>
+
+                                    <Form.Row className="formMargins" style={{display: ((this.state.explotacion.estatus!=10)?'none':'inline')}}>
+                                        <FormFecha idF={"0FR"} textoAuxiliar="Calculado" idTexto="FechaFinalRealTexto0FR" dia={this.state.explotacion.fechaFR.dia} mes={this.state.explotacion.fechaFR.mes} ano={this.state.explotacion.fechaFR.ano}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
                                     </Form.Row>
 
                                     <Form.Row className="formMargins">
@@ -3299,6 +3330,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                                 >
                                                                     <option value={8}>En proceso</option>
                                                                     <option value={2}>Inactivo</option>
+                                                                    <option value={10}>Finalizada</option>
                                                                 </Form.Control>
                                                                 <Form.Text className="text-muted">
                                                                     Obligatorio
@@ -3309,6 +3341,11 @@ export default class ConsultarExplotacion extends React.Component {
                                                             <FormFecha idF={etapa.numero+"I"} titulo="Fecha de Inicio de la Etapa" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(etapa.fechaI.dia==0)?"- -":etapa.fechaI.dia} mes={(etapa.fechaI.mes==0)?"- -":etapa.fechaI.mes} ano={(etapa.fechaI.ano==0)?"- - - -":etapa.fechaI.ano} disabled={true}/>
                                                             <FormFecha idF={etapa.numero+"F"} titulo="Fecha Final de la Etapa" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(etapa.fechaF.dia==0)?"- -":etapa.fechaF.dia} mes={(etapa.fechaF.mes==0)?"- -":etapa.fechaF.mes} ano={(etapa.fechaF.ano==0)?"- - - -":etapa.fechaF.ano} disabled={true}/>            
                                                         </Form.Row>
+
+                                                        <Form.Row className="formMargins" style={{display: ((etapa.estatus!=10)?'none':'inline')}}>
+                                                            <FormFecha idF={etapa.numero+"FR"} textoAuxiliar="Calculado" idTexto={"FechaFinalRealTexto"+etapa.numero+"FR"} dia={etapa.fechaFR.dia} mes={etapa.fechaFR.mes} ano={etapa.fechaFR.ano}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
+                                                        </Form.Row>
+
                                                         <Form.Row className="formMargins">
                                                             <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,'YacimientosNombreTextEtapa'+etapa.numeroV,"Introduzca un nombre válido")} controlId={'YacimientosNombreEtapa'+etapa.numeroV} className="inputsPaddingRight">
                                                                 <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
@@ -3372,6 +3409,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                                                     >
                                                                                         <option value={8}>En proceso</option>
                                                                                         <option value={2}>Inactivo</option>
+                                                                                        <option value={10}>Finalizada</option>
                                                                                     </Form.Control>
                                                                                     <Form.Text className="text-muted">
                                                                                         Obligatorio
@@ -3381,6 +3419,9 @@ export default class ConsultarExplotacion extends React.Component {
                                                                             <Form.Row className="formMargins">
                                                                                 <FormFecha idF={etapa.numero+''+fase.numero+"I"} titulo="Fecha de Inicio de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft" dia={(fase.fechaI.dia==0)?"- -":fase.fechaI.dia} mes={(fase.fechaI.mes==0)?"- -":fase.fechaI.mes} ano={(fase.fechaI.ano==0)?"- - - -":fase.fechaI.ano} disabled={true}/>
                                                                                 <FormFecha idF={etapa.numero+''+fase.numero+"F"} titulo="Fecha Final de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(fase.fechaF.dia==0)?"- -":fase.fechaF.dia} mes={(fase.fechaF.mes==0)?"- -":fase.fechaF.mes} ano={(fase.fechaF.ano==0)?"- - - -":fase.fechaF.ano} disabled={true}/>            
+                                                                            </Form.Row>
+                                                                            <Form.Row className="formMargins" style={{display: ((fase.estatus!=10)?'none':'inline')}}>
+                                                                                <FormFecha idF={etapa.numero+''+fase.numero+"FR"} textoAuxiliar="Obligatorio" idTexto={"FechaFinalRealTexto"+fase.numero+''+etapa.numero+"FR"} dia={fase.fechaFR.dia} mes={fase.fechaFR.mes} ano={fase.fechaFR.ano}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
                                                                             </Form.Row>
                                                                             <FormTitulo titulo={"Información General de la Fase "+fase.numero}/>
                                                                             <Form.Row className="formMargins">

@@ -2561,14 +2561,14 @@ export default class RegistrarExplotacion extends React.Component {
         explotacion.fechaI.ano = Number(fechaInicio.ano);
 
         let fecha = new Date();
-        fecha.setDate(fechaInicio.dia-1);
+        fecha.setDate(fechaInicio.dia);
         fecha.setMonth(fechaInicio.mes-1);
         fecha.setFullYear(fechaInicio.ano);
         console.log("Fechaaaa11",fecha);
 
         etapas.forEach((etapa)=>{
             console.log("Fechaaa222",fecha);
-            etapa.fechaI.dia = fecha.getDate()+1;
+            etapa.fechaI.dia = fecha.getDate();
             etapa.fechaI.mes = fecha.getMonth()+1;
             etapa.fechaI.ano = fecha.getFullYear();
 
@@ -2579,7 +2579,7 @@ export default class RegistrarExplotacion extends React.Component {
 
             etapa.fases.forEach((fase)=>{
 
-                fase.fechaI.dia = fecha.getDate()+1;
+                fase.fechaI.dia = fecha.getDate();
                 fase.fechaI.mes = fecha.getMonth()+1;
                 fase.fechaI.ano = fecha.getFullYear();
 
@@ -2590,7 +2590,7 @@ export default class RegistrarExplotacion extends React.Component {
                 fecha.setDate(fecha.getDate()+fase.duracion);
                 console.log("Duracion",fase.duracion);
 
-                fase.fechaF.dia = fecha.getDate()+1;
+                fase.fechaF.dia = fecha.getDate();
                 fase.fechaF.mes = fecha.getMonth()+1;
                 fase.fechaF.ano = fecha.getFullYear();
 
@@ -2600,7 +2600,7 @@ export default class RegistrarExplotacion extends React.Component {
 
             });
             console.log("Fechaaa333",fecha);
-            etapa.fechaF.dia = fecha.getDate()+1;
+            etapa.fechaF.dia = fecha.getDate();
             etapa.fechaF.mes = fecha.getMonth()+1;
             etapa.fechaF.ano = fecha.getFullYear();
 
@@ -2610,7 +2610,7 @@ export default class RegistrarExplotacion extends React.Component {
 
         });
 
-        explotacion.fechaF.dia = fecha.getDate()+1;
+        explotacion.fechaF.dia = fecha.getDate();
         explotacion.fechaF.mes = fecha.getMonth()+1;
         explotacion.fechaF.ano = fecha.getFullYear();
 
@@ -2651,7 +2651,7 @@ export default class RegistrarExplotacion extends React.Component {
 
 
                                     <Form.Row className="formMargins" >
-                                        <FormFecha idF={"0I"} onChangeF={this.handleOnChangeFecha}  titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" textoAuxiliar disabled={false}/>
+                                        <FormFecha idF={"0I"} onChangeF={this.handleOnChangeFecha}  titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={false}/>
                                         
                                         <FormFecha idF={"0F"} titulo="Fecha Final de explotación" clase="inputsPaddingLeft" textoAuxiliar="Calculado" dia={(this.state.explotacion.fechaF.dia==0)?"- -":this.state.explotacion.fechaF.dia} mes={(this.state.explotacion.fechaF.mes==0)?"- -":this.state.explotacion.fechaF.mes} ano={(this.state.explotacion.fechaF.ano==0)?"- - - -":this.state.explotacion.fechaF.ano} disabled={true}/>    
                                     </Form.Row>

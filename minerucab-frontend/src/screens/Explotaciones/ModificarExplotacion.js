@@ -46,6 +46,7 @@ export default class ModificarExplotacion extends React.Component {
             explotacion:{
                 id:null,
                 duracion:0,
+                finalizar:false,
                 costo:0,
                 fechaI:{
                     dia:0,
@@ -56,7 +57,12 @@ export default class ModificarExplotacion extends React.Component {
                     dia:0,
                     mes:0,
                     ano:0
-                }
+                },
+                fechaFR:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                },
             },
             yacimiento:{
                 id:null,
@@ -101,6 +107,7 @@ export default class ModificarExplotacion extends React.Component {
             etapas: [{
                 nombre: "Etapa 1",
                 nombreV:null,
+                finalizar:false,
                 id:null,
                 estatus:null,
                 duracion:0,
@@ -130,6 +137,7 @@ export default class ModificarExplotacion extends React.Component {
                     nombreV:null,
                     id:null,
                     duracion:0,
+                    finalizar:false,
                     estatus:null,
                     costo:0,
                     faseShow:true,
@@ -284,7 +292,7 @@ export default class ModificarExplotacion extends React.Component {
                 id:2,
                 duracion:41,
                 costo:0,
-                estatus:1,
+                estatus:8,
                 fechaI:{
                     dia:12,
                     mes:3,
@@ -306,7 +314,7 @@ export default class ModificarExplotacion extends React.Component {
                 nombre: "diego",
                 duracion:10,
                 costo:30,
-                estatus:1,
+                estatus:2,
                 fechaI:{
                     dia:2,
                     mes:2,
@@ -326,13 +334,13 @@ export default class ModificarExplotacion extends React.Component {
                     id:1,
                     nombre: "andrea",
                     estatus:2,
-                    duracion:10,
+                    duracion:2,
                     costo:4,
                     checkInicialCargos:true,
                     checkInicialtipoMaquiaria:true,
                     fechaI:{
                         dia:1,
-                        mes:30,
+                        mes:7,
                         ano:2018
                     },
                     fechaF:{
@@ -467,7 +475,7 @@ export default class ModificarExplotacion extends React.Component {
                 id:4,
                 duracion:31,
                 costo:30,
-                estatus:3,
+                estatus:8,
                 fechaI:{
                     dia:12,
                     mes:3,
@@ -485,10 +493,10 @@ export default class ModificarExplotacion extends React.Component {
                 },
                 fases: [{
                     nombre: "Sanchéz",
-                    id:3,
+                    id:8,
                     duracion:30,
                     costo:5,
-                    estatus:4,
+                    estatus:2,
                     checkInicialCargos:true,
                     checkInicialtipoMaquiaria:true,
                     fechaI:{
@@ -543,7 +551,7 @@ export default class ModificarExplotacion extends React.Component {
                     nombre: "Albita",
                     id:4,
                     duracion:1,
-                    estatus:3,
+                    estatus:10,
                     costo:7.2,
                     checkInicialCargos:true,
                     checkInicialtipoMaquiaria:true,
@@ -592,6 +600,7 @@ export default class ModificarExplotacion extends React.Component {
             explotacion:{
                 id:null,
                 duracion:0,
+                finalizar:false,
                 costo:0,
                 fechaI:{
                     dia:0,
@@ -653,6 +662,7 @@ export default class ModificarExplotacion extends React.Component {
                 nombre: "Etapa 1",
                 nombreV:null,
                 id:null,
+                finalizar:false,
                 estatus:null,
                 duracion:0,
                 costo:0,
@@ -680,6 +690,7 @@ export default class ModificarExplotacion extends React.Component {
                     nombre: "Fase 1",
                     nombreV:null,
                     id:null,
+                    finalizar:false,
                     duracion:0,
                     estatus:null,
                     costo:0,
@@ -796,6 +807,10 @@ export default class ModificarExplotacion extends React.Component {
         state.explotacion.costo = info.explotacion.costo;
         state.explotacion.estatus = info.explotacion.estatus;
 
+        if(state.explotacion.estatus==10){
+            state.explotacion.finalizar=true;
+        }
+
 
         state.explotacion.fechaI.dia =  info.explotacion.fechaI.dia;
         state.explotacion.fechaI.mes =  info.explotacion.fechaI.mes;
@@ -883,6 +898,7 @@ export default class ModificarExplotacion extends React.Component {
                 nombreV:null,
                 id:null,
                 estatus:null,
+                finalizar:false,
                 duracion:0,
                 costo:0,
                 etapaShow:true,
@@ -910,6 +926,7 @@ export default class ModificarExplotacion extends React.Component {
                     nombreV:null,
                     id:null,
                     duracion:0,
+                    finalizar:false,
                     estatus:null,
                     costo:0,
                     faseShow:true,
@@ -1017,6 +1034,10 @@ export default class ModificarExplotacion extends React.Component {
             etapa.costo= info.etapas[i].costo;
             etapa.estatus= info.etapas[i].estatus;
 
+            if(etapa.estatus==10){
+                etapa.finalizar = true;
+            }
+
             etapa.fechaI.dia =  info.etapas[i].fechaI.dia;
             etapa.fechaI.mes =  info.etapas[i].fechaI.mes;
             etapa.fechaI.ano =  info.etapas[i].fechaI.ano;
@@ -1039,6 +1060,7 @@ export default class ModificarExplotacion extends React.Component {
                     duracion:0,
                     estatus:null,
                     costo:0,
+                    finalizar:false,
                     faseShow:true,
                     cargoShow:'inline',
                     tipoMaquinariaShow:'inline',
@@ -1146,6 +1168,10 @@ export default class ModificarExplotacion extends React.Component {
                 fase.duracion=info.etapas[i].fases[j].duracion;
                 fase.costo= info.etapas[i].fases[j].costo;
                 fase.estatus = info.etapas[i].fases[j].estatus;
+
+                if(fase.estatus==10){
+                    fase.finalizar = true;
+                }
                  
                 fase.fechaI.dia =  info.etapas[i].fases[j].fechaI.dia;
                 fase.fechaI.mes =  info.etapas[i].fases[j].fechaI.mes;
@@ -2723,7 +2749,7 @@ export default class ModificarExplotacion extends React.Component {
         }
     }
 
-     renderEmpleadosModal=(sexo)=>{
+    renderEmpleadosModal=(sexo)=>{
         if(sexo=="Masculino"){
             return(<Image src="/images/empleado1.png" alt="empleado" fluid />)
         }else if(sexo=="Femenino"){
@@ -2800,8 +2826,7 @@ export default class ModificarExplotacion extends React.Component {
         return(faltante);
     }
 
-
-     validarEmpleadoHorario=(etapaNum,faseNum,cargoNum,empleadoNum)=>{
+    validarEmpleadoHorario=(etapaNum,faseNum,cargoNum,empleadoNum)=>{
         let etapas=this.state.etapas;
         let empleado=etapas[etapaNum-1].fases[faseNum-1].cargos[cargoNum].empleados[empleadoNum];
         let faltantes=0;
@@ -2820,8 +2845,6 @@ export default class ModificarExplotacion extends React.Component {
         else{
             return("✓");
         } 
-        
-        
     }
 
     setDia=(key,etapaNum,faseNum,cargoNum,empleadoNum)=>{
@@ -2837,7 +2860,6 @@ export default class ModificarExplotacion extends React.Component {
 
 
     handleOnChangeFecha=()=>{
-
         const valueDia = document.getElementById("FechaDia0I").value;
         const valueMes = document.getElementById("FechaMes0I").value;
         const valueAno = document.getElementById("FechaAno0I").value;
@@ -2881,8 +2903,6 @@ export default class ModificarExplotacion extends React.Component {
             document.getElementById("FechaInicioTexto").innerHTML = "Obligatorio";
            
         }
-       
-
     }
 
     setFechaCero=()=>{
@@ -2960,16 +2980,16 @@ export default class ModificarExplotacion extends React.Component {
         explotacion.fechaI.dia = Number(fechaInicio.dia);
         explotacion.fechaI.mes = Number(fechaInicio.mes);
         explotacion.fechaI.ano = Number(fechaInicio.ano);
-
+        console.log("fechaInicio",fechaInicio);
         let fecha = new Date();
-        fecha.setDate(fechaInicio.dia-1);
+        fecha.setDate(fechaInicio.dia);
         fecha.setMonth(fechaInicio.mes-1);
         fecha.setFullYear(fechaInicio.ano);
         console.log("Fechaaaa11",fecha);
 
         etapas.forEach((etapa)=>{
             console.log("Fechaaa222",fecha);
-            etapa.fechaI.dia = fecha.getDate()+1;
+            etapa.fechaI.dia = fecha.getDate();
             etapa.fechaI.mes = fecha.getMonth()+1;
             etapa.fechaI.ano = fecha.getFullYear();
 
@@ -2980,7 +3000,7 @@ export default class ModificarExplotacion extends React.Component {
 
             etapa.fases.forEach((fase)=>{
 
-                fase.fechaI.dia = fecha.getDate()+1;
+                fase.fechaI.dia = fecha.getDate();
                 fase.fechaI.mes = fecha.getMonth()+1;
                 fase.fechaI.ano = fecha.getFullYear();
 
@@ -2991,7 +3011,7 @@ export default class ModificarExplotacion extends React.Component {
                 fecha.setDate(fecha.getDate()+fase.duracion);
                 console.log("Duracion",fase.duracion);
 
-                fase.fechaF.dia = fecha.getDate()+1;
+                fase.fechaF.dia = fecha.getDate();
                 fase.fechaF.mes = fecha.getMonth()+1;
                 fase.fechaF.ano = fecha.getFullYear();
 
@@ -3001,7 +3021,7 @@ export default class ModificarExplotacion extends React.Component {
 
             });
             console.log("Fechaaa333",fecha);
-            etapa.fechaF.dia = fecha.getDate()+1;
+            etapa.fechaF.dia = fecha.getDate();
             etapa.fechaF.mes = fecha.getMonth()+1;
             etapa.fechaF.ano = fecha.getFullYear();
 
@@ -3011,7 +3031,7 @@ export default class ModificarExplotacion extends React.Component {
 
         });
 
-        explotacion.fechaF.dia = fecha.getDate()+1;
+        explotacion.fechaF.dia = fecha.getDate();
         explotacion.fechaF.mes = fecha.getMonth()+1;
         explotacion.fechaF.ano = fecha.getFullYear();
 
@@ -3027,6 +3047,200 @@ export default class ModificarExplotacion extends React.Component {
     }
 
 
+
+
+    handleOnChangeFechaReal=(etapaNum,faseNum)=>{
+        const valueDia = document.getElementById("FechaDia"+etapaNum+faseNum+"FR").value;
+        const valueMes = document.getElementById("FechaMes"+etapaNum+faseNum+"FR").value;
+        const valueAno = document.getElementById("FechaAno"+etapaNum+faseNum+"FR").value;
+
+        const valueTrimmedDia = valueDia.trim();
+        const valueTrimmedMes = valueMes.trim();
+        const valueTrimmedAno = valueAno.trim();
+
+        if(valueTrimmedDia && valueTrimmedMes && valueTrimmedAno ){
+            if((!isNaN(valueTrimmedDia) && (Number(valueTrimmedDia)>0) &&(Number(valueTrimmedDia)<=31)) && (!isNaN(valueTrimmedMes) && (Number(valueTrimmedMes)>0) && (Number(valueTrimmedMes)<=12)) && ( !isNaN(valueTrimmedAno) && (Number(valueTrimmedAno)>=1887) ) ){
+                
+                let FechaInicio = new Date(document.getElementById("FechaAno"+etapaNum+faseNum+"I").value,document.getElementById("FechaMes"+etapaNum+faseNum+"I").value,document.getElementById("FechaDia"+etapaNum+faseNum+"I").value);
+                let FechaFinalReal = new Date(valueAno,valueMes,valueDia);
+                console.log("Fecha INicio",FechaInicio,"Fecha Real",FechaFinalReal);
+                if(FechaInicio<FechaFinalReal){
+                    document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Obligatorio";
+                    let fecha={
+                        dia:Number(valueDia),
+                        mes:Number(valueMes),
+                        ano:Number(valueAno)
+                    };
+                    this.actualizarFechasReales(fecha,etapaNum,faseNum);
+
+                }
+                else{
+                    document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "La Fecha Final Real debe ser mayor a la Fecha de Inicio";
+                }
+                
+                
+            }
+            else{
+               
+                    
+                document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Introduzca una fecha válida";
+                   
+            }    
+        }
+        else{
+            event.target.state='invalid';
+            
+            document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Introduzca una fecha válida";
+            console.log("invalido");
+        }
+            
+        if(!valueDia && !valueMes && !valueAno){
+            event.target.state='';
+            document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Obligatorio";   
+        }
+    }
+
+    actualizarEstatus=(event,etapaNum,faseNum)=>{
+
+            let value = event.target.value;
+
+            let etapas = this.state.etapas;
+            let explotacion = this.state.explotacion;
+
+            etapas[etapaNum-1].fases[faseNum-1].estatus=value;
+
+            let etapasFinalizadas=true;
+            let etapasInactivas=true;
+            etapas.forEach((etapa)=>{
+                let fasesFinalizadas=true;
+                let fasesInactivas=true;
+                etapa.fases.forEach((fase)=>{
+                    if(fase.estatus!=10){
+                        fasesFinalizadas=false;
+                    }
+                    if(fase.estatus!=2){
+                        fasesInactivas=false;
+                    }
+                });
+
+                if(fasesInactivas==true){
+                    etapa.estatus=2;
+
+                }else if(fasesFinalizadas==true){
+                    etapa.estatus=10;
+                }
+                else{
+                    etapa.estatus=8;
+                }
+
+                if(etapa.estatus!=10){
+                    etapasFinalizadas=false;
+                }
+                if(etapa.estatus!=2){
+                    etapasInactivas=false;
+                }
+            });
+
+            if(etapasInactivas==true){
+                explotacion.estatus=2;
+
+            }else if(etapasFinalizadas==true){
+                explotacion.estatus=10;
+            }
+            else{
+                explotacion.estatus=8;
+            }
+
+            console.log("Explotacion",explotacion,"Etapas",etapas);
+
+            this.setState(() => ({
+                etapas: etapas,
+                explotacion: explotacion
+            }));
+    }
+
+    actualizarFechasReales=(fechaFR,etapaNum,faseNum)=>{
+        
+        let etapas = this.state.etapas;
+        let explotacion = this.state.explotacion;
+
+        etapas[etapaNum-1].fases[faseNum-1].fechaFR.dia = fechaFR.dia ;
+        etapas[etapaNum-1].fases[faseNum-1].fechaFR.mes = fechaFR.mes ;
+        etapas[etapaNum-1].fases[faseNum-1].fechaFR.ano = fechaFR.ano ;
+
+        let fechaExplotacion = new Date(0,0,0);
+       
+
+        etapas.forEach((etapa)=>{
+            let fechaEtapa = new Date(0,0,0);
+            if(etapa.estatus==10){
+                etapa.fases.forEach((fase)=>{
+                
+                    let fechaFase;
+                    if((fase.estatus==10)&&(fase.fechaFR.dia!=0))
+                    {
+                        fechaFase = new Date(fase.fechaFR.ano,fase.fechaFR.mes,fase.fechaFR.dia);
+                    }
+                    else{
+                        fechaFase = new Date(fase.fechaF.ano,fase.fechaF.mes,fase.fechaF.dia);
+                    }
+
+                    if(fechaEtapa<fechaFase){
+                        fechaEtapa = fechaFase;
+                    }
+                
+                
+                });
+
+                etapa.fechaFR.dia = fechaEtapa.getDate();
+                etapa.fechaFR.mes = fechaEtapa.getMonth();
+                etapa.fechaFR.ano = fechaEtapa.getFullYear();
+
+                document.getElementById("FechaDia"+etapa.numero+"FR").value = etapa.fechaFR.dia;
+                document.getElementById("FechaMes"+etapa.numero+"FR").value = etapa.fechaFR.mes;
+                document.getElementById("FechaAno"+etapa.numero+"FR").value = etapa.fechaFR.ano;
+            }
+
+        });
+
+        if(explotacion.estatus==10){
+            etapas.forEach((etapa)=>{
+                let fechaEtapa ;
+
+                if((etapa.estatus==10)&&(etapa.fechaFR.dia!=0)){
+                    fechaEtapa = new Date(etapa.fechaFR.ano,etapa.fechaFR.mes,etapa.fechaFR.dia);
+                }
+                else{
+                    fechaEtapa = new Date(etapa.fechaF.ano,etapa.fechaF.mes,etapa.fechaF.dia);
+                }
+
+
+                if(fechaExplotacion<fechaEtapa){
+                    fechaExplotacion = fechaEtapa;
+                }
+            });
+
+
+            explotacion.fechaFR.dia = fechaExplotacion.getDate();
+            explotacion.fechaFR.mes = fechaExplotacion.getMonth();
+            explotacion.fechaFR.ano = fechaExplotacion.getFullYear();
+
+
+            document.getElementById("FechaDia0FR").value = explotacion.fechaFR.dia;
+            document.getElementById("FechaMes0FR").value = explotacion.fechaFR.mes;
+            document.getElementById("FechaAno0FR").value = explotacion.fechaFR.ano;
+
+        }
+
+        
+
+        this.setState(() => ({
+            etapas: etapas,
+            explotacion: explotacion
+        }));
+        console.log("Explotacioes Fechas",explotacion,"Etapas Fechas",etapas);
+
+    }
 
     render(){
         
@@ -3049,13 +3263,35 @@ export default class ModificarExplotacion extends React.Component {
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
-
+                                
+                                    <Form.Row className="formMargins">
+                                        <Form.Group as={Col} md="6"  className="inputsPaddingRight" >
+                                            <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
+                                            <Form.Control 
+                                            as="select" 
+                                            className="form-input"
+                                            value={this.state.explotacion.estatus}
+                                            disabled={true}
+                                            >
+                                                <option value={8}>En proceso</option>
+                                                <option value={2}>Inactivo</option>
+                                                <option value={10}>Finalizada</option>
+                                            </Form.Control>
+                                            <Form.Text className="text-muted">
+                                                Obligatorio
+                                            </Form.Text>    
+                                        </Form.Group>
+                                    </Form.Row>
 
                                     <Form.Row className="formMargins" >
-                                        <FormFecha idF={"0I"} textoAuxiliar="Obligatorio" dia={(this.state.explotacion.fechaI.dia==0)?"- -":this.state.explotacion.fechaI.dia} mes={(this.state.explotacion.fechaI.mes==0)?"- -":this.state.explotacion.fechaI.mes} ano={(this.state.explotacion.fechaI.ano==0)?"- - - -":this.state.explotacion.fechaI.ano}  titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" textoAuxiliar disabled={true}/>
+                                        <FormFecha idF={"0I"} idTexto="FechaInicioTexto" onChangeF={()=>this.handleOnChangeFecha()} textoAuxiliar="Obligatorio" dia={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaI.dia:""} mes={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaI.mes:""} ano={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaI.ano:""}   titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft"  disabled={(this.state.explotacion.finalizar==true)?true:false}/>
                                         
                                         <FormFecha idF={"0F"} titulo="Fecha Final de explotación" clase="inputsPaddingLeft" textoAuxiliar="Calculado" dia={(this.state.explotacion.fechaF.dia==0)?"- -":this.state.explotacion.fechaF.dia} mes={(this.state.explotacion.fechaF.mes==0)?"- -":this.state.explotacion.fechaF.mes} ano={(this.state.explotacion.fechaF.ano==0)?"- - - -":this.state.explotacion.fechaF.ano} disabled={true}/>    
                                         
+                                    </Form.Row>
+
+                                    <Form.Row className="formMargins" style={{display: ((this.state.explotacion.estatus!=10)?'none':'inline')}}>
+                                        <FormFecha idF={"0FR"} textoAuxiliar="Calculado" idTexto="FechaFinalRealTexto0FR" dia={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaFR.dia:"- -"} mes={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaFR.mes:"- -"} ano={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaFR.ano:"- - - -"}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
                                     </Form.Row>
 
                                     <Form.Row className="formMargins">
@@ -3099,6 +3335,7 @@ export default class ModificarExplotacion extends React.Component {
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
 
+                    
 
                                     <Form.Row className="formMargins">
                                         <Form.Group as={Col} md="6" controlId="YacimientosNombreYacimiento" className="inputsPaddingRight">
@@ -3266,9 +3503,33 @@ export default class ModificarExplotacion extends React.Component {
                                                         <br/>
                                                         <FormTitulo titulo={"Información General de la Etapa "+etapa.numero}/>
                                                         <Form.Row className="formMargins">
+                                                            <Form.Group as={Col} md="6"  className="inputsPaddingRight">
+                                                                <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
+                                                                <Form.Control 
+                                                                as="select" 
+                                                                className="form-input"
+                                                                value={etapa.estatus}
+                                                                disabled={(etapa.finalizar==true)?true:false}
+                                                                >
+                                                                    <option value={8}>En proceso</option>
+                                                                    <option value={2}>Inactivo</option>
+                                                                    <option value={10}>Finalizada</option>
+                                                                </Form.Control>
+                                                                <Form.Text className="text-muted">
+                                                                    Obligatorio
+                                                                </Form.Text>    
+                                                            </Form.Group>
+                                                        </Form.Row>
+
+                                                        <Form.Row className="formMargins">
                                                             <FormFecha idF={etapa.numero+"I"} titulo="Fecha de Inicio de la Etapa" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(etapa.fechaI.dia==0)?"- -":etapa.fechaI.dia} mes={(etapa.fechaI.mes==0)?"- -":etapa.fechaI.mes} ano={(etapa.fechaI.ano==0)?"- - - -":etapa.fechaI.ano} disabled={true}/>
                                                             <FormFecha idF={etapa.numero+"F"} titulo="Fecha Final de la Etapa" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(etapa.fechaF.dia==0)?"- -":etapa.fechaF.dia} mes={(etapa.fechaF.mes==0)?"- -":etapa.fechaF.mes} ano={(etapa.fechaF.ano==0)?"- - - -":etapa.fechaF.ano} disabled={true}/>            
                                                         </Form.Row>
+
+                                                        <Form.Row className="formMargins" style={{display: ((etapa.estatus!=10)?'none':'inline')}}>
+                                                            <FormFecha idF={etapa.numero+"FR"} textoAuxiliar="Calculado" idTexto={"FechaFinalRealTexto"+etapa.numero+"FR"} dia={(etapa.finalizar==true)?etapa.fechaFR.dia:"- -"} mes={(etapa.finalizar==true)?etapa.fechaFR.mes:"- -"} ano={(etapa.finalizar==true)?etapa.fechaFR.ano:"- - - -"}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
+                                                        </Form.Row>
+
                                                         <Form.Row className="formMargins">
                                                             <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,'YacimientosNombreTextEtapa'+etapa.numeroV,"Introduzca un nombre válido")} controlId={'YacimientosNombreEtapa'+etapa.numeroV} className="inputsPaddingRight">
                                                                 <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
@@ -3312,7 +3573,7 @@ export default class ModificarExplotacion extends React.Component {
                                                             onClick={this.prueba}
                                                         >
                                                             {this.state.etapas[etapa.numeroV-1].fases.map((fase,indexf)=>{
-                                                                console.log()        
+                                                                      
 
                                                                 if (fase.faseShow === true) 
 
@@ -3322,9 +3583,33 @@ export default class ModificarExplotacion extends React.Component {
                                                                         <Container>
                                                                             <br/>
                                                                             <Form.Row className="formMargins">
+                                                                                <Form.Group as={Col} md="6"  className="inputsPaddingRight">
+                                                                                    <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
+                                                                                    <Form.Control 
+                                                                                    as="select" 
+                                                                                    className="form-input"
+                                                                                    defaultValue={fase.estatus}
+                                                                                    disabled={(fase.finalizar==true)?true:false}
+                                                                                    onChange={(evt)=>this.actualizarEstatus(evt,etapa.numero,fase.numero)}
+                                                                                    >
+                                                                                        <option value={8}>En proceso</option>
+                                                                                        <option value={2}>Inactivo</option>
+                                                                                        <option value={10}>Finalizada</option>
+                                                                                    </Form.Control>
+                                                                                    <Form.Text className="text-muted">
+                                                                                        Obligatorio
+                                                                                    </Form.Text>    
+                                                                                </Form.Group>
+                                                                            </Form.Row>
+                                                                            <Form.Row className="formMargins">
                                                                                 <FormFecha idF={etapa.numero+''+fase.numero+"I"} titulo="Fecha de Inicio de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft" dia={(fase.fechaI.dia==0)?"- -":fase.fechaI.dia} mes={(fase.fechaI.mes==0)?"- -":fase.fechaI.mes} ano={(fase.fechaI.ano==0)?"- - - -":fase.fechaI.ano} disabled={true}/>
                                                                                 <FormFecha idF={etapa.numero+''+fase.numero+"F"} titulo="Fecha Final de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(fase.fechaF.dia==0)?"- -":fase.fechaF.dia} mes={(fase.fechaF.mes==0)?"- -":fase.fechaF.mes} ano={(fase.fechaF.ano==0)?"- - - -":fase.fechaF.ano} disabled={true}/>            
                                                                             </Form.Row>
+
+                                                                             <Form.Row className="formMargins" style={{display: ((fase.estatus!=10)?'none':'inline')}}>
+                                                                                <FormFecha idF={etapa.numero+''+fase.numero+"FR"} onChangeF={()=>this.handleOnChangeFechaReal(etapa.numero,fase.numero)} textoAuxiliar="Obligatorio" idTexto={"FechaFinalRealTexto"+fase.numero+''+etapa.numero+"FR"} dia={(fase.finalizar==true)?fase.fechaFR.dia:""} mes={(fase.finalizar==true)?fase.fechaFR.mes:""} ano={(fase.finalizar==true)?fase.fechaFR.ano:""}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={false}/>
+                                                                            </Form.Row>
+
                                                                             <FormTitulo titulo={"Información General de la Fase "+fase.numero}/>
                                                                             <Form.Row className="formMargins">
                                                                                 <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,'YacimientosNombreTextEtapaFase'+etapa.numeroV+fase.numeroV,"Introduzca un nombre válido")} controlId={'YacimientosNombreEtapaFase'+etapa.numeroV+fase.numeroV} className="inputsPaddingRight">
@@ -3391,11 +3676,11 @@ export default class ModificarExplotacion extends React.Component {
                                                                                                         <br/>
                                                                                                         <div> {'Agregar '+ cargo.nombre + ' :'} </div>
                                                                                                         <br/>
-                                                                                                        <Row>
+                                                                                                        <Row style={{display: ((fase.finalizar==true)?'none':'inline')}}>
                                                                                                             <Col sm={0} md={1}></Col>
                                                                                                             <Col sm={12} md={10}>
                                                                                                                 <DataTable
-
+                                                                                                                    
                                                                                                                     selectCheck={null}
                                                                                                                     selectCheck2={this.selectFunctionCheckbox}
 
@@ -3478,7 +3763,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                                                                                                             <Form.Row >
                                                                                                                                                                 <Col sm={1}>
                                                                                                                                                                 </Col>
-                                                                                                                                                                <Form.Group as={Col} sm="8"controlId={"DropdownDia"+horario.dia+etapa.numero+fase.numero+indexcar+indexem}>
+                                                                                                                                                                <Form.Group as={Col} sm="8"controlId={"DropdownDia"+horario.dia+etapa.numero+fase.numero+indexcar+indexem} diasbled={(fase.finalizar==true)?true:false}>
                                                                                                                                                                     <Form.Label>{horario.dia}</Form.Label>
                                                                                                                                                                     <Form.Control as="select" defaultValue={horario.value} > 
                                                                                                                                                                         <option value={0}>No aplica</option>
@@ -3504,7 +3789,7 @@ export default class ModificarExplotacion extends React.Component {
 
                                                                                                                                 <Modal.Footer>
                                                                                                                                     <Button variant="primary" onClick={()=>this.horario(etapa.numero,fase.numero,indexcar,indexem)}>
-                                                                                                                                      Guardar Cambios
+                                                                                                                                      {(fase.finalizar==true)?"Ver Horario":"Guardar Cambios"}
                                                                                                                                     </Button>
                                                                                                                                 </Modal.Footer>
                                                                                                                             </Modal>
@@ -3556,7 +3841,8 @@ export default class ModificarExplotacion extends React.Component {
                                                                                                         <br/>
                                                                                                         <div> {'Agregar '+ tipoMaquinaria.nombre + ' :'} </div>
                                                                                                         <br/>
-                                                                                                        <Row>
+                                                                                                        {console.log("FINALIZADOFASE",fase.finalizar)}
+                                                                                                        <Row style={{display: ((fase.finalizar==true)?'none':'inline')}}>
                                                                                                             <Col sm={0} md={1}></Col>
                                                                                                             <Col sm={12} md={10}>
                                                                                                                 <DataTable

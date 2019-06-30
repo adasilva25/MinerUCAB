@@ -62,6 +62,7 @@ app.post('/crearMineralMetalico', MineralesValidations.crearMineralMetalico);
 app.post('/crearMineralNoMetalico', MineralesValidations.crearMineralNoMetalico);
 /* -------------------- USUARIOS -------------------- */
 app.post('/validateUser', Usuarios.validateUser)
+app.post('/insertUsuario', Usuarios.insertUsuario)
 /* -------------------- VENTAS -------------------- */
 app.post('/createVenta', VentasValidations.createVenta);
 app.post('/crearEmpleado', EmpleadosValidations.crearEmpleado);
@@ -144,11 +145,13 @@ app.get('/getAllMineralesMetalicosByIdYacimiento/:id', YacimientoMineral.getAllM
 app.get('/getAllMineralesNoMetalicosByIdYacimiento/:id', YacimientoMineral.getAllMineralesNoMetalicosByIdYacimiento)
 
 
-
 /* ----------------------------------- UPDATE ----------------------------------- */
 /* -------------------- CLIENTES -------------------- */
 app.put('/updateClienteNaturalById', ClientesNaturales.updateClienteNaturalById);
 app.put('/updateClienteJuridicoById', ClientesJuridicos.updateClienteJuridicoById);
+/* -------------------- EMPLEADOS -------------------- */
+app.put('/updateEmpleadoById', Empleados.updateEmpleadoById)
+app.put('/updateUsuarioById', Usuarios.updateUsuarioById)
 /* -------------------- MAQUINARIAS -------------------- */
 app.put('/updateMaquinariaById/:id', Maquinarias.updateMaquinariaById)
 
@@ -160,6 +163,7 @@ app.delete('/deleteClienteById/:id', ClientesNaturales.deleteClienteById);
 app.delete('/deleteClienteJuridicoById/:id', ClientesJuridicos.deleteClienteJuridicoById);
 /* -------------------- EMPLEADO -------------------- */
 app.delete('/deleteEmpleadoById/:id', Empleados.deleteEmpleadoById)
+app.delete('/deleteUsuarioById/:id', Usuarios.deleteUsuarioById)
 /* -------------------- MAQUINARIAS -------------------- */
 app.delete('/deleteMaquinariaById/:id', Maquinarias.deleteMaquinariaById)
 /* -------------------- MINERALES -------------------- */
