@@ -48,6 +48,11 @@ app.post('/createClienteNatural', ClientesNaturales.createClienteNatural);
 app.post('/createClienteJuridico', ClientesJuridicos.createClienteJuridico);
 /* -------------------- MAQUINARIAS -------------------- */
 app.post('/createMaquinaria', Maquinarias.createMaquinaria);
+/* -------------------- MINERALES -------------------- */
+app.post('/insertPresMinMet', Minerales.insertPresMinMet);
+app.post('/insertPresMinNoMet', Minerales.insertPresMinNoMet);
+app.post('/insertCompMinMet', Minerales.insertCompMinMet);
+app.post('/insertCompMinNoMet', Minerales.insertCompMinNoMet);
 /* -------------------- USUARIOS -------------------- */
 app.post('/validateUser', Usuarios.validateUser)
 app.post('/insertUsuario', Usuarios.insertUsuario)
@@ -134,6 +139,13 @@ app.put('/updateEmpleadoById', Empleados.updateEmpleadoById)
 app.put('/updateUsuarioById', Usuarios.updateUsuarioById)
 /* -------------------- MAQUINARIAS -------------------- */
 app.put('/updateMaquinariaById/:id', Maquinarias.updateMaquinariaById)
+/* -------------------- MINERALES -------------------- */
+app.put('/updateMinMetById', Minerales.updateMinMetById)
+app.put('/updateMinNoMetById', Minerales.updateMinNoMetById)
+app.put('/updatePresMinMet', Minerales.updatePresMinMet)
+app.put('/updatePresMinNoMet', Minerales.updatePresMinNoMet)
+app.put('/updateCompMinMet', Minerales.updateCompMinMet)
+app.put('/updateCompMinNoMet', Minerales.updateCompMinNoMet)
 
 
 /* ----------------------------------- DELETE ----------------------------------- */
@@ -148,7 +160,8 @@ app.delete('/deleteMaquinariaById/:id', Maquinarias.deleteMaquinariaById)
 /* -------------------- MINERALES -------------------- */
 app.delete('/deleteMineralMetalicoById/:id', Minerales.deleteMineralMetalicoById);
 app.delete('/deleteMineralNoMetalicoById/:id', Minerales.deleteMineralNoMetalicoById);
-
+app.delete('/deletePresMin/:id', Minerales.deletePresMin);
+app.delete('/deleteCompMin/:id', Minerales.deleteCompMin);
 
 
 /* ------------------------------ DELETE ------------------------------ */
