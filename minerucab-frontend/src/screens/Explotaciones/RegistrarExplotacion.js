@@ -220,19 +220,13 @@ export default class RegistrarExplotacion extends React.Component {
                 nombre:"Okinawa",
                 descripcion:"muy mineraloso",
                 area:300,
-                tipo:"Autóctono",
-                tipoId:3,
                 ubicacion:{
                     estado:"Sucre",
                     municipio:"Sucre",
                     parroquia:"Altagracia",
                     idParroquia:760
                 },
-                fecha:{
-                    dia:7,
-                    mes:14,
-                    ano:1999
-                }
+
             },
             minerales:[{
                 id:1,
@@ -272,8 +266,6 @@ export default class RegistrarExplotacion extends React.Component {
                     nombre: "andrea",
                     duracion:10,
                     costo:4,
-                    checkInicialCargos:true,
-                    checkInicialtipoMaquiaria:true,
                     cargos:[{
                         id:14,
                         nombre:"Geólogo",
@@ -315,8 +307,6 @@ export default class RegistrarExplotacion extends React.Component {
                     id:3,
                     duracion:30,
                     costo:5,
-                    checkInicialCargos:true,
-                    checkInicialtipoMaquiaria:true,
                     cargos:[{
                         id:3,
                         nombre:"Administrador",
@@ -347,8 +337,6 @@ export default class RegistrarExplotacion extends React.Component {
                     id:4,
                     duracion:1,
                     costo:7.2,
-                    checkInicialCargos:true,
-                    checkInicialtipoMaquiaria:true,
                     cargos:[{
                         id:10,
                         nombre:"Geologo",
@@ -461,6 +449,8 @@ export default class RegistrarExplotacion extends React.Component {
                     numeroV:1,
                     cargosId:[],
                     tipoMaquinariaId:[],
+                    checkInicialCargos:true,
+                    checkInicialtipoMaquiaria:true,
                     fechaI:{
                         dia:0,
                         mes:0,
@@ -544,10 +534,7 @@ export default class RegistrarExplotacion extends React.Component {
         state.yacimiento.ubicacion.municipio = info.yacimiento.ubicacion.municipio;
         state.yacimiento.ubicacion.parroquia = info.yacimiento.ubicacion.parroquia;
         state.yacimiento.ubicacion.idParroquia = info.yacimiento.ubicacion.idParroquia;
-        state.yacimiento.fecha.dia = info.yacimiento.fecha.dia;
-        state.yacimiento.fecha.mes = info.yacimiento.fecha.mes;
-        state.yacimiento.fecha.ano = info.yacimiento.fecha.ano;
-
+        
         state.explotacion.id = info.explotacion.id;
         state.explotacion.duracion = info.explotacion.duracion;
         state.explotacion.costo = info.explotacion.costo;

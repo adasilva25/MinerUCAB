@@ -243,6 +243,44 @@ export default class ModificarExplotacion extends React.Component {
 
      componentWillMount = () => {
 
+
+         const config = {
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            responseType: 'json'
+        }
+        axios.get('http://localhost:3000/getAllMineralesMetalicosConPresentacion', config)
+            .then((res) => {
+                console.log(res)
+                res.data.forEach(element => {
+                    let mineralInfo = {
+                        tipoMineral: 'metalico',
+                        idBdPresentacionMineral: '',
+                        nombre: '',
+                        presentacion: '',
+                        precio: 0
+                    }
+                    mineralInfo.idBdPresentacionMineral = element.clave;
+                    mineralInfo.nombre = element.mineral;
+                    mineralInfo.presentacion = element.presentacion;
+                    mineralInfo.precio = element.precio;
+                    this.setState((prevState) => ({
+                        minerales: prevState.minerales.concat(mineralInfo)
+                    }));
+                })
+            }).catch((e) => {
+                console.log('Error en axios')
+            })
+
+
+
+
+
+
+
+        
+
         const info = {
             yacimiento:{
                 id:1,

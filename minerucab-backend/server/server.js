@@ -9,6 +9,7 @@ const ClientesJuridicos = require('../database/model/ClientesJuridicos');
 const ClientesNaturales = require('../database/model/ClientesNaturales');
 const DetalleVentas = require('../database/model/DetalleVentas');
 const Empleados = require('../database/model/Empleados');
+const Explotaciones = rquire('../database/model/Explotaciones');
 const JasperReports = require('../reports/jasper-reports/jasper-reports-generator');
 const Lugares = require('../database/model/Lugares');
 const Maquinarias = require('../database/model/Maquinarias');
@@ -75,6 +76,8 @@ app.get('/getAllEmpleados', Empleados.getAllEmpleados);
 app.get('/getCriticInfoEmpleados', Empleados.getCriticInfoEmpleados)
 app.get('/getEmpleadoByCedula/:cedula', Empleados.getEmpleadoByCedula);
 app.get('/getEmpleadoById/:id', Empleados.getEmpleadoById);
+/* -------------------- EXPLOTACIONES -------------------- */
+app.get('/getExplotacionByIdYacimiento/:id',Explotaciones.getExplotacionByIdYacimiento);
 /* -------------------- CLIENTES -------------------- */
 app.get('/getClienteNombreApellidoById/:id', ClientesNaturales.getClienteNombreApellidoById);
 app.get('/getAllClientes', ClientesNaturales.getAllClientes);
