@@ -93,6 +93,7 @@ const createTipoMaquinariaFase = (values) => {
     }) 
 }
 
+
 /* ------------------------------ READ ------------------------------ */
 
 const getEtapasByIdExplotacion = (req, res) => {
@@ -101,15 +102,18 @@ const getEtapasByIdExplotacion = (req, res) => {
     });
     client.connect();
     const text = 'SELECT Clave, nombre, costo_total, duracion FROM MU_ETAPA WHERE fk_explotacion = ($1)';
+
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
         client.end();
         res.status(200).json(response.rows)
     })
+
     .catch((e) => {
         client.end();
         console.error(e.stack);
+
     })
 }
 
@@ -137,5 +141,6 @@ module.exports = {
     createTipoMaquinariaFase,
     getAllExplotaciones,
     getEtapasByIdExplotacion
+
     // ,[siguientes funciones]
 }

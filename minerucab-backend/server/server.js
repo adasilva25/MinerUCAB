@@ -9,6 +9,7 @@ const ClientesJuridicos = require('../database/model/ClientesJuridicos');
 const ClientesNaturales = require('../database/model/ClientesNaturales');
 const DetalleVentas = require('../database/model/DetalleVentas');
 const Empleados = require('../database/model/Empleados');
+
 const Explotaciones = require('../database/model/Explotaciones');
 const Fases = require('../database/model/Fases');
 const JasperReports = require('../reports/jasper-reports/jasper-reports-generator');
@@ -59,6 +60,10 @@ app.post('/crearEmpleado', EmpleadosValidations.crearEmpleado);
 /* -------------------- MAQUINARIAS -------------------- */
 app.post('/createMaquinaria', Maquinarias.createMaquinaria);
 /* -------------------- MINERALES -------------------- */
+app.post('/insertPresMinMet', Minerales.insertPresMinMet);
+app.post('/insertPresMinNoMet', Minerales.insertPresMinNoMet);
+app.post('/insertCompMinMet', Minerales.insertCompMinMet);
+app.post('/insertCompMinNoMet', Minerales.insertCompMinNoMet);
 app.post('/crearMineralMetalico', MineralesValidations.crearMineralMetalico);
 app.post('/crearMineralNoMetalico', MineralesValidations.crearMineralNoMetalico);
 /* -------------------- USUARIOS -------------------- */
@@ -163,6 +168,13 @@ app.put('/updateEmpleadoById', Empleados.updateEmpleadoById)
 app.put('/updateUsuarioById', Usuarios.updateUsuarioById)
 /* -------------------- MAQUINARIAS -------------------- */
 app.put('/updateMaquinariaById/:id', Maquinarias.updateMaquinariaById)
+/* -------------------- MINERALES -------------------- */
+app.put('/updateMinMetById', Minerales.updateMinMetById)
+app.put('/updateMinNoMetById', Minerales.updateMinNoMetById)
+app.put('/updatePresMinMet', Minerales.updatePresMinMet)
+app.put('/updatePresMinNoMet', Minerales.updatePresMinNoMet)
+app.put('/updateCompMinMet', Minerales.updateCompMinMet)
+app.put('/updateCompMinNoMet', Minerales.updateCompMinNoMet)
 
 
 
@@ -178,7 +190,8 @@ app.delete('/deleteMaquinariaById/:id', Maquinarias.deleteMaquinariaById)
 /* -------------------- MINERALES -------------------- */
 app.delete('/deleteMineralMetalicoById/:id', Minerales.deleteMineralMetalicoById);
 app.delete('/deleteMineralNoMetalicoById/:id', Minerales.deleteMineralNoMetalicoById);
-
+app.delete('/deletePresMin/:id', Minerales.deletePresMin);
+app.delete('/deleteCompMin/:id', Minerales.deleteCompMin);
 
 
 /* ------------------------------ DELETE ------------------------------ */

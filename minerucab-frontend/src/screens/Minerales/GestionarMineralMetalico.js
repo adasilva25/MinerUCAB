@@ -41,6 +41,7 @@ export default class GestionarMineralMetalico extends React.Component {
                     presShow: true,
                     numero: 1,
                     numeroV:1,
+                    predetdb:false,
                 }],
                 componentesmin: [{
                     mineral: 1,
@@ -49,6 +50,7 @@ export default class GestionarMineralMetalico extends React.Component {
                     compShow: true,
                     numero: 1,
                     numeroV:1,
+                    predetdb:false,
                 }]
             }))
         }
@@ -112,7 +114,10 @@ export default class GestionarMineralMetalico extends React.Component {
                                 presShow: true,
                                 numero: this.state.presentacionesmin.length+1,
                                 numeroV: this.state.presentacionesmin.length+1,
+                                predetdb: true,
+                                relacion: 0,
                             }
+                            presInfo.relacion = element.relacion;
                             presInfo.presentacion = element.clave;
                             presInfo.nombre = element.nombre;
                             presInfo.precio = element.precio;
@@ -133,7 +138,10 @@ export default class GestionarMineralMetalico extends React.Component {
                                 compShow: true,
                                 numero: this.state.componentesmin.length+1,
                                 numeroV: this.state.componentesmin.length+1,
+                                predetdb: true,
+                                relacion: 0,
                             }
+                            compInfo.relacion = element.relacion;
                             compInfo.mineral = element.clave;
                             compInfo.nombre = element.nombre;
                             compInfo.porcentaje = element.porcentaje;
@@ -158,6 +166,7 @@ export default class GestionarMineralMetalico extends React.Component {
             presShow: true,
             numero: 1,
             numeroV:1,
+            predetdb:false,
         };
 
         if(this.state.presentacionesmin.length === 0){
@@ -169,6 +178,7 @@ export default class GestionarMineralMetalico extends React.Component {
                     presShow: true,
                     numero: 1,
                     numeroV:1,
+                    predetdb:false,
                 }],
             }));
         }else{
@@ -193,6 +203,7 @@ export default class GestionarMineralMetalico extends React.Component {
             compShow:true,
             numero: 1,
             numeroV:1,
+            predetdb:false,
         };
 
         if(this.state.componentesmin.length === 0){
@@ -204,6 +215,7 @@ export default class GestionarMineralMetalico extends React.Component {
                     compShow:true,
                     numero: 1,
                     numeroV:1,
+                    predetdb:false,
                 }],
             }));
         }else{
@@ -288,7 +300,7 @@ export default class GestionarMineralMetalico extends React.Component {
                         existe = 1;
                     }
                 })
-                if (existe === 0){
+                if ((existe === 0)&&(optionPre.clave !== parseInt(this.props.match.params.id))){
                     componente.push(optionPre.nombre);
                     return(<option value={optionPre.clave} id={optionPre.nombre}>{optionPre.nombre}</option>)
                 }
@@ -577,11 +589,6 @@ export default class GestionarMineralMetalico extends React.Component {
         }
     }
     onSubmit = () => {
-        console.log("nombre", this.state.nombre)
-        console.log("descripcion", this.state.descripcion)
-        console.log("dureza", this.state.dureza)
-        console.log("presentaciones", this.state.presentacionesmin)
-        console.log("componentes", this.state.componentesmin)
         let repetido = 0
         var tienepres = false
         for (let i=0; i<this.state.presentacionesmin.length; i++){
@@ -616,6 +623,7 @@ export default class GestionarMineralMetalico extends React.Component {
                     desc = this.state.descripcion
                 }
                 let mineral = {
+                    mineralid: this.props.match.params.id,
                     nombre: this.state.nombre,
                     dureza: parseFloat(this.state.dureza),
                     descripcion: desc,
@@ -662,6 +670,181 @@ export default class GestionarMineralMetalico extends React.Component {
                             console.log('Error en axios')
                         })
                     history.push('/home');
+                }
+
+                if(this.props.match.params.accion === 'M'){
+                    console.log(mineral)
+                    let presentacionesorg = {
+                        insert: [],
+                        update: [],
+                        delete: [],
+                    }
+                    let componentesorg = {
+                        insert: [],
+                        update: [],
+                        delete: [],
+                    }
+                    for (let i = 0; i < this.state.presentacionesmin.length; i++){
+                        let pres = {
+                            precio: this.state.presentacionesmin[i].precio,
+                            idPresentacion: this.state.presentacionesmin[i].presentacion,
+                            relacion: this.state.presentacionesmin[i].relacion,
+                            mineral: this.props.match.params.id,
+                        }
+                        //Update
+                        if((this.state.presentacionesmin[i].predetdb === true)&&(this.state.presentacionesmin[i].presShow === true)){
+                            presentacionesorg.update.push(pres)
+                        }
+                        //Insert
+                        if((this.state.presentacionesmin[i].predetdb === false)&&(this.state.presentacionesmin[i].presShow === true)){
+                            presentacionesorg.insert.push(pres)
+                        }
+                        //Delete
+                        if((this.state.presentacionesmin[i].predetdb === true)&&(this.state.presentacionesmin[i].presShow === false)){
+                            presentacionesorg.delete.push(pres)
+                        }
+                    }
+                    for (let i = 0; i < this.state.componentesmin.length; i++){
+                        let comp = {
+                            idComponente: this.state.componentesmin[i].mineral,
+                            porcentaje: parseFloat(this.state.componentesmin[i].porcentaje),
+                            relacion: this.state.componentesmin[i].relacion,
+                            mineral: this.props.match.params.id,
+                        }
+                        //Update
+                        if((this.state.componentesmin[i].predetdb === true)&&(this.state.componentesmin[i].compShow === true)){
+                            componentesorg.update.push(comp)
+                        }
+                        //Insert
+                        if((this.state.componentesmin[i].predetdb === false)&&(this.state.componentesmin[i].compShow === true)){
+                            componentesorg.insert.push(comp)
+                        }
+                        //Delete
+                        if((this.state.componentesmin[i].predetdb === true)&&(this.state.componentesmin[i].compShow === false)){
+                            componentesorg.delete.push(comp)
+                        }
+                    }
+
+                    console.log(presentacionesorg)
+                    console.log(componentesorg)
+
+                    const config = {
+                        headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        responseType: 'json',
+                        data: mineral
+                    }
+                    axios.put('http://localhost:3000/updateMinMetById', config)
+                    .then((res) => {
+                        console.log(res)
+                        if(presentacionesorg.update.length>0){
+                            for(let i=0; i<presentacionesorg.update.length; i++){
+                                const config = {
+                                    headers: {
+                                      'Content-Type': 'application/x-www-form-urlencoded'
+                                    },
+                                    responseType: 'json',
+                                    data: presentacionesorg.update[i]
+                                }
+                                axios.put('http://localhost:3000/updatePresMinMet', config)
+                                .then((res) => {
+                                    console.log(res)
+                                }).catch((e) => {
+                                    console.log(e)
+                                })
+                            }
+                        }
+                        if(presentacionesorg.insert.length>0){
+                            for(let i=0; i<presentacionesorg.insert.length; i++){
+                                const config = {
+                                    headers: {
+                                      'Content-Type': 'application/x-www-form-urlencoded'
+                                    },
+                                    responseType: 'json',
+                                    data: presentacionesorg.insert[i]
+                                }
+                                axios.post('http://localhost:3000/insertPresMinMet', config)
+                                    .then((res) => {
+                                        console.log(res)
+                                    }).catch((e) => {
+                                        console.log(e)
+                                    })
+                            }
+                        }
+                        if(presentacionesorg.delete.length>0){
+                            for(let i=0; i<presentacionesorg.delete.length; i++){
+                                const config = {
+                                    headers: {
+                                      'Content-Type': 'application/x-www-form-urlencoded'
+                                    },
+                                    responseType: 'json'
+                                }
+                                axios.delete(`http://localhost:3000/deletePresMin/${presentacionesorg.delete[i].relacion}`, config)
+                                    .then((res) => {
+                                      console.log(res);
+                                    })
+                                    .catch((e) => {
+                                      console.log(e)
+                                    })
+                            }
+                        }
+                        if(componentesorg.update.length>0){
+                            for(let i=0; i<componentesorg.update.length; i++){
+                                const config = {
+                                    headers: {
+                                      'Content-Type': 'application/x-www-form-urlencoded'
+                                    },
+                                    responseType: 'json',
+                                    data: componentesorg.update[i]
+                                }
+                                axios.put('http://localhost:3000/updateCompMinMet', config)
+                                .then((res) => {
+                                    console.log(res)
+                                }).catch((e) => {
+                                    console.log(e)
+                                })
+                            }
+                        }
+                        if(componentesorg.insert.length>0){
+                            for(let i=0; i<componentesorg.insert.length; i++){
+                                const config = {
+                                    headers: {
+                                      'Content-Type': 'application/x-www-form-urlencoded'
+                                    },
+                                    responseType: 'json',
+                                    data: componentesorg.insert[i]
+                                }
+                                axios.post('http://localhost:3000/insertCompMinMet', config)
+                                    .then((res) => {
+                                        console.log(res)
+                                    }).catch((e) => {
+                                        console.log(e)
+                                    })
+                            }
+                        }
+                        if(componentesorg.delete.length>0){
+                            for(let i=0; i<componentesorg.delete.length; i++){
+                                const config = {
+                                    headers: {
+                                      'Content-Type': 'application/x-www-form-urlencoded'
+                                    },
+                                    responseType: 'json'
+                                }
+                                axios.delete(`http://localhost:3000/deleteCompMin/${componentesorg.delete[i].relacion}`, config)
+                                    .then((res) => {
+                                      console.log(res);
+                                    })
+                                    .catch((e) => {
+                                      console.log(e)
+                                    })
+                            }
+                        }
+                        history.push('/home')
+                    }).catch((e) => {
+                        console.log(e)
+                        history.push('/home')
+                    })
                 }
             }else{
                 alert("Existen campos invalidos. Revise e intente de nuevo.")

@@ -182,11 +182,7 @@ export default class RegistrarExplotacion extends React.Component {
                     parroquia:"Altagracia",
                     idParroquia:760
                 },
-                fecha:{
-                    dia:7,
-                    mes:14,
-                    ano:1999
-                }
+
             },
             minerales:[{
                 id:1,
@@ -297,8 +293,6 @@ export default class RegistrarExplotacion extends React.Component {
                     id:4,
                     duracion:1,
                     costo:7.2,
-                    checkInicialCargos:true,
-                    checkInicialtipoMaquiaria:true,
                     cargos:[{
                         id:10,
                         nombre:"Geologo",
@@ -2153,7 +2147,7 @@ export default class RegistrarExplotacion extends React.Component {
         console.log(maquinarias);
         console.log(this.state.etapas);
         
-    };
+    }; 
 
     nombreDT = (nombre) => {
      console.log('fino')
