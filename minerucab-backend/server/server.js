@@ -9,6 +9,8 @@ const ClientesJuridicos = require('../database/model/ClientesJuridicos');
 const ClientesNaturales = require('../database/model/ClientesNaturales');
 const DetalleVentas = require('../database/model/DetalleVentas');
 const Empleados = require('../database/model/Empleados');
+const Explotaciones = require('../database/model/Explotaciones');
+const Fases = require('../database/model/Fases');
 const JasperReports = require('../reports/jasper-reports/jasper-reports-generator');
 const Lugares = require('../database/model/Lugares');
 const Maquinarias = require('../database/model/Maquinarias');
@@ -24,6 +26,7 @@ const Ventas = require('../database/model/Ventas');
 const VentasValidations = require('../validations/VentasValidations');
 const Yacimientos = require('../database/model/Yacimientos');
 const YacimientoMineral = require('../database/model/YacimientoMineral');
+const YacimientosValidations = require('../validations/YacimientosValidations');
 
 const express = require('express');
 const app = express();
@@ -61,6 +64,9 @@ app.post('/crearMineralNoMetalico', MineralesValidations.crearMineralNoMetalico)
 app.post('/validateUser', Usuarios.validateUser)
 /* -------------------- VENTAS -------------------- */
 app.post('/createVenta', VentasValidations.createVenta);
+app.post('/crearEmpleado', EmpleadosValidations.crearEmpleado);
+/* -------------------- YacimientosValidations -------------------- */
+app.post('/crearConfiguracionYacimiento', YacimientosValidations.crearConfiguracionYacimiento);
 
 
 /* ----------------------------------- GET ----------------------------------- */
@@ -68,6 +74,7 @@ app.post('/createVenta', VentasValidations.createVenta);
 app.get('/getAllCargos', Cargos.getAllCargos);
 app.get('/getCargoByIdEmpleado/:id', Cargos.getCargoByIdEmpleado);
 app.get('/getAllRoles', Roles.getAllRoles);
+app.get('/getCargosByIdFase/:id', Cargos.getCargosByIdFase);
 /* -------------------- EMPLEADO -------------------- */
 app.get('/getRolByIdEmpleado/:id', Roles.getRolByIdEmpleado);
 app.get('/getAllEmpleados', Empleados.getAllEmpleados);
@@ -85,6 +92,10 @@ app.get('/getClienteById/:id', ClientesNaturales.getClienteById);
 app.get('/getClienteJuridicoById/:id', ClientesJuridicos.getClienteJuridicoById);
 /* -------------------- DETALLES DE VENTAS -------------------- */
 app.get('/getDetalleVentaByIdVenta/:id', DetalleVentas.getDetalleVentaByIdVenta);
+/* -------------------- EXPLOTACIONES -------------------- */
+app.get('/getEtapasByIdExplotacion/:id', Explotaciones.getEtapasByIdExplotacion);
+/* -------------------- FASES -------------------- */
+app.get('/getFasesByIdEtapa/:id', Fases.getFasesByIdEtapa)
 /* -------------------- LUGAR -------------------- */
 app.get('/getAllEstados', Lugares.getAllEstados);
 app.get('/getAllMunicipiosByIdEstado/:id', Lugares.getAllMunicipiosByIdEstado);
@@ -109,6 +120,7 @@ app.get('/getAllPresentacionesByIdMineralMetalico/:id', Presentaciones.getAllPre
 app.get('/getAllPresentacionesByIdMineralNoMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralNoMetalico);
 /* -------------------- TIPOS DE MAQUINARIAS -------------------- */
 app.get('/getAllTiposMaquinaria', TiposMaquinaria.getAllTiposMaquinaria);
+app.get('/getTiposMaquinariaByIdFase/:id', TiposMaquinaria.getTiposMaquinariaByIdFase)
 /* -------------------- TIPOS DE YACIMIENTOS -------------------- */
 app.get('/getAllTiposYacimiento', TiposYacimiento.getAllTiposYacimiento);
 app.get('/getTipoYacimientoByIdYacimiento/:id', TiposYacimiento.getTipoYacimientoByIdYacimiento);

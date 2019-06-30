@@ -1,26 +1,26 @@
 require('dotenv').config({ path: '.env.development' });
 const { Client } = require('pg');
-
-// FORMATO  CONNECTION STRING postgressql://YourUserName:YourPassword@localhost:5432/YourDatabase
+const format = require('pg-format');
 
 /* ------------------------------ CREATE ------------------------------ */
 
-const createYacimiento = (total, fk_cliente, fk_estatus, callback) => {
+const createYacimiento = (info, claveExplotacion, callback) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'INSERT INTO mu_venta (Total, fk_cliente_natural, fk_estatus) VALUES ($1, $2, $3) RETURNING Clave';
-    const values = [total, fk_cliente, fk_estatus];
+    const text = 'INSERT INTO MU_YACIMIENTO (nombre, descripcion, fecha_registro, "tamaño", fk_lugar, fk_estatus, fk_explotacion)\n\
+                    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING Clave';
+    const values = [info.yacimiento.nombre, info.yacimiento.descripcion, info.yacimiento.fecha, info.yacimiento.area, info.yacimiento.ubicacion.parroquia, info.yacimiento.estatus, claveExplotacion];
     client.query(text, values)
     .then((res) => {
         client.end();
+        callback(res.rows[0].clave)
     })
     .catch((e) => {
-        client.end();
         console.error(e.stack);
+        client.end();
     })
-    
 }
 
 const getAllYacimientos = (req, res) => {
@@ -57,6 +57,23 @@ const getAllYacimientoInfoById = (req, res) => {
     })
 }
 
+const insertTipoYacimiento = (info, claveYacimiento) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'INSERT INTO MU_YACIMIENTO_TIPO_YACIMIENTO (fk_yacimiento, fk_tipo_yacimiento) VALUES ($1, $2);';
+    const values = [claveYacimiento, info.yacimiento.tipo]
+    client.query(text, values)
+    .then((res) => {
+        client.end();
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    }) 
+}
+
 const getYacimientoById = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
@@ -76,10 +93,45 @@ const getYacimientoById = (req, res) => {
     })
 }
 
+const createYacMineralMet = (values) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = format('INSERT INTO MU_YACIMIENTO_MINERAL (cantidad, fk_mineral_metalico, fk_mineral_no_metalico, fk_yacimiento) VALUES %L', values);
+    client.query(text)
+    .then((res) => {
+        client.end();
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    }) 
+}
+
+const createYacMineralNoMet = (values) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = format('INSERT INTO MU_YACIMIENTO_MINERAL (cantidad, fk_mineral_metalico, fk_mineral_no_metalico, fk_yacimiento) VALUES %L', values);
+    client.query(text)
+    .then((res) => {
+        client.end();
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    }) 
+}
+
 module.exports = {
     createYacimiento,
     getAllYacimientos,
     getAllYacimientoInfoById,
-    getYacimientoById
+    getYacimientoById,
+    insertTipoYacimiento,
+    createYacMineralMet,
+    createYacMineralNoMet
     // ,[siguientes funciones]
 }
