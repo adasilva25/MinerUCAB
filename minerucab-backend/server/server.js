@@ -18,9 +18,11 @@ const PagosValidations = require('../validations/PagosValidations');
 const Presentaciones = require('../database/model/Presentaciones');
 const Roles = require('../database/model/Roles');
 const TiposMaquinaria = require('../database/model/TiposMaquinaria');
+const TiposYacimiento = require('../database/model/TiposYacimiento');
 const Usuarios = require('../database/model/Usuarios')
 const Ventas = require('../database/model/Ventas');
 const VentasValidations = require('../validations/VentasValidations');
+const YacimientosValidations = require('../validations/YacimientosValidations');
 
 const express = require('express');
 const app = express();
@@ -48,11 +50,14 @@ app.post('/createClienteJuridico', ClientesJuridicos.createClienteJuridico);
 app.post('/createMaquinaria', Maquinarias.createMaquinaria);
 /* -------------------- USUARIOS -------------------- */
 app.post('/validateUser', Usuarios.validateUser)
+app.post('/insertUsuario', Usuarios.insertUsuario)
 /* -------------------- VENTAS -------------------- */
 app.post('/createVenta', VentasValidations.createVenta);
 app.post('/crearEmpleado', EmpleadosValidations.crearEmpleado);
 app.post('/crearMineralMetalico', MineralesValidations.crearMineralMetalico);
 app.post('/crearMineralNoMetalico', MineralesValidations.crearMineralNoMetalico);
+/* -------------------- YacimientosValidations -------------------- */
+app.post('/crearConfiguracionYacimiento', YacimientosValidations.crearConfiguracionYacimiento);
 
 
 /* ----------------------------------- GET ----------------------------------- */
@@ -105,6 +110,8 @@ app.get('/getAllPresentacionesByIdMineralMetalico/:id', Presentaciones.getAllPre
 app.get('/getAllPresentacionesByIdMineralNoMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralNoMetalico);
 /* -------------------- TIPOS DE MAQUINARIAS -------------------- */
 app.get('/getAllTiposMaquinaria', TiposMaquinaria.getAllTiposMaquinaria);
+/* -------------------- TIPOS DE YACIMIENTOS -------------------- */
+app.get('/getAllTiposYacimiento', TiposYacimiento.getAllTiposYacimiento);
 /* -------------------- USUARIOS -------------------- */
 app.get('/getUsuarioById/:id', Usuarios.getUsuarioById);
 /* -------------------- VENTAS -------------------- */
@@ -118,11 +125,13 @@ app.get('/getPagosTarjetaCreditoDeVenta/:id', PagosValidations.getPagosTarjetaCr
 app.get('/getPagosTarjetaDebitoDeVenta/:id', PagosValidations.getPagosTarjetaDebitoDeVenta);
 app.get('/getPagosTransferenciaDeVenta/:id', PagosValidations.getPagosTransferenciaDeVenta);
 
-
 /* ----------------------------------- UPDATE ----------------------------------- */
 /* -------------------- CLIENTES -------------------- */
 app.put('/updateClienteNaturalById', ClientesNaturales.updateClienteNaturalById);
 app.put('/updateClienteJuridicoById', ClientesJuridicos.updateClienteJuridicoById);
+/* -------------------- EMPLEADOS -------------------- */
+app.put('/updateEmpleadoById', Empleados.updateEmpleadoById)
+app.put('/updateUsuarioById', Usuarios.updateUsuarioById)
 /* -------------------- MAQUINARIAS -------------------- */
 app.put('/updateMaquinariaById/:id', Maquinarias.updateMaquinariaById)
 
@@ -133,6 +142,7 @@ app.delete('/deleteClienteById/:id', ClientesNaturales.deleteClienteById);
 app.delete('/deleteClienteJuridicoById/:id', ClientesJuridicos.deleteClienteJuridicoById);
 /* -------------------- EMPLEADO -------------------- */
 app.delete('/deleteEmpleadoById/:id', Empleados.deleteEmpleadoById)
+app.delete('/deleteUsuarioById/:id', Usuarios.deleteUsuarioById)
 /* -------------------- MAQUINARIAS -------------------- */
 app.delete('/deleteMaquinariaById/:id', Maquinarias.deleteMaquinariaById)
 /* -------------------- MINERALES -------------------- */

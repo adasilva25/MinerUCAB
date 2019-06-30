@@ -120,12 +120,35 @@ const deleteEmpleadoById = (req, res) => {
     })
 }
 
+const updateEmpleadoById = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    console.log(req.body.data)
+    client.connect();
+    const text = 'UPDATE MU_EMPLEADO SET ci=($1), p_nombre=($2), s_nombre=($3), p_apellido=($4), s_apellido=($5),\n\
+                    fecha_nacimiento=($6), sexo=($7), nivel_de_instruccion=($8), telefono=($9), fk_lugar=($10), fk_cargo=($11),\n\
+                    fk_estatus=($12) WHERE Clave = ($13);';
+    const values = [req.body.data.ci, req.body.data.pnombre, req.body.data.snombre, req.body.data.papellido, req.body.data.sapellido, req.body.data.fecha_nacimiento, req.body.data.sexo, req.body.data.nivel, req.body.data.telefono, req.body.data.fk_lugar, req.body.data.fk_cargo, req.body.data.fk_estatus, req.body.data.empleadoid];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error: error.toString() });
+        client.end();
+    })
+}
+
 module.exports = {
     createEmpleado,
     getAllEmpleados,
     getCriticInfoEmpleados,
     getEmpleadoByCedula,
     getEmpleadoById,
+    updateEmpleadoById,
     deleteEmpleadoById
     // ,[siguientes funciones]
 }
