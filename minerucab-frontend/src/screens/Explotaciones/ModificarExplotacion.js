@@ -340,7 +340,7 @@ export default class ModificarExplotacion extends React.Component {
                     checkInicialtipoMaquiaria:true,
                     fechaI:{
                         dia:1,
-                        mes:30,
+                        mes:7,
                         ano:2018
                     },
                     fechaF:{
@@ -2749,7 +2749,7 @@ export default class ModificarExplotacion extends React.Component {
         }
     }
 
-     renderEmpleadosModal=(sexo)=>{
+    renderEmpleadosModal=(sexo)=>{
         if(sexo=="Masculino"){
             return(<Image src="/images/empleado1.png" alt="empleado" fluid />)
         }else if(sexo=="Femenino"){
@@ -2826,8 +2826,7 @@ export default class ModificarExplotacion extends React.Component {
         return(faltante);
     }
 
-
-     validarEmpleadoHorario=(etapaNum,faseNum,cargoNum,empleadoNum)=>{
+    validarEmpleadoHorario=(etapaNum,faseNum,cargoNum,empleadoNum)=>{
         let etapas=this.state.etapas;
         let empleado=etapas[etapaNum-1].fases[faseNum-1].cargos[cargoNum].empleados[empleadoNum];
         let faltantes=0;
@@ -2846,8 +2845,6 @@ export default class ModificarExplotacion extends React.Component {
         else{
             return("✓");
         } 
-        
-        
     }
 
     setDia=(key,etapaNum,faseNum,cargoNum,empleadoNum)=>{
@@ -2906,8 +2903,6 @@ export default class ModificarExplotacion extends React.Component {
             document.getElementById("FechaInicioTexto").innerHTML = "Obligatorio";
            
         }
-       
-
     }
 
     setFechaCero=()=>{
@@ -2985,16 +2980,16 @@ export default class ModificarExplotacion extends React.Component {
         explotacion.fechaI.dia = Number(fechaInicio.dia);
         explotacion.fechaI.mes = Number(fechaInicio.mes);
         explotacion.fechaI.ano = Number(fechaInicio.ano);
-
+        console.log("fechaInicio",fechaInicio);
         let fecha = new Date();
-        fecha.setDate(fechaInicio.dia-1);
+        fecha.setDate(fechaInicio.dia);
         fecha.setMonth(fechaInicio.mes-1);
         fecha.setFullYear(fechaInicio.ano);
         console.log("Fechaaaa11",fecha);
 
         etapas.forEach((etapa)=>{
             console.log("Fechaaa222",fecha);
-            etapa.fechaI.dia = fecha.getDate()+1;
+            etapa.fechaI.dia = fecha.getDate();
             etapa.fechaI.mes = fecha.getMonth()+1;
             etapa.fechaI.ano = fecha.getFullYear();
 
@@ -3005,7 +3000,7 @@ export default class ModificarExplotacion extends React.Component {
 
             etapa.fases.forEach((fase)=>{
 
-                fase.fechaI.dia = fecha.getDate()+1;
+                fase.fechaI.dia = fecha.getDate();
                 fase.fechaI.mes = fecha.getMonth()+1;
                 fase.fechaI.ano = fecha.getFullYear();
 
@@ -3016,7 +3011,7 @@ export default class ModificarExplotacion extends React.Component {
                 fecha.setDate(fecha.getDate()+fase.duracion);
                 console.log("Duracion",fase.duracion);
 
-                fase.fechaF.dia = fecha.getDate()+1;
+                fase.fechaF.dia = fecha.getDate();
                 fase.fechaF.mes = fecha.getMonth()+1;
                 fase.fechaF.ano = fecha.getFullYear();
 
@@ -3026,7 +3021,7 @@ export default class ModificarExplotacion extends React.Component {
 
             });
             console.log("Fechaaa333",fecha);
-            etapa.fechaF.dia = fecha.getDate()+1;
+            etapa.fechaF.dia = fecha.getDate();
             etapa.fechaF.mes = fecha.getMonth()+1;
             etapa.fechaF.ano = fecha.getFullYear();
 
@@ -3054,55 +3049,58 @@ export default class ModificarExplotacion extends React.Component {
 
 
 
-    handleOnChangeFechaReal=(idTexto,etapaNum,faseNum)=>{
-            const valueDia = document.getElementById("FechaDia"+etapaNum+faseNum+"FR").value;
-            const valueMes = document.getElementById("FechaMes"+etapaNum+faseNum+"FR").value;
-            const valueAno = document.getElementById("FechaAno"+etapaNum+faseNum+"FR").value;
+    handleOnChangeFechaReal=(etapaNum,faseNum)=>{
+        const valueDia = document.getElementById("FechaDia"+etapaNum+faseNum+"FR").value;
+        const valueMes = document.getElementById("FechaMes"+etapaNum+faseNum+"FR").value;
+        const valueAno = document.getElementById("FechaAno"+etapaNum+faseNum+"FR").value;
 
-            const valueTrimmedDia = valueDia.trim();
-            const valueTrimmedMes = valueMes.trim();
-            const valueTrimmedAno = valueAno.trim();
+        const valueTrimmedDia = valueDia.trim();
+        const valueTrimmedMes = valueMes.trim();
+        const valueTrimmedAno = valueAno.trim();
 
-            if(valueTrimmedDia && valueTrimmedMes && valueTrimmedAno ){
+        if(valueTrimmedDia && valueTrimmedMes && valueTrimmedAno ){
+            if((!isNaN(valueTrimmedDia) && (Number(valueTrimmedDia)>0) &&(Number(valueTrimmedDia)<=31)) && (!isNaN(valueTrimmedMes) && (Number(valueTrimmedMes)>0) && (Number(valueTrimmedMes)<=12)) && ( !isNaN(valueTrimmedAno) && (Number(valueTrimmedAno)>=1887) ) ){
                 
-
-                if((!isNaN(valueTrimmedDia) && (Number(valueTrimmedDia)>0) &&(Number(valueTrimmedDia)<=31)) && (!isNaN(valueTrimmedMes) && (Number(valueTrimmedMes)>0) && (Number(valueTrimmedMes)<=12)) && ( !isNaN(valueTrimmedAno) && (Number(valueTrimmedAno)>=1887) ) ){
-                    document.getElementById(idTexto).innerHTML = "Obligatorio";
+                let FechaInicio = new Date(document.getElementById("FechaAno"+etapaNum+faseNum+"I").value,document.getElementById("FechaMes"+etapaNum+faseNum+"I").value,document.getElementById("FechaDia"+etapaNum+faseNum+"I").value);
+                let FechaFinalReal = new Date(valueAno,valueMes,valueDia);
+                console.log("Fecha INicio",FechaInicio,"Fecha Real",FechaFinalReal);
+                if(FechaInicio<FechaFinalReal){
+                    document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Obligatorio";
                     let fecha={
                         dia:Number(valueDia),
                         mes:Number(valueMes),
                         ano:Number(valueAno)
                     };
-                   // console.log("FEEEEEEEEEEEEECCCCCCHA",fecha);
-                    this.actualizarFechas(fecha);
-                    
+                    this.actualizarFechasReales(fecha,etapaNum,faseNum);
+
                 }
                 else{
-                    this.setFechaCero();
-                    
-                    document.getElementById(idTexto).innerHTML = "Introduzca una fecha válida";
-                   
+                    document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "La Fecha Final Real debe ser mayor a la Fecha de Inicio";
                 }
-               
+                
+                
             }
             else{
-                event.target.state='invalid';
-                this.setFechaCero();
-                document.getElementById(idTexto).innerHTML = "Introduzca una fecha válida";
-                console.log("invalido");
-            }
-            
-            if(!valueDia && !valueMes && !valueAno){
-                event.target.state='';
-                this.setFechaCero();
-                document.getElementById(idTexto).innerHTML = "Obligatorio";
                
-            }
-           
-
+                    
+                document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Introduzca una fecha válida";
+                   
+            }    
         }
+        else{
+            event.target.state='invalid';
+            
+            document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Introduzca una fecha válida";
+            console.log("invalido");
+        }
+            
+        if(!valueDia && !valueMes && !valueAno){
+            event.target.state='';
+            document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Obligatorio";   
+        }
+    }
 
-        almacenarEstatus=(event,etapaNum,faseNum)=>{
+    actualizarEstatus=(event,etapaNum,faseNum)=>{
 
             let value = event.target.value;
 
@@ -3141,8 +3139,6 @@ export default class ModificarExplotacion extends React.Component {
                 if(etapa.estatus!=2){
                     etapasInactivas=false;
                 }
-
-
             });
 
             if(etapasInactivas==true){
@@ -3161,8 +3157,90 @@ export default class ModificarExplotacion extends React.Component {
                 etapas: etapas,
                 explotacion: explotacion
             }));
+    }
+
+    actualizarFechasReales=(fechaFR,etapaNum,faseNum)=>{
+        
+        let etapas = this.state.etapas;
+        let explotacion = this.state.explotacion;
+
+        etapas[etapaNum-1].fases[faseNum-1].fechaFR.dia = fechaFR.dia ;
+        etapas[etapaNum-1].fases[faseNum-1].fechaFR.mes = fechaFR.mes ;
+        etapas[etapaNum-1].fases[faseNum-1].fechaFR.ano = fechaFR.ano ;
+
+        let fechaExplotacion = new Date(0,0,0);
+       
+
+        etapas.forEach((etapa)=>{
+            let fechaEtapa = new Date(0,0,0);
+            if(etapa.estatus==10){
+                etapa.fases.forEach((fase)=>{
+                
+                    let fechaFase;
+                    if((fase.estatus==10)&&(fase.fechaFR.dia!=0))
+                    {
+                        fechaFase = new Date(fase.fechaFR.ano,fase.fechaFR.mes,fase.fechaFR.dia);
+                    }
+                    else{
+                        fechaFase = new Date(fase.fechaF.ano,fase.fechaF.mes,fase.fechaF.dia);
+                    }
+
+                    if(fechaEtapa<fechaFase){
+                        fechaEtapa = fechaFase;
+                    }
+                
+                
+                });
+
+                etapa.fechaFR.dia = fechaEtapa.getDate();
+                etapa.fechaFR.mes = fechaEtapa.getMonth();
+                etapa.fechaFR.ano = fechaEtapa.getFullYear();
+
+                document.getElementById("FechaDia"+etapa.numero+"FR").value = etapa.fechaFR.dia;
+                document.getElementById("FechaMes"+etapa.numero+"FR").value = etapa.fechaFR.mes;
+                document.getElementById("FechaAno"+etapa.numero+"FR").value = etapa.fechaFR.ano;
+            }
+
+        });
+
+        if(explotacion.estatus==10){
+            etapas.forEach((etapa)=>{
+                let fechaEtapa ;
+
+                if((etapa.estatus==10)&&(etapa.fechaFR.dia!=0)){
+                    fechaEtapa = new Date(etapa.fechaFR.ano,etapa.fechaFR.mes,etapa.fechaFR.dia);
+                }
+                else{
+                    fechaEtapa = new Date(etapa.fechaF.ano,etapa.fechaF.mes,etapa.fechaF.dia);
+                }
+
+
+                if(fechaExplotacion<fechaEtapa){
+                    fechaExplotacion = fechaEtapa;
+                }
+            });
+
+
+            explotacion.fechaFR.dia = fechaExplotacion.getDate();
+            explotacion.fechaFR.mes = fechaExplotacion.getMonth();
+            explotacion.fechaFR.ano = fechaExplotacion.getFullYear();
+
+
+            document.getElementById("FechaDia0FR").value = explotacion.fechaFR.dia;
+            document.getElementById("FechaMes0FR").value = explotacion.fechaFR.mes;
+            document.getElementById("FechaAno0FR").value = explotacion.fechaFR.ano;
 
         }
+
+        
+
+        this.setState(() => ({
+            etapas: etapas,
+            explotacion: explotacion
+        }));
+        console.log("Explotacioes Fechas",explotacion,"Etapas Fechas",etapas);
+
+    }
 
     render(){
         
@@ -3206,14 +3284,14 @@ export default class ModificarExplotacion extends React.Component {
                                     </Form.Row>
 
                                     <Form.Row className="formMargins" >
-                                        <FormFecha idF={"0I"} idTexto="FechaInicioTexto0I" onChangeF={()=>this.handleOnChangeFecha()} textoAuxiliar="Obligatorio" dia={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaI.dia:""} mes={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaI.mes:""} ano={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaI.ano:""}   titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft"  disabled={(this.state.explotacion.finalizar==true)?true:false}/>
+                                        <FormFecha idF={"0I"} idTexto="FechaInicioTexto" onChangeF={()=>this.handleOnChangeFecha()} textoAuxiliar="Obligatorio" dia={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaI.dia:""} mes={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaI.mes:""} ano={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaI.ano:""}   titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft"  disabled={(this.state.explotacion.finalizar==true)?true:false}/>
                                         
                                         <FormFecha idF={"0F"} titulo="Fecha Final de explotación" clase="inputsPaddingLeft" textoAuxiliar="Calculado" dia={(this.state.explotacion.fechaF.dia==0)?"- -":this.state.explotacion.fechaF.dia} mes={(this.state.explotacion.fechaF.mes==0)?"- -":this.state.explotacion.fechaF.mes} ano={(this.state.explotacion.fechaF.ano==0)?"- - - -":this.state.explotacion.fechaF.ano} disabled={true}/>    
                                         
                                     </Form.Row>
 
                                     <Form.Row className="formMargins" style={{display: ((this.state.explotacion.estatus!=10)?'none':'inline')}}>
-                                        <FormFecha idF={"0FR"} textoAuxiliar="Calculado" idTexto="FechaFinalRealTexto0FR" dia={this.state.explotacion.fechaFR.dia} mes={this.state.explotacion.fechaFR.mes} ano={this.state.explotacion.fechaFR.ano}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
+                                        <FormFecha idF={"0FR"} textoAuxiliar="Calculado" idTexto="FechaFinalRealTexto0FR" dia={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaFR.dia:"- -"} mes={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaFR.mes:"- -"} ano={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaFR.ano:"- - - -"}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
                                     </Form.Row>
 
                                     <Form.Row className="formMargins">
@@ -3512,7 +3590,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                                     className="form-input"
                                                                                     defaultValue={fase.estatus}
                                                                                     disabled={(fase.finalizar==true)?true:false}
-                                                                                    onChange={(evt)=>this.almacenarEstatus(evt,etapa.numero,fase.numero)}
+                                                                                    onChange={(evt)=>this.actualizarEstatus(evt,etapa.numero,fase.numero)}
                                                                                     >
                                                                                         <option value={8}>En proceso</option>
                                                                                         <option value={2}>Inactivo</option>
@@ -3529,7 +3607,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                             </Form.Row>
 
                                                                              <Form.Row className="formMargins" style={{display: ((fase.estatus!=10)?'none':'inline')}}>
-                                                                                <FormFecha idF={fase.numero+"FR"} onChangeF={()=>this.handleOnChangeFechaReal(etapa.numero,fase.numero)}textoAuxiliar="Calculado" idTexto={"FechaFinalRealTexto"+fase.numero+"FR"} dia={fase.fechaFR.dia} mes={fase.fechaFR.mes} ano={fase.fechaFR.ano}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={false}/>
+                                                                                <FormFecha idF={etapa.numero+''+fase.numero+"FR"} onChangeF={()=>this.handleOnChangeFechaReal(etapa.numero,fase.numero)} textoAuxiliar="Obligatorio" idTexto={"FechaFinalRealTexto"+fase.numero+''+etapa.numero+"FR"} dia={(fase.finalizar==true)?fase.fechaFR.dia:""} mes={(fase.finalizar==true)?fase.fechaFR.mes:""} ano={(fase.finalizar==true)?fase.fechaFR.ano:""}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={false}/>
                                                                             </Form.Row>
 
                                                                             <FormTitulo titulo={"Información General de la Fase "+fase.numero}/>

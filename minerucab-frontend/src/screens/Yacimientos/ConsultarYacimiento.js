@@ -1233,7 +1233,7 @@ export default class ConsultarYacimiento extends React.Component {
                                                         >
 
                                                             {this.state.etapas[etapa.numeroV-1].fases.map((fase,indexf)=>{
-                                                                console.log()        
+                                                                console.log("Fases de etapa",etapa.fases,"FASE [0]",etapa.fases[0],"Etapas",this.state.etapas);        
 
                                                                 if (fase.faseShow === true) 
 
