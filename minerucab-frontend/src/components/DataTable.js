@@ -33,7 +33,7 @@ export default class DataTable extends React.Component {
         let explotar = this.props.explotar === true
         let checktable = this.props.checktable === true;
         let modificarCheck = this.props.modificarCheck === true;
-        const listaModificarCheck=this.props.listaModificarCheck;
+        const listaModificarCheck = this.props.listaModificarCheck;
         let urlConsultar = this.props.urlConsultar;
         let urlModificar = this.props.urlModificar;
         let urlExplotar = this.props.urlExplotar;

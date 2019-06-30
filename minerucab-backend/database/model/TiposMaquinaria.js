@@ -43,7 +43,26 @@ const getTiposMaquinariaByIdFase = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT TMF.Cantidad cantidad, TMF.Costo costo, TM.Clave clave, TM.Nombre nombre FROM mu_tipo_maquinaria_fase TMF, MU_TIPO_MAQUINARIA TM WHERE TMF.fk_fase = ($1) AND TMF.fk_tipo_maquinaria = TM.Clave;';
+    const text = 'SELECT TMF.Clave clave_tipo_maquinaria_fase, TMF.Cantidad cantidad, TMF.Costo costo, TM.Clave clave, TM.Nombre nombre FROM mu_tipo_maquinaria_fase TMF, MU_TIPO_MAQUINARIA TM WHERE TMF.fk_fase = ($1) AND TMF.fk_tipo_maquinaria = TM.Clave;';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
+const getMaquinariaByIdTipoMaquinariaFase = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'SELECT TMF.Clave clave_tipo_maquinaria_fase, TMF.Cantidad cantidad, TMF.Costo costo, TM.Clave clave, TM.Nombre nombre FROM mu_tipo_maquinaria_fase TMF, MU_TIPO_MAQUINARIA TM WHERE TMF.fk_fase = ($1) AND TMF.fk_tipo_maquinaria = TM.Clave;';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -60,6 +79,7 @@ const getTiposMaquinariaByIdFase = (req, res) => {
 module.exports = {
     getAllTiposMaquinaria,
     getTipoMaquinariaById,
-    getTiposMaquinariaByIdFase
+    getTiposMaquinariaByIdFase,
+    getMaquinariaByIdTipoMaquinariaFase
     // ,[siguientes funciones]
 }

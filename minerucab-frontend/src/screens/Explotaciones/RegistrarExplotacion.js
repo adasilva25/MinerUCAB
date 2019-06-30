@@ -22,10 +22,6 @@ import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal'
-import ModalHeader from 'react-bootstrap/ModalHeader'
-import ModalTitle from 'react-bootstrap/ModalTitle'
-import ModalBody from 'react-bootstrap/ModalBody'
-import ModalFooter from 'react-bootstrap/ModalFooter'
 import axios from 'axios';
 
 // https://www.w3schools.com/jquery/html_removeclass.asp
@@ -699,14 +695,14 @@ export default class RegistrarExplotacion extends React.Component {
                                                     tipoMaquinaria.nombre = item.nombre;
                                                     tipoMaquinaria.costo = item.costo;
                                                     tipoMaquinaria.cantidad = item.cantidad;
-                                                    fase.tipoMaquinariaId.push(tipoMaquinaria.id)
+                                                    // fase.tipoMaquinariaId.push(tipoMaquinaria.id)
 
                                                     this.setState((prevState) => ({
                                                         etapas: prevState.etapas.map((etapaMap) => {
                                                             if (etapaMap.id === etapa.id){
                                                                 return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
                                                                     if (faseMap.id === fase.id){
-                                                                        return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.concat(tipoMaquinaria)}
+                                                                        return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.concat(tipoMaquinaria), tipoMaquinariaId: faseMap.tipoMaquinariaId.concat(tipoMaquinaria.id)}
                                                                     }
                                                                     else {
                                                                         return faseMap
@@ -3356,7 +3352,7 @@ export default class RegistrarExplotacion extends React.Component {
 
                                     <Form.Group controlId="YacimientosTamañoYacimiento"  className="inputsPaddingRight">
                                         <Form.Label className="cliente-description-fields-text formMarginsE">Ubicación</Form.Label>
-                                        <FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>
+                                        {this.state.yacimiento.ubicacion.idParroquia && <FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>}
                                     </Form.Group>
                                     
                                 </Card.Body>
