@@ -78,9 +78,29 @@ const updateMaquinariaById = (req, res) => {
     })
     .catch((error) => {
         console.log(error);
-        res.status(500).json({ error: error.toString() });
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
+}
+
+const getMaquinariasByIdTipoMaquinaria = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    console.log(req.body.data)
+    client.connect();
+    const text = 'SELECT MA.Clave clave, MA.Identificador identificador FROM MU_MAQUINARIA MA, MU_TIPO_MAQUINARIA TM WHERE TM.Clave = MA.fk_tipo_maquinaria AND TM.Clave = ($1);';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })   
 }
 
 /* ------------------------------ DELETE ------------------------------ */
@@ -99,8 +119,8 @@ const deleteMaquinariaById = (req, res) => {
     })
     .catch((error) => {
         console.log(error);
-        res.status(500).json({ error: error.toString() });
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -108,6 +128,7 @@ module.exports = {
     createMaquinaria,
     getAllMaquinarias,
     getMaquinariaById,
+    getMaquinariasByIdTipoMaquinaria,
     updateMaquinariaById,
     deleteMaquinariaById
     // ,[siguientes funciones]

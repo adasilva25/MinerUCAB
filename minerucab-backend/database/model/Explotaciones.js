@@ -117,15 +117,16 @@ const getEtapasByIdExplotacion = (req, res) => {
     })
 }
 
-const getEtapasYEstatusByIdExplotacion=(req, res)=>{
+
+const getAllExplotaciones = (req, res) => {
+
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'SELECT Clave, nombre, costo_total, duracion, fk_estatus as estatus, fecha_inicio, fecha_fin, fecha_fin_real FROM MU_ETAPA WHERE fk_explotacion = ($1)';
 
-    const values = [req.params.id];
-    client.query(text, values)
+    client.query('SELECT EX.Clave, EX.costo_total "Costo", EX.fecha_inicio "Fecha inicio", E.nombre estatus FROM MU_EXPLOTACION EX, MU_ESTATUS E WHERE EX.fk_estatus = E.Clave;')
+
     .then((response) => {
         client.end();
         res.status(200).json(response.rows)
@@ -134,53 +135,8 @@ const getEtapasYEstatusByIdExplotacion=(req, res)=>{
     .catch((e) => {
         client.end();
         console.error(e.stack);
-
     })
 }
-
-
-getFasesYEstatusByIdEtapa=(req,res)=>{
-    const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
-    });
-    client.connect();
-    const text = 'SELECT Clave, nombre, costo, duracion, fk_estatus as estatus, fecha_inicio, fecha_fin, fecha_fin_real FROM MU_FASE WHERE fk_etapa = ($1)';
-
-    const values = [req.params.id];
-    client.query(text, values)
-    .then((response) => {
-        client.end();
-        res.status(200).json(response.rows)
-    })
-
-    .catch((e) => {
-        client.end();
-        console.error(e.stack);
-
-    })
-}
-
-
-const getAllInfoExplotacionById=(req, res)=>{
-    const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
-    });
-    client.connect();
-    const text = 'SELECT Y.Nombre as nombre, Y.Tamaño as area, Y.fk_lugar as idParroquia, EX.fk_estatus as estatus, EX.Clave as clave_explotacion, EX.Duracion as duracion_explotacion, EX.costo_total as costo_explotacion, EX.fecha_inicio as fecha_inicio, EX.fecha_fin as fecha_fin, EX.fecha_fin_real as fecha_fin_real, (SELECT m1.nombre FROM mu_lugar m1, mu_lugar m2, mu_lugar m3 WHERE m3.fk_lugar = m2.clave AND m2.fk_lugar = m1.clave AND m3.clave = Y.fk_lugar) as "estado", (SELECT m2.nombre FROM mu_lugar m1, mu_lugar m2, mu_lugar m3 WHERE m3.fk_lugar = m2.clave AND m2.fk_lugar = m1.clave AND m3.clave = Y.fk_lugar) as municipio, (SELECT m3.nombre FROM mu_lugar m1, mu_lugar m2, mu_lugar m3 WHERE m3.fk_lugar = m2.clave AND m2.fk_lugar = m1.clave AND m3.clave = Y.fk_lugar) as "parroquia" FROM MU_YACIMIENTO Y, MU_EXPLOTACION EX WHERE Y.fk_explotacion = EX.Clave AND EX.Clave = ($1);';
-    const values = [req.params.id];
-    client.query(text, values)
-    .then((response) => {
-        client.end();
-        res.status(200).json(response.rows)
-    })
-    .catch((error) => {
-        console.log(error);
-        client.end();
-        res.status(500).json({ error: error.toString() });
-    })
-}
-
-
 
 
 module.exports = {
@@ -189,10 +145,10 @@ module.exports = {
     createFase,
     createCargoFase,
     createTipoMaquinariaFase,
-    getEtapasByIdExplotacion,
-    getAllInfoExplotacionById,
-    getEtapasYEstatusByIdExplotacion,
-    getFasesYEstatusByIdEtapa
+
+    getAllExplotaciones,
+    getEtapasByIdExplotacion
+
 
     // ,[siguientes funciones]
 }
