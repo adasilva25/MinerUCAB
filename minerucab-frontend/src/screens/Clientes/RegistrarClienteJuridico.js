@@ -93,7 +93,7 @@ export default class RegistrarClienteJuridico extends React.Component {
                     axios.post('http://localhost:3000/createClienteJuridico', config)
                     .then((res) => {
                         console.log(res)
-                        history.push('/cliente')
+                        this.props.history.push('/cliente')
                     }).catch((e) => {
                         console.log(e)
                         this.setState({ mensajeError: 'Hubo un error registrando el cliente. Por favor, intente de nuevo y valide sus campos' })
@@ -105,7 +105,7 @@ export default class RegistrarClienteJuridico extends React.Component {
                     axios.put('http://localhost:3000/updateClienteJuridicoById', config)
                     .then((res) => {
                         console.log(res)
-                        history.push('/cliente')
+                        this.props.history.push('/cliente')
                     }).catch((e) => {
                         console.log(e)
                         this.setState({ mensajeError: 'Hubo un error actualizando los datos del cliente. Por favor, intente de nuevo y valide sus campos' })
@@ -332,7 +332,7 @@ export default class RegistrarClienteJuridico extends React.Component {
                                     <Col md={5}>
                                         <Button 
                                             className="modal-ventasform-volver-button btn-block" 
-                                            onClick={() => history.goBack()}
+                                            onClick={() => this.props.history.goBack()}
                                         > 
                                             Volver 
                                         </Button>

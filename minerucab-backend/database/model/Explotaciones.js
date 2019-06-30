@@ -93,11 +93,32 @@ const createTipoMaquinariaFase = (values) => {
     }) 
 }
 
+/* ------------------------------ READ ------------------------------ */
+
+const getEtapasByIdExplotacion = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'SELECT Clave, nombre, costo_total, duracion FROM MU_ETAPA WHERE fk_explotacion = ($1)';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
 module.exports = {
     createExplotacion,
     createEtapa,
     createFase,
     createCargoFase,
-    createTipoMaquinariaFase
+    createTipoMaquinariaFase,
+    getEtapasByIdExplotacion
     // ,[siguientes funciones]
 }

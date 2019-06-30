@@ -54,8 +54,8 @@ const createTipoPagoTD = (values, callback) => {
     const text = format('INSERT INTO mu_tipo_pago_tarjeta_debito (Banco, Numero_tarjeta) VALUES %L RETURNING Clave', values);
     client.query(text)
     .then((res) => {
-        callback(res.rows[0].clave)
         client.end();
+        callback(res.rows[0].clave)
     })
     .catch((e) => {
         console.error(e.stack);

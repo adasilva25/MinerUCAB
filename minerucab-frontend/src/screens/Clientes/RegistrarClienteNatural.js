@@ -139,7 +139,7 @@ export default class RegistrarClienteNatural extends React.Component {
                         axios.post('http://localhost:3000/createClienteNatural', config)
                             .then((res) => {
                                 console.log(res)
-                                history.push('/cliente')
+                                this.props.history.push('/cliente')
                             }).catch((e) => {
                                 console.log('catch', e)
                                 this.setState({ mensajeError: 'Hubo un error registrando el cliente. Por favor, intente de nuevo y valide sus campos' })
@@ -151,7 +151,7 @@ export default class RegistrarClienteNatural extends React.Component {
                         axios.put('http://localhost:3000/updateClienteNaturalById', config)
                         .then((res) => {
                             console.log(res)
-                            history.push('/cliente')
+                            this.props.history.push('/cliente')
                         }).catch((e) => {
                             console.log(e)
                             this.setState({ mensajeError: 'Hubo un error actualizando los datos del cliente. Por favor, intente de nuevo y valide sus campos' })

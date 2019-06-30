@@ -59,7 +59,7 @@ export default class FormFecha extends React.Component {
                             </Form.Text>
                         <Form.Control type="text" id={((this.props.idF==0)||(this.props.idF==null)||(this.props.idF==undefined))? "FechaAno":"FechaAno"+this.props.idF} onChange={this.props.onChangeF} defaultValue={this.state.ano} className="form-date form-input" placeholder="YYYY"  disabled={this.props.disabled}/>                                            
                     </Row>
-                <Form.Text className="text-muted" id="FechaInicioTexto">
+                <Form.Text className="text-muted" id={this.props.idTexto}>
                     {this.props.textoAuxiliar}
                 </Form.Text>
                 

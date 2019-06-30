@@ -78,7 +78,7 @@ const AppRouter = () => (
         <Route path="/yacimiento" component={Yacimiento} />
         <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />
         <Route path="/modificar_yacimiento" component={ModificarYacimiento} />
-        <Route path="/consultar_yacimiento" component={ConsultarYacimiento} />
+        <Route path="/consultar_yacimiento/:accion/:id" component={ConsultarYacimiento} />
         {/* ------------------------ EXPLOTACIÓN ------------------------ */}
         <Route path="/registrar_explotacion" component={RegistrarExplotacion} />
         <Route path="/consultar_explotacion" component={ConsultarExplotacion} />
