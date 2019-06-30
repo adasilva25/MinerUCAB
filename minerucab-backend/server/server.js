@@ -100,6 +100,10 @@ app.get('/getClienteJuridicoById/:id', ClientesJuridicos.getClienteJuridicoById)
 app.get('/getDetalleVentaByIdVenta/:id', DetalleVentas.getDetalleVentaByIdVenta);
 /* -------------------- EXPLOTACIONES -------------------- */
 app.get('/getEtapasByIdExplotacion/:id', Explotaciones.getEtapasByIdExplotacion);
+app.get('/getFasesByIdEtapa/:id', Explotaciones.getFasesByIdEtapa);
+app.get('/getCargosExpByIdFase/:id', Explotaciones.getCargosExpByIdFase);
+app.get('/getEmpleadosByIdCargoFase/:id', Explotaciones.getEmpleadosByIdCargoFase);
+app.get('/getExplotacionById/:id', Explotaciones.getExplotacionById);
 /* -------------------- FASES -------------------- */
 app.get('/getFasesByIdEtapa/:id', Fases.getFasesByIdEtapa)
 /* -------------------- LUGAR -------------------- */
@@ -145,10 +149,10 @@ app.get('/getPagosTransferenciaDeVenta/:id', PagosValidations.getPagosTransferen
 /* -------------------- YACIMIENTOS -------------------- */
 app.get('/getAllYacimientos', Yacimientos.getAllYacimientos);
 app.get('/getAllYacimientoInfoById/:id', Yacimientos.getAllYacimientoInfoById);
+app.get('/getYacimientoByIdExplotacion/:id', Yacimientos.getYacimientoByIdExplotacion);
 /* -------------------- YACIMIENTO MINERAL -------------------- */
 app.get('/getAllMineralesMetalicosByIdYacimiento/:id', YacimientoMineral.getAllMineralesMetalicosByIdYacimiento)
 app.get('/getAllMineralesNoMetalicosByIdYacimiento/:id', YacimientoMineral.getAllMineralesNoMetalicosByIdYacimiento)
-
 
 /* ----------------------------------- UPDATE ----------------------------------- */
 /* -------------------- CLIENTES -------------------- */

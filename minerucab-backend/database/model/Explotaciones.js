@@ -101,7 +101,93 @@ const getEtapasByIdExplotacion = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'SELECT Clave, nombre, costo_total, duracion FROM MU_ETAPA WHERE fk_explotacion = ($1)';
+    const text = 'SELECT * FROM MU_ETAPA WHERE fk_explotacion = ($1)';
+
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+
+    })
+}
+
+const getFasesByIdEtapa = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'SELECT * FROM MU_FASE WHERE fk_etapa = ($1)';
+
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+
+    })
+}
+
+const getCargosExpByIdFase = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'select c.clave as clave, c.nombre as nombre, cf.sueldo as sueldo, cf.cantidad as cantidad, cf.clave as relacion from mu_cargo_fase cf, mu_cargo c\n\
+                    where cf.fk_cargo=c.clave and fk_fase = ($1);';
+
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+
+    })
+}
+
+const getEmpleadosByIdCargoFase = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'select e.clave, e.p_nombre, e.p_apellido, e.ci, e.sexo, ecf.clave as relacion from mu_cargo_fase cf, mu_empleado e, mu_empleado_cargo_fase ecf\n\
+                    where cf.clave=ecf.fk_cargo_fase and e.clave=ecf.fk_empleado and cf.clave = ($1)';
+
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+
+    })
+}
+
+const getExplotacionById = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'SELECT * FROM MU_EXPLOTACION WHERE clave = ($1)';
 
     const values = [req.params.id];
     client.query(text, values)
@@ -124,7 +210,11 @@ module.exports = {
     createCargoFase,
     createTipoMaquinariaFase,
 
-    getEtapasByIdExplotacion
+    getEtapasByIdExplotacion,
+    getFasesByIdEtapa,
+    getCargosExpByIdFase,
+    getEmpleadosByIdCargoFase,
+    getExplotacionById
 
     // ,[siguientes funciones]
 }

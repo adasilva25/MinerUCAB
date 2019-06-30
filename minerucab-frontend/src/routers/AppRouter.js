@@ -81,7 +81,7 @@ const AppRouter = () => (
         <Route path="/consultar_yacimiento/:accion/:id" component={ConsultarYacimiento} />
         {/* ------------------------ EXPLOTACIÓN ------------------------ */}
         <Route path="/registrar_explotacion" component={RegistrarExplotacion} />
-        <Route path="/consultar_explotacion" component={ConsultarExplotacion} />
+        <Route path="/consultar_explotacion/:accion/:id" component={ConsultarExplotacion} />
         <Route path="/modificar_explotacion" component={ModificarExplotacion} />
 
       </Switch>
