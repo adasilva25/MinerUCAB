@@ -9,6 +9,7 @@ const ClientesJuridicos = require('../database/model/ClientesJuridicos');
 const ClientesNaturales = require('../database/model/ClientesNaturales');
 const DetalleVentas = require('../database/model/DetalleVentas');
 const Empleados = require('../database/model/Empleados');
+
 const Explotaciones = require('../database/model/Explotaciones');
 const Fases = require('../database/model/Fases');
 const JasperReports = require('../reports/jasper-reports/jasper-reports-generator');
