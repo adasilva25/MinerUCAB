@@ -20,6 +20,7 @@ const MineralesValidations = require('../validations/MineralesValidations');
 const PagosValidations = require('../validations/PagosValidations');
 const Presentaciones = require('../database/model/Presentaciones');
 const Roles = require('../database/model/Roles');
+const SolicitudesCompra = require('../database/model/SolicitudesCompra');
 const TiposMaquinaria = require('../database/model/TiposMaquinaria');
 const TiposYacimiento = require('../database/model/TiposYacimiento');
 const Usuarios = require('../database/model/Usuarios')
@@ -87,6 +88,7 @@ app.get('/getAllEmpleados', Empleados.getAllEmpleados);
 app.get('/getCriticInfoEmpleados', Empleados.getCriticInfoEmpleados)
 app.get('/getEmpleadoByCedula/:cedula', Empleados.getEmpleadoByCedula);
 app.get('/getEmpleadoById/:id', Empleados.getEmpleadoById);
+app.get('/getEmpleadosByIdCargo/:id', Empleados.getEmpleadosByIdCargo);
 /* -------------------- CLIENTES -------------------- */
 app.get('/getClienteNombreApellidoById/:id', ClientesNaturales.getClienteNombreApellidoById);
 app.get('/getAllClientes', ClientesNaturales.getAllClientes);
@@ -99,6 +101,7 @@ app.get('/getClienteJuridicoById/:id', ClientesJuridicos.getClienteJuridicoById)
 /* -------------------- DETALLES DE VENTAS -------------------- */
 app.get('/getDetalleVentaByIdVenta/:id', DetalleVentas.getDetalleVentaByIdVenta);
 /* -------------------- EXPLOTACIONES -------------------- */
+app.get('/getAllExplotaciones', Explotaciones.getAllExplotaciones)
 app.get('/getEtapasByIdExplotacion/:id', Explotaciones.getEtapasByIdExplotacion);
 app.get('/getFasesByIdEtapa/:id', Explotaciones.getFasesByIdEtapa);
 app.get('/getCargosExpByIdFase/:id', Explotaciones.getCargosExpByIdFase);
@@ -114,6 +117,7 @@ app.get('/getLugarByIdParroquia/:id', Lugares.getLugarByIdParroquia);
 /* -------------------- MAQUINARIAS -------------------- */
 app.get('/getAllMaquinarias', Maquinarias.getAllMaquinarias);
 app.get('/getMaquinariaById/:id', Maquinarias.getMaquinariaById);
+app.get('/getMaquinariasByIdTipoMaquinaria/:id', Maquinarias.getMaquinariasByIdTipoMaquinaria);
 /* -------------------- MINERALES -------------------- */
 app.get('/getAllMineralesMetalicos', Minerales.getAllMineralesMetalicos);
 app.get('/getAllMineralesNoMetalicos', Minerales.getAllMineralesNoMetalicos);
@@ -128,6 +132,11 @@ app.get('/getAllComponentesByIdMineralNoMetalico/:id', Minerales.getAllComponent
 app.get('/getAllPresentaciones', Presentaciones.getAllPresentaciones);
 app.get('/getAllPresentacionesByIdMineralMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralMetalico);
 app.get('/getAllPresentacionesByIdMineralNoMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralNoMetalico);
+/* -------------------- SOLICITUDES DE COMPRA -------------------- */
+app.get('/getAllSolicitudesDeCompra', SolicitudesCompra.getAllSolicitudesDeCompra);
+app.get('/getSolicitudDeCompraInfoById/:id', SolicitudesCompra.getSolicitudDeCompraInfoById);
+app.get('/getDetalleSolicitudCompraMineralMetalicoById/:id', SolicitudesCompra.getDetalleSolicitudCompraMineralMetalicoById)
+app.get('/getDetalleSolicitudCompraMineralNoMetalicoById/:id', SolicitudesCompra.getDetalleSolicitudCompraMineralNoMetalicoById)
 /* -------------------- TIPOS DE MAQUINARIAS -------------------- */
 app.get('/getAllTiposMaquinaria', TiposMaquinaria.getAllTiposMaquinaria);
 app.get('/getTiposMaquinariaByIdFase/:id', TiposMaquinaria.getTiposMaquinariaByIdFase)

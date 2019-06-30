@@ -2,8 +2,10 @@ import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import LoginPage from '../screens/Login/LoginPage';
 import CambiarContrasena from '../screens/Login/CambiarContrasena';
+import ConsultarSolicitudCompra from '../screens/Compras/ConsultarSolicitudCompra';
 import DashboardPage from '../components/DashboardPage';
 import Empleado from '../screens/Empleados/Empleado';
+import Explotacion from '../screens/Explotaciones/Explotacion';
 import GestionarEmpleado from '../screens/Empleados/GestionarEmpleado';
 import RegistrarClienteNatural from '../screens/Clientes/RegistrarClienteNatural';
 import RegistrarClienteJuridico from '../screens/Clientes/RegistrarClienteJuridico';
@@ -60,9 +62,15 @@ const AppRouter = () => (
         <Route path="/borar_cliente" component={ModalYesNo} />
         {/* ------------------------ SOLICITUDES DE COMPRA ------------------------ */}
         <Route path="/solicitud_compra" component={SolicitudCompra} />
+        <Route path="/consultar_solicitud_compra/:accion/:id" component={ConsultarSolicitudCompra} />
         {/* ------------------------ EMPLEADOS ------------------------ */}
         <Route path="/empleado" component={Empleado} />
         <Route path="/gestionar_empleado/:accion/:id?" component={GestionarEmpleado} />
+        {/* ------------------------ EXPLOTACIÓN ------------------------ */}
+        <Route path="/explotacion" component={Explotacion} />
+        <Route path="/registrar_explotacion/:accion/:id" component={RegistrarExplotacion} />
+        <Route path="/consultar_explotacion/:accion/:id" component={ConsultarExplotacion} />
+        <Route path="/modificar_explotacion" component={ModificarExplotacion} />
         {/* ------------------------ MAQUINARIAS ------------------------ */}
         <Route path="/maquinaria" component={Maquinaria} />
         <Route path="/gestionar_maquinaria/:accion/:id?" component={GestionarMaquinaria}/>
@@ -77,12 +85,8 @@ const AppRouter = () => (
         {/* ------------------------ YACIMIENTO ------------------------ */}
         <Route path="/yacimiento" component={Yacimiento} />
         <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />
-        <Route path="/modificar_yacimiento" component={ModificarYacimiento} />
+        <Route path="/modificar_yacimiento/:id" component={ModificarYacimiento} />
         <Route path="/consultar_yacimiento/:accion/:id" component={ConsultarYacimiento} />
-        {/* ------------------------ EXPLOTACIÓN ------------------------ */}
-        <Route path="/registrar_explotacion" component={RegistrarExplotacion} />
-        <Route path="/consultar_explotacion/:accion/:id" component={ConsultarExplotacion} />
-        <Route path="/modificar_explotacion" component={ModificarExplotacion} />
 
       </Switch>
     </div>

@@ -26,14 +26,17 @@ export default class DataTable extends React.Component {
     componentDidMount = () => {
         const iconoConsultar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconsearch" icon={Icons.faSearch}/>);
         const iconoModificar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconedit" icon={Icons.faEdit} />);
+        const iconoExplotar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconedit" icon={Icons.faEyeDropper} />);
         let modificar = this.props.modificar === true;
         let consultar = this.props.consultar === true;
         let eliminar = this.props.eliminar === true;
+        let explotar = this.props.explotar === true
         let checktable = this.props.checktable === true;
         let modificarCheck = this.props.modificarCheck === true;
         const listaModificarCheck=this.props.listaModificarCheck;
         let urlConsultar = this.props.urlConsultar;
         let urlModificar = this.props.urlModificar;
+        let urlExplotar = this.props.urlExplotar;
         let size = this.props.size;
         let registros = true;
         let dataSet = [];
@@ -75,7 +78,7 @@ export default class DataTable extends React.Component {
                 })*/
                 axios.get(`${this.props.data}`, config)
                 .then((res) => {
-                    console.log('res', res)
+                    // console.log('res', res)
                     res.data.forEach(item => {
                         let values = [];
                         const keys = Object.keys(item);
@@ -234,6 +237,9 @@ export default class DataTable extends React.Component {
                                         if (eliminar === true){
                                             const iconoEliminar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon id={row[0]} className="icons icondelete" icon={Icons.faTrashAlt}/>)
                                             data += `${iconoEliminar}`
+                                        }
+                                        if (explotar === true){
+                                            data += `<a href="${urlExplotar}/CO/${encodeURIComponent(row[0])}">${iconoExplotar}</a>`
                                         }
                                         if ((eliminar === false) && (modificar === false) && (consultar === false) && (registros === true)){
                                             data = 'No posee acciones disponibles'
@@ -611,9 +617,6 @@ export default class DataTable extends React.Component {
     render(){
         return (
             <div>
-            {
-                console.log('btn length', document.getElementsByClassName('icondelete').length)
-            }
             <form name="frm-dt" id="frm-dt" >
                 <table  className="display" width="100%" ref={el => this.el = el}>
                 </table>

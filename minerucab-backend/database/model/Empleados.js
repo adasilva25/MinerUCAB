@@ -101,9 +101,28 @@ const getEmpleadoById = (req, res) => {
     })
 }
 
+const getEmpleadosByIdCargo = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
+    });
+    client.connect();
+    const text = 'SELECT E.Clave "Clave", E.p_nombre "Nombre", E.p_apellido "Apellido", E.ci "Cédula", E.sexo "Sexo" FROM mu_empleado E, MU_CARGO C WHERE C.clave = ($1) AND C.Clave = E.fk_cargo;';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
 const deleteEmpleadoById = (req, res) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     client.connect();
     const text = 'DELETE FROM mu_empleado WHERE clave = ($1);';
@@ -122,7 +141,7 @@ const deleteEmpleadoById = (req, res) => {
 
 const updateEmpleadoById = (req, res) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     console.log(req.body.data)
     client.connect();
@@ -148,6 +167,7 @@ module.exports = {
     getCriticInfoEmpleados,
     getEmpleadoByCedula,
     getEmpleadoById,
+    getEmpleadosByIdCargo,
     updateEmpleadoById,
     deleteEmpleadoById
     // ,[siguientes funciones]

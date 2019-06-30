@@ -952,8 +952,6 @@ export default class ModificarExplotacion extends React.Component {
             }]
         }
 
-        console.log(info);
-
         let state={
             eliminadosFases: [],
             dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
@@ -1152,89 +1150,292 @@ export default class ModificarExplotacion extends React.Component {
                 }]
             }]
         }
-        state.yacimiento.id=info.yacimiento.id;
-        state.yacimiento.nombre=info.yacimiento.nombre;
-        state.yacimiento.descripcion = info.yacimiento.descripcion;
-        state.yacimiento.area = info.yacimiento.area;
-        state.yacimiento.tipo = info.yacimiento.tipo;
-        state.yacimiento.tipoId = info.yacimiento.tipoId;
-        state.yacimiento.ubicacion.estado = info.yacimiento.ubicacion.estado;
-        state.yacimiento.ubicacion.municipio = info.yacimiento.ubicacion.municipio;
-        state.yacimiento.ubicacion.parroquia = info.yacimiento.ubicacion.parroquia;
-        state.yacimiento.ubicacion.idParroquia = info.yacimiento.ubicacion.idParroquia;
-        state.yacimiento.fecha.dia = info.yacimiento.fecha.dia;
-        state.yacimiento.fecha.mes = info.yacimiento.fecha.mes;
-        state.yacimiento.fecha.ano = info.yacimiento.fecha.ano;
-
-        state.explotacion.id = info.explotacion.id;
-        state.explotacion.duracion = info.explotacion.duracion;
-        state.explotacion.costo = info.explotacion.costo;
-        state.explotacion.estatus = info.explotacion.estatus;
-
-        if(state.explotacion.estatus==10){
-            state.explotacion.finalizar=true;
-        }
 
 
-        state.explotacion.fechaI.dia =  info.explotacion.fechaI.dia;
-        state.explotacion.fechaI.mes =  info.explotacion.fechaI.mes;
-        state.explotacion.fechaI.ano =  info.explotacion.fechaI.ano;
+        console.log(info);
 
-        state.explotacion.fechaF.dia =  info.explotacion.fechaF.dia;
-        state.explotacion.fechaF.mes =  info.explotacion.fechaF.mes;
-        state.explotacion.fechaF.ano =  info.explotacion.fechaF.ano;
+        // let state={
+        //     eliminadosFases: [],
+        //     dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
+        //     actualizar:true,
+        //     eliminar:true,
+        //     prueba: true,
+        //     key:"Etapa 1",
+        //     explotacion:{
+        //         id:null,
+        //         duracion:0,
+        //         finalizar:false,
+        //         costo:0,
+        //         fechaI:{
+        //             dia:0,
+        //             mes:0,
+        //             ano:0
+        //         },
+        //         fechaF:{
+        //             dia:0,
+        //             mes:0,
+        //             ano:0
+        //         },
+        //         fechaFR:{
+        //             dia:0,
+        //             mes:0,
+        //             ano:0
+        //         },
+        //     },
+        //     yacimiento:{
+        //         id:null,
+        //         nombre:null,
+        //         descripcion:null,
+        //         area:null,
+        //         estatus:null,
+        //         tipo:null,
+        //         tipoId:null,
+        //         ubicacion:{
+        //             estado:null,
+        //             municipio:null,
+        //             parroquia:null,
+        //             idParroquia:null,
+        //         },
+        //         fecha:{
+        //             dia:0,
+        //             mes:0,
+        //             ano:0
+        //         }
+        //     },
+        //     accordionKey:[],
+        //     mineralShow:'inline',
+        //     mineralId:[],
+        //     Minerales:[{
+        //         nombre:null,
+        //         id:-1,
+        //         total: 0,
+        //         accordionKey:0,
+              
+                
+        //     }],
+        //     mineralNoMetalicoId:[],
+        //     mineralNoMetalicoShow:'inline',
+        //     MineralesNoMetalicos:[{
+        //         nombre:null,
+        //         id:-1,
+        //         total: 0,
+        //         accordionKey:0,
+                
+        //     }],
+        //     etapas: [{
+        //         nombre: "Etapa 1",
+        //         nombreV:null,
+        //         id:null,
+        //         finalizar:false,
+        //         estatus:null,
+        //         duracion:0,
+        //         costo:0,
+        //         etapaShow:true,
+        //         numero: 1,
+        //         numeroV:1,
+        //         eliminar:true,
+        //         fechaI:{
+        //             dia:0,
+        //             mes:0,
+        //             ano:0
+        //         },
+        //         fechaF:{
+        //             dia:0,
+        //             mes:0,
+        //             ano:0
+        //         },
+        //         fechaFR:{
+        //             dia:0,
+        //             mes:0,
+        //             ano:0
+        //         },
+        //         key:"Fase 1",
+        //         fases: [{
+        //             nombre: "Fase 1",
+        //             nombreV:null,
+        //             id:null,
+        //             finalizar:false,
+        //             duracion:0,
+        //             estatus:null,
+        //             costo:0,
+        //             faseShow:true,
+        //             cargoShow:'inline',
+        //             tipoMaquinariaShow:'inline',
+        //             numero:1,
+        //             numeroV:1,
+        //             cargosId:[],
+        //             checkInicialCargos:true,
+        //             tipoMaquinariaId:[],
+        //             checkInicialtipoMaquiaria:true,
+        //             fechaI:{
+        //                 dia:0,
+        //                 mes:0,
+        //                 ano:0
+        //             },
+        //             fechaF:{
+        //                 dia:0,
+        //                 mes:0,
+        //                 ano:0
+        //             },
+        //             fechaFR:{
+        //                 dia:0,
+        //                 mes:0,
+        //                 ano:0
+        //             },
+        //             cargos:[{
+        //                 nombre:null,
+        //                 id:-1,
+        //                 sueldo:0,
+        //                 cantidad:0,
+        //                 estatus:null,
+        //                 accordionKey:0,
+        //                 empleadosShow:'inline',
+        //                 empleadosId:[],
+        //                 checkInicialEmpleado:true,
+        //                 empleados:[{
+        //                     id:-1,
+        //                     nombre:null,
+        //                     ci:null,
+        //                     accordionKey:0,
+        //                     sexo:null,
+        //                     estatus:null,
+        //                     dia:"Lunes",
+        //                     horario:[{
+        //                         dia:"Lunes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Martes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Miercoles",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Jueves",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Viernes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     }]
+        //                 }],
+        //             }],
+        //             tipoMaquinaria:[{
+        //                 nombre:null,
+        //                 id:-1,
+        //                 costo:0,
+        //                 cantidad:0,
+        //                 estatus:null,
+        //                 accordionKey:0,
+        //                 maquinariasShow:'none',
+        //                 maquinariasId:[],
+        //                 checkInicialMaquiaria:true,
+        //                 maquinarias:[{
+        //                     id:-1,
+        //                     serial:null,
+        //                     estatus:null,
+        //                 }],
+        //             }]
 
-        state.explotacion.fechaFR.dia =  info.explotacion.fechaFR.dia;
-        state.explotacion.fechaFR.mes =  info.explotacion.fechaFR.mes;
-        state.explotacion.fechaFR.ano =  info.explotacion.fechaFR.ano;
+        //         }]
+        //     }]
+        // }
+
+        // state.yacimiento.id=info.yacimiento.id;
+        // state.yacimiento.nombre=info.yacimiento.nombre;
+        // state.yacimiento.descripcion = info.yacimiento.descripcion;
+        // state.yacimiento.area = info.yacimiento.area;
+        // state.yacimiento.tipo = info.yacimiento.tipo;
+        // state.yacimiento.tipoId = info.yacimiento.tipoId;
+        // state.yacimiento.ubicacion.estado = info.yacimiento.ubicacion.estado;
+        // state.yacimiento.ubicacion.municipio = info.yacimiento.ubicacion.municipio;
+        // state.yacimiento.ubicacion.parroquia = info.yacimiento.ubicacion.parroquia;
+        // state.yacimiento.ubicacion.idParroquia = info.yacimiento.ubicacion.idParroquia;
+        // state.yacimiento.fecha.dia = info.yacimiento.fecha.dia;
+        // state.yacimiento.fecha.mes = info.yacimiento.fecha.mes;
+        // state.yacimiento.fecha.ano = info.yacimiento.fecha.ano;
+
+        // state.explotacion.id = info.explotacion.id;
+        // state.explotacion.duracion = info.explotacion.duracion;
+        // state.explotacion.costo = info.explotacion.costo;
+        // state.explotacion.estatus = info.explotacion.estatus;
+
+        // if(state.explotacion.estatus==10){
+        //     state.explotacion.finalizar=true;
+        // }
 
 
-        state.Minerales.shift();
-        for(let i=0; i<info.minerales.length; i++){
+        // state.explotacion.fechaI.dia =  info.explotacion.fechaI.dia;
+        // state.explotacion.fechaI.mes =  info.explotacion.fechaI.mes;
+        // state.explotacion.fechaI.ano =  info.explotacion.fechaI.ano;
+
+        // state.explotacion.fechaF.dia =  info.explotacion.fechaF.dia;
+        // state.explotacion.fechaF.mes =  info.explotacion.fechaF.mes;
+        // state.explotacion.fechaF.ano =  info.explotacion.fechaF.ano;
+
+        // state.explotacion.fechaFR.dia =  info.explotacion.fechaFR.dia;
+        // state.explotacion.fechaFR.mes =  info.explotacion.fechaFR.mes;
+        // state.explotacion.fechaFR.ano =  info.explotacion.fechaFR.ano;
+
+
+        // state.Minerales.shift();
+        // for(let i=0; i<info.minerales.length; i++){
 
            
-            state.mineralId.push(info.minerales[i].id);
+        //     state.mineralId.push(info.minerales[i].id);
 
-            let mineral={
-                nombre:null,
-                id:-1,
-                total: 0,
-                accordionKey:0,
+        //     let mineral={
+        //         nombre:null,
+        //         id:-1,
+        //         total: 0,
+        //         accordionKey:0,
                
                 
-            }
+        //     }
 
-            mineral.nombre=info.minerales[i].nombre;
-            mineral.id=info.minerales[i].id;
-            mineral.total=info.minerales[i].total;
+        //     mineral.nombre=info.minerales[i].nombre;
+        //     mineral.id=info.minerales[i].id;
+        //     mineral.total=info.minerales[i].total;
 
             
-            state.Minerales.push(mineral);
-        }
+        //     state.Minerales.push(mineral);
+        // }
         
 
 
-        state.MineralesNoMetalicos.shift();
-        for(let i=0; i<info.mineralesNoMetalicos.length; i++){
+        // state.MineralesNoMetalicos.shift();
+        // for(let i=0; i<info.mineralesNoMetalicos.length; i++){
 
             
-            state.mineralNoMetalicoId.push(info.mineralesNoMetalicos[i].id);
+        //     state.mineralNoMetalicoId.push(info.mineralesNoMetalicos[i].id);
 
-            let mineral={
-                nombre:null,
-                id:-1,
-                total: 0,
-                accordionKey:0,
+        //     let mineral={
+        //         nombre:null,
+        //         id:-1,
+        //         total: 0,
+        //         accordionKey:0,
                 
-            }
+        //     }
 
-            mineral.nombre=info.mineralesNoMetalicos[i].nombre;
-            mineral.id=info.mineralesNoMetalicos[i].id;
-            mineral.total=Number(info.mineralesNoMetalicos[i].total);
+        //     mineral.nombre=info.mineralesNoMetalicos[i].nombre;
+        //     mineral.id=info.mineralesNoMetalicos[i].id;
+        //     mineral.total=Number(info.mineralesNoMetalicos[i].total);
 
             
-            state.MineralesNoMetalicos.push(mineral);
-        }
+        //     state.MineralesNoMetalicos.push(mineral);
+        // }
 
 
 
@@ -1251,504 +1452,504 @@ export default class ModificarExplotacion extends React.Component {
 
         //console.log("minerales",state.Minerales);
 
-        state.etapas.shift();
+        // state.etapas.shift();
 
-        if (info.etapas.length>1){
-            state.eliminar=false;
-        }
-        for(let i=0; i<info.etapas.length; i++){
-            let etapa={
-                nombre: "Etapa 1",
-                nombreV:null,
-                id:null,
-                estatus:null,
-                finalizar:false,
-                duracion:0,
-                costo:0,
-                etapaShow:true,
-                numero: 1,
-                numeroV:1,
-                eliminar:true,
-                fechaI:{
-                    dia:0,
-                    mes:0,
-                    ano:0
-                },
-                fechaF:{
-                    dia:0,
-                    mes:0,
-                    ano:0
-                },
-                fechaFR:{
-                    dia:0,
-                    mes:0,
-                    ano:0
-                },
-                key:"Fase 1",
-                fases: [{
-                    nombre: "Fase 1",
-                    nombreV:null,
-                    id:null,
-                    duracion:0,
-                    finalizar:false,
-                    estatus:null,
-                    costo:0,
-                    faseShow:true,
-                    cargoShow:'inline',
-                    tipoMaquinariaShow:'inline',
-                    numero:1,
-                    numeroV:1,
-                    cargosId:[],
-                    checkInicialCargos:true,
-                    tipoMaquinariaId:[],
-                    checkInicialtipoMaquiaria:true,
-                    fechaI:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    fechaF:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    fechaFR:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    cargos:[{
-                        nombre:null,
-                        id:-1,
-                        sueldo:0,
-                        cantidad:0,
-                        estatus:null,
-                        accordionKey:0,
-                        empleadosShow:'inline',
-                        empleadosId:[],
-                        checkInicialEmpleado:true,
-                        empleados:[{
-                            id:-1,
-                            nombre:null,
-                            ci:null,
-                            accordionKey:0,
-                            sexo:null,
-                            estatus:null,
-                            dia:"Lunes",
-                            horario:[{
-                                dia:"Lunes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Martes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Miercoles",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Jueves",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Viernes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            }]
-                        }],
-                    }],
-                    tipoMaquinaria:[{
-                        nombre:null,
-                        id:-1,
-                        costo:0,
-                        cantidad:0,
-                        estatus:null,
-                        accordionKey:0,
-                        maquinariasShow:'none',
-                        maquinariasId:[],
-                        checkInicialMaquiaria:true,
-                        maquinarias:[{
-                            id:-1,
-                            serial:null,
-                            estatus:null,
-                        }],
-                    }]
+        // if (info.etapas.length>1){
+        //     state.eliminar=false;
+        // }
+        // for(let i=0; i<info.etapas.length; i++){
+        //     let etapa={
+        //         nombre: "Etapa 1",
+        //         nombreV:null,
+        //         id:null,
+        //         estatus:null,
+        //         finalizar:false,
+        //         duracion:0,
+        //         costo:0,
+        //         etapaShow:true,
+        //         numero: 1,
+        //         numeroV:1,
+        //         eliminar:true,
+        //         fechaI:{
+        //             dia:0,
+        //             mes:0,
+        //             ano:0
+        //         },
+        //         fechaF:{
+        //             dia:0,
+        //             mes:0,
+        //             ano:0
+        //         },
+        //         fechaFR:{
+        //             dia:0,
+        //             mes:0,
+        //             ano:0
+        //         },
+        //         key:"Fase 1",
+        //         fases: [{
+        //             nombre: "Fase 1",
+        //             nombreV:null,
+        //             id:null,
+        //             duracion:0,
+        //             finalizar:false,
+        //             estatus:null,
+        //             costo:0,
+        //             faseShow:true,
+        //             cargoShow:'inline',
+        //             tipoMaquinariaShow:'inline',
+        //             numero:1,
+        //             numeroV:1,
+        //             cargosId:[],
+        //             checkInicialCargos:true,
+        //             tipoMaquinariaId:[],
+        //             checkInicialtipoMaquiaria:true,
+        //             fechaI:{
+        //                 dia:0,
+        //                 mes:0,
+        //                 ano:0
+        //             },
+        //             fechaF:{
+        //                 dia:0,
+        //                 mes:0,
+        //                 ano:0
+        //             },
+        //             fechaFR:{
+        //                 dia:0,
+        //                 mes:0,
+        //                 ano:0
+        //             },
+        //             cargos:[{
+        //                 nombre:null,
+        //                 id:-1,
+        //                 sueldo:0,
+        //                 cantidad:0,
+        //                 estatus:null,
+        //                 accordionKey:0,
+        //                 empleadosShow:'inline',
+        //                 empleadosId:[],
+        //                 checkInicialEmpleado:true,
+        //                 empleados:[{
+        //                     id:-1,
+        //                     nombre:null,
+        //                     ci:null,
+        //                     accordionKey:0,
+        //                     sexo:null,
+        //                     estatus:null,
+        //                     dia:"Lunes",
+        //                     horario:[{
+        //                         dia:"Lunes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Martes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Miercoles",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Jueves",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Viernes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     }]
+        //                 }],
+        //             }],
+        //             tipoMaquinaria:[{
+        //                 nombre:null,
+        //                 id:-1,
+        //                 costo:0,
+        //                 cantidad:0,
+        //                 estatus:null,
+        //                 accordionKey:0,
+        //                 maquinariasShow:'none',
+        //                 maquinariasId:[],
+        //                 checkInicialMaquiaria:true,
+        //                 maquinarias:[{
+        //                     id:-1,
+        //                     serial:null,
+        //                     estatus:null,
+        //                 }],
+        //             }]
 
-                }]
-            }
+        //         }]
+        //     }
 
-            etapa.id=info.etapas[i].id;
-            etapa.numero=i+1;
-            etapa.numeroV=i+1;
+        //     etapa.id=info.etapas[i].id;
+        //     etapa.numero=i+1;
+        //     etapa.numeroV=i+1;
 
-            etapa.nombre= 'Etapa '+ (i+1);
-            etapa.nombreV=info.etapas[i].nombre;
+        //     etapa.nombre= 'Etapa '+ (i+1);
+        //     etapa.nombreV=info.etapas[i].nombre;
 
-            etapa.duracion=info.etapas[i].duracion;
-            etapa.costo= info.etapas[i].costo;
-            etapa.estatus= info.etapas[i].estatus;
+        //     etapa.duracion=info.etapas[i].duracion;
+        //     etapa.costo= info.etapas[i].costo;
+        //     etapa.estatus= info.etapas[i].estatus;
 
-            if(etapa.estatus==10){
-                etapa.finalizar = true;
-            }
+        //     if(etapa.estatus==10){
+        //         etapa.finalizar = true;
+        //     }
 
-            etapa.fechaI.dia =  info.etapas[i].fechaI.dia;
-            etapa.fechaI.mes =  info.etapas[i].fechaI.mes;
-            etapa.fechaI.ano =  info.etapas[i].fechaI.ano;
+        //     etapa.fechaI.dia =  info.etapas[i].fechaI.dia;
+        //     etapa.fechaI.mes =  info.etapas[i].fechaI.mes;
+        //     etapa.fechaI.ano =  info.etapas[i].fechaI.ano;
 
-            etapa.fechaF.dia =  info.etapas[i].fechaF.dia;
-            etapa.fechaF.mes =  info.etapas[i].fechaF.mes;
-            etapa.fechaF.ano =  info.etapas[i].fechaF.ano;
+        //     etapa.fechaF.dia =  info.etapas[i].fechaF.dia;
+        //     etapa.fechaF.mes =  info.etapas[i].fechaF.mes;
+        //     etapa.fechaF.ano =  info.etapas[i].fechaF.ano;
 
-            etapa.fechaFR.dia =  info.etapas[i].fechaFR.dia;
-            etapa.fechaFR.mes =  info.etapas[i].fechaFR.mes;
-            etapa.fechaFR.ano =  info.etapas[i].fechaFR.ano;
+        //     etapa.fechaFR.dia =  info.etapas[i].fechaFR.dia;
+        //     etapa.fechaFR.mes =  info.etapas[i].fechaFR.mes;
+        //     etapa.fechaFR.ano =  info.etapas[i].fechaFR.ano;
 
-            etapa.fases.shift();
-            for(let j=0; j<info.etapas[i].fases.length; j++){
+        //     etapa.fases.shift();
+        //     for(let j=0; j<info.etapas[i].fases.length; j++){
 
-                let fase ={
-                    nombre: "Fase 1",
-                    nombreV:null,
-                    id:null,
-                    duracion:0,
-                    estatus:null,
-                    costo:0,
-                    finalizar:false,
-                    faseShow:true,
-                    cargoShow:'inline',
-                    tipoMaquinariaShow:'inline',
-                    numero:1,
-                    numeroV:1,
-                    cargosId:[],
-                    checkInicialCargos:true,
-                    tipoMaquinariaId:[],
-                    checkInicialtipoMaquiaria:true,
-                    fechaI:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    fechaF:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    fechaFR:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    cargos:[{
-                        nombre:null,
-                        id:-1,
-                        sueldo:0,
-                        cantidad:0,
-                        estatus:null,
-                        accordionKey:0,
-                        empleadosShow:'inline',
-                        empleadosId:[],
-                        checkInicialEmpleado:true,
-                        empleados:[{
-                            id:-1,
-                            nombre:null,
-                            ci:null,
-                            accordionKey:0,
-                            sexo:null,
-                            estatus:null,
-                            dia:"Lunes",
-                            horario:[{
-                                dia:"Lunes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Martes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Miercoles",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Jueves",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Viernes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            }]
-                        }],
-                    }],
-                    tipoMaquinaria:[{
-                        nombre:null,
-                        id:-1,
-                        costo:0,
-                        cantidad:0,
-                        estatus:null,
-                        accordionKey:0,
-                        maquinariasShow:'none',
-                        maquinariasId:[],
-                        checkInicialMaquiaria:true,
-                        maquinarias:[{
-                            id:-1,
-                            serial:null,
-                            estatus:null,
-                        }],
-                    }]
+        //         let fase ={
+        //             nombre: "Fase 1",
+        //             nombreV:null,
+        //             id:null,
+        //             duracion:0,
+        //             estatus:null,
+        //             costo:0,
+        //             finalizar:false,
+        //             faseShow:true,
+        //             cargoShow:'inline',
+        //             tipoMaquinariaShow:'inline',
+        //             numero:1,
+        //             numeroV:1,
+        //             cargosId:[],
+        //             checkInicialCargos:true,
+        //             tipoMaquinariaId:[],
+        //             checkInicialtipoMaquiaria:true,
+        //             fechaI:{
+        //                 dia:0,
+        //                 mes:0,
+        //                 ano:0
+        //             },
+        //             fechaF:{
+        //                 dia:0,
+        //                 mes:0,
+        //                 ano:0
+        //             },
+        //             fechaFR:{
+        //                 dia:0,
+        //                 mes:0,
+        //                 ano:0
+        //             },
+        //             cargos:[{
+        //                 nombre:null,
+        //                 id:-1,
+        //                 sueldo:0,
+        //                 cantidad:0,
+        //                 estatus:null,
+        //                 accordionKey:0,
+        //                 empleadosShow:'inline',
+        //                 empleadosId:[],
+        //                 checkInicialEmpleado:true,
+        //                 empleados:[{
+        //                     id:-1,
+        //                     nombre:null,
+        //                     ci:null,
+        //                     accordionKey:0,
+        //                     sexo:null,
+        //                     estatus:null,
+        //                     dia:"Lunes",
+        //                     horario:[{
+        //                         dia:"Lunes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Martes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Miercoles",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Jueves",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Viernes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     }]
+        //                 }],
+        //             }],
+        //             tipoMaquinaria:[{
+        //                 nombre:null,
+        //                 id:-1,
+        //                 costo:0,
+        //                 cantidad:0,
+        //                 estatus:null,
+        //                 accordionKey:0,
+        //                 maquinariasShow:'none',
+        //                 maquinariasId:[],
+        //                 checkInicialMaquiaria:true,
+        //                 maquinarias:[{
+        //                     id:-1,
+        //                     serial:null,
+        //                     estatus:null,
+        //                 }],
+        //             }]
 
-                }
-
-
+        //         }
 
 
 
-                fase.id=info.etapas[i].fases[j].id;
-                fase.numero=j+1;
-                fase.numeroV=j+1;
 
-                fase.nombre= 'Fase '+ (j+1);
-                fase.nombreV=info.etapas[i].fases[j].nombre;
 
-                fase.duracion=info.etapas[i].fases[j].duracion;
-                fase.costo= info.etapas[i].fases[j].costo;
-                fase.estatus = info.etapas[i].fases[j].estatus;
+        //         fase.id=info.etapas[i].fases[j].id;
+        //         fase.numero=j+1;
+        //         fase.numeroV=j+1;
 
-                if(fase.estatus==10){
-                    fase.finalizar = true;
-                }
+        //         fase.nombre= 'Fase '+ (j+1);
+        //         fase.nombreV=info.etapas[i].fases[j].nombre;
+
+        //         fase.duracion=info.etapas[i].fases[j].duracion;
+        //         fase.costo= info.etapas[i].fases[j].costo;
+        //         fase.estatus = info.etapas[i].fases[j].estatus;
+
+        //         if(fase.estatus==10){
+        //             fase.finalizar = true;
+        //         }
                  
-                fase.fechaI.dia =  info.etapas[i].fases[j].fechaI.dia;
-                fase.fechaI.mes =  info.etapas[i].fases[j].fechaI.mes;
-                fase.fechaI.ano =  info.etapas[i].fases[j].fechaI.ano;
+        //         fase.fechaI.dia =  info.etapas[i].fases[j].fechaI.dia;
+        //         fase.fechaI.mes =  info.etapas[i].fases[j].fechaI.mes;
+        //         fase.fechaI.ano =  info.etapas[i].fases[j].fechaI.ano;
 
-                fase.fechaF.dia =  info.etapas[i].fases[j].fechaF.dia;
-                fase.fechaF.mes =  info.etapas[i].fases[j].fechaF.mes;
-                fase.fechaF.ano =  info.etapas[i].fases[j].fechaF.ano;
+        //         fase.fechaF.dia =  info.etapas[i].fases[j].fechaF.dia;
+        //         fase.fechaF.mes =  info.etapas[i].fases[j].fechaF.mes;
+        //         fase.fechaF.ano =  info.etapas[i].fases[j].fechaF.ano;
 
-                fase.fechaFR.dia =  info.etapas[i].fases[j].fechaFR.dia;
-                fase.fechaFR.mes =  info.etapas[i].fases[j].fechaFR.mes;
-                fase.fechaFR.ano =  info.etapas[i].fases[j].fechaFR.ano;
+        //         fase.fechaFR.dia =  info.etapas[i].fases[j].fechaFR.dia;
+        //         fase.fechaFR.mes =  info.etapas[i].fases[j].fechaFR.mes;
+        //         fase.fechaFR.ano =  info.etapas[i].fases[j].fechaFR.ano;
 
-                fase.cargos.shift();
-                for(let k=0; k<info.etapas[i].fases[j].cargos.length; k++){
-                    fase.cargosId.push(info.etapas[i].fases[j].cargos[k].id);
+        //         fase.cargos.shift();
+        //         for(let k=0; k<info.etapas[i].fases[j].cargos.length; k++){
+        //             fase.cargosId.push(info.etapas[i].fases[j].cargos[k].id);
 
-                    let cargo={
-                        nombre:null,
-                        id:-1,
-                        sueldo:0,
-                        cantidad:0,
-                        estatus:null,
-                        accordionKey:0,
-                        empleadosShow:'inline',
-                        empleadosId:[],
-                        checkInicialEmpleado:true,
-                        empleados:[{
-                            id:-1,
-                            nombre:null,
-                            ci:null,
-                            accordionKey:0,
-                            sexo:null,
-                            estatus:null,
-                            dia:"Lunes",
-                            horario:[{
-                                dia:"Lunes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Martes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Miercoles",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Jueves",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Viernes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            }]
-                        }],
-                    }
+        //             let cargo={
+        //                 nombre:null,
+        //                 id:-1,
+        //                 sueldo:0,
+        //                 cantidad:0,
+        //                 estatus:null,
+        //                 accordionKey:0,
+        //                 empleadosShow:'inline',
+        //                 empleadosId:[],
+        //                 checkInicialEmpleado:true,
+        //                 empleados:[{
+        //                     id:-1,
+        //                     nombre:null,
+        //                     ci:null,
+        //                     accordionKey:0,
+        //                     sexo:null,
+        //                     estatus:null,
+        //                     dia:"Lunes",
+        //                     horario:[{
+        //                         dia:"Lunes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Martes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Miercoles",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Jueves",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Viernes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     }]
+        //                 }],
+        //             }
 
 
-                    cargo.id=info.etapas[i].fases[j].cargos[k].id;
-                    cargo.sueldo=info.etapas[i].fases[j].cargos[k].sueldo;
-                    cargo.cantidad=info.etapas[i].fases[j].cargos[k].cantidad;
-                    cargo.nombre=info.etapas[i].fases[j].cargos[k].nombre;
+        //             cargo.id=info.etapas[i].fases[j].cargos[k].id;
+        //             cargo.sueldo=info.etapas[i].fases[j].cargos[k].sueldo;
+        //             cargo.cantidad=info.etapas[i].fases[j].cargos[k].cantidad;
+        //             cargo.nombre=info.etapas[i].fases[j].cargos[k].nombre;
 
-                    cargo.empleados.shift()
-                    console.log("IsUndefined?",info.etapas[i].fases[j].cargos[k].empleados,i,j,k);
-                    info.etapas[i].fases[j].cargos[k].empleados.forEach((empleadoR)=>{
-                        cargo.empleadosId.push(empleadoR.id);
-                        let empleado={
-                            id:-1,
-                            nombre:null,
-                            ci:null,
-                            accordionKey:0,
-                            sexo:null,
-                            estatus:null,
-                            dia:"Lunes",
-                            horario:[{
-                                dia:"Lunes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Martes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Miercoles",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Jueves",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Viernes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            }]
-                        }
+        //             cargo.empleados.shift()
+        //             console.log("IsUndefined?",info.etapas[i].fases[j].cargos[k].empleados,i,j,k);
+        //             info.etapas[i].fases[j].cargos[k].empleados.forEach((empleadoR)=>{
+        //                 cargo.empleadosId.push(empleadoR.id);
+        //                 let empleado={
+        //                     id:-1,
+        //                     nombre:null,
+        //                     ci:null,
+        //                     accordionKey:0,
+        //                     sexo:null,
+        //                     estatus:null,
+        //                     dia:"Lunes",
+        //                     horario:[{
+        //                         dia:"Lunes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Martes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Miercoles",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Jueves",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     },
+        //                     {
+        //                         dia:"Viernes",
+        //                         horaEntrada:null,
+        //                         horaSalida:null,
+        //                         value:1,
+        //                     }]
+        //                 }
 
-                        empleado.id = empleadoR.id;
-                        empleado.nombre = empleadoR.nombre;
-                        empleado.ci = empleadoR.ci;
-                        empleado.sexo = empleadoR.sexo;
+        //                 empleado.id = empleadoR.id;
+        //                 empleado.nombre = empleadoR.nombre;
+        //                 empleado.ci = empleadoR.ci;
+        //                 empleado.sexo = empleadoR.sexo;
                         
-                        for(let y=0; y<empleadoR.horario.length; y++){
-                            empleado.horario[y].horaEntrada = empleadoR.horario[y].horaEntrada;
-                            empleado.horario[y].horaSalida = empleadoR.horario[y].horaSalida;
-                            empleado.horario[y].value = empleadoR.horario[y].value;
-                        }
-                        cargo.empleados.push(empleado);
+        //                 for(let y=0; y<empleadoR.horario.length; y++){
+        //                     empleado.horario[y].horaEntrada = empleadoR.horario[y].horaEntrada;
+        //                     empleado.horario[y].horaSalida = empleadoR.horario[y].horaSalida;
+        //                     empleado.horario[y].value = empleadoR.horario[y].value;
+        //                 }
+        //                 cargo.empleados.push(empleado);
 
-                    });
-
-
-                    fase.cargos.push(cargo);    
-                }
+        //             });
 
 
-                fase.tipoMaquinaria.shift();
-                for(let k=0; k<info.etapas[i].fases[j].tipoMaquinaria.length; k++){
-                    fase.tipoMaquinariaId.push(info.etapas[i].fases[j].tipoMaquinaria[k].id);
-                    let tipoMaquinaria={
-                        nombre:null,
-                        id:-1,
-                        costo:0,
-                        cantidad:0,
-                        estatus:null,
-                        accordionKey:0,
-                        maquinariasShow:'none',
-                        maquinariasId:[],
-                        checkInicialMaquiaria:true,
-                        maquinarias:[{
-                            id:-1,
-                            serial:null,
-                            estatus:null,
-                        }],
-                    }
+        //             fase.cargos.push(cargo);    
+        //         }
 
 
-                    tipoMaquinaria.id=info.etapas[i].fases[j].tipoMaquinaria[k].id;
-                    tipoMaquinaria.sueldo=info.etapas[i].fases[j].tipoMaquinaria[k].sueldo;
-                    tipoMaquinaria.cantidad=info.etapas[i].fases[j].tipoMaquinaria[k].cantidad;
-                    tipoMaquinaria.nombre=info.etapas[i].fases[j].tipoMaquinaria[k].nombre;
+        //         fase.tipoMaquinaria.shift();
+        //         for(let k=0; k<info.etapas[i].fases[j].tipoMaquinaria.length; k++){
+        //             fase.tipoMaquinariaId.push(info.etapas[i].fases[j].tipoMaquinaria[k].id);
+        //             let tipoMaquinaria={
+        //                 nombre:null,
+        //                 id:-1,
+        //                 costo:0,
+        //                 cantidad:0,
+        //                 estatus:null,
+        //                 accordionKey:0,
+        //                 maquinariasShow:'none',
+        //                 maquinariasId:[],
+        //                 checkInicialMaquiaria:true,
+        //                 maquinarias:[{
+        //                     id:-1,
+        //                     serial:null,
+        //                     estatus:null,
+        //                 }],
+        //             }
 
-                    tipoMaquinaria.maquinarias.shift();
-                    info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias.forEach((maquinariaR)=>{
-                        tipoMaquinaria.maquinariasId.push(maquinariaR.id);
-                        let maquinaria = {
-                            id:-1,
-                            serial:null,
-                            estatus:null,
-                        }
 
-                        maquinaria.id = maquinariaR.id;
-                        maquinaria.serial = maquinariaR.serial;
+        //             tipoMaquinaria.id=info.etapas[i].fases[j].tipoMaquinaria[k].id;
+        //             tipoMaquinaria.sueldo=info.etapas[i].fases[j].tipoMaquinaria[k].sueldo;
+        //             tipoMaquinaria.cantidad=info.etapas[i].fases[j].tipoMaquinaria[k].cantidad;
+        //             tipoMaquinaria.nombre=info.etapas[i].fases[j].tipoMaquinaria[k].nombre;
 
-                        tipoMaquinaria.maquinarias.push(maquinaria);
+        //             tipoMaquinaria.maquinarias.shift();
+        //             info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias.forEach((maquinariaR)=>{
+        //                 tipoMaquinaria.maquinariasId.push(maquinariaR.id);
+        //                 let maquinaria = {
+        //                     id:-1,
+        //                     serial:null,
+        //                     estatus:null,
+        //                 }
 
-                    });
+        //                 maquinaria.id = maquinariaR.id;
+        //                 maquinaria.serial = maquinariaR.serial;
 
-                    fase.tipoMaquinaria.push(tipoMaquinaria);
-                    /*console.log("fase",fase);
-                    console.log("Tipo",fase.tipoMaquinaria[k].maquinarias);
-                    console.log("TipSasdwsdo",fase.tipoMaquinaria);
-                    console.log("Tipo",fase.tipoMaquinaria.maquinarias);*/
-                    if(fase.tipoMaquinaria[k].maquinarias.length>0){
-                        fase.tipoMaquinaria[k].maquinariasShow = 'inline';
-                    }
-                }
+        //                 tipoMaquinaria.maquinarias.push(maquinaria);
+
+        //             });
+
+        //             fase.tipoMaquinaria.push(tipoMaquinaria);
+        //             /*console.log("fase",fase);
+        //             console.log("Tipo",fase.tipoMaquinaria[k].maquinarias);
+        //             console.log("TipSasdwsdo",fase.tipoMaquinaria);
+        //             console.log("Tipo",fase.tipoMaquinaria.maquinarias);*/
+        //             if(fase.tipoMaquinaria[k].maquinarias.length>0){
+        //                 fase.tipoMaquinaria[k].maquinariasShow = 'inline';
+        //             }
+        //         }
                 
-                etapa.fases.push(fase); 
-            }
-            if (etapa.fases.length>1){
-                etapa.eliminar=false;
-            }
-            state.etapas.push(etapa);
-        }
+        //         etapa.fases.push(fase); 
+        //     }
+        //     if (etapa.fases.length>1){
+        //         etapa.eliminar=false;
+        //     }
+        //     state.etapas.push(etapa);
+        // }
 
         
 
        
 
-        console.log("estado inicial",state);
-        console.log("estado inicial",state.mineralId);
-        this.setState(() => ({
-            eliminar: state.eliminar,
-            yacimiento: state.yacimiento,
-            explotacion: state.explotacion,
-            mineralId: state.mineralId,
-            Minerales: state.Minerales,
-            mineralNoMetalicoId: state.mineralNoMetalicoId,
-            MineralesNoMetalicos: state.MineralesNoMetalicos,
-            etapas: state.etapas
-        }));
+        // console.log("estado inicial",state);
+        // console.log("estado inicial",state.mineralId);
+        // this.setState(() => ({
+        //     eliminar: state.eliminar,
+        //     yacimiento: state.yacimiento,
+        //     explotacion: state.explotacion,
+        //     mineralId: state.mineralId,
+        //     Minerales: state.Minerales,
+        //     mineralNoMetalicoId: state.mineralNoMetalicoId,
+        //     MineralesNoMetalicos: state.MineralesNoMetalicos,
+        //     etapas: state.etapas
+        // }));
     }
 
     /*inicializarInputs=()=>{
