@@ -8,7 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ModalYesNo from '../../components/ModalYesNo';
 
-export default class SolicitudCompra extends React.Component {
+export default class Explotacion extends React.Component {
     state = {
         modalShowEliminar: false,
         infoEliminar: ''
@@ -28,7 +28,7 @@ export default class SolicitudCompra extends React.Component {
                           <Col md={11}>
                               <Row>
                                   <Col md={11}>
-                                      <h4 className="horizontal-line-title-ventas-form cliente-title">Solicitud Compra</h4>
+                                      <h4 className="horizontal-line-title-ventas-form cliente-title">Explotaciones</h4>
                                   </Col>
                                   <Col md={1}></Col>
                               </Row>
@@ -38,7 +38,7 @@ export default class SolicitudCompra extends React.Component {
                 <ModalYesNo
                     show={this.state.modalShowEliminar}
                     onHide={this.modalEliminarClose}
-                    mensaje={'¿Está seguro que desea eliminar la compra'}
+                    mensaje={'¿Está seguro que desea eliminar la explotación'}
                     infoeliminar={this.state.infoEliminar}
                     urleliminar={`http://localhost:3000/FALTAPORDEFINIR/${this.state.idEliminar}`}
                 />
@@ -47,19 +47,23 @@ export default class SolicitudCompra extends React.Component {
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
                             <DataTable
-                                data={'http://localhost:3000/getAllSolicitudesDeCompra'}
-                                urlModificar={'/modificar_yacimiento'}
-                                urlConsultar={'/consultar_solicitud_compra'}
-                                urlCrear={'/registrar_yacimiento'}
+                                data={'http://localhost:3000/getAllYacimientos'}
+                                textoSingular={'yacimiento'}
+                                textoPlural={'yacimientos'}
+                                urlModificar={'/modificar_explotacion'}
+                                urlConsultar={'/consultar_explotacion'}
+                                urlCrear={'/registrar_explotacion'}
+                                urlExplotar={'/registrar_explotacion'}
                                 agregar={true}
                                 modificar={true}
                                 consultar={true}
                                 eliminar={true}
+                                explotar={true}
                                 modalEliminar={this.modalEliminarOpen}
                                 reload={this.state.reload}
                                 checktable={false}
-                                textoSingular={'solicitud de compra'}
-                                textoPlural={'solicitudes de compra'}
+                                textoSingular={'explotación'}
+                                textoPlural={'explotaciones'}
                                 size={500}
                             />
                         </Col>
