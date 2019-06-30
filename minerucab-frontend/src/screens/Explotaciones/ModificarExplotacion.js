@@ -26,7 +26,7 @@ import ModalHeader from 'react-bootstrap/ModalHeader'
 import ModalTitle from 'react-bootstrap/ModalTitle'
 import ModalBody from 'react-bootstrap/ModalBody'
 import ModalFooter from 'react-bootstrap/ModalFooter'
-
+import axios from 'axios';
 // https://www.w3schools.com/jquery/html_removeclass.asp
 
 
@@ -243,97 +243,316 @@ export default class ModificarExplotacion extends React.Component {
 
      componentWillMount = () => {
 
+        let state={
+            eliminadosFases: [],
+            dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
+            actualizar:true,
+            eliminar:true,
+            prueba: true,
+            key:"Etapa 1",
+            explotacion:{
+                id:null,
+                duracion:0,
+                finalizar:false,
+                costo:0,
+                fechaI:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                },
+                fechaF:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                },
+                fechaFR:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                },
+            },
+            yacimiento:{
+                id:null,
+                nombre:null,
+                descripcion:null,
+                area:null,
+                estatus:null,
+                tipo:null,
+                tipoId:null,
+                ubicacion:{
+                    estado:null,
+                    municipio:null,
+                    parroquia:null,
+                    idParroquia:null,
+                },
+                fecha:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                }
+            },
+            accordionKey:[],
+            mineralShow:'inline',
+            mineralId:[],
+            Minerales:[{
+                nombre:null,
+                id:-1,
+                total: 0,
+                accordionKey:0,
+              
+                
+            }],
+            mineralNoMetalicoId:[],
+            mineralNoMetalicoShow:'inline',
+            MineralesNoMetalicos:[{
+                nombre:null,
+                id:-1,
+                total: 0,
+                accordionKey:0,
+                
+            }],
+            etapas: [{
+                nombre: "Etapa 1",
+                nombreV:null,
+                id:null,
+                finalizar:false,
+                estatus:null,
+                duracion:0,
+                costo:0,
+                etapaShow:true,
+                numero: 1,
+                numeroV:1,
+                eliminar:true,
+                fechaI:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                },
+                fechaF:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                },
+                fechaFR:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                },
+                key:"Fase 1",
+                fases: [{
+                    nombre: "Fase 1",
+                    nombreV:null,
+                    id:null,
+                    finalizar:false,
+                    duracion:0,
+                    estatus:null,
+                    costo:0,
+                    faseShow:true,
+                    cargoShow:'inline',
+                    tipoMaquinariaShow:'inline',
+                    numero:1,
+                    numeroV:1,
+                    cargosId:[],
+                    checkInicialCargos:true,
+                    tipoMaquinariaId:[],
+                    checkInicialtipoMaquiaria:true,
+                    fechaI:{
+                        dia:0,
+                        mes:0,
+                        ano:0
+                    },
+                    fechaF:{
+                        dia:0,
+                        mes:0,
+                        ano:0
+                    },
+                    fechaFR:{
+                        dia:0,
+                        mes:0,
+                        ano:0
+                    },
+                    cargos:[{
+                        nombre:null,
+                        id:-1,
+                        sueldo:0,
+                        cantidad:0,
+                        estatus:null,
+                        accordionKey:0,
+                        empleadosShow:'inline',
+                        empleadosId:[],
+                        checkInicialEmpleado:true,
+                        empleados:[{
+                            id:-1,
+                            nombre:null,
+                            ci:null,
+                            accordionKey:0,
+                            sexo:null,
+                            estatus:null,
+                            dia:"Lunes",
+                            horario:[{
+                                dia:"Lunes",
+                                horaEntrada:null,
+                                horaSalida:null,
+                                value:1,
+                            },
+                            {
+                                dia:"Martes",
+                                horaEntrada:null,
+                                horaSalida:null,
+                                value:1,
+                            },
+                            {
+                                dia:"Miercoles",
+                                horaEntrada:null,
+                                horaSalida:null,
+                                value:1,
+                            },
+                            {
+                                dia:"Jueves",
+                                horaEntrada:null,
+                                horaSalida:null,
+                                value:1,
+                            },
+                            {
+                                dia:"Viernes",
+                                horaEntrada:null,
+                                horaSalida:null,
+                                value:1,
+                            }]
+                        }],
+                    }],
+                    tipoMaquinaria:[{
+                        nombre:null,
+                        id:-1,
+                        costo:0,
+                        cantidad:0,
+                        estatus:null,
+                        accordionKey:0,
+                        maquinariasShow:'none',
+                        maquinariasId:[],
+                        checkInicialMaquiaria:true,
+                        maquinarias:[{
+                            id:-1,
+                            serial:null,
+                            estatus:null,
+                        }],
+                    }]
 
-         /*const config = {
+                }]
+            }]
+        }
+
+         const config = {
             headers: {
               'Content-Type': 'application/json'
             },
             responseType: 'json'
         }
-        axios.get(`http://localhost:3000/getAllYacimientoInfoById/${this.props.match.params.id}`, config)
+        axios.get(`http://localhost:3000/getAllInfoExplotacionById/${this.props.match.params.id}`, config)
             .then((res) => {
                 console.log('will mount', res)
                 
+                state.yacimiento.id = this.props.match.params.id;
+                state.yacimiento.nombre = res.data[0].nombre;
+                state.yacimiento.area = Number(res.data[0].area);
+
+                state.yacimiento.ubicacion.estado = res.data[0].estado;
+                state.yacimiento.ubicacion.municipio = res.data[0].municipio;
+                state.yacimiento.ubicacion.parroquia = res.data[0].parroquia;
+                state.yacimiento.ubicacion.idParroquia = Number(res.data[0].idparroquia);
+                
+                state.explotacion.id = Number(res.data[0].clave_explotacion);
+                state.explotacion.duracion = Number(res.data[0].duracion_explotacion);
+                state.explotacion.costo = Number(res.data[0].costo_explotacion);
+                state.explotacion.estatus = res.data[0].estatus;
+
+                if(state.explotacion.estatus==10){
+                    state.explotacion.finalizar=true;
+                }
+
+
+                let date = new Date(res.data[0].fecha_inicio);
+                let dia = date.getDate();
+                let mes = (date.getMonth() + 1);
+                let ano = date.getFullYear();
+
+                 console.log('Dia', dia,"Mes",mes,"año",ano);
+
+                state.explotacion.fechaI.dia =  dia;
+                state.explotacion.fechaI.mes =  mes;
+                state.explotacion.fechaI.ano =  ano;
+
+                date = new Date(res.data[0].fecha_fin);
+                dia = date.getDate();
+                mes = (date.getMonth() + 1);
+                ano = date.getFullYear();
+
+
+                state.explotacion.fechaF.dia =  dia;
+                state.explotacion.fechaF.mes =  mes;
+                state.explotacion.fechaF.ano =  ano;
+
+                date = new Date(res.data[0].fecha_fin_real);
+                dia = date.getDate();
+                mes = (date.getMonth() + 1);
+                ano = date.getFullYear();
+
+
+                state.explotacion.fechaFR.dia =  dia;
+                state.explotacion.fechaFR.mes =  mes;
+                state.explotacion.fechaFR.ano =  ano;
+
                 
 
-                info.yacimiento.id = this.props.match.params.id
-                info.yacimiento.nombre = res.data[0].nombre;
-                info.yacimiento.area = res.data[0].area;
-                info.yacimiento.ubicacion.estado = res.data[0].estado
-                info.yacimiento.ubicacion.municipio = res.data[0].municipio
-                info.yacimiento.ubicacion.parroquia = res.data[0].parroquia
-                info.yacimiento.ubicacion.idParroquia = res.data[0].idparroquia
+                 this.setState(() => ({
+                    yacimiento: state.yacimiento,
+                    explotacion: state.explotacion
+                 }));
                 
-
-                info.estatus.id = res.data[0].clave_estatus;
-                info.estatus.nombre = res.data[0].estatus;
-
-                info.explotacion.id = res.data[0].clave_explotacion;
-                info.explotacion.duracion = res.data[0].duracion_explotacion;
-                info.explotacion.costo = res.data[0].costo_explotacion;
-
-
-                state.estatus.id = res.data[0].clave_estatus;
-                state.estatus.nombre = res.data[0].estatus;
-
-                state.yacimiento.id=info.yacimiento.id;
-                state.yacimiento.nombre=info.yacimiento.nombre;
-                state.yacimiento.descripcion = info.yacimiento.descripcion;
-                state.yacimiento.area = info.yacimiento.area;
-                state.yacimiento.ubicacion.estado = info.yacimiento.ubicacion.estado;
-                state.yacimiento.ubicacion.municipio = info.yacimiento.ubicacion.municipio;
-                state.yacimiento.ubicacion.parroquia = info.yacimiento.ubicacion.parroquia;
-                state.yacimiento.ubicacion.idParroquia = info.yacimiento.ubicacion.idParroquia;
-                state.yacimiento.fecha.dia = dia;
-                state.yacimiento.fecha.mes = mes;
-                state.yacimiento.fecha.ano = ano;
-
-                state.explotacion.id = info.explotacion.id;
-                state.explotacion.duracion = info.explotacion.duracion;
-                state.explotacion.costo = info.explotacion.costo;
-                
-                axios.get(`http://localhost:3000/getTipoYacimientoByIdYacimiento/${this.props.match.params.id}`, config)
-                .then((res) => {
-                    console.log('will mount', res)
-                    info.yacimiento.tipo = res.data[0].nombre_tipo_yacimiento
-                    info.yacimiento.tipoId = res.data[0].clave_tipo_yacimiento;
-                    
-                    state.yacimiento.tipo = info.yacimiento.tipo;
-                    state.yacimiento.tipoId = info.yacimiento.tipoId;
-                    
-                    this.setState(() => ({
-                        yacimiento: state.yacimiento,
-                        explotacion: state.explotacion,
-                        estatus: state.estatus
-                    }));
-                    console.log('state', this.state.yacimiento)
-
-                }).catch((e) => {
-                    console.log('Error en axios')
-                })
 
                 //  YEYO
                 state.etapas.shift();
-                axios.get(`http://localhost:3000/getEtapasByIdExplotacion/${state.explotacion.id}`, config)
+                axios.get(`http://localhost:3000/getEtapasYEstatusByIdExplotacion/${state.explotacion.id}`, config)
                     .then((res) => {
                         let etapas = [];
+                        console.log('Etapas', res)
                         res.data.forEach((item, i) => {
-                            let etapaState = {
+
+                            let etapa={
                                 nombre: "Etapa 1",
                                 nombreV:null,
                                 id:null,
+                                estatus:null,
+                                finalizar:false,
                                 duracion:0,
                                 costo:0,
                                 etapaShow:true,
                                 numero: 1,
                                 numeroV:1,
                                 eliminar:true,
+                                fechaI:{
+                                    dia:0,
+                                    mes:0,
+                                    ano:0
+                                },
+                                fechaF:{
+                                    dia:0,
+                                    mes:0,
+                                    ano:0
+                                },
+                                fechaFR:{
+                                    dia:0,
+                                    mes:0,
+                                    ano:0
+                                },
                                 key:"Fase 1",
                                 fases: [{
                                     nombre: "Fase 1",
                                     nombreV:null,
                                     id:null,
                                     duracion:0,
+                                    finalizar:false,
+                                    estatus:null,
                                     costo:0,
                                     faseShow:true,
                                     cargoShow:'inline',
@@ -341,63 +560,321 @@ export default class ModificarExplotacion extends React.Component {
                                     numero:1,
                                     numeroV:1,
                                     cargosId:[],
-                                    tipoMaquinariaId:[],
                                     checkInicialCargos:true,
+                                    tipoMaquinariaId:[],
                                     checkInicialtipoMaquiaria:true,
+                                    fechaI:{
+                                        dia:0,
+                                        mes:0,
+                                        ano:0
+                                    },
+                                    fechaF:{
+                                        dia:0,
+                                        mes:0,
+                                        ano:0
+                                    },
+                                    fechaFR:{
+                                        dia:0,
+                                        mes:0,
+                                        ano:0
+                                    },
                                     cargos:[{
                                         nombre:null,
                                         id:-1,
                                         sueldo:0,
                                         cantidad:0,
-                                        accordionKey:0
+                                        estatus:null,
+                                        accordionKey:0,
+                                        empleadosShow:'inline',
+                                        empleadosId:[],
+                                        checkInicialEmpleado:true,
+                                        empleados:[{
+                                            id:-1,
+                                            nombre:null,
+                                            ci:null,
+                                            accordionKey:0,
+                                            sexo:null,
+                                            estatus:null,
+                                            dia:"Lunes",
+                                            horario:[{
+                                                dia:"Lunes",
+                                                horaEntrada:null,
+                                                horaSalida:null,
+                                                value:1,
+                                            },
+                                            {
+                                                dia:"Martes",
+                                                horaEntrada:null,
+                                                horaSalida:null,
+                                                value:1,
+                                            },
+                                            {
+                                                dia:"Miercoles",
+                                                horaEntrada:null,
+                                                horaSalida:null,
+                                                value:1,
+                                            },
+                                            {
+                                                dia:"Jueves",
+                                                horaEntrada:null,
+                                                horaSalida:null,
+                                                value:1,
+                                            },
+                                            {
+                                                dia:"Viernes",
+                                                horaEntrada:null,
+                                                horaSalida:null,
+                                                value:1,
+                                            }]
+                                        }],
                                     }],
                                     tipoMaquinaria:[{
                                         nombre:null,
                                         id:-1,
                                         costo:0,
                                         cantidad:0,
-                                        accordionKey:0
+                                        estatus:null,
+                                        accordionKey:0,
+                                        maquinariasShow:'none',
+                                        maquinariasId:[],
+                                        checkInicialMaquiaria:true,
+                                        maquinarias:[{
+                                            id:-1,
+                                            serial:null,
+                                            estatus:null,
+                                        }],
                                     }]
-                
+
                                 }]
-                            } 
+                            }
 
+                            etapa.id=item.clave;
+                            etapa.numero=i+1;
+                            etapa.numeroV=i+1;
 
-                            let etapa = {};
-                            etapa.id = item.clave;
-                            etapa.nombre = item.nombre;
-                            etapa.costo = item.costo_total;
-                            etapa.duracion = item.duracion;
-                        
-                            console.log('id-etapa', etapa.id)
-                            console.log('item id-eta', item)
-                            console.log('i', i)
+                            etapa.nombre= 'Etapa '+ (i+1);
+                            etapa.nombreV=item.nombre;
 
-                            //  YEYO
-                            etapaState.id=etapa.id;
-                            etapaState.numero=i+1;
-                            etapaState.numeroV=i+1;
+                            etapa.duracion=item.duracion;
+                            etapa.costo= Number(item.costo_total);
+                            etapa.estatus= item.estatus;
 
-                            etapaState.nombre= 'Etapa '+ (i+1);
-                            etapaState.nombreV=etapa.nombre;
+                            if(etapa.estatus==10){
+                                etapa.finalizar = true;
+                            }
 
-                            etapaState.duracion=etapa.duracion;
-                            etapaState.costo= etapa.costo;
-                            
-                            etapaState.fases.shift();
+                            let date = new Date(item.fecha_inicio);
+                            let dia = date.getDate();
+                            let mes = (date.getMonth() + 1);
+                            let ano = date.getFullYear();
+
+                            etapa.fechaI.dia =  dia;
+                            etapa.fechaI.mes =  mes;
+                            etapa.fechaI.ano =  ano;
+
+                            date = new Date(item.fecha_fin);
+                            dia = date.getDate();
+                            mes = (date.getMonth() + 1);
+                            ano = date.getFullYear();
+
+                            etapa.fechaF.dia =  dia;
+                            etapa.fechaF.mes =  mes;
+                            etapa.fechaF.ano =  ano;
+
+                            date = new Date(item.fecha_fin_real);
+                            dia = date.getDate();
+                            mes = (date.getMonth() + 1);
+                            ano = date.getFullYear();
+
+                            etapa.fechaFR.dia =  dia;
+                            etapa.fechaFR.mes =  mes;
+                            etapa.fechaFR.ano =  ano;
+
+                            etapa.fases.shift();
+
                             this.setState((prevState) => ({
-                                etapas: prevState.etapas.concat(etapaState)
+                                etapas: prevState.etapas.concat(etapa)
                             }));
 
                             // console.log('etapaState', etapaState)
 
-                            axios.get(`http://localhost:3000/getFasesByIdEtapa/${etapa.id}`, config)
+                           axios.get(`http://localhost:3000/getFasesYEstatusByIdEtapa/${etapa.id}`, config)
                                 .then((res) => {
                                     let fases = [];
+                                    console.log('Fases', res)
                                     res.data.forEach((element, j) => {
 
+
+                                        let fase ={
+                                            nombre: "Fase 1",
+                                            nombreV:null,
+                                            id:null,
+                                            duracion:0,
+                                            estatus:null,
+                                            costo:0,
+                                            finalizar:false,
+                                            faseShow:true,
+                                            cargoShow:'inline',
+                                            tipoMaquinariaShow:'inline',
+                                            numero:1,
+                                            numeroV:1,
+                                            cargosId:[],
+                                            checkInicialCargos:true,
+                                            tipoMaquinariaId:[],
+                                            checkInicialtipoMaquiaria:true,
+                                            fechaI:{
+                                                dia:0,
+                                                mes:0,
+                                                ano:0
+                                            },
+                                            fechaF:{
+                                                dia:0,
+                                                mes:0,
+                                                ano:0
+                                            },
+                                            fechaFR:{
+                                                dia:0,
+                                                mes:0,
+                                                ano:0
+                                            },
+                                            cargos:[{
+                                                nombre:null,
+                                                id:-1,
+                                                sueldo:0,
+                                                cantidad:0,
+                                                estatus:null,
+                                                accordionKey:0,
+                                                empleadosShow:'inline',
+                                                empleadosId:[],
+                                                checkInicialEmpleado:true,
+                                                empleados:[{
+                                                    id:-1,
+                                                    nombre:null,
+                                                    ci:null,
+                                                    accordionKey:0,
+                                                    sexo:null,
+                                                    estatus:null,
+                                                    dia:"Lunes",
+                                                    horario:[{
+                                                        dia:"Lunes",
+                                                        horaEntrada:null,
+                                                        horaSalida:null,
+                                                        value:1,
+                                                    },
+                                                    {
+                                                        dia:"Martes",
+                                                        horaEntrada:null,
+                                                        horaSalida:null,
+                                                        value:1,
+                                                    },
+                                                    {
+                                                        dia:"Miercoles",
+                                                        horaEntrada:null,
+                                                        horaSalida:null,
+                                                        value:1,
+                                                    },
+                                                    {
+                                                        dia:"Jueves",
+                                                        horaEntrada:null,
+                                                        horaSalida:null,
+                                                        value:1,
+                                                    },
+                                                    {
+                                                        dia:"Viernes",
+                                                        horaEntrada:null,
+                                                        horaSalida:null,
+                                                        value:1,
+                                                    }]
+                                                }],
+                                            }],
+                                            tipoMaquinaria:[{
+                                                nombre:null,
+                                                id:-1,
+                                                costo:0,
+                                                cantidad:0,
+                                                estatus:null,
+                                                accordionKey:0,
+                                                maquinariasShow:'none',
+                                                maquinariasId:[],
+                                                checkInicialMaquiaria:true,
+                                                maquinarias:[{
+                                                    id:-1,
+                                                    serial:null,
+                                                    estatus:null,
+                                                }],
+                                            }]
+
+                                        }
+
+
+
+
+
+                                        fase.id=element.clave;
+                                        fase.numero=j+1;
+                                        fase.numeroV=j+1;
+
+                                        fase.nombre= 'Fase '+ (j+1);
+                                        fase.nombreV=element.nombre;
+
+                                        fase.duracion=element.duracion;
+                                        fase.costo= Number(element.costo);
+                                        fase.estatus = element.estatus;
+
+                                        if(fase.estatus==10){
+                                            fase.finalizar = true;
+                                        }
+
+                                        let date = new Date(item.fecha_inicio);
+                                        let dia = date.getDate();
+                                        let mes = (date.getMonth() + 1);
+                                        let ano = date.getFullYear();
+                                         
+                                        fase.fechaI.dia =  dia;
+                                        fase.fechaI.mes =  mes;
+                                        fase.fechaI.ano =  ano;
+
+
+
+                                        date = new Date(item.fecha_fin);
+                                        dia = date.getDate();
+                                        mes = (date.getMonth() + 1);
+                                        ano = date.getFullYear();
+
+
+                                        fase.fechaF.dia =  dia;
+                                        fase.fechaF.mes =  mes;
+                                        fase.fechaF.ano =  ano;
+
+                                        date = new Date(item.fecha_fin_real);
+                                        dia = date.getDate();
+                                        mes = (date.getMonth() + 1);
+                                        ano = date.getFullYear();
+
                                         
-                                        let faseState = {
+
+                                        fase.fechaFR.dia =  dia;
+                                        fase.fechaFR.mes =  mes;
+                                        fase.fechaFR.ano =  ano;
+
+                                        this.setState((prevState) => ({
+                                            etapas: prevState.etapas.map((etapaMap) => {
+                                                if (etapaMap.id === etapa.id){
+                                                    return {...etapaMap, fases: etapaMap.fases.concat(fase)}
+                                                }
+                                                else{
+                                                    return etapaMap
+                                                }
+                                            })
+                                        }));
+
+
+
+                                        fase.cargos.shift();
+
+
+                                        
+                                       /* let faseState = {
                                             nombre: "Fase 1",
                                             nombreV:null,
                                             duracion:0,
@@ -447,13 +924,46 @@ export default class ModificarExplotacion extends React.Component {
                                         // console.log('fase-state', faseState)
 
                                         
-                                        //  YEYO
-                                        faseState.tipoMaquinaria.shift();
-                                        axios.get(`http://localhost:3000/getTiposMaquinariaByIdFase/${fase.id}`, config)
+                                        //  YEYO*/
+                                    fase.tipoMaquinaria.shift();
+                                    axios.get(`http://localhost:3000/getTiposMaquinariaByIdFase/${fase.id}`, config)
                                         .then((res) => {
                                             let maquinarias = [];
+                                            console.log('Tipo de Maquinaria', res)
                                             res.data.forEach((item) => {
-                                                let maquinaria = {}
+                                                let tipoMaquinaria={
+                                                    nombre:null,
+                                                    id:-1,
+                                                    costo:0,
+                                                    cantidad:0,
+                                                    estatus:null,
+                                                    accordionKey:0,
+                                                    maquinariasShow:'none',
+                                                    maquinariasId:[],
+                                                    checkInicialMaquiaria:true,
+                                                    maquinarias:[{
+                                                        id:-1,
+                                                        serial:null,
+                                                        estatus:null,
+                                                    }],
+                                                }
+
+
+                                                tipoMaquinaria.id = item.clave;
+                                                tipoMaquinaria.sueldo = item.costo;
+                                                tipoMaquinaria.cantidad = item.cantidad;
+                                                tipoMaquinaria.nombre = item.nombre;
+
+                                                tipoMaquinaria.maquinarias.shift();
+
+
+
+
+
+
+
+
+                                               /*let maquinaria = {}
                                                 maquinaria.id = item.clave;
                                                 maquinaria.nombre = item.nombre;
                                                 maquinaria.costo = item.costo;
@@ -478,13 +988,13 @@ export default class ModificarExplotacion extends React.Component {
                                                 tipoMaquinariaState.nombre=maquinaria.nombre;
                                                 // faseState.tipoMaquinaria.push(tipoMaquinariaState);
 
-
+*/
                                                 this.setState((prevState) => ({
                                                     etapas: prevState.etapas.map((etapaMap) => {
                                                         if (etapaMap.id === etapa.id){
                                                             return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
                                                                 if (faseMap.id === fase.id){
-                                                                    return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.concat(tipoMaquinariaState)}
+                                                                    return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.concat(tipoMaquinaria)}
                                                                 }
                                                                 else {
                                                                     return faseMap
@@ -507,7 +1017,7 @@ export default class ModificarExplotacion extends React.Component {
 
                                         //  YEYO
                                         faseState.cargos.shift();
-                                        let cargosState = []
+                                       /* let cargosState = []
                                         axios.get(`http://localhost:3000/getCargosByIdFase/${fase.id}`, config)
                                         .then((res) => {
                                             let cargos = [];
@@ -566,31 +1076,34 @@ export default class ModificarExplotacion extends React.Component {
                                         .catch((e) => {
                                             console.log('Error en axios')
                                         })
-
+    */
                                         fases.push(fase)
 
                                         // YEYO
                                         // console.log('faseStateCargo', faseState.cargos)
-                                        etapaState.fases.push(faseState); 
+                                        etapa.fases.push(fase); 
                                     })
                                     //FUNCIONA EMPIZA ACA
                                     // this.setState((prevState) => ({
                                     //     etapas: prevState.etapas.concat(etapaState)
                                     // }));
-                                    // FUNCIONA TERMINA ACA                                    
+                                    // FUNCIONA TERMINA ACA          
+                                    
+                                   console.log("this.stateee",this.state);                          
                                 })
                                 .catch((e) => {
                                     console.log('error')
                                 })
                                 
 
-                                etapas.push(etapa)
+                               etapas.push(etapa);
+                               console.log("stateee",state);
 
                             })
 
                             
                         }).catch((e) => {
-                            console.log('Error en axios')
+                            console.log('Error en axios Etapas')
                         })
                         
 
@@ -601,13 +1114,13 @@ export default class ModificarExplotacion extends React.Component {
 
 
 
-*/
 
 
 
 
 
-        const info = {
+
+       /* const info = {
             yacimiento:{
                 id:1,
                 nombre:"Okinawa",
@@ -832,8 +1345,8 @@ export default class ModificarExplotacion extends React.Component {
                         costo:5,
                         cantidad:9,
                     }]
-                }*/]
-            },    
+                }*///]
+         /*   },    
             {
                 nombre: "Baudet",
                 id:4,
@@ -1720,7 +2233,7 @@ export default class ModificarExplotacion extends React.Component {
                     console.log("Tipo",fase.tipoMaquinaria[k].maquinarias);
                     console.log("TipSasdwsdo",fase.tipoMaquinaria);
                     console.log("Tipo",fase.tipoMaquinaria.maquinarias);*/
-                    if(fase.tipoMaquinaria[k].maquinarias.length>0){
+                /*    if(fase.tipoMaquinaria[k].maquinarias.length>0){
                         fase.tipoMaquinaria[k].maquinariasShow = 'inline';
                     }
                 }
@@ -1732,13 +2245,13 @@ export default class ModificarExplotacion extends React.Component {
             }
             state.etapas.push(etapa);
         }
-
+*/
         
 
        
 
-        console.log("estado inicial",state);
-        console.log("estado inicial",state.mineralId);
+       //console.log("estado inicial",state);
+       // console.log("estado inicial",state.mineralId);
         this.setState(() => ({
             eliminar: state.eliminar,
             yacimiento: state.yacimiento,

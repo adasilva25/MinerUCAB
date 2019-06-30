@@ -100,6 +100,9 @@ app.get('/getClienteJuridicoById/:id', ClientesJuridicos.getClienteJuridicoById)
 app.get('/getDetalleVentaByIdVenta/:id', DetalleVentas.getDetalleVentaByIdVenta);
 /* -------------------- EXPLOTACIONES -------------------- */
 app.get('/getEtapasByIdExplotacion/:id', Explotaciones.getEtapasByIdExplotacion);
+app.get('/getAllInfoExplotacionById/:id', Explotaciones.getAllInfoExplotacionById);
+app.get('/getEtapasYEstatusByIdExplotacion/:id', Explotaciones.getEtapasYEstatusByIdExplotacion);
+app.get('/getFasesYEstatusByIdEtapa/:id', Explotaciones.getFasesYEstatusByIdEtapa);
 /* -------------------- FASES -------------------- */
 app.get('/getFasesByIdEtapa/:id', Fases.getFasesByIdEtapa)
 /* -------------------- LUGAR -------------------- */
