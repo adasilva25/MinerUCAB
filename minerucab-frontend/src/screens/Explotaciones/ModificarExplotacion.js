@@ -690,12 +690,12 @@ export default class ModificarExplotacion extends React.Component {
                             etapa.fechaFR.mes =  mes;
                             etapa.fechaFR.ano =  ano;
 
-                            etapa.fases.shift();
+                            
 
                             this.setState((prevState) => ({
                                 etapas: prevState.etapas.concat(etapa)
                             }));
-
+                            etapa.fases.shift();
                             // console.log('etapaState', etapaState)
 
                            axios.get(`http://localhost:3000/getFasesYEstatusByIdEtapa/${etapa.id}`, config)
@@ -925,10 +925,10 @@ export default class ModificarExplotacion extends React.Component {
 
                                         
                                         //  YEYO*/
-                                    fase.tipoMaquinaria.shift();
+                                    
                                     axios.get(`http://localhost:3000/getTiposMaquinariaByIdFase/${fase.id}`, config)
                                         .then((res) => {
-                                            let maquinarias = [];
+                                            let tiposMaquinaria = [];
                                             console.log('Tipo de Maquinaria', res)
                                             res.data.forEach((item) => {
                                                 let tipoMaquinaria={
@@ -954,9 +954,11 @@ export default class ModificarExplotacion extends React.Component {
                                                 tipoMaquinaria.cantidad = item.cantidad;
                                                 tipoMaquinaria.nombre = item.nombre;
 
-                                                tipoMaquinaria.maquinarias.shift();
+                                                tiposMaquinaria
 
+                                                
 
+                                                tiposMaquinaria.push(tipoMaquinaria);
 
 
 
@@ -1008,15 +1010,19 @@ export default class ModificarExplotacion extends React.Component {
                                                 }));
                                             })
 
-                                            fase.tipoMaquinaria = maquinarias
+                                            tipoMaquinaria.maquinarias.shift();
+
+                                            fase.tipoMaquinaria = tipoMaquinaria;
+
 
                                         })
                                         .catch((e) => {
-                                            console.log('Error en axios')
+                                            console.log('Error en axios tipoMaquinaria')
                                         })
+                                        fase.tipoMaquinaria.shift();
 
                                         //  YEYO
-                                        faseState.cargos.shift();
+                                       // faseState.cargos.shift();
                                        /* let cargosState = []
                                         axios.get(`http://localhost:3000/getCargosByIdFase/${fase.id}`, config)
                                         .then((res) => {
@@ -1092,7 +1098,7 @@ export default class ModificarExplotacion extends React.Component {
                                    console.log("this.stateee",this.state);                          
                                 })
                                 .catch((e) => {
-                                    console.log('error')
+                                    console.log('Error fases')
                                 })
                                 
 
@@ -1109,7 +1115,7 @@ export default class ModificarExplotacion extends React.Component {
 
 
             }).catch((e) => {
-                console.log('Error en axios')
+                console.log('Error en axios ALL')
             })
 
 

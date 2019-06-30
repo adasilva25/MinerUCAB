@@ -39,6 +39,7 @@ export default class ModificarYacimiento extends React.Component {
                 id:null,
                 duracion:0,
                 costo:0,
+                estatus:null,
             },
             estatus:{
                 id:null,
@@ -84,6 +85,7 @@ export default class ModificarYacimiento extends React.Component {
             etapas: [{
                 nombre: "Etapa 1",
                 nombreV:null,
+                estatus:null,
                 id:null,
                 duracion:0,
                 costo:0,
@@ -97,6 +99,7 @@ export default class ModificarYacimiento extends React.Component {
                     nombreV:null,
                     id:null,
                     duracion:0,
+                    estatus:null,
                     costo:0,
                     faseShow:true,
                     cargoShow:'inline',
@@ -112,6 +115,7 @@ export default class ModificarYacimiento extends React.Component {
                         id:-1,
                         sueldo:0,
                         cantidad:0,
+                        asignados:0,
                         accordionKey:0
                     }],
                     tipoMaquinaria:[{
@@ -119,6 +123,7 @@ export default class ModificarYacimiento extends React.Component {
                         id:-1,
                         costo:0,
                         cantidad:0,
+                        asignados:0,
                         accordionKey:0
                     }]
 
@@ -185,16 +190,19 @@ export default class ModificarYacimiento extends React.Component {
             explotacion:{
                 duracion:0,
                 costo:0,
+                estatus:null,
             },
             etapas: [{
                 id:2,
                 nombre: "diego",
                 duracion:80,
                 costo:30,
+                estatus:null,
                 fases: [{
                     id:1,
                     nombre: "andrea",
                     duracion:10,
+                    estatus:null,
                     costo:4,
                     checkInicialCargos:true,
                     checkInicialtipoMaquiaria:true,
@@ -203,12 +211,14 @@ export default class ModificarYacimiento extends React.Component {
                         nombre:"Natu",
                         sueldo:5,
                         cantidad:7,
+                        asignados:0,
                     }],
                     tipoMaquinaria:[{
                         id:5,
                         nombre:"Aloa",
                         costo:52,
                         cantidad:7,
+                        asignados:0,
                     }]
                 }/*,
                 {
@@ -301,6 +311,7 @@ export default class ModificarYacimiento extends React.Component {
                 id:null,
                 duracion:0,
                 costo:0,
+                estatus:null,
             },
             estatus:{
                 id:null,
@@ -352,6 +363,7 @@ export default class ModificarYacimiento extends React.Component {
                 duracion:0,
                 costo:0,
                 etapaShow:true,
+                estatus:null,
                 numero: 1,
                 numeroV:1,
                 eliminar:true,
@@ -365,6 +377,7 @@ export default class ModificarYacimiento extends React.Component {
                     faseShow:true,
                     cargoShow:'inline',
                     tipoMaquinariaShow:'inline',
+                    estatus:null,
                     numero:1,
                     numeroV:1,
                     cargosId:[],
@@ -374,6 +387,7 @@ export default class ModificarYacimiento extends React.Component {
                         id:-1,
                         sueldo:0,
                         cantidad:0,
+                        asignados:0,
                         accordionKey:0
                     }],
                     tipoMaquinaria:[{
@@ -381,6 +395,7 @@ export default class ModificarYacimiento extends React.Component {
                         id:-1,
                         costo:0,
                         cantidad:0,
+                        asignados:0,
                         accordionKey:0
                     }]
 
@@ -483,6 +498,7 @@ export default class ModificarYacimiento extends React.Component {
             let etapa={
                 nombre: "Etapa 1",
                 nombreV:null,
+                estatus:null,
                 id:null,
                 duracion:0,
                 costo:0,
@@ -497,6 +513,7 @@ export default class ModificarYacimiento extends React.Component {
                     id:null,
                     duracion:0,
                     costo:0,
+                    estatus:null,
                     faseShow:true,
                     cargoShow:'inline',
                     tipoMaquinariaShow:'inline',
@@ -511,6 +528,7 @@ export default class ModificarYacimiento extends React.Component {
                         id:-1,
                         sueldo:0,
                         cantidad:0,
+                        asignados:0,
                         accordionKey:0
                     }],
                     tipoMaquinaria:[{
@@ -518,6 +536,7 @@ export default class ModificarYacimiento extends React.Component {
                         id:-1,
                         costo:0,
                         cantidad:0,
+                        asignados:0,
                         accordionKey:0
                     }]
 
@@ -549,6 +568,7 @@ export default class ModificarYacimiento extends React.Component {
                     tipoMaquinariaShow:'inline',
                     numero:1,
                     numeroV:1,
+                    estatus:null,
                     cargosId:[],
                     tipoMaquinariaId:[],
                     checkInicialCargos:true,
@@ -558,6 +578,7 @@ export default class ModificarYacimiento extends React.Component {
                         id:-1,
                         sueldo:0,
                         cantidad:0,
+                        asignados:0,
                         accordionKey:0
                     }],
                     tipoMaquinaria:[{
@@ -565,6 +586,7 @@ export default class ModificarYacimiento extends React.Component {
                         id:-1,
                         costo:0,
                         cantidad:0,
+                        asignados:0,
                         accordionKey:0
                     }]
                 }
@@ -593,6 +615,7 @@ export default class ModificarYacimiento extends React.Component {
                         id:-1,
                         sueldo:0,
                         cantidad:0,
+                        asignados:0,
                         accordionKey:0
                     }
 
@@ -614,6 +637,7 @@ export default class ModificarYacimiento extends React.Component {
                         id:-1,
                         costo:0,
                         cantidad:0,
+                        asignados:0,
                         accordionKey:0
                     }
 
