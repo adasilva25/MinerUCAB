@@ -3031,7 +3031,7 @@ export default class ModificarExplotacion extends React.Component {
 
         });
 
-        explotacion.fechaF.dia = fecha.getDate()+1;
+        explotacion.fechaF.dia = fecha.getDate();
         explotacion.fechaF.mes = fecha.getMonth()+1;
         explotacion.fechaF.ano = fecha.getFullYear();
 
@@ -3527,7 +3527,7 @@ export default class ModificarExplotacion extends React.Component {
                                                         </Form.Row>
 
                                                         <Form.Row className="formMargins" style={{display: ((etapa.estatus!=10)?'none':'inline')}}>
-                                                            <FormFecha idF={etapa.numero+"FR"} textoAuxiliar="Calculado" idTexto={"FechaFinalRealTexto"+etapa.numero+"FR"} dia={etapa.fechaFR.dia} mes={etapa.fechaFR.mes} ano={etapa.fechaFR.ano}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
+                                                            <FormFecha idF={etapa.numero+"FR"} textoAuxiliar="Calculado" idTexto={"FechaFinalRealTexto"+etapa.numero+"FR"} dia={(etapa.finalizar==true)?etapa.fechaFR.dia:"- -"} mes={(etapa.finalizar==true)?etapa.fechaFR.mes:"- -"} ano={(etapa.finalizar==true)?etapa.fechaFR.ano:"- - - -"}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
                                                         </Form.Row>
 
                                                         <Form.Row className="formMargins">
@@ -3763,7 +3763,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                                                                                                             <Form.Row >
                                                                                                                                                                 <Col sm={1}>
                                                                                                                                                                 </Col>
-                                                                                                                                                                <Form.Group as={Col} sm="8"controlId={"DropdownDia"+horario.dia+etapa.numero+fase.numero+indexcar+indexem}>
+                                                                                                                                                                <Form.Group as={Col} sm="8"controlId={"DropdownDia"+horario.dia+etapa.numero+fase.numero+indexcar+indexem} diasbled={(fase.finalizar==true)?true:false}>
                                                                                                                                                                     <Form.Label>{horario.dia}</Form.Label>
                                                                                                                                                                     <Form.Control as="select" defaultValue={horario.value} > 
                                                                                                                                                                         <option value={0}>No aplica</option>
@@ -3789,7 +3789,7 @@ export default class ModificarExplotacion extends React.Component {
 
                                                                                                                                 <Modal.Footer>
                                                                                                                                     <Button variant="primary" onClick={()=>this.horario(etapa.numero,fase.numero,indexcar,indexem)}>
-                                                                                                                                      Guardar Cambios
+                                                                                                                                      {(fase.finalizar==true)?"Ver Horario":"Guardar Cambios"}
                                                                                                                                     </Button>
                                                                                                                                 </Modal.Footer>
                                                                                                                             </Modal>
