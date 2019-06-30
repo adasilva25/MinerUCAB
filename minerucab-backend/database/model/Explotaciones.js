@@ -94,22 +94,26 @@ const createTipoMaquinariaFase = (values) => {
 }
 
 
-const getExplotacionByIdYacimiento = (req, res) =>{
+/* ------------------------------ READ ------------------------------ */
+
+const getEtapasByIdExplotacion = (req, res) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'SELECT C.clave as clave, C.nombre as nombre FROM mu_cargo C, mu_empleado E WHERE C.clave=E.fk_cargo AND E.clave = ($1);';
+    const text = 'SELECT Clave, nombre, costo_total, duracion FROM MU_ETAPA WHERE fk_explotacion = ($1)';
+
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
         client.end();
         res.status(200).json(response.rows)
     })
-    .catch((error) => {
-        console.log(error);
+
+    .catch((e) => {
         client.end();
-        res.status(500).json({ error: error.toString() });
+        console.error(e.stack);
+
     })
 }
 
@@ -119,6 +123,8 @@ module.exports = {
     createFase,
     createCargoFase,
     createTipoMaquinariaFase,
-    getExplotacionByIdYacimiento
+
+    getEtapasByIdExplotacion
+
     // ,[siguientes funciones]
 }

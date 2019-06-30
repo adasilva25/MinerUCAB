@@ -81,8 +81,8 @@ const getClienteByCedula = (req, res) => {
     })
     .catch((error) => {
         console.log(error);
-        res.status(500).json({ error: error.toString() });
         client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 

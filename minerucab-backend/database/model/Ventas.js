@@ -41,8 +41,8 @@ const createVentaClienteJuridico = (total, fk_cliente, fk_estatus, callback) => 
         // return res.rows[0].clave;
     })
     .catch((e) => {
-        console.error(e.stack);
         client.end();
+        console.error(e.stack);
     })
 }
 
@@ -70,7 +70,7 @@ const getAllVentasClientesNaturales = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
-    client.query('SELECT V.Clave as Clave, V.Total as Total, V.Fecha as Fecha, C.p_nombre as Nombre FROM MU_VENTA V, MU_CLIENTE_NATURAL C WHERE V.fk_cliente_natural IS NOT NULL AND V.fk_cliente_natural = C.Clave;')
+    client.query('SELECT V.Clave as Clave, C.p_nombre as Nombre, C.p_apellido as Apellido, V.Total as "Total", V.Fecha as Fecha FROM MU_VENTA V, MU_CLIENTE_NATURAL C WHERE V.fk_cliente_natural IS NOT NULL AND V.fk_cliente_natural = C.Clave;')
     .then((response) => {
         client.end();
         // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
@@ -88,7 +88,7 @@ const getAllVentasClientesJuridicos = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
-    client.query('SELECT V.Clave as Clave, V.Total as Total, V.Fecha as Fecha, C.nombre as Nombre FROM MU_VENTA V, MU_CLIENTE_JURIDICO C WHERE V.fk_cliente_juridico IS NOT NULL AND V.fk_cliente_juridico = C.Clave;')
+    client.query('SELECT V.Clave as Clave, C.nombre as Nombre, V.Total as "Total", V.Fecha as Fecha FROM MU_VENTA V, MU_CLIENTE_JURIDICO C WHERE V.fk_cliente_juridico IS NOT NULL AND V.fk_cliente_juridico = C.Clave;')
     .then((response) => {
         client.end();
         // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
@@ -117,8 +117,8 @@ const getFkClienteNaturalEnVentaById = (claveVenta, callback) => {
         callback(response.rows[0].fk_cliente_natural)
     })
     .catch((error) => {
-        console.log(error);
         client.end();
+        console.log(error);
     })
 }
 
@@ -138,8 +138,8 @@ const getFkClienteJuridicoEnVentaById = (claveVenta, callback) => {
         callback(response.rows[0].fk_cliente_juridico)
     })
     .catch((error) => {
-        console.log(error);
         client.end();
+        console.log(error);
     })
 }
 

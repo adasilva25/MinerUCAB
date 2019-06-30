@@ -1886,7 +1886,7 @@ export default class RegistrarYacimiento extends React.Component {
                                     <Form.Row className="formMargins">
                                         <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,"YacimientosNombreYacimientoText","Introduzca un nombre válido")} controlId="YacimientosNombreYacimiento" className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
-                                            <Form.Control type="text" className="form-input" placeholder="Introduzca nombre del yacimiento" />
+                                            <Form.Control autofocus={true} type="text" className="form-input" placeholder="Introduzca nombre del yacimiento" />
                                             <Form.Text className="text-muted" id="YacimientosNombreYacimientoText">
                                                 Obligatorio
                                             </Form.Text>

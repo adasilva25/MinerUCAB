@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
+import { connect } from 'react-redux';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
@@ -12,7 +13,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import { history } from '../../routers/History';
 
-export default class Venta extends React.Component {
+export class Venta extends React.Component {
     constructor(props){
         super(props);
     }  
@@ -29,7 +30,7 @@ export default class Venta extends React.Component {
         this.setState({ modalShowEliminar: true });
     }
     goBack = () => {
-        history.goBack()
+        this.props.history.goBack()
     }
     render(){
         return (
@@ -96,7 +97,7 @@ export default class Venta extends React.Component {
                                       checktable={false}
                                       textoSingular={'cliente'}
                                       textoPlural={'clientes'}
-                                      size={270}
+                                      size={400}
                                   />
                               </Col>
                               <Col sm={0} md={1}></Col>
@@ -116,7 +117,9 @@ export default class Venta extends React.Component {
                                 <Col md={1}></Col>
                             </Row>
                         </Container>
-
+{
+    console.log(this.props.user)
+}
                       <Container>
                           <Row>
                               <Col sm={0} md={1}></Col>
@@ -136,7 +139,7 @@ export default class Venta extends React.Component {
                                       checktable={false}
                                       textoSingular={'cliente'}
                                       textoPlural={'clientes'}
-                                      size={270}
+                                      size={400}
                                   />
                               </Col>
                               <Col sm={0} md={1}></Col>
@@ -166,3 +169,11 @@ export default class Venta extends React.Component {
         )
     }
 }
+
+const mapStateToProps = (state, props) => { // esto pasa a ser un prop
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(Venta)

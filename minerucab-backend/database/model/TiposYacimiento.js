@@ -19,7 +19,26 @@ const getAllTiposYacimiento = (req, res) => {
     })
 }
 
+const getTipoYacimientoByIdYacimiento = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'SELECT MTY.Clave as clave_tipo_yacimiento, MTY.Nombre as nombre_tipo_yacimiento FROM MU_YACIMIENTO_TIPO_YACIMIENTO MYTY, MU_TIPO_YACIMIENTO MTY WHERE MYTY.fk_yacimiento = ($1) AND MYTY.fk_tipo_yacimiento = MTY.Clave;';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
 module.exports = {
-    getAllTiposYacimiento
+    getAllTiposYacimiento,
+    getTipoYacimientoByIdYacimiento
     // ,[siguientes funciones]
 }

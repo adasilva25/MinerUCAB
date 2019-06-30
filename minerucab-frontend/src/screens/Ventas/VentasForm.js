@@ -326,7 +326,7 @@ export default class VentasForm extends React.Component {
             axios.post('http://localhost:3000/createVenta', config)
                 .then((res) => {
                     console.log(res)
-                    history.push('/venta')
+                    this.props.history.push('/venta')
                 }).catch((e) => {
                     console.log('Error en axios')
                 })
@@ -1135,7 +1135,7 @@ export default class VentasForm extends React.Component {
         }
     }
     goBack = () => {
-        history.goBack()
+        this.props.history.goBack()
     }
     deletePago = (index) => {
         console.log('index deletePago', index)
