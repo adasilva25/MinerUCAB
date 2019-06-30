@@ -1499,7 +1499,7 @@ export default class RegistrarExplotacion extends React.Component {
         console.log(maquinarias);
         console.log(this.state.etapas);
         
-    };
+    }; 
 
     nombreDT = (nombre) => {
      console.log('fino')

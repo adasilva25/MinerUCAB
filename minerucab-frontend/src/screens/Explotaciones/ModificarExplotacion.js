@@ -244,42 +244,368 @@ export default class ModificarExplotacion extends React.Component {
      componentWillMount = () => {
 
 
-         const config = {
+         /*const config = {
             headers: {
               'Content-Type': 'application/json'
             },
             responseType: 'json'
         }
-        axios.get('http://localhost:3000/getAllMineralesMetalicosConPresentacion', config)
+        axios.get(`http://localhost:3000/getAllYacimientoInfoById/${this.props.match.params.id}`, config)
             .then((res) => {
-                console.log(res)
-                res.data.forEach(element => {
-                    let mineralInfo = {
-                        tipoMineral: 'metalico',
-                        idBdPresentacionMineral: '',
-                        nombre: '',
-                        presentacion: '',
-                        precio: 0
-                    }
-                    mineralInfo.idBdPresentacionMineral = element.clave;
-                    mineralInfo.nombre = element.mineral;
-                    mineralInfo.presentacion = element.presentacion;
-                    mineralInfo.precio = element.precio;
-                    this.setState((prevState) => ({
-                        minerales: prevState.minerales.concat(mineralInfo)
+                console.log('will mount', res)
+                
+                
+
+                info.yacimiento.id = this.props.match.params.id
+                info.yacimiento.nombre = res.data[0].nombre;
+                info.yacimiento.area = res.data[0].area;
+                info.yacimiento.ubicacion.estado = res.data[0].estado
+                info.yacimiento.ubicacion.municipio = res.data[0].municipio
+                info.yacimiento.ubicacion.parroquia = res.data[0].parroquia
+                info.yacimiento.ubicacion.idParroquia = res.data[0].idparroquia
+                
+
+                info.estatus.id = res.data[0].clave_estatus;
+                info.estatus.nombre = res.data[0].estatus;
+
+                info.explotacion.id = res.data[0].clave_explotacion;
+                info.explotacion.duracion = res.data[0].duracion_explotacion;
+                info.explotacion.costo = res.data[0].costo_explotacion;
+
+
+                state.estatus.id = res.data[0].clave_estatus;
+                state.estatus.nombre = res.data[0].estatus;
+
+                state.yacimiento.id=info.yacimiento.id;
+                state.yacimiento.nombre=info.yacimiento.nombre;
+                state.yacimiento.descripcion = info.yacimiento.descripcion;
+                state.yacimiento.area = info.yacimiento.area;
+                state.yacimiento.ubicacion.estado = info.yacimiento.ubicacion.estado;
+                state.yacimiento.ubicacion.municipio = info.yacimiento.ubicacion.municipio;
+                state.yacimiento.ubicacion.parroquia = info.yacimiento.ubicacion.parroquia;
+                state.yacimiento.ubicacion.idParroquia = info.yacimiento.ubicacion.idParroquia;
+                state.yacimiento.fecha.dia = dia;
+                state.yacimiento.fecha.mes = mes;
+                state.yacimiento.fecha.ano = ano;
+
+                state.explotacion.id = info.explotacion.id;
+                state.explotacion.duracion = info.explotacion.duracion;
+                state.explotacion.costo = info.explotacion.costo;
+                
+                axios.get(`http://localhost:3000/getTipoYacimientoByIdYacimiento/${this.props.match.params.id}`, config)
+                .then((res) => {
+                    console.log('will mount', res)
+                    info.yacimiento.tipo = res.data[0].nombre_tipo_yacimiento
+                    info.yacimiento.tipoId = res.data[0].clave_tipo_yacimiento;
+                    
+                    state.yacimiento.tipo = info.yacimiento.tipo;
+                    state.yacimiento.tipoId = info.yacimiento.tipoId;
+                    
+                    this.setState(() => ({
+                        yacimiento: state.yacimiento,
+                        explotacion: state.explotacion,
+                        estatus: state.estatus
                     }));
+                    console.log('state', this.state.yacimiento)
+
+                }).catch((e) => {
+                    console.log('Error en axios')
                 })
+
+                //  YEYO
+                state.etapas.shift();
+                axios.get(`http://localhost:3000/getEtapasByIdExplotacion/${state.explotacion.id}`, config)
+                    .then((res) => {
+                        let etapas = [];
+                        res.data.forEach((item, i) => {
+                            let etapaState = {
+                                nombre: "Etapa 1",
+                                nombreV:null,
+                                id:null,
+                                duracion:0,
+                                costo:0,
+                                etapaShow:true,
+                                numero: 1,
+                                numeroV:1,
+                                eliminar:true,
+                                key:"Fase 1",
+                                fases: [{
+                                    nombre: "Fase 1",
+                                    nombreV:null,
+                                    id:null,
+                                    duracion:0,
+                                    costo:0,
+                                    faseShow:true,
+                                    cargoShow:'inline',
+                                    tipoMaquinariaShow:'inline',
+                                    numero:1,
+                                    numeroV:1,
+                                    cargosId:[],
+                                    tipoMaquinariaId:[],
+                                    checkInicialCargos:true,
+                                    checkInicialtipoMaquiaria:true,
+                                    cargos:[{
+                                        nombre:null,
+                                        id:-1,
+                                        sueldo:0,
+                                        cantidad:0,
+                                        accordionKey:0
+                                    }],
+                                    tipoMaquinaria:[{
+                                        nombre:null,
+                                        id:-1,
+                                        costo:0,
+                                        cantidad:0,
+                                        accordionKey:0
+                                    }]
+                
+                                }]
+                            } 
+
+
+                            let etapa = {};
+                            etapa.id = item.clave;
+                            etapa.nombre = item.nombre;
+                            etapa.costo = item.costo_total;
+                            etapa.duracion = item.duracion;
+                        
+                            console.log('id-etapa', etapa.id)
+                            console.log('item id-eta', item)
+                            console.log('i', i)
+
+                            //  YEYO
+                            etapaState.id=etapa.id;
+                            etapaState.numero=i+1;
+                            etapaState.numeroV=i+1;
+
+                            etapaState.nombre= 'Etapa '+ (i+1);
+                            etapaState.nombreV=etapa.nombre;
+
+                            etapaState.duracion=etapa.duracion;
+                            etapaState.costo= etapa.costo;
+                            
+                            etapaState.fases.shift();
+                            this.setState((prevState) => ({
+                                etapas: prevState.etapas.concat(etapaState)
+                            }));
+
+                            // console.log('etapaState', etapaState)
+
+                            axios.get(`http://localhost:3000/getFasesByIdEtapa/${etapa.id}`, config)
+                                .then((res) => {
+                                    let fases = [];
+                                    res.data.forEach((element, j) => {
+
+                                        
+                                        let faseState = {
+                                            nombre: "Fase 1",
+                                            nombreV:null,
+                                            duracion:0,
+                                            costo:0,
+                                            faseShow:true,
+                                            cargoShow:'inline',
+                                            tipoMaquinariaShow:'inline',
+                                            numero:1,
+                                            numeroV:1,
+                                            cargosId:[],
+                                            tipoMaquinariaId:[],
+                                            checkInicialCargos:true,
+                                            checkInicialtipoMaquiaria:true,
+                                            cargos:[],
+                                            tipoMaquinaria:[]
+                                        }
+
+
+                                        let fase = {}
+                                        fase.id = element.clave;
+                                        fase.nombre = element.nombre;
+                                        fase.costo = element.costo;
+                                        fase.duracion = element.duracion
+
+
+                                        //  YEYO
+                                        faseState.id=fase.id;
+                                        faseState.numero=j+1;
+                                        faseState.numeroV=j+1;
+                                        faseState.nombre= 'Fase '+ (j+1);
+                                        faseState.nombreV=fase.nombre;
+                                        faseState.duracion=fase.duracion;
+                                        faseState.costo= fase.costo;
+                                        
+                                
+                                        this.setState((prevState) => ({
+                                            etapas: prevState.etapas.map((etapaMap) => {
+                                                if (etapaMap.id === etapa.id){
+                                                    return {...etapaMap, fases: etapaMap.fases.concat(faseState)}
+                                                }
+                                                else{
+                                                    return etapaMap
+                                                }
+                                            })
+                                        }));
+                                
+                                        // console.log('fase-state', faseState)
+
+                                        
+                                        //  YEYO
+                                        faseState.tipoMaquinaria.shift();
+                                        axios.get(`http://localhost:3000/getTiposMaquinariaByIdFase/${fase.id}`, config)
+                                        .then((res) => {
+                                            let maquinarias = [];
+                                            res.data.forEach((item) => {
+                                                let maquinaria = {}
+                                                maquinaria.id = item.clave;
+                                                maquinaria.nombre = item.nombre;
+                                                maquinaria.costo = item.costo;
+                                                maquinaria.cantidad = item.cantidad;
+
+                                                maquinarias.push(maquinaria)
+
+
+
+                                                //  yeyo
+                                                faseState.tipoMaquinariaId.push(maquinaria.id);
+                                                let tipoMaquinariaState={
+                                                    nombre:null,
+                                                    id:-1,
+                                                    costo:0,
+                                                    cantidad:0,
+                                                    accordionKey:0
+                                                }
+                                                tipoMaquinariaState.id=maquinaria.id;
+                                                tipoMaquinariaState.costo=maquinaria.costo;
+                                                tipoMaquinariaState.cantidad=maquinaria.cantidad;
+                                                tipoMaquinariaState.nombre=maquinaria.nombre;
+                                                // faseState.tipoMaquinaria.push(tipoMaquinariaState);
+
+
+                                                this.setState((prevState) => ({
+                                                    etapas: prevState.etapas.map((etapaMap) => {
+                                                        if (etapaMap.id === etapa.id){
+                                                            return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
+                                                                if (faseMap.id === fase.id){
+                                                                    return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.concat(tipoMaquinariaState)}
+                                                                }
+                                                                else {
+                                                                    return faseMap
+                                                                }
+                                                            })}
+                                                        }
+                                                        else{
+                                                            return etapaMap
+                                                        }
+                                                    })
+                                                }));
+                                            })
+
+                                            fase.tipoMaquinaria = maquinarias
+
+                                        })
+                                        .catch((e) => {
+                                            console.log('Error en axios')
+                                        })
+
+                                        //  YEYO
+                                        faseState.cargos.shift();
+                                        let cargosState = []
+                                        axios.get(`http://localhost:3000/getCargosByIdFase/${fase.id}`, config)
+                                        .then((res) => {
+                                            let cargos = [];
+                                            res.data.forEach((item, k) => {
+                                                
+                                                
+                                                let cargoState={
+                                                    nombre:null,
+                                                    id:-1,
+                                                    sueldo:0,
+                                                    cantidad:0,
+                                                    accordionKey:0
+                                                }
+                                                
+                                                
+                                                let cargo = {}
+                                                cargo.id = item.clave;
+                                                cargo.nombre = item.nombre;
+                                                cargo.sueldo = item.sueldo;
+                                                cargo.cantidad = item.cantidad;
+                                                
+                                                cargos.push(cargo)
+
+
+
+                                                //  YEYO
+                                                faseState.cargosId.push(cargo.id);
+                                                cargoState.id=cargo.id;
+                                                cargoState.sueldo=cargo.sueldo;
+                                                cargoState.cantidad=cargo.cantidad;
+                                                cargoState.nombre=cargo.nombre;
+                                                // cargosState.push(cargoState);   
+
+                                                this.setState((prevState) => ({
+                                                    etapas: prevState.etapas.map((etapaMap) => {
+                                                        if (etapaMap.id === etapa.id){
+                                                            return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
+                                                                if (faseMap.id === fase.id){
+                                                                    return {...faseMap, cargos: faseMap.cargos.concat(cargoState)}
+                                                                }
+                                                                else {
+                                                                    return faseMap
+                                                                }
+                                                            })}
+                                                        }
+                                                        else{
+                                                            return etapaMap
+                                                        }
+                                                    })
+                                                }));
+                                            })
+                                            
+                                            faseState.cargos = cargosState
+                                            fase.cargos = cargos
+                                        })
+                                        .catch((e) => {
+                                            console.log('Error en axios')
+                                        })
+
+                                        fases.push(fase)
+
+                                        // YEYO
+                                        // console.log('faseStateCargo', faseState.cargos)
+                                        etapaState.fases.push(faseState); 
+                                    })
+                                    //FUNCIONA EMPIZA ACA
+                                    // this.setState((prevState) => ({
+                                    //     etapas: prevState.etapas.concat(etapaState)
+                                    // }));
+                                    // FUNCIONA TERMINA ACA                                    
+                                })
+                                .catch((e) => {
+                                    console.log('error')
+                                })
+                                
+
+                                etapas.push(etapa)
+
+                            })
+
+                            
+                        }).catch((e) => {
+                            console.log('Error en axios')
+                        })
+                        
+
+
             }).catch((e) => {
                 console.log('Error en axios')
             })
 
 
 
+*/
 
 
 
 
-        
 
         const info = {
             yacimiento:{
