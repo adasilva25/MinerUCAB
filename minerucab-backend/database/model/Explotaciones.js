@@ -244,7 +244,7 @@ const getEtapasByIdExplotacion = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'SELECT E.Clave clave, E.nombre nombre, E.costo_total costo_total, E.Fecha_inicio fecha_inicio, E.fecha_fin fecha_fin, E.fecha_fin_real fecha_fin_real, E.duracion duracion, ES.Nombre estatus FROM MU_ETAPA E, MU_ESTATUS ES WHERE E.fk_explotacion = ($1) AND E.fk_estatus = ES.Clave';
+    const text = 'SELECT E.Clave clave, E.nombre nombre, E.costo_total costo_total, E.Fecha_inicio fecha_inicio, E.fecha_fin fecha_fin, E.fecha_fin_real fecha_fin_real, E.duracion duracion, ES.Nombre estatus, E.fk_estatus clave_estatus FROM MU_ETAPA E, MU_ESTATUS ES WHERE E.fk_explotacion = ($1) AND E.fk_estatus = ES.Clave';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -400,12 +400,32 @@ const updateEstatus = (fk_estatus) => {
     })
 }
 
+const deleteExplotacionById = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'DELETE FROM MU_EXPLOTACION WHERE Clave = ($1);';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
 module.exports = {
     createExplotacion,
     createEtapa,
     createFase,
     createCargoFase,
     createTipoMaquinariaFase,
+    deleteExplotacionById,
     getAllExplotacionesFkVentaConEstatusDiferenteAInactivo,
     getEtapasByIdExplotacion,
     getFasesByIdEtapa,

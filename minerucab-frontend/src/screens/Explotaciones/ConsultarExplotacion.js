@@ -41,6 +41,9 @@ export default class ConsultarExplotacion extends React.Component {
             loadedexp:true,
             loadedyac:true,
             loadedetapa:true,
+            loadfecha:false,
+            loadfase:false,
+            loadetapa:false,
             explotacion:{
                 id:null,
                 duracion:0,
@@ -61,6 +64,7 @@ export default class ConsultarExplotacion extends React.Component {
                     mes:0,
                     ano:0
                 },
+                estatus: null
             },
             yacimiento:{
                 id:null,
@@ -594,18 +598,69 @@ export default class ConsultarExplotacion extends React.Component {
                 explotacion.duracion = res.data[0].duracion_explotacion;
                 explotacion.costo = res.data[0].costo_explotacion;
 
+                axios.get(`http://localhost:3000/getExplotacionInfo/${this.props.match.params.id}`, config)
+                    .then((res) => {
+                        console.log('res explofoaf', res)
+                            let date 
+                            let dia 
+                            let mes 
+                            let ano 
+
+                            explotacion.estatus = res.data[0].estatus
+
+                            if (res.data[0].fecha_inicio){
+                                console.log('entro')
+                                let date = new Date(res.data[0].fecha_inicio)
+                                let dia = date.getDate()
+                                let mes = (date.getMonth() + 1)
+                                let ano = date.getFullYear()
+
+                                explotacion.fechaI.dia = dia
+                                explotacion.fechaI.mes = mes
+                                explotacion.fechaI.ano = ano
+                            }
+
+                            if (res.data[0].fecha_fin){
+                                date = new Date(res.data[0].fecha_fin)
+                                dia = date.getDate()
+                                mes = (date.getMonth() + 1)
+                                ano = date.getFullYear()
+
+                                explotacion.fechaF.dia = dia
+                                explotacion.fechaF.mes = mes
+                                explotacion.fechaF.ano = ano
+                            }
+
+                            if (res.data[0].fecha_fin_real){
+                                date = new Date(res.data[0].fecha_fin_real)
+                                dia = date.getDate()
+                                mes = (date.getMonth() + 1)
+                                ano = date.getFullYear()
+
+                                explotacion.fechaFR.dia = dia
+                                explotacion.fechaFR.mes = mes
+                                explotacion.fechaFR.ano = ano
+                            }
+
+                            this.setState(() => ({
+                                explotacion: explotacion,
+                                loadfecha:true
+                            }));
+
+                            console.log('state exp', this.state.explotacion)
+                    })
+                    .catch((e) => {
+                        console.log('Error en axios')
+                    })
+
                 state.estatus.id = res.data[0].clave_estatus;
                 state.estatus.nombre = res.data[0].estatus;
                 
-                this.setState(() => ({
-                    explotacion: explotacion
-                }));
 
                 this.setState(() => ({
                     estatus: state.estatus
                 }));
 
-                console.log('state', this.state)
 
 
                 axios.get(`http://localhost:3000/getTipoYacimientoByIdYacimiento/${this.props.match.params.id}`, config)
@@ -732,6 +787,7 @@ export default class ConsultarExplotacion extends React.Component {
             
                             }]
                         }]
+                        let longitud=0;
                         res.data.forEach((item, i) => {
                             let etapa = {
                                 nombre: "Etapa 1",
@@ -806,7 +862,7 @@ export default class ConsultarExplotacion extends React.Component {
                             etapa.nombre= 'Etapa '+ (i+1);
                             etapa.numero=i+1;
                             etapa.numeroV=i+1;
-                            etapa.estatus = item.estatus
+                            etapa.estatus = item.clave_estatus
 
                             let date 
                             let dia 
@@ -830,9 +886,9 @@ export default class ConsultarExplotacion extends React.Component {
                                 mes = (date.getMonth() + 1)
                                 ano = date.getFullYear()
 
-                                etapa.fechaI.dia = dia
-                                etapa.fechaI.mes = mes
-                                etapa.fechaI.ano = ano
+                                etapa.fechaF.dia = dia
+                                etapa.fechaF.mes = mes
+                                etapa.fechaF.ano = ano
                             }
 
                             if (item.fecha_fin_real){
@@ -841,9 +897,9 @@ export default class ConsultarExplotacion extends React.Component {
                                 mes = (date.getMonth() + 1)
                                 ano = date.getFullYear()
 
-                                etapa.fechaI.dia = dia
-                                etapa.fechaI.mes = mes
-                                etapa.fechaI.ano = ano
+                                etapa.fechaFR.dia = dia
+                                etapa.fechaFR.mes = mes
+                                etapa.fechaFR.ano = ano
                             }
                             
                             etapa.fases.shift();
@@ -857,7 +913,9 @@ export default class ConsultarExplotacion extends React.Component {
                             axios.get(`http://localhost:3000/getFasesByIdEtapa/${etapa.id}`, config)
                                 .then((res) => {
                                     let fases = [];
+                                    let longitud1=0;
                                     res.data.forEach((element, j) => {
+                                        console.log('res etapa', element)
 
                                         let fase = {
                                             nombre: "Fase 1",
@@ -928,9 +986,9 @@ export default class ConsultarExplotacion extends React.Component {
                                             mes = (date.getMonth() + 1)
                                             ano = date.getFullYear()
 
-                                            fase.fechaI.dia = dia
-                                            fase.fechaI.mes = mes
-                                            fase.fechaI.ano = ano
+                                            fase.fechaF.dia = dia
+                                            fase.fechaF.mes = mes
+                                            fase.fechaF.ano = ano
                                         }
 
                                         if (element.fecha_fin_real){
@@ -939,13 +997,13 @@ export default class ConsultarExplotacion extends React.Component {
                                             mes = (date.getMonth() + 1)
                                             ano = date.getFullYear()
     
-                                            fase.fechaI.dia = dia
-                                            fase.fechaI.mes = mes
-                                            fase.fechaI.ano = ano
+                                            fase.fechaFR.dia = dia
+                                            fase.fechaFR.mes = mes
+                                            fase.fechaFR.ano = ano
                                         }
 
 
-                                        fase.estatus = element.estatus
+                                        fase.estatus = element.fk_estatus
                                         fase.id=element.clave;
                                         fase.numero=j+1;
                                         fase.numeroV=j+1;
@@ -1250,13 +1308,27 @@ export default class ConsultarExplotacion extends React.Component {
                                                         console.log('Error en axios')
                                                     })
     
+                                                    //  FASE
+                                                    longitud1++;
                                                 })
+                                                if(longitud1==res.data.length){
+                                                    this.setState(() => ({
+                                                        loadfase:true
+                                                    }));
+                                                }
                                             })
                                             .catch((e) => {
                                                 console.log('Error en axios')
                                             })
+                                longitud++;
+                                
 
                         })
+                        if(longitud==res.data.length){
+                            this.setState(() => ({
+                                loadetapa:true
+                            }));
+                        }
                     })
                 
 
@@ -3066,7 +3138,7 @@ export default class ConsultarExplotacion extends React.Component {
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[0]} onClick={() => this.accordionf(0)} className="accordion borderacc">
                                 <FormTitulo titulo="Información General"/>
                             </Accordion.Toggle>
-                            <Accordion.Collapse eventKey={1} >
+                           { this.state.loadfecha && <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
                                     <Form.Row className="formMargins" >
                                         {
@@ -3123,7 +3195,7 @@ export default class ConsultarExplotacion extends React.Component {
                                         <Form.Group as={Col} md="1"></Form.Group>
                                     </Form.Row>
                                 </Card.Body>
-                            </Accordion.Collapse>
+                            </Accordion.Collapse>}
                         </Card>
                     </Accordion>
                     
@@ -3161,7 +3233,6 @@ export default class ConsultarExplotacion extends React.Component {
                             </Accordion.Collapse>
                         </Card>
                     </Accordion>
-                   {console.log('stateee', this.state)}
                     {
                         (this.state.minerales.length>0)&&
                         <Accordion defaultActiveKey={1} >
@@ -3276,12 +3347,12 @@ export default class ConsultarExplotacion extends React.Component {
                                                     <Container>
                                                         <br/>
                                                         <FormTitulo titulo={"Información General de la Etapa "+etapa.numero}/>
-                                                        <Form.Row className="formMargins">
+                                                        {this.state.loadedetapa && <Form.Row className="formMargins">
                                                             <FormFecha idF={etapa.numero+"I"} titulo="Fecha de Inicio de la Etapa" textoAuxiliar="" clase="inputsPaddingLeft"  dia={(etapa.fechaI.dia==0)?"- -":etapa.fechaI.dia} mes={(etapa.fechaI.mes==0)?"- -":etapa.fechaI.mes} ano={(etapa.fechaI.ano==0)?"- - - -":etapa.fechaI.ano} disabled={true}/>
                                                             <FormFecha idF={etapa.numero+"F"} titulo="Fecha Final de la Etapa" textoAuxiliar="" clase="inputsPaddingLeft"  dia={(etapa.fechaF.dia==0)?"- -":etapa.fechaF.dia} mes={(etapa.fechaF.mes==0)?"- -":etapa.fechaF.mes} ano={(etapa.fechaF.ano==0)?"- - - -":etapa.fechaF.ano} disabled={true}/>            
-                                                        </Form.Row>
+                                                        </Form.Row>}
 
-                                                        <Form.Row className="formMargins">
+                                                        { this.state.loadfase && <Form.Row className="formMargins">
                                                             <Form.Group as={Col} md="5"  className="inputsPaddingRight">
                                                                 <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
                                                                 <Form.Control 
@@ -3299,7 +3370,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                             <Form.Group style={{display: ((etapa.estatus!=10)?'none':'contents')}}>
                                                                 <FormFecha idF={etapa.numero+"FR"} textoAuxiliar="" idTexto={"FechaFinalRealTexto"+etapa.numero+"FR"} dia={etapa.fechaFR.dia} mes={etapa.fechaFR.mes} ano={etapa.fechaFR.ano}  titulo="Fecha de Final Real de etapa" textoAuxiliar="" clase="inputsPaddingLeft" disabled={true}/>
                                                             </Form.Group>
-                                                        </Form.Row>
+                                                        </Form.Row>}
 
                                                         <Form.Row className="formMargins">
                                                             <Form.Group as={Col} md="3"></Form.Group>
@@ -3341,8 +3412,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                         >
                                                             {
                                                                 this.state.etapas[etapa.numeroV-1].fases.map((fase,indexf)=>{
-                                                                console.log("empl", fase.cargos)        
-
+                                                                
                                                                 if (fase.faseShow === true) 
 
                                                                     return(    
@@ -3351,12 +3421,12 @@ export default class ConsultarExplotacion extends React.Component {
                                                                         <Container>
                                                                             <br/>
 
-                                                                            <Form.Row className="formMargins">
+                                                                            {this.state.loadfase && <Form.Row className="formMargins">
                                                                                 <FormFecha idF={etapa.numero+''+fase.numero+"I"} titulo="Fecha de Inicio de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft" dia={(fase.fechaI.dia==0)?"- -":fase.fechaI.dia} mes={(fase.fechaI.mes==0)?"- -":fase.fechaI.mes} ano={(fase.fechaI.ano==0)?"- - - -":fase.fechaI.ano} disabled={true}/>
                                                                                 <FormFecha idF={etapa.numero+''+fase.numero+"F"} titulo="Fecha Final de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(fase.fechaF.dia==0)?"- -":fase.fechaF.dia} mes={(fase.fechaF.mes==0)?"- -":fase.fechaF.mes} ano={(fase.fechaF.ano==0)?"- - - -":fase.fechaF.ano} disabled={true}/>            
-                                                                            </Form.Row>
+                                                                            </Form.Row>}
 
-                                                                            <Form.Row className="formMargins">
+                                                                            { this.state.loadfase && <Form.Row className="formMargins">
                                                                                 <Form.Group as={Col} md="5"  className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
                                                                                     <Form.Control 
@@ -3377,7 +3447,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                                                 <Form.Group style={{display: ((fase.estatus!=10)?'none':'contents')}}>
                                                                                     <FormFecha idF={etapa.numero+''+fase.numero+"FR"} textoAuxiliar="Obligatorio" idTexto={"FechaFinalRealTexto"+fase.numero+''+etapa.numero+"FR"} dia={fase.fechaFR.dia} mes={fase.fechaFR.mes} ano={fase.fechaFR.ano}  titulo="Fecha de Final Real de Fase" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
                                                                                 </Form.Group>
-                                                                            </Form.Row>
+                                                                            </Form.Row>}
 
                                                                             <FormTitulo titulo={"Información General de la Fase "+fase.numero}/>
                                                                             <Form.Row className="formMargins">

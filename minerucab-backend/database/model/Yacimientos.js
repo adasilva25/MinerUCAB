@@ -39,6 +39,24 @@ const getAllYacimientos = (req, res) => {
     })
 }
 
+const getExplotacionInfo = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'SELECT EX.Fecha_inicio fecha_inicio, EX.fk_estatus estatus, EX.Fecha_fin fecha_fin, EX.fecha_fin_real fecha_fin_real FROM MU_EXPLOTACION EX, MU_YACIMIENTO Y WHERE Y.fk_explotacion = EX.Clave AND Y.Clave = ($1);'
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
 const getAllYacimientoInfoById = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
@@ -81,6 +99,42 @@ const getAllYacimientosConEstatusDiferenteAInactivo = (req, res) => {
     });
     client.connect();
     const text = 'SELECT Y.Clave, Y.Nombre as "Nombre", Y.Tamaño as "Tamaño (Kms)", (SELECT m1.nombre FROM mu_lugar m1, mu_lugar m2, mu_lugar m3 WHERE m3.fk_lugar = m2.clave AND m2.fk_lugar = m1.clave AND m3.clave = Y.fk_lugar) as "Ubicación", E.Nombre as "Estatus" FROM MU_YACIMIENTO Y, MU_ESTATUS E WHERE Y.fk_estatus = E.Clave AND E.Nombre != ($1);'
+    const values = ['Inactivo'];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
+const getAllExplotacionesConEstatusInactivo = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'SELECT Y.fk_explotacion "Clave", Y.Nombre as "Nombre", Y.Tamaño as "Tamaño (Kms)", (SELECT m1.nombre FROM mu_lugar m1, mu_lugar m2, mu_lugar m3 WHERE m3.fk_lugar = m2.clave AND m2.fk_lugar = m1.clave AND m3.clave = Y.fk_lugar) as "Ubicación", E.Nombre as "Estatus" FROM MU_YACIMIENTO Y, MU_ESTATUS E WHERE Y.fk_estatus = E.Clave AND E.Nombre = ($1) AND Y.fk_explotacion IS NOT NULL;'
+    const values = ['Inactivo'];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
+const getAllExplotacionesConEstatusDiferenteAInactivo = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'SELECT Y.fk_explotacion "Clave", Y.Nombre as "Nombre", Y.Tamaño as "Tamaño (Kms)", (SELECT m1.nombre FROM mu_lugar m1, mu_lugar m2, mu_lugar m3 WHERE m3.fk_lugar = m2.clave AND m2.fk_lugar = m1.clave AND m3.clave = Y.fk_lugar) as "Ubicación", E.Nombre as "Estatus" FROM MU_YACIMIENTO Y, MU_ESTATUS E WHERE Y.fk_estatus = E.Clave AND E.Nombre != ($1);'
     const values = ['Inactivo'];
     client.query(text, values)
     .then((response) => {
@@ -180,12 +234,35 @@ const createYacMineralNoMet = (values) => {
     }) 
 }
 
+const deleteYacimientoById = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'DELETE FROM MU_YACIMIENTO WHERE Clave = ($1);';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
 module.exports = {
     createYacimiento,
+    deleteYacimientoById,
     getAllYacimientos,
+    getAllExplotacionesConEstatusDiferenteAInactivo,
+    getAllExplotacionesConEstatusInactivo,
     getAllYacimientosConEstatusInactivo,
     getAllYacimientosConEstatusDiferenteAInactivo,
     getAllYacimientoInfoById,
+    getExplotacionInfo,
     getYacimientoById,
     getYacimientoByIdExplotacion,
     insertTipoYacimiento,

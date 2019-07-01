@@ -1202,7 +1202,7 @@ export default class ModificarExplotacion extends React.Component {
                                         }
 
 
-                                        fase.estatus = element.estatus
+                                        fase.estatus = element.fk_estatus
                                         fase.id=element.clave;
                                         fase.numero=j+1;
                                         fase.numeroV=j+1;

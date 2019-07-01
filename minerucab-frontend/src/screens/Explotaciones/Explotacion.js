@@ -20,10 +20,11 @@ export default class Explotacion extends React.Component {
         mineralesMet: [],
         mineralesNoMet: [],
         expl: 0,
+        idEliminar: null
     }
     modalEliminarClose = () => this.setState({ modalShowEliminar: false });
-    modalEliminarOpen = () => {
-        this.setState({ modalShowEliminar: true });
+    modalEliminarOpen = (i) => {
+        this.setState({ idEliminar: i, modalShowEliminar: true });
     }
     modalExplotarClose = () => this.setState({ modalShowExplotar: false });
     modalExplotarOpen = (idExp) => {
@@ -135,8 +136,8 @@ export default class Explotacion extends React.Component {
                     show={this.state.modalShowEliminar}
                     onHide={this.modalEliminarClose}
                     mensaje={'¿Está seguro que desea eliminar la explotación'}
-                    infoeliminar={this.state.infoEliminar}
-                    urleliminar={`http://localhost:3000/FALTAPORDEFINIR/${this.state.idEliminar}`}
+                    infoeliminar={''}
+                    urleliminar={`http://localhost:3000/deleteExplotacionById/${this.state.idEliminar}`}
                 />
                 <ModalExplotar
                     show={this.state.modalShowExplotar}
@@ -218,7 +219,6 @@ export default class Explotacion extends React.Component {
                                 modificar={true}
                                 consultar={true}
                                 eliminar={true}
-                                explotar={true}
                                 modalEliminar={this.modalEliminarOpen}
                                 reload={this.state.reload}
                                 checktable={false}
