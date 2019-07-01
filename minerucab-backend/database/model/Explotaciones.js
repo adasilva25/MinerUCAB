@@ -218,7 +218,6 @@ const getClaveTipoMaquinariaFase = (faseId, tipoMaquinariaId, callback) => {
 
     })
 }
-
 const getClaveCargoFaseByCargoClaveYFaseClave = (faseId, cargoId, callback) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
@@ -376,7 +375,6 @@ const getAllExplotaciones = (req, res) => {
         client.end();
         res.status(200).json(response.rows)
     })
-
     .catch((e) => {
         client.end();
         console.error(e.stack);

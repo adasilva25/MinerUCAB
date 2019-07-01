@@ -212,6 +212,7 @@ export default class Explotacion extends React.Component {
                                 urlModificar={'/modificar_explotacion'}
                                 urlConsultar={'/consultar_explotacion'}
                                 urlExplotar={'/registrar_explotacion'}
+                                urlCrear={'/registrar_explotacion'}
                                 modalExplotar={this.modalExplotarOpen}
                                 agregar={false}
                                 modificar={true}

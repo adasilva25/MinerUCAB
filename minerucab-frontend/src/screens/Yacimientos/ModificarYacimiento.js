@@ -35,7 +35,10 @@ export default class ModificarYacimiento extends React.Component {
         this.state = {
             eliminadosFases: [],
             actualizar:true,
+            fechaInsertada: false,
             eliminar:true,
+            insertCargos:false,
+            insertTM:false,
             prueba: true,
             key:"Etapa 1",
             explotacion:{
@@ -445,7 +448,8 @@ export default class ModificarYacimiento extends React.Component {
                     console.log('res tipo', res)
 
                     this.setState(() => ({
-                        yacimiento: state.yacimiento
+                        yacimiento: state.yacimiento,
+                        fechaInsertada:true,
                     }));
 
                 }).catch((e) => {
@@ -570,6 +574,7 @@ export default class ModificarYacimiento extends React.Component {
                                 nombreV:null,
                                 id:null,
                                 duracion:0,
+                                eliminar:true,
                                 costo:0,
                                 etapaShow:true,
                                 numero: 1,
@@ -685,7 +690,8 @@ export default class ModificarYacimiento extends React.Component {
                             
                             etapa.fases.shift();
                             this.setState((prevState) => ({
-                                etapas: prevState.etapas.concat(etapa)
+                                etapas: prevState.etapas.concat(etapa),
+                                eliminar:false,
                             }));
 
                             console.log('state et', this.state.etapas)
@@ -736,7 +742,7 @@ export default class ModificarYacimiento extends React.Component {
                                         this.setState((prevState) => ({
                                             etapas: prevState.etapas.map((etapaMap) => {
                                                 if (etapaMap.id === etapa.id){
-                                                    return {...etapaMap, fases: etapaMap.fases.concat(fase)}
+                                                    return {...etapaMap, fases: etapaMap.fases.concat(fase), eliminar:false}
                                                 }
                                                 else{
                                                     return etapaMap
@@ -748,6 +754,7 @@ export default class ModificarYacimiento extends React.Component {
                                         // fase.tipoMaquinaria.shift();
                                         axios.get(`http://localhost:3000/getTiposMaquinariaByIdFase/${fase.id}`, config)
                                             .then((res) => {
+                                                let longitud1=0;
                                                 res.data.forEach((item) => {
                                                     let tipoMaquinaria = {
                                                         nombre:null,
@@ -781,6 +788,15 @@ export default class ModificarYacimiento extends React.Component {
                                                             }
                                                         })
                                                     }));
+                                                    longitud1++;
+                                                    if(longitud1==res.data.length){
+                                                        this.setState(() => ({
+                                                            insertTM:true
+                                                        }));
+                                                    }
+                                                    
+
+
                                                     // console.log('estado tm', this.state)
 
                                                     // axios.get(`http://localhost:3000/getMaquinariasByIdTipoMaquinaria/${item.clave}`, config)
@@ -833,6 +849,7 @@ export default class ModificarYacimiento extends React.Component {
 
                                                 axios.get(`http://localhost:3000/getCargosByIdFase/${fase.id}`)
                                                     .then((res) => {
+                                                        let longitud=0;
                                                         res.data.forEach((item) => {
                                                             
                                                             let cargo={
@@ -906,6 +923,13 @@ export default class ModificarYacimiento extends React.Component {
                                                                     }
                                                                 })
                                                             }));
+
+                                                            longitud++;
+                                                            if(longitud==res.data.length){
+                                                                this.setState(() => ({
+                                                                    insertCargos:true
+                                                                }));
+                                                            }
                                                             
                                                         })
                                                     })
@@ -1013,6 +1037,22 @@ export default class ModificarYacimiento extends React.Component {
                         }));
                         console.log('state mm', this.state.minerales)
                     }
+                    else{
+                        let mineral={
+                                nombre:null,
+                                id:-1,
+                                total: 0,
+                                accordionKey:0,
+                                
+                            }
+                        state.mineralShow='none',
+                            
+                            state.Minerales.push(mineral);
+                            this.setState(() => ({
+                                minerales: state.Minerales,
+                                mineralShow: state.mineralShow
+                            }));
+                    }
                 }).catch((e) => {
                     console.log('Error en axios')
                 })
@@ -1061,6 +1101,24 @@ export default class ModificarYacimiento extends React.Component {
                     }));
     
                     console.log('state nm', this.state)
+                }
+                else{
+
+                    let mineral={
+                        nombre:null,
+                        id:-1,
+                        total: 0,
+                        accordionKey:0,
+                        
+                    }
+                    state.MineralesNoMetalicos.push(mineral);
+                    state.mineralNoMetalicoShow='none',
+                    this.setState(() => ({
+                        
+                        MineralesNoMetalicos: state.MineralesNoMetalicos,
+                        mineralNoMetalicoShow: state.mineralNoMetalicoShow
+                    }));
+                
                 }
     
             }).catch((e) => {
@@ -2405,7 +2463,7 @@ export default class ModificarYacimiento extends React.Component {
         let cantidad_anterior = 0;
         let id_a_eliminar=0;
 
-        if(tiposMaquinaria[0].id === -1){
+        if((tiposMaquinaria.length>0) &&(tiposMaquinaria[0].id === -1)){
             tiposMaquinaria.shift();
 
         }
@@ -3124,7 +3182,7 @@ export default class ModificarYacimiento extends React.Component {
 
 
 
-    handleOnChangeMineralNo=(event,minNUm)=>{
+    handleOnChangeMineralNoMetalico=(event,minNUm)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
         const minerales= this.state.MineralesNoMetalicos;
@@ -3244,7 +3302,7 @@ export default class ModificarYacimiento extends React.Component {
 
                     <FormTitulo titulo="Modificar Yacimiento" tamaño="BIG"/>
                      
-                    <Accordion defaultActiveKey={1} >
+                    { (this.state.fechaInsertada) && <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[0]} onClick={() => this.accordionf(0)} className="accordion borderacc">
                               
@@ -3263,7 +3321,7 @@ export default class ModificarYacimiento extends React.Component {
                                             as="select" 
                                             className="form-input"
 
-                                            value={this.state.estatus.nombre}
+                                            defaultValue={this.state.estatus.nombre}
 
                                             onClick={(evt)=>this.handleOnClickEstatus(evt)}
                                             >
@@ -3285,7 +3343,7 @@ export default class ModificarYacimiento extends React.Component {
                                         <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,"YacimientosNombreYacimientoText","Introduzca un nombre válido")} controlId="YacimientosNombreYacimiento" className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
 
-                                            <Form.Control type="text" className="form-input" value={this.state.yacimiento.nombre} placeholder="Introduzca nombre del yacimiento" />
+                                            <Form.Control type="text" className="form-input" defaultValue={this.state.yacimiento.nombre} placeholder="Introduzca nombre del yacimiento" />
 
                                             <Form.Text className="text-muted" id="YacimientosNombreYacimientoText">
                                                 Obligatorio
@@ -3294,7 +3352,7 @@ export default class ModificarYacimiento extends React.Component {
                                         <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,"YacimientosDescripcionYacimientoText","Introduzca una descripción válida")} controlId="YacimientosDescripcionYacimiento" className="inputsPaddingLeft">
                                             <Form.Label className="cliente-description-fields-text">Descripción</Form.Label>
 
-                                            <Form.Control as="textarea" rows="1" className="form-input-juridico-textarea" value={this.state.yacimiento.descripcion} placeholder="Introduzca una descripción"/>
+                                            <Form.Control as="textarea" rows="1" className="form-input-juridico-textarea" defaultValue={this.state.yacimiento.descripcion} placeholder="Introduzca una descripción"/>
 
                                             <Form.Text className="text-muted" id="YacimientosDescripcionYacimientoText">
                                                 Obligatorio
@@ -3308,7 +3366,7 @@ export default class ModificarYacimiento extends React.Component {
                                             <Form.Label className="cliente-description-fields-text">Área</Form.Label>
                                             <InputGroup className="MyInputGroup">
 
-                                                <Form.Control type="text" className="form-input" value={this.state.yacimiento.area} placeholder="Introduzca tamaño del yacimiento" /> 
+                                                <Form.Control type="text" className="form-input" defaultValue={this.state.yacimiento.area} placeholder="Introduzca tamaño del yacimiento" /> 
 
                                                 <InputGroup.Append>
                                                     <InputGroup.Text  className="input-append-ventas-form" >Km<sup>2</sup></InputGroup.Text>
@@ -3318,7 +3376,9 @@ export default class ModificarYacimiento extends React.Component {
                                                 Obligatorio
                                             </Form.Text>    
                                         </Form.Group>
+
                                         <FormFecha titulo="Fecha de Registro" clase="inputsPaddingLeft" dia={this.state.yacimiento.fecha.dia} mes={this.state.yacimiento.fecha.mes} ano={this.state.yacimiento.fecha.ano} disabled={true}/>    
+                                    
                                     </Form.Row>
 
                                     <Form.Row className="formMargins">
@@ -3328,7 +3388,7 @@ export default class ModificarYacimiento extends React.Component {
 
                                             type="text" 
                                             className="form-input"
-                                            value={this.state.yacimiento.tipo}
+                                            defaultValue={this.state.yacimiento.tipo}
                                             >
 
                                             </Form.Control>
@@ -3340,7 +3400,9 @@ export default class ModificarYacimiento extends React.Component {
                                 </Card.Body>
                             </Accordion.Collapse>
                         </Card>
-                    </Accordion>
+                    </Accordion>}
+
+
                     <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[1]} onClick={() => this.accordionf(1)} className="accordion borderacc">
@@ -3372,7 +3434,7 @@ export default class ModificarYacimiento extends React.Component {
                                     <Row>
                                         <Col sm={0} md={1}></Col>
                                         <Col sm={12} md={10}>
-                                            <DataTable
+                                            { ((this.state.mineralNoMetalicoId.length>0)||(this.state.mineralId.length>0)) && <DataTable
                                                 selectCheck={this.selectFunctionCheckbox}
                                                 modificarCheck={true}
                                                 listaModificarCheck={this.state.mineralId}
@@ -3394,6 +3456,7 @@ export default class ModificarYacimiento extends React.Component {
                                                 etapa={0}
                                                 fase={0}
                                             />
+                                        }
                                         </Col>
                                         <Col sm={0} md={1}></Col>
                                     </Row>
@@ -3416,7 +3479,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
 
-                                                                                <Form.Control type="text" className="form-input" value={mineral.total} placeholder="Introduzca cantidad" /> 
+                                                                                <Form.Control type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
 
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
@@ -3455,10 +3518,10 @@ export default class ModificarYacimiento extends React.Component {
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
                     
-                                    <Row>
+                                   <Row>
                                         <Col sm={0} md={1}></Col>
                                         <Col sm={12} md={10}>
-                                            <DataTable
+                                           { ((this.state.mineralNoMetalicoId.length>0)||(this.state.mineralId.length>0)) && <DataTable
                                                 selectCheck={this.selectFunctionCheckbox}
                                                 modificarCheck={true}
                                                 listaModificarCheck={this.state.mineralNoMetalicoId}
@@ -3480,6 +3543,7 @@ export default class ModificarYacimiento extends React.Component {
                                                 etapa={0}
                                                 fase={0}
                                             />
+                                        }
                                         </Col>
                                         <Col sm={0} md={1}></Col>
                                     </Row>
@@ -3501,7 +3565,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineralNoMetalico(evt,mineral.id)} controlId={'YacimientosTotalMineralNoMetalico'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
-                                                                                <Form.Control type="text" className="form-input" value={mineral.total} placeholder="Introduzca cantidad" /> 
+                                                                                <Form.Control type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
 
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
@@ -3670,9 +3734,8 @@ export default class ModificarYacimiento extends React.Component {
 
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
-                                                                                    
 
-                                                                                        <DataTable
+                                                                                       {(this.state.insertCargos==true) && <DataTable
 
                                                                                             selectCheck={this.selectFunctionCheckbox}
 
@@ -3696,7 +3759,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                             fase={fase.numeroV}
                                                                                             nombreDT={this.props.nombreDT}
                                                                                         />
-                                                                                       
+                                                                                       }
                                                                                     </Col>
                                                                                     <Col sm={0} md={1}></Col>
                                                                             </Row>
@@ -3750,7 +3813,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                             <Row>
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
-                                                                                        <DataTable
+                                                                                       {(this.state.insertTM==true)&& <DataTable
 
                                                                                             selectCheck={this.selectFunctionCheckbox}
 
@@ -3774,7 +3837,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                             textoPlural={'tipos de maquinaria'}
                                                                                             etapa={etapa.numeroV}
                                                                                             fase={fase.numeroV}
-                                                                                        />
+                                                                                        />}
                                                                                     </Col>
                                                                                     <Col sm={0} md={1}></Col>
                                                                             </Row>
