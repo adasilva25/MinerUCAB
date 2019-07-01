@@ -9,6 +9,7 @@ import OpcionesLocales from '../../components/OpcionesLocales';
 import InputGroup from 'react-bootstrap/InputGroup';
 import OpcionesGlobales from '../../components/OpcionesGlobales';
 import axios from 'axios';
+import {history} from '../../routers/History';
 
 // https://stackoverflow.com/questions/469357/html-text-input-allow-only-numeric-input
 
@@ -277,7 +278,6 @@ export default class VentasForm extends React.Component {
             venta: this.props.match.params.id,
         }
         console.log(info)
-        if(parseInt(info.estado) === 7){
             console.log("paso")
             const config = {
                 headers: {
@@ -304,7 +304,7 @@ export default class VentasForm extends React.Component {
                         if(this.state.conflicto===true){
                             alert("El inventario no posee la cantidad necesaria para cubrir esta venta. Inicie una explotación de los minerales deseados.")
                         }
-                        if(this.state.conflicto===false){
+                        if((this.state.conflicto===false)&&(parseInt(info.estado) === 7)){
                             const configup = {
                                 headers: {
                                   'Content-Type': 'application/x-www-form-urlencoded'
@@ -316,6 +316,7 @@ export default class VentasForm extends React.Component {
 
                             axios.put('http://localhost:3000/updateVenta', configup)
                                 .then((res) => {
+                                    history.push('/home')
                                 }).catch((e) => {
                                     console.log('Error en axios')
                                 })
@@ -325,7 +326,6 @@ export default class VentasForm extends React.Component {
                     })
             })
         }
-    }
     dropdownChange = (e) => {
         const nombreMineral = this.state.minerales[e.target.value].nombre;
         console.log(nombreMineral)
