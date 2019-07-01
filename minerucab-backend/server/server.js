@@ -21,6 +21,7 @@ const PagosValidations = require('../validations/PagosValidations');
 const Presentaciones = require('../database/model/Presentaciones');
 const Roles = require('../database/model/Roles');
 const SolicitudesCompra = require('../database/model/SolicitudesCompra');
+const SolCompraValidations = require('../validations/SolCompraValidation')
 const TiposMaquinaria = require('../database/model/TiposMaquinaria');
 const TiposYacimiento = require('../database/model/TiposYacimiento');
 const Usuarios = require('../database/model/Usuarios')
@@ -53,6 +54,7 @@ app.get('/', (req, res) => {
 
 
 /* ----------------------------------- POST ----------------------------------- */
+app.post('/crearSolCompra', SolCompraValidations.crearSolCompra);
 /* -------------------- CLIENTES -------------------- */
 app.post('/createClienteNatural', ClientesNaturales.createClienteNatural);
 app.post('/createClienteJuridico', ClientesJuridicos.createClienteJuridico);
@@ -135,9 +137,16 @@ app.get('/getAllPresentacionesByIdMineralMetalico/:id', Presentaciones.getAllPre
 app.get('/getAllPresentacionesByIdMineralNoMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralNoMetalico);
 /* -------------------- SOLICITUDES DE COMPRA -------------------- */
 app.get('/getAllSolicitudesDeCompra', SolicitudesCompra.getAllSolicitudesDeCompra);
+app.get('/getEstatusSolicitudDeCompraByIdExplotacion/:id', SolicitudesCompra.getEstatusSolicitudDeCompraByIdExplotacion);
 app.get('/getSolicitudDeCompraInfoById/:id', SolicitudesCompra.getSolicitudDeCompraInfoById);
-app.get('/getDetalleSolicitudCompraMineralMetalicoById/:id', SolicitudesCompra.getDetalleSolicitudCompraMineralMetalicoById)
-app.get('/getDetalleSolicitudCompraMineralNoMetalicoById/:id', SolicitudesCompra.getDetalleSolicitudCompraMineralNoMetalicoById)
+app.get('/getDetalleSolicitudCompraMineralMetalicoById/:id', SolicitudesCompra.getDetalleSolicitudCompraMineralMetalicoById);
+app.get('/getDetalleSolicitudCompraMineralNoMetalicoById/:id', SolicitudesCompra.getDetalleSolicitudCompraMineralNoMetalicoById);
+app.get('/getMinExpSolicitudDeCompra/:id', SolicitudesCompra.getMinExpSolicitudDeCompra);
+app.get('/getMinMetComponentesSolicitudDeCompra/:id', SolicitudesCompra.getMinMetComponentesSolicitudDeCompra);
+app.get('/getMinNoMetComponentesSolicitudDeCompra/:id', SolicitudesCompra.getMinNoMetComponentesSolicitudDeCompra);
+app.get('/getEmpresaMinMetComponentesSolicitudDeCompra/:id', SolicitudesCompra.getEmpresaMinMetComponentesSolicitudDeCompra);
+app.get('/getEmpresaMinNoMetComponentesSolicitudDeCompra/:id', SolicitudesCompra.getEmpresaMinNoMetComponentesSolicitudDeCompra);
+
 /* -------------------- TIPOS DE MAQUINARIAS -------------------- */
 app.get('/getAllTiposMaquinaria', TiposMaquinaria.getAllTiposMaquinaria);
 app.get('/getTiposMaquinariaByIdFase/:id', TiposMaquinaria.getTiposMaquinariaByIdFase)

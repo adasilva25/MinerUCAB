@@ -11,7 +11,7 @@ const createYacimiento = (info, claveExplotacion, callback) => {
     client.connect();
     const text = 'INSERT INTO MU_YACIMIENTO (nombre, descripcion, fecha_registro, "tamaño", fk_lugar, fk_estatus, fk_explotacion)\n\
                     VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING Clave';
-    const values = [info.yacimiento.nombre, info.yacimiento.descripcion, info.yacimiento.fecha, info.yacimiento.area, info.yacimiento.ubicacion.parroquia, info.yacimiento.estatus, claveExplotacion];
+    const values = [info.yacimiento.nombre, info.yacimiento.descripcion, info.yacimiento.fecha, info.yacimiento.area, info.yacimiento.ubicacion.parroquia, 2, claveExplotacion];
     client.query(text, values)
     .then((res) => {
         client.end();

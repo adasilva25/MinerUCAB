@@ -11,7 +11,7 @@ const createExplotacion = (info, callback) => {
     client.connect();
     const text = 'INSERT INTO MU_EXPLOTACION (costo_total, duracion, fecha_inicio, fecha_fin, fk_venta, fk_estatus)\n\
                     VALUES ($1, $2, null, null, null, $3) RETURNING Clave';
-    const values = [info.explotacion.costo, info.explotacion.duracion, info.explotacion.estatus];
+    const values = [info.explotacion.costo, info.explotacion.duracion, 2];
     client.query(text, values)
     .then((res) => {
         client.end();
@@ -208,7 +208,7 @@ const getAllExplotaciones = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    client.query('SELECT EX.Clave, EX.costo_total "Costo", EX.fecha_inicio "Fecha inicio", E.nombre estatus FROM MU_EXPLOTACION EX, MU_ESTATUS E WHERE EX.fk_estatus = E.Clave;')
+    client.query('SELECT EX.Clave, Y.nombre as "Yacimiento", EX.costo_total "Costo", EX.fecha_inicio as fecha, E.nombre estatus FROM MU_EXPLOTACION EX, MU_ESTATUS E, MU_YACIMIENTO Y WHERE EX.clave=Y.fk_explotacion AND EX.fk_estatus = E.Clave;')
     .then((response) => {
         client.end();
         res.status(200).json(response.rows)
