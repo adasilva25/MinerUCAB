@@ -28,7 +28,7 @@ const createMaquinaria = (req, res) => {
 
 const getAllMaquinarias = (req, res) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     client.connect();
     client.query('SELECT M.Clave, M.Identificador AS "Serial", M.Fecha_adquisicion AS "Fecha Adquisición", TM.nombre AS "Tipo de Maquinaria", E.Nombre as "Estatus" FROM MU_MAQUINARIA M, MU_TIPO_MAQUINARIA TM, MU_ESTATUS E WHERE M.fk_estatus = E.Clave AND TM.clave = M.fk_tipo_maquinaria;')
@@ -44,7 +44,7 @@ const getAllMaquinarias = (req, res) => {
 }
 const getMaquinariaById = (req, res) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
     const text = 'SELECT * FROM MU_MAQUINARIA WHERE Clave = ($1);';
@@ -65,7 +65,7 @@ const getMaquinariaById = (req, res) => {
 
 const updateMaquinariaById = (req, res) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     console.log(req.body.data)
     client.connect();
@@ -83,13 +83,32 @@ const updateMaquinariaById = (req, res) => {
     })
 }
 
+const updateEstatusMaquinaria = (clave, fk_estatus) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
+    });
+    client.connect();
+    const text = 'UPDATE MU_MAQUINARIA SET fk_estatus = ($1) WHERE Clave = ($2);';
+    const values = [fk_estatus, clave];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
 const getMaquinariasByIdTipoMaquinaria = (req, res) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     console.log(req.body.data)
     client.connect();
-    const text = 'SELECT MA.Clave clave, MA.Identificador identificador FROM MU_MAQUINARIA MA, MU_TIPO_MAQUINARIA TM WHERE TM.Clave = MA.fk_tipo_maquinaria AND TM.Clave = ($1);';
+    const text = 'SELECT MA.Clave clave, MA.Identificador identificador FROM MU_MAQUINARIA MA, MU_TIPO_MAQUINARIA TM WHERE TM.Clave = MA.fk_tipo_maquinaria AND TM.Clave = ($1) AND MA.fk_estatus = 1;';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -101,6 +120,25 @@ const getMaquinariasByIdTipoMaquinaria = (req, res) => {
         client.end();
         res.status(500).json({ error: error.toString() });
     })   
+}
+
+const getMaquinariaByIdTipoMaquinariaFase = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
+    });
+    client.connect();
+    const text = 'SELECT M.Clave clave_maquinaria, M.Identificador serial, E.Nombre estatus FROM MU_MAQUINARIA M, MU_ESTATUS E, MU_MAQUINARIA_TIPO_MAQUINARIA_FASE MTMF WHERE MTMF.fk_tipo_maquinaria_fase = ($1) AND M.Clave = MTMF.fk_maquinaria AND E.Clave = M.fk_estatus';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
 }
 
 /* ------------------------------ DELETE ------------------------------ */
@@ -129,7 +167,9 @@ module.exports = {
     getAllMaquinarias,
     getMaquinariaById,
     getMaquinariasByIdTipoMaquinaria,
+    getMaquinariaByIdTipoMaquinariaFase,
     updateMaquinariaById,
+    updateEstatusMaquinaria,
     deleteMaquinariaById
     // ,[siguientes funciones]
 }

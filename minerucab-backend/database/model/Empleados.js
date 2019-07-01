@@ -26,7 +26,7 @@ const createEmpleado = (info, callback) => {
 
 const getAllEmpleados = (req, res) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     client.connect();
 
@@ -106,7 +106,45 @@ const getEmpleadosByIdCargo = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     client.connect();
-    const text = 'SELECT E.Clave "Clave", E.p_nombre "Nombre", E.p_apellido "Apellido", E.ci "Cédula", E.sexo "Sexo" FROM mu_empleado E, MU_CARGO C WHERE C.clave = ($1) AND C.Clave = E.fk_cargo;';
+    const text = 'SELECT E.Clave "Clave", E.p_nombre "Nombre", E.p_apellido "Apellido", E.ci "Cédula", E.sexo "Sexo" FROM mu_empleado E, MU_CARGO C WHERE C.clave = ($1) AND C.Clave = E.fk_cargo AND E.fk_estatus = 1;';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
+const getEmpleadosByIdCargoFase = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
+    });
+    client.connect();
+    const text = 'SELECT E.Clave clave, E.CI ci, E.p_nombre nombre, E.Sexo sexo, ES.Nombre estatus, ECF.Clave clave_empleado_cargo_fase FROM MU_EMPLEADO E, MU_ESTATUS ES, MU_EMPLEADO_CARGO_FASE ECF WHERE ECF.fk_cargo_fase = ($1) AND E.Clave = ECF.fk_empleado AND ECF.fk_estatus = ES.Clave';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
+const getHorarioEmpleadoByIdEmpleadoCargoFase = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
+    });
+    client.connect();
+    const text = '	SELECT H.Clave clave_horario, H.Dia dia, H.hora_entrada hora_entrada, H.hora_salida hora_salida FROM MU_HORARIO H, MU_HORARIO_EMPLEADO HE WHERE HE.fk_empleado_cargo_fase = ($1) AND HE.fk_horario = H.Clave;';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -168,6 +206,8 @@ module.exports = {
     getEmpleadoByCedula,
     getEmpleadoById,
     getEmpleadosByIdCargo,
+    getEmpleadosByIdCargoFase,
+    getHorarioEmpleadoByIdEmpleadoCargoFase,
     updateEmpleadoById,
     deleteEmpleadoById
     // ,[siguientes funciones]

@@ -26,8 +26,8 @@ export class Venta extends React.Component {
         this.setState({ modalShow: true });
     }
     modalEliminarClose = () => this.setState({ modalShowEliminar: false });
-    modalEliminarOpen = () => {
-        this.setState({ modalShowEliminar: true });
+    modalEliminarOpen = (i) => {
+        this.setState({ idEliminar: i, modalShowEliminar: true });
     }
     goBack = () => {
         this.props.history.goBack()
@@ -45,7 +45,7 @@ export class Venta extends React.Component {
               show={this.state.modalShowEliminar}
               onHide={this.modalEliminarClose}
               mensaje={'¿Está seguro que desea eliminar la venta'}
-              infoeliminar={this.state.infoEliminar}
+              infoeliminar={''}
               urleliminar={`http://localhost:3000/deleteVentaById/${this.state.idEliminar}`}
             />
             <Container className="pagecontent">
@@ -84,7 +84,7 @@ export class Venta extends React.Component {
                               <Col sm={12} md={10}>
                                   <DataTable
                                       data={'http://localhost:3000/getAllVentasClientesNaturales'}
-                                      urlModificar={'/registrar_cliente_juridico'}
+                                      urlModificar={'/modificar_ventas'}
                                       urlConsultar={'/consultar_ventas'}
                                       urlEliminar={'/home'}
                                       agregar={false}
@@ -126,7 +126,7 @@ export class Venta extends React.Component {
                               <Col sm={12} md={10}>
                                   <DataTable
                                       data={'http://localhost:3000/getAllVentasClientesJuridicos'}
-                                      urlModificar={'/registrar_cliente_juridico'}
+                                      urlModificar={'/modificar_ventas'}
                                       urlConsultar={'/consultar_ventas'}
                                       urlEliminar={'/home'}
                                       agregar={true}

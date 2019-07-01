@@ -26,14 +26,13 @@ export default class DataTable extends React.Component {
     componentDidMount = () => {
         const iconoConsultar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconsearch" icon={Icons.faSearch}/>);
         const iconoModificar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconedit" icon={Icons.faEdit} />);
-        const iconoExplotar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon className="icons iconedit" icon={Icons.faEyeDropper} />);
         let modificar = this.props.modificar === true;
         let consultar = this.props.consultar === true;
         let eliminar = this.props.eliminar === true;
         let explotar = this.props.explotar === true
         let checktable = this.props.checktable === true;
         let modificarCheck = this.props.modificarCheck === true;
-        const listaModificarCheck=this.props.listaModificarCheck;
+        const listaModificarCheck = this.props.listaModificarCheck;
         let urlConsultar = this.props.urlConsultar;
         let urlModificar = this.props.urlModificar;
         let urlExplotar = this.props.urlExplotar;
@@ -44,6 +43,7 @@ export default class DataTable extends React.Component {
         const textoPlural = this.props.textoPlural;
         let columnsSet = 0;
         const modalEliminar = this.props.modalEliminar;
+        const modalExplotar = this.props.modalExplotar;
         let etapa = this.props.etapa;
         let fase = this.props.fase;
         let id = this.props.id;
@@ -239,7 +239,8 @@ export default class DataTable extends React.Component {
                                             data += `${iconoEliminar}`
                                         }
                                         if (explotar === true){
-                                            data += `<a href="${urlExplotar}/CO/${encodeURIComponent(row[0])}">${iconoExplotar}</a>`
+                                            const iconoExplotar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon id={row[0]} className="icons iconedit iconexp" icon={Icons.faEyeDropper}/>)
+                                            data += `${iconoExplotar}`
                                         }
                                         if ((eliminar === false) && (modificar === false) && (consultar === false) && (registros === true)){
                                             data = 'No posee acciones disponibles'
@@ -300,9 +301,9 @@ export default class DataTable extends React.Component {
 
                                                 if(tipo=="E"){
                                                     checkboxesDT[k].alt = dataSet[m][0];//ID
-                                                    checkboxesDT[k].Name = dataSet[m][1];//CI
-                                                    checkboxesDT[k].align = dataSet[m][2]+' '+dataSet[m][4];//NOMBRE
-                                                    checkboxesDT[k].dirName = dataSet[m][7];//SEXO
+                                                    checkboxesDT[k].Name = dataSet[m][3];//CI
+                                                    checkboxesDT[k].align = dataSet[m][1]+' '+dataSet[m][2];//NOMBRE
+                                                    checkboxesDT[k].dirName = dataSet[m][4];//SEXO
                                                    
                                                 }
                                                 else{
@@ -320,7 +321,7 @@ export default class DataTable extends React.Component {
                                             }
                                             
 
-                                            m++;
+                                            m++; 
                                         }
 
                                         //      ANTERIOR EN CASO DE EMERGENCIA
@@ -483,13 +484,21 @@ export default class DataTable extends React.Component {
                                             this.props.modalEliminar(botonesEliminar[i])
                                         }
                                         else {
+                                            console.log('id', botonesEliminar[i].id)
                                             this.props.modalEliminar(botonesEliminar[i].id)
                                         }   
                                     }.bind(this)
                                 }
                             }
                             
-
+                         const botonesExplotar = document.getElementsByClassName('iconexp');
+                            if (botonesExplotar.length > 0){
+                                for (let i = 0; i <  botonesExplotar.length; i++){
+                                     botonesExplotar[i].onclick = function() {
+                                        this.props.modalExplotar(botonesExplotar[i].id)
+                                    }.bind(this)
+                                }
+                            }
                             // if (checktable === true){
                             //     const checks = document.getElementsByClassName('checkbox-dt');
                             //     console.log(checks.length)

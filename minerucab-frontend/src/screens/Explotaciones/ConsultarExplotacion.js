@@ -38,9 +38,9 @@ export default class ConsultarExplotacion extends React.Component {
         super(props);
         this.state = {
             aux: [],
-            loadedexp:false,
-            loadedyac:false,
-            loadedetapa:false,
+            loadedexp:true,
+            loadedyac:true,
+            loadedetapa:true,
             explotacion:{
                 id:null,
                 duracion:0,
@@ -101,59 +101,362 @@ export default class ConsultarExplotacion extends React.Component {
     }
 
     componentWillMount = () => {
-        const info = { //info
+        const info = {
             yacimiento:{
                 id:1,
-                nombre:"Okinawiwis",
+                nombre:"Okinawa",
                 descripcion:"muy mineraloso",
                 estatus:null,
                 area:300,
                 tipo:"Autóctono",
                 tipoId:3,
-                ubicacion:{ //ubicacion
+                ubicacion:{
                     estado:"Sucre",
                     municipio:"Sucre",
                     parroquia:"Altagracia",
                     idParroquia:760
-                }, //ubicacion/
-                fecha:{ //fecha
+                },
+                fecha:{
                     dia:7,
                     mes:14,
                     ano:1999
-                } //fecha/
+                }
             },
-            minerales:[],
-            mineralesNoMetalicos:[],
+            minerales:[{
+                id:1,
+                total: 5,
+                nombre:"Epale",
+               
+            },
+            {
+                id:8,
+                total: 8,
+                nombre:"Epale2",
+                
+            }],
+            mineralesNoMetalicos:[{
+                id:1,
+                total: 5,
+                nombre:"ICabron",
+               
+            },
+            {
+                id:8,
+                total: 8,
+                nombre:"Alumina",
+               
+            }],
             explotacion:{
                 id:2,
                 duracion:41,
-                finalizar:false,
                 costo:0,
-                fechaI:{ //fechainicio
+                estatus:8,
+                fechaI:{
                     dia:12,
                     mes:3,
                     ano:2019
-                }, //fechainicio/
-                fechaF:{ //fechafin
+                },
+                fechaF:{
                     dia:25,
                     mes:5,
                     ano:2019
-                }, //fechafin/
-                fechaFR:{ //fechafinreal
+                },
+                fechaFR:{
                     dia:13,
                     mes:7,
                     ano:2017
-                } //fechafinreal/
+                }
             },
-            etapas: []
-        } //info/
-        let state={
+            etapas: [{
+                id:2,
+                nombre: "diego",
+                duracion:10,
+                costo:30,
+                estatus:2,
+                fechaI:{
+                    dia:2,
+                    mes:2,
+                    ano:2
+                },
+                fechaF:{
+                    dia:1,
+                    mes:1,
+                    ano:1
+                },
+                fechaFR:{
+                    dia:14,
+                    mes:8,
+                    ano:2013
+                },
+                fases: [{
+                    id:1,
+                    nombre: "andrea",
+                    estatus:2,
+                    duracion:2,
+                    costo:4,
+                    checkInicialCargos:true,
+                    checkInicialtipoMaquiaria:true,
+                    fechaI:{
+                        dia:1,
+                        mes:7,
+                        ano:2018
+                    },
+                    fechaF:{
+                        dia:5,
+                        mes:8,
+                        ano:2010
+                    },
+                    fechaFR:{
+                        dia:14,
+                        mes:8,
+                        ano:2013
+                    },
+                    cargos:[{
+                        id:14,
+                        nombre:"Geólogo",
+                        sueldo:5,
+                        cantidad:7,
+                        empleados:[{
+                            id:2,
+                            nombre:"Diego",
+                            ci:"jcjcsdjdj",
+                            accordionKey:0,
+                            sexo:"Masculino",
+                            dia:"Lunes",
+                            horario:[{
+                                dia:"Lunes",
+                                horaEntrada:"d",
+                                horaSalida:null,
+                                value:0,
+                            },
+                            {
+                                dia:"Martes",
+                                horaEntrada:"76",
+                                horaSalida:null,
+                                value:0,
+                            },
+                            {
+                                dia:"Miercoles",
+                                horaEntrada:"753",
+                                horaSalida:"",
+                                value:2,
+                            },
+                            {
+                                dia:"Jueves",
+                                horaEntrada:"s",
+                                horaSalida:null,
+                                value:2,
+                            },
+                            {
+                                dia:"Viernes",
+                                horaEntrada:"sdd",
+                                horaSalida:null,
+                                value:1,
+                            }]
+                        },
+                        {
+                            id:3,
+                            nombre:"Alba",
+                            ci:"jcjcsdjdj",
+                            accordionKey:0,
+                            sexo:"Femenino",
+                            dia:"Lunes",
+                            horario:[{
+                                dia:"Lunes",
+                                horaEntrada:"dgs",
+                                horaSalida:null,
+                                value:1,
+                            },
+                            {
+                                dia:"Martes",
+                                horaEntrada:"76",
+                                horaSalida:null,
+                                value:1,
+                            },
+                            {
+                                dia:"Miercoles",
+                                horaEntrada:"753",
+                                horaSalida:"",
+                                value:1,
+                            },
+                            {
+                                dia:"Jueves",
+                                horaEntrada:"s",
+                                horaSalida:null,
+                                value:0,
+                            },
+                            {
+                                dia:"Viernes",
+                                horaEntrada:"sdd",
+                                horaSalida:null,
+                                value:2,
+                            }]
+                        }],
+                    }],
+                    tipoMaquinaria:[{
+                        id:5,
+                        nombre:"Plancha",
+                        costo:52,
+                        cantidad:7,
+                        maquinarias:[{
+                            id:1,
+                            serial:"edde",
+                            estatus:null,
+                        },
+                        {
+                            id:2,
+                            serial:"efer",
+                            estatus:null,
+                        }]
+                    }]
+                }/*,
+                {
+                    nombre: "Albita",
+                    duracion:1,
+                    costo:7.2,
+                    cargos:[{
+                        id:10,
+                        nombre:"Em",
+                        sueldo:8,
+                        cantidad:6,
+                    }],
+                    tipoMaquinaria:[{
+                        id:7,
+                        nombre:"Dibujante",
+                        costo:5,
+                        cantidad:9,
+                    }]
+                }*/]
+            },    
+            {
+                nombre: "Baudet",
+                id:4,
+                duracion:31,
+                costo:30,
+                estatus:8,
+                fechaI:{
+                    dia:12,
+                    mes:3,
+                    ano:2019
+                },
+                fechaF:{
+                    dia:25,
+                    mes:5,
+                    ano:2019
+                },
+                fechaFR:{
+                    dia:13,
+                    mes:7,
+                    ano:2017
+                },
+                fases: [{
+                    nombre: "Sanchéz",
+                    id:8,
+                    duracion:30,
+                    costo:5,
+                    estatus:2,
+                    checkInicialCargos:true,
+                    checkInicialtipoMaquiaria:true,
+                    fechaI:{
+                        dia:12,
+                        mes:3,
+                        ano:2019
+                    },
+                    fechaF:{
+                        dia:25,
+                        mes:5,
+                        ano:2019
+                    },
+                    fechaFR:{
+                        dia:13,
+                        mes:7,
+                        ano:2017
+                    },
+                    cargos:[{
+                        id:3,
+                        nombre:"Administrador",
+                        sueldo:8,
+                        cantidad:1,
+                        empleados:[],
+                    },
+                    {
+                        id:2,
+                        nombre:"Dibujante",
+                        sueldo:5,
+                        cantidad:9,
+                        empleados:[],
+                    }],
+                    tipoMaquinaria:[{
+                        id:6,
+                        nombre:"Excavadora",
+                        costo:2,
+                        cantidad:8,
+                        maquinarias:[{
+                            id:3,
+                            serial:"er",
+                            estatus:null,
+                        }],
+                    },
+                    {
+                        id:1,
+                        nombre:"Plancha",
+                        costo:9,
+                        cantidad:4,
+                        maquinarias:[]
+                    }]
+                },
+                {
+                    nombre: "Albita",
+                    id:4,
+                    duracion:1,
+                    estatus:10,
+                    costo:7.2,
+                    checkInicialCargos:true,
+                    checkInicialtipoMaquiaria:true,
+                    fechaI:{
+                        dia:12,
+                        mes:3,
+                        ano:2019
+                    },
+                    fechaF:{
+                        dia:25,
+                        mes:5,
+                        ano:2019
+                    },
+                    fechaFR:{
+                        dia:11,
+                        mes:9,
+                        ano:2017
+                    },
+                    cargos:[{
+                        id:10,
+                        nombre:"Geologo",
+                        sueldo:8,
+                        cantidad:6,
+                        empleados:[]
+                    }],
+                    tipoMaquinaria:[{
+                        id:7,
+                        nombre:"Horno",
+                        costo:5,
+                        cantidad:9,
+                        maquinarias:[],
+                    }]
+                }]
+            }]
+        }
+
+        let state = {
             eliminadosFases: [],
             dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
             actualizar:true,
             eliminar:true,
             prueba: true,
             key:"Etapa 1",
+            estatus:{
+                id:null,
+                nombre:null,
+            },
             explotacion:{
                 id:null,
                 duracion:0,
@@ -198,55 +501,61 @@ export default class ConsultarExplotacion extends React.Component {
             accordionKey:[],
             mineralShow:'inline',
             mineralId:[],
-            minerales:[],
+            Minerales:[{
+                nombre:null,
+                id:-1,
+                total: 0,
+                accordionKey:0,
+              
+                
+            }],
             mineralNoMetalicoId:[],
             mineralNoMetalicoShow:'inline',
-            mineralesNoMetalicos:[],
-            etapas: [{
-                nombre: "Etapa 1",
-                nombreV:null,
-                id:null,
-                estatus:null,
-                finalizar:false,
-                duracion:0,
-                costo:0,
-                etapaShow:true,
-                numero: 1,
-                numeroV:1,
-                eliminar:true,
-                fechaI:{
-                    dia:0,
-                    mes:0,
-                    ano:0
-                },
-                fechaF:{
-                    dia:0,
-                    mes:0,
-                    ano:0
-                },
-                fechaFR:{
-                    dia:0,
-                    mes:0,
-                    ano:0
-                },
-                key:"Fase 1",
-                fases: [{
-                    nombre: "Fase 1",
-                    nombreV:null,
+            MineralesNoMetalicos:[{
+                nombre:null,
+                id:-1,
+                total: 0,
+                accordionKey:0,
+                
+            }],
+            etapas: []
+        }
+
+        const config = {
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            responseType: 'json'
+        }
+
+        axios.get(`http://localhost:3000/getAllYacimientoInfoById/${this.props.match.params.id}`, config)
+            .then((res) => {
+                console.log('res yac', res)
+                let yacimiento = {
+                    nombre:null,
+                    id:null,
+                    descripcion:null,
+                    area:null,
+                    tipo:null,
+                    tipoId:null,
+                    ubicacion:{
+                        estado:null,
+                        municipio:null,
+                        parroquia:null,
+                        idParroquia:null
+                    },
+                    fecha:{
+                        dia:0,
+                        mes:0,
+                        ano:0
+                    }
+                }
+
+                let explotacion = {
                     id:null,
                     duracion:0,
-                    estatus:null,
                     finalizar:false,
                     costo:0,
-                    faseShow:true,
-                    cargoShow:'inline',
-                    tipoMaquinariaShow:'inline',
-                    numero:1,
-                    numeroV:1,
-                    cargosId:[],
-                    checkInicialCargos:true,
-                    tipoMaquinariaId:[],
-                    checkInicialtipoMaquiaria:true,
                     fechaI:{
                         dia:0,
                         mes:0,
@@ -261,218 +570,214 @@ export default class ConsultarExplotacion extends React.Component {
                         dia:0,
                         mes:0,
                         ano:0
-                    },
-                    cargos:[{
-                        nombre:null,
-                        id:-1,
-                        sueldo:0,
-                        cantidad:0,
-                        estatus:null,
-                        accordionKey:0,
-                        empleadosShow:'inline',
-                        empleadosId:[],
-                        checkInicialEmpleado:true,
-                        empleados:[{
-                            id:-1,
-                            nombre:null,
-                            ci:null,
-                            accordionKey:0,
-                            sexo:null,
-                            estatus:null,
-                            dia:"Lunes",
-                            horario:[]
-                        }],
-                    }],
-                    tipoMaquinaria:[{
-                        nombre:null,
-                        id:-1,
-                        costo:0,
-                        cantidad:0,
-                        estatus:null,
-                        accordionKey:0,
-                        maquinariasShow:'none',
-                        maquinariasId:[],
-                        checkInicialMaquiaria:true,
-                        maquinarias:[],
-                    }]
-                }]
-            }]
-        }
-        const config = {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            responseType: 'json'
-        }
-        axios.get(`http://localhost:3000/getExplotacionById/${this.props.match.params.id}`, config)
-            .then((res) => {
-                var fi = new Date(res.data[0].fecha_inicio);
-                var ff = new Date(res.data[0].fecha_fin);
-                var fr = new Date(res.data[0].fecha_fin_real);
-                info.explotacion.id = this.props.match.params.id;
-                info.explotacion.duracion = res.data[0].duracion;
-                info.explotacion.costo = res.data[0].costo_total;
-                info.explotacion.estatus = res.data[0].fk_estatus;
-                info.explotacion.fechaI.dia = fi.getDate();
-                info.explotacion.fechaI.mes = (fi.getMonth()+1);
-                info.explotacion.fechaI.ano = fi.getFullYear();
-                info.explotacion.fechaF.dia = ff.getDate();
-                info.explotacion.fechaF.mes = (ff.getMonth()+1);
-                info.explotacion.fechaF.ano = ff.getFullYear();
-                info.explotacion.fechaFR.dia = fr.getDate();
-                info.explotacion.fechaFR.mes = (fr.getMonth()+1);
-                info.explotacion.fechaFR.ano = fr.getFullYear();
-                if(info.explotacion.estatus===10){
-                    info.explotacion.finalizar=true;
+                    }
                 }
+
+                const date = new Date(res.data[0].fecha_registro)
+                const dia = date.getDate()
+                const mes = (date.getMonth() + 1)
+                const ano = date.getFullYear()
+
+                state.yacimiento.id = this.props.match.params.id
+                state.yacimiento.nombre = res.data[0].nombre;
+                state.yacimiento.descripcion = res.data[0].descripcion;
+                state.yacimiento.area = res.data[0].area;
+                state.yacimiento.ubicacion.estado = res.data[0].estado
+                state.yacimiento.ubicacion.municipio = res.data[0].municipio
+                state.yacimiento.ubicacion.parroquia = res.data[0].parroquia
+                state.yacimiento.ubicacion.idParroquia = res.data[0].idparroquia
+                state.yacimiento.fecha.dia = dia;
+                state.yacimiento.fecha.mes = mes;
+                state.yacimiento.fecha.ano = ano;
+
+                explotacion.id = res.data[0].clave_explotacion;
+                explotacion.duracion = res.data[0].duracion_explotacion;
+                explotacion.costo = res.data[0].costo_explotacion;
+
+                state.estatus.id = res.data[0].clave_estatus;
+                state.estatus.nombre = res.data[0].estatus;
+                
                 this.setState(() => ({
-                    explotacion: info.explotacion,
-                    loadedexp:true,
+                    explotacion: explotacion
                 }));
-        }).catch((e) => {
-              console.log('Error en axios')
-        })
-        axios.get(`http://localhost:3000/getYacimientoByIdExplotacion/${this.props.match.params.id}`, config)
-            .then((res) => {
-                info.yacimiento.id = res.data[0].clave;
-                info.yacimiento.nombre = res.data[0].nombre;
-                info.yacimiento.area = res.data[0].tamaño;
-                info.yacimiento.ubicacion.idParroquia = res.data[0].fk_lugar;
-
-                axios.get(`http://localhost:3000/getAllMineralesMetalicosByIdYacimiento/${info.yacimiento.id}`, config)
-                    .then((res) => {
-                        res.data.forEach(element => {
-                            let mineral={
-                                nombre:null,
-                                id:-1,
-                                total: -1,
-                                accordionKey:0,
-                            }
-                            mineral.nombre=element.nombre_mineral_metalico;
-                            mineral.id=element.clave_mineral_metalico;
-                            mineral.total=parseFloat(element.cantidad_mineral_metalico);
-                            info.minerales.push(mineral);
-                        })
-                        this.setState(() => ({
-                            yacimiento: info.yacimiento,
-                            minerales: info.minerales,
-                            loadedyac: true,
-                        }));
-                }).catch((e) => {
-                      console.log('Error en axios')
-                })
-
-                axios.get(`http://localhost:3000/getAllMineralesNoMetalicosByIdYacimiento/${info.yacimiento.id}`, config)
-                    .then((res) => {
-                        res.data.forEach(element => {
-                            let mineral={
-                                nombre:null,
-                                id:-1,
-                                total: -1,
-                                accordionKey:0,
-                            }
-                            mineral.nombre=element.nombre_mineral_metalico;
-                            mineral.id=element.clave_mineral_metalico;
-                            mineral.total=parseFloat(element.cantidad_mineral_metalico);
-                            info.mineralesNoMetalicos.push(mineral);
-                        })
-                        console.log(info)
-                        this.setState(() => ({
-                            yacimiento: info.yacimiento,
-                            minerales: info.minerales,
-                            mineralesNoMetalicos: info.mineralesNoMetalicos,
-                            loadedyac: true,
-                        }));
-                }).catch((e) => {
-                      console.log('Error en axios')
-                })
 
                 this.setState(() => ({
-                    yacimiento: info.yacimiento,
-                    loadedyac: true,
+                    estatus: state.estatus
                 }));
-        }).catch((e) => {
-              console.log('Error en axios')
-        })
-        axios.get(`http://localhost:3000/getEtapasByIdExplotacion/${this.props.match.params.id}`, config)
-            .then((res) => {
-                let i=0
-                res.data.forEach(element => {
-                    var fi = new Date(element.fecha_inicio);
-                    var ff = new Date(element.fecha_fin);
-                    var fr = new Date(element.fecha_fin_real);
-                    let etapa={
-                        id:null,
-                        nombreV:null,
-                        estatus:null,
-                        duracion:0,
-                        finalizar:false,
-                        costo:0,
-                        etapaShow:true,
-                        eliminar:true,
-                        fechaI:{
-                            dia:0,
-                            mes:0,
-                            ano:0
-                        },
-                        fechaF:{
-                            dia:0,
-                            mes:0,
-                            ano:0
-                        },
-                        fechaFR:{
-                            dia:0,
-                            mes:0,
-                            ano:0
-                        },
-                        key:"Fase 1",
-                        fases:[],
-                    }
-                    etapa.nombreV=element.nombre;
-                    etapa.id=element.clave;
-                    etapa.estatus=element.fk_estatus;
-                    etapa.duracion=element.duracion;
-                    etapa.costo=element.costo_total;
-                    etapa.numero=i+1,
-                    etapa.numeroV=i+1,
-                    etapa.nombre= 'Etapa '+ (i+1),
-                    etapa.fechaI.dia = fi.getDate();
-                    etapa.fechaI.mes = (fi.getMonth()+1);
-                    etapa.fechaI.ano = fi.getFullYear();
-                    etapa.fechaF.dia = ff.getDate();
-                    etapa.fechaF.mes = (ff.getMonth()+1);
-                    etapa.fechaF.ano = ff.getFullYear();
-                    etapa.fechaFR.dia = fr.getDate();
-                    etapa.fechaFR.mes = (fr.getMonth()+1);
-                    etapa.fechaFR.ano = fr.getFullYear();
-                    if(etapa.estatus==10){
-                        etapa.finalizar = true;
-                    }
 
-                    axios.get(`http://localhost:3000/getFasesByIdEtapa/${etapa.id}`, config)
-                        .then((res) => {
-                            console.log(res)
-                            let j=0
-                            res.data.forEach(elementf => {
-                                var ffi = new Date(elementf.fecha_inicio);
-                                var fff = new Date(elementf.fecha_fin);
-                                var ffr = new Date(elementf.fecha_fin_real);
-                                let fase={
+                console.log('state', this.state)
+
+
+                axios.get(`http://localhost:3000/getTipoYacimientoByIdYacimiento/${this.props.match.params.id}`, config)
+                .then((res) => {
+                    console.log('res tipo', res)
+                    
+                    state.yacimiento.tipo = res.data[0].nombre_tipo_yacimiento
+                    state.yacimiento.tipoId = res.data[0].clave_tipo_yacimiento;
+                    
+                    console.log('res tipo', res)
+
+                    this.setState(() => ({
+                        yacimiento: state.yacimiento
+                    }));
+
+                }).catch((e) => {
+                    console.log('Error en axios')
+                })
+
+                axios.get(`http://localhost:3000/getEtapasByIdExplotacion/${explotacion.id}`, config)
+                    .then((res) => {
+                        let etapas = [{
+                            nombre: "Etapa 1",
+                            nombreV:null,
+                            id:null,
+                            duracion:0,
+                            costo:0,
+                            etapaShow:true,
+                            numero: 1,
+                            numeroV:1,
+                            eliminar:true,
+                            fechaI:{
+                                dia:0,
+                                mes:0,
+                                ano:0
+                            },
+                            fechaF:{
+                                dia:0,
+                                mes:0,
+                                ano:0
+                            },
+                            key:"Fase 1",
+                            fases: [{
+                                nombre: "Fase 1",
+                                nombreV:null,
+                                id:null,
+                                duracion:0,
+                                costo:0,
+                                faseShow:true,
+                                cargoShow:'inline',
+                                tipoMaquinariaShow:'inline',
+                                numero:1,
+                                numeroV:1,
+                                cargosId:[],
+                                tipoMaquinariaId:[],
+                                checkInicialCargos:true,
+                                checkInicialtipoMaquiaria:true,
+                                fechaI:{
+                                    dia:0,
+                                    mes:0,
+                                    ano:0
+                                },
+                                fechaF:{
+                                    dia:0,
+                                    mes:0,
+                                    ano:0
+                                },
+                                cargos:[{
+                                    nombre:null,
+                                    id:-1,
+                                    sueldo:0,
+                                    cantidad:0,
+                                    accordionKey:0,
+                                    empleadosShow:'none',
+                                    empleados:[{
+                                        id:-1,
+                                        nombre:null,
+                                        ci:null,
+                                        accordionKey:0,
+                                        sexo:null,
+                                        dia:"Lunes",
+                                        horario:[{
+                                            dia:"Lunes",
+                                            horaEntrada:null,
+                                            horaSalida:null,
+                                            value:1,
+                                        },
+                                        {
+                                            dia:"Martes",
+                                            horaEntrada:null,
+                                            horaSalida:null,
+                                            value:1,
+                                        },
+                                        {
+                                            dia:"Miercoles",
+                                            horaEntrada:null,
+                                            horaSalida:null,
+                                            value:1,
+                                        },
+                                        {
+                                            dia:"Jueves",
+                                            horaEntrada:null,
+                                            horaSalida:null,
+                                            value:1,
+                                        },
+                                        {
+                                            dia:"Viernes",
+                                            horaEntrada:null,
+                                            horaSalida:null,
+                                            value:1,
+                                        }]
+                                    }],
+                                    
+                                }],
+                                tipoMaquinaria:[{
+                                    nombre:null,
+                                    id:-1,
+                                    costo:0,
+                                    cantidad:0,
+                                    accordionKey:0,
+                                    maquinariasShow:'none',
+                                    maquinarias:[],
+                                }]
+            
+                            }]
+                        }]
+                        res.data.forEach((item, i) => {
+                            let etapa = {
+                                nombre: "Etapa 1",
+                                nombreV:null,
+                                id:null,
+                                finalizar:false,
+                                estatus:null,
+                                duracion:0,
+                                costo:0,
+                                etapaShow:true,
+                                numero: 1,
+                                numeroV:1,
+                                eliminar:true,
+                                fechaI:{
+                                    dia:0,
+                                    mes:0,
+                                    ano:0
+                                },
+                                fechaF:{
+                                    dia:0,
+                                    mes:0,
+                                    ano:0
+                                },
+                                fechaFR:{
+                                    dia:0,
+                                    mes:0,
+                                    ano:0
+                                },
+                                key:"Fase 1",
+                                fases: [{
+                                    nombre: "Fase 1",
                                     nombreV:null,
                                     id:null,
+                                    finalizar:false,
                                     duracion:0,
                                     estatus:null,
                                     costo:0,
                                     faseShow:true,
-                                    finalizar:false,
                                     cargoShow:'inline',
                                     tipoMaquinariaShow:'inline',
+                                    numero:1,
+                                    numeroV:1,
                                     cargosId:[],
                                     checkInicialCargos:true,
                                     tipoMaquinariaId:[],
                                     checkInicialtipoMaquiaria:true,
-                                    cargos: [],
-                                    tipoMaquinaria: [],
                                     fechaI:{
                                         dia:0,
                                         mes:0,
@@ -488,161 +793,571 @@ export default class ConsultarExplotacion extends React.Component {
                                         mes:0,
                                         ano:0
                                     },
-                                }
-                                fase.nombreV=elementf.nombre;
-                                fase.id=elementf.clave;
-                                fase.estatus=elementf.fk_estatus;
-                                fase.duracion=elementf.duracion;
-                                fase.costo=elementf.costo;
-                                fase.numero=j+1,
-                                fase.numeroV=j+1,
-                                fase.nombre= 'Fase '+ (j+1),
-                                fase.fechaI.dia = ffi.getDate();
-                                fase.fechaI.mes = (ffi.getMonth()+1);
-                                fase.fechaI.ano = ffi.getFullYear();
-                                fase.fechaF.dia = fff.getDate();
-                                fase.fechaF.mes = (fff.getMonth()+1);
-                                fase.fechaF.ano = fff.getFullYear();
-                                fase.fechaFR.dia = ffr.getDate();
-                                fase.fechaFR.mes = (ffr.getMonth()+1);
-                                fase.fechaFR.ano = ffr.getFullYear();
-                                if(fase.estatus==10){
-                                    fase.finalizar = true;
-                                }
+                                    cargos:[],
+                                    tipoMaquinaria:[]
+                
+                                }]
+                            }
 
-                                axios.get(`http://localhost:3000/getCargosExpByIdFase/${fase.id}`, config)
-                                    .then((res) => {
-                                        res.data.forEach(elementc => {
-                                            let cargo={
-                                                relacion: 0,
+                            etapa.id = item.clave;
+                            etapa.nombreV = item.nombre;
+                            etapa.costo = item.costo_total;
+                            etapa.duracion = item.duracion;
+                            etapa.nombre= 'Etapa '+ (i+1);
+                            etapa.numero=i+1;
+                            etapa.numeroV=i+1;
+                            etapa.estatus = item.estatus
+
+                            let date 
+                            let dia 
+                            let mes 
+                            let ano 
+
+                            if (item.fecha_inicio){
+                                let date = new Date(item.fecha_inicio)
+                                let dia = date.getDate()
+                                let mes = (date.getMonth() + 1)
+                                let ano = date.getFullYear()
+
+                                etapa.fechaI.dia = dia
+                                etapa.fechaI.mes = mes
+                                etapa.fechaI.ano = ano
+                            }
+
+                            if (item.fecha_fin){
+                                date = new Date(item.fecha_fin)
+                                dia = date.getDate()
+                                mes = (date.getMonth() + 1)
+                                ano = date.getFullYear()
+
+                                etapa.fechaI.dia = dia
+                                etapa.fechaI.mes = mes
+                                etapa.fechaI.ano = ano
+                            }
+
+                            if (item.fecha_fin_real){
+                                date = new Date(item.fecha_fin_real)
+                                dia = date.getDate()
+                                mes = (date.getMonth() + 1)
+                                ano = date.getFullYear()
+
+                                etapa.fechaI.dia = dia
+                                etapa.fechaI.mes = mes
+                                etapa.fechaI.ano = ano
+                            }
+                            
+                            etapa.fases.shift();
+                            this.setState((prevState) => ({
+                                etapas: prevState.etapas.concat(etapa)
+                            }));
+
+                            console.log('state et', this.state.etapas)
+
+
+                            axios.get(`http://localhost:3000/getFasesByIdEtapa/${etapa.id}`, config)
+                                .then((res) => {
+                                    let fases = [];
+                                    res.data.forEach((element, j) => {
+
+                                        let fase = {
+                                            nombre: "Fase 1",
+                                            nombreV:null,
+                                            id:null,
+                                            finalizar:false,
+                                            duracion:0,
+                                            estatus:null,
+                                            costo:0,
+                                            faseShow:true,
+                                            cargoShow:'inline',
+                                            tipoMaquinariaShow:'inline',
+                                            numero:1,
+                                            numeroV:1,
+                                            cargosId:[],
+                                            checkInicialCargos:true,
+                                            tipoMaquinariaId:[],
+                                            checkInicialtipoMaquiaria:true,
+                                            fechaI:{
+                                                dia:0,
+                                                mes:0,
+                                                ano:0
+                                            },
+                                            fechaF:{
+                                                dia:0,
+                                                mes:0,
+                                                ano:0
+                                            },
+                                            fechaFR:{
+                                                dia:0,
+                                                mes:0,
+                                                ano:0
+                                            },
+                                            cargos:[],
+                                            tipoMaquinaria:[/*{     EN CASO DE ERROR QUITAR
                                                 nombre:null,
                                                 id:-1,
-                                                sueldo:0,
+                                                costo:0,
                                                 cantidad:0,
+                                                estatus:null,
                                                 accordionKey:0,
-                                                empleadosShow:'inline',
-                                                empleadosId:[],
-                                                checkInicialEmpleado:true,
-                                                empleados:[]
-                                            }
-                                            cargo.nombre=elementc.nombre;
-                                            cargo.id=elementc.clave;
-                                            cargo.sueldo=elementc.sueldo;
-                                            cargo.cantidad=elementc.cantidad;
-                                            cargo.relacion=elementc.relacion;
+                                                maquinariasShow:'none',
+                                                maquinariasId:[],
+                                                checkInicialMaquiaria:true,
+                                                maquinarias:[],
+                                            }*/]
+                                        }
 
-                                            axios.get(`http://localhost:3000/getEmpleadosByIdCargoFase/${cargo.relacion}`, config)
-                                                .then((res) => {
-                                                    res.data.forEach(elemente => {
-                                                        let empleado={
-                                                            id:-1,
-                                                            nombre:null,
-                                                            ci:null,
-                                                            accordionKey:0,
-                                                            sexo:null,
-                                                            dia:"Lunes",
-                                                            horario:[
-                                                                {
-                                                                    dia:"Lunes",
-                                                                    horaEntrada:null,
-                                                                    horaSalida:null,
-                                                                    value:1,
-                                                                },
-                                                                {
-                                                                    dia:"Martes",
-                                                                    horaEntrada:null,
-                                                                    horaSalida:null,
-                                                                    value:1,
-                                                                },
-                                                                {
-                                                                    dia:"Miercoles",
-                                                                    horaEntrada:null,
-                                                                    horaSalida:null,
-                                                                    value:1,
-                                                                },
-                                                                {
-                                                                    dia:"Jueves",
-                                                                    horaEntrada:null,
-                                                                    horaSalida:null,
-                                                                    value:1,
-                                                                },
-                                                                {
-                                                                    dia:"Viernes",
-                                                                    horaEntrada:null,
-                                                                    horaSalida:null,
-                                                                    value:1,
-                                                                }
-                                                            ]
-                                                        }
-                                                        empleado.nombre=elemente.p_nombre+' '+elemente.p_apellido;
-                                                        empleado.id=elemente.clave;
-                                                        empleado.ci = elemente.ci;
-                                                        empleado.sexo = elemente.sexo;
-                                                        empleado.relacion = elemente.relacion;
+                                        let date 
+                                        let dia 
+                                        let mes 
+                                        let ano 
 
-                                                        /*axios.get(`http://localhost:3000/getEmpleadosByIdCargoFase/${empleado.relacion}`, config)
-                                                            .then((res) => {
-                                                                res.data.forEach(elementh => {
-                                                                    let turno={
-                                                                        dia:"Lunes",
-                                                                        horaEntrada:null,
-                                                                        horaSalida:null,
-                                                                        value:1,
-                                                                    }
-                                                                    if(turno.dia==="Lunes"){
+                                        if (element.fecha_inicio){
+                                            let date = new Date(element.fecha_inicio)
+                                            let dia = date.getDate()
+                                            let mes = (date.getMonth() + 1)
+                                            let ano = date.getFullYear()
 
-                                                                    }
-                                                        
+                                            fase.fechaI.dia = dia
+                                            fase.fechaI.mes = mes
+                                            fase.fechaI.ano = ano
+                                        }
 
-                                                                    
+                                        if (element.fecha_fin){
+                                            date = new Date(element.fecha_fin)
+                                            dia = date.getDate()
+                                            mes = (date.getMonth() + 1)
+                                            ano = date.getFullYear()
 
+                                            fase.fechaI.dia = dia
+                                            fase.fechaI.mes = mes
+                                            fase.fechaI.ano = ano
+                                        }
+
+                                        if (element.fecha_fin_real){
+                                            date = new Date(element.fecha_fin_real)
+                                            dia = date.getDate()
+                                            mes = (date.getMonth() + 1)
+                                            ano = date.getFullYear()
+    
+                                            fase.fechaI.dia = dia
+                                            fase.fechaI.mes = mes
+                                            fase.fechaI.ano = ano
+                                        }
+
+
+                                        fase.estatus = element.estatus
+                                        fase.id=element.clave;
+                                        fase.numero=j+1;
+                                        fase.numeroV=j+1;
+                                        fase.nombre= 'Fase '+ (j+1);
+                                        fase.nombreV=element.nombre;
+                                        fase.duracion=element.duracion;
+                                        fase.costo= element.costo;
                                         
-                                                                })
-                                                        }).catch((e) => {
-                                                              console.log('Error en axios')
-                                                        })*/
+                                        
+                                
+                                        this.setState((prevState) => ({
+                                            etapas: prevState.etapas.map((etapaMap) => {
+                                                if (etapaMap.id === etapa.id){
+                                                    return {...etapaMap, fases: etapaMap.fases.concat(fase)}
+                                                }
+                                                else{
+                                                    return etapaMap
+                                                }
+                                            })
+                                        }));
 
-                                                        cargo.empleados.push(empleado);
+
+                                        // fase.tipoMaquinaria.shift();
+                                        axios.get(`http://localhost:3000/getTiposMaquinariaByIdFase/${fase.id}`, config)
+                                            .then((res) => {
+                                                res.data.forEach((item) => {
+                                                    let tipoMaquinaria = {
+                                                        id_tipo_maquinaria_fase: null,
+                                                        nombre:null,
+                                                        id:-1,
+                                                        costo:0,
+                                                        cantidad:0,
+                                                        accordionKey:0,
+                                                        checkInicialMaquiaria:true,
+                                                        maquinariasShow:'none',
+                                                        maquinariasId: [],
+                                                        maquinarias:[]
+                                                    }
+                                                    tipoMaquinaria.id_tipo_maquinaria_fase = item.clave_tipo_maquinaria_fase;
+                                                    tipoMaquinaria.id = item.clave;
+                                                    tipoMaquinaria.nombre = item.nombre;
+                                                    tipoMaquinaria.costo = item.costo;
+                                                    tipoMaquinaria.cantidad = item.cantidad;
+                                                    fase.tipoMaquinariaId.push(tipoMaquinaria.id)
+
+                                                    this.setState((prevState) => ({
+                                                        etapas: prevState.etapas.map((etapaMap) => {
+                                                            if (etapaMap.id === etapa.id){
+                                                                return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
+                                                                    if (faseMap.id === fase.id){
+                                                                        return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.concat(tipoMaquinaria), tipoMaquinariaId: faseMap.tipoMaquinariaId.concat(tipoMaquinaria.id)}
+                                                                    }
+                                                                    else {
+                                                                        return faseMap
+                                                                    }
+                                                                })}
+                                                            }
+                                                            else{
+                                                                return etapaMap
+                                                            }
+                                                        })
+                                                    }));
+                                                    
+
+                                                    axios.get(`http://localhost:3000/getMaquinariaByIdTipoMaquinariaFase/${tipoMaquinaria.id_tipo_maquinaria_fase}`, config)
+                                                        .then((res) => {
+                                                            res.data.forEach((item) => {
+                                                                let maquinaria = {
+                                                                    id: item.clave_maquinaria,
+                                                                    estatus: item.estatus,
+                                                                    serial: item.serial
+                                                                }
+                                                                tipoMaquinaria.maquinariasId.push(item.clave_maquinaria);
+
+                                                                this.setState((prevState) => ({
+                                                                    etapas: prevState.etapas.map((etapaMap) => {
+                                                                        if (etapaMap.id === etapa.id){
+                                                                            return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
+                                                                                if (faseMap.id === fase.id){
+                                                                                    return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.map((tipoMaquinariaMap) => {
+                                                                                        if (tipoMaquinariaMap.id === tipoMaquinaria.id){
+                                                                                            return{...tipoMaquinariaMap, maquinarias: tipoMaquinariaMap.maquinarias.concat(maquinaria)}
+                                                                                        }
+                                                                                        else{
+                                                                                            return tipoMaquinariaMap
+                                                                                        }
+                                                                                    })}
+                                                                                }
+                                                                                else {
+                                                                                    return faseMap
+                                                                                }
+                                                                            })}
+                                                                        }
+                                                                        else{
+                                                                            return etapaMap
+                                                                        }
+                                                                    })
+                                                                }));
+
+                                                            })
+                                                        })  
+                                                        .catch((e) => {
+                                                            console.log('Error en axios')
+                                                        })  
                                                     })
-                                            }).catch((e) => {
-                                                  console.log('Error en axios')
+                                                })
+                                                .catch((e) => {
+                                                    console.log('Error en axios')
+                                                })
+
+                                                axios.get(`http://localhost:3000/getCargosByIdFase/${fase.id}`)
+                                                    .then((res) => {
+                                                        res.data.forEach((item) => {
+                                                            fase.cargosId.push(item.clave);
+
+                                                            let cargo = {
+                                                                nombre:null,
+                                                                id:-1,
+                                                                sueldo:0,
+                                                                cantidad:0,
+                                                                estatus:null,
+                                                                id_cargo_fase: null,
+                                                                accordionKey:0,
+                                                                empleadosShow:'inline',
+                                                                empleadosId:[],
+                                                                checkInicialEmpleado:true,
+                                                                empleados:[]
+                                                            }
+
+                                                            // item.clave_cargo_fase
+
+                                                            cargo.id=item.clave;
+                                                            cargo.sueldo=item.sueldo;
+                                                            cargo.cantidad=item.cantidad;
+                                                            cargo.nombre=item.nombre;
+                                                            cargo.id_cargo_fase = item.clave_cargo_fase
+
+                                                            this.setState((prevState) => ({
+                                                                etapas: prevState.etapas.map((etapaMap) => {
+                                                                    if (etapaMap.id === etapa.id){
+                                                                        return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
+                                                                            if (faseMap.id === fase.id){
+                                                                                return {...faseMap, cargos: faseMap.cargos.concat(cargo)}
+                                                                            }
+                                                                            else {
+                                                                                return faseMap
+                                                                            }
+                                                                        })}
+                                                                    }
+                                                                    else{
+                                                                        return etapaMap
+                                                                    }
+                                                                })
+                                                            }));
+
+                                                            axios.get(`http://localhost:3000/getEmpleadosByIdCargoFase/${item.clave_cargo_fase}`, config)
+                                                                .then((res) => {
+                                                                    res.data.forEach((element) => {
+                                                                        let empleado = {
+                                                                            id:-1,
+                                                                            nombre:null,
+                                                                            ci:null,
+                                                                            accordionKey:0,
+                                                                            sexo:null,
+                                                                            estatus:null,
+                                                                            dia:"Lunes",
+                                                                            horario:[{
+                                                                                id: null,
+                                                                                dia:"Lunes",
+                                                                                horaEntrada:null,
+                                                                                horaSalida:null,
+                                                                                value:1,
+                                                                            },
+                                                                            {
+                                                                                id: null,
+                                                                                dia:"Martes",
+                                                                                horaEntrada:null,
+                                                                                horaSalida:null,
+                                                                                value:1,
+                                                                            },
+                                                                            {
+                                                                                id: null,
+                                                                                dia:"Miercoles",
+                                                                                horaEntrada:null,
+                                                                                horaSalida:null,
+                                                                                value:1,
+                                                                            },
+                                                                            {
+                                                                                id: null,
+                                                                                dia:"Jueves",
+                                                                                horaEntrada:null,
+                                                                                horaSalida:null,
+                                                                                value:1,
+                                                                            },
+                                                                            {
+                                                                                id: null,
+                                                                                dia:"Viernes",
+                                                                                horaEntrada:null,
+                                                                                horaSalida:null,
+                                                                                value:1,
+                                                                            }]
+                                                                        }
+                                                                        empleado.ci = element.ci;
+                                                                        empleado.nombre = element.nombre;
+                                                                        empleado.sexo = element.sexo;
+                                                                        empleado.id = element.clave;
+                                                                        empleado.estatus = element.estatus;
+                                                                        empleado.clave_empleado_cargo_fase = element.clave_empleado_cargo_fase
+                                                                        cargo.empleadosId.push(empleado.id);
+
+                                                                        this.setState((prevState) => ({
+                                                                            etapas: prevState.etapas.map((etapaMap) => {
+                                                                                if (etapaMap.id === etapa.id){
+                                                                                    return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
+                                                                                        if (faseMap.id === fase.id){
+                                                                                            return {...faseMap, cargos: faseMap.cargos.map((cargoMap) => {
+                                                                                                if (cargoMap.id === cargo.id){
+                                                                                                    return {...cargoMap, empleados: cargoMap.empleados.concat(empleado)}
+                                                                                                }
+                                                                                                else {
+                                                                                                    return cargoMap
+                                                                                                }
+                                                                                            })}
+                                                                                        }
+                                                                                        else {
+                                                                                            return faseMap
+                                                                                        }
+                                                                                    })}
+                                                                                }
+                                                                                else{
+                                                                                    return etapaMap
+                                                                                }
+                                                                            })
+                                                                        }));
+
+                                                                        axios.get(`http://localhost:3000/getHorarioEmpleadoByIdEmpleadoCargoFase/${empleado.clave_empleado_cargo_fase}`, config)
+                                                                            .then((res) => {
+                                                                                res.data.forEach((item) => {
+                                                                                    
+                                                                                    empleado.horario.forEach((horario) => {
+                                                                                        if (horario.dia === item.dia){
+                                                                                            horario.id = item.clave_horario
+                                                                                            horario.dia = item.dia
+                                                                                            horario.horaEntrada = item.hora_entrada
+                                                                                            horario.horaSalida = item.hora_salida
+
+                                                                                            if (item.clave_horario % 2 === 0){
+                                                                                                horario.value = 2
+                                                                                            }
+                                                                                        }
+                                                                                    })
+
+
+                                                                                    
+
+                                                                                    this.setState((prevState) => ({
+                                                                                        etapas: prevState.etapas.map((etapaMap) => {
+                                                                                            if (etapaMap.id === etapa.id){
+                                                                                                return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
+                                                                                                    if (faseMap.id === fase.id){
+                                                                                                        return {...faseMap, cargos: faseMap.cargos.map((cargoMap) => {
+                                                                                                            if (cargoMap.id === cargo.id){
+                                                                                                                return {...cargoMap, empleados: cargoMap.empleados.map((empleadoMap) => {
+                                                                                                                    if (empleadoMap.id === empleado.id){
+                                                                                                                        return {...empleadoMap, horario: empleado.horario}
+                                                                                                                    }
+                                                                                                                    else {
+                                                                                                                        return empleadoMap
+                                                                                                                    }
+                                                                                                                })}
+                                                                                                            }
+                                                                                                            else {
+                                                                                                                return cargoMap
+                                                                                                            }
+                                                                                                        })}
+                                                                                                    }
+                                                                                                    else {
+                                                                                                        return faseMap
+                                                                                                    }
+                                                                                                })}
+                                                                                            }
+                                                                                            else{
+                                                                                                return etapaMap
+                                                                                            }
+                                                                                        })
+                                                                                    }));
+                                                                                    
+                                                                                })
+                                                                            })
+                                                                            .catch((e) => {
+
+                                                                            })
+                                                                    })
+                                                                })
+                                                                .catch((e) => {
+
+                                                                })
+                                                            
+                                                        })
+                                                    })
+                                                    .catch((e) => {
+                                                        console.log('Error en axios')
+                                                    })
+    
+                                                })
+                                            })
+                                            .catch((e) => {
+                                                console.log('Error en axios')
                                             })
 
-                                            fase.cargos.push(cargo);
-                                        })
-                                }).catch((e) => {
-                                      console.log('Error en axios')
-                                })
-
-                                etapa.fases.push(fase);
-                                j++;
-                            })
-                    }).catch((e) => {
-                          console.log('Error en axios')
+                        })
                     })
-                    info.etapas.push(etapa);
-                    i++;
-                })
+                
 
-                this.setState(() => ({
-                    etapas: info.etapas,
-                    loadedetapa: true,
-                }));
-                this.setState((prevState) => ({
-                    aux: prevState.aux.map((etapaMap) => {
-                        if (etapaMap.id === aux.id){
-                            return {...etapaMap, b: 2}
-                        }
-                        else{
-                            return etapaMap
-                        }
+            })
+            .catch((e) => {
+                console.log('Error en axios')
+            })
+  
+            axios.get(`http://localhost:3000/getAllMineralesMetalicosByIdYacimiento/${this.props.match.params.id}`, config)
+            .then((res) => {
+                if (res.data.length > 0){
+                    let mineralesMetalicos = []
+                    res.data.forEach((item) => {
+                        let mineral = {}
+                        mineral.id = item.clave_mineral_metalico;
+                        mineral.total = item.cantidad_mineral_metalico;
+                        mineral.nombre = item.nombre_mineral_metalico;
+                        mineralesMetalicos.push(mineral)
                     })
-                }));
-                console.log(this.state)
+    
+                    state.Minerales.shift();
+    
+                    for(let i=0; i<mineralesMetalicos.length; i++){
+    
+                        
+                        state.mineralId.push(mineralesMetalicos[i].id);
+    
+                        let mineral = {
+                            nombre:null,
+                            id:-1,
+                            total: 0,
+                            accordionKey:0,
+                        }
+    
+                        mineral.nombre=mineralesMetalicos.nombre;
+                        mineral.id=mineralesMetalicos.id;
+                        mineral.total=mineralesMetalicos.total;
+    
+                        state.Minerales.push(mineral);
+                    }
+    
+                    this.setState(() => ({
+                        mineralId: state.mineralId,
+                        minerales: mineralesMetalicos,
+                    }));
+                }
             }).catch((e) => {
-                  console.log('Error en axios')
+                console.log('Error en axios')
             })
 
+        axios.get(`http://localhost:3000/getAllMineralesNoMetalicosByIdYacimiento/${this.props.match.params.id}`, config)
+            .then((res) => {
+                if (res.data.length > 0){
+
+                    let mineralesNoMetalicos = []
+                    res.data.forEach((item) => {
+                        let mineral = {}
+                        mineral.id = item.clave_mineral_metalico;
+                        mineral.total = item.cantidad_mineral_metalico;
+                        mineral.nombre = item.nombre_mineral_metalico;
+                        mineralesNoMetalicos.push(mineral)
+
+                        // console.log('mu nom', mineral.nombre)
+                    })
+
+                    info.mineralesNoMetalicos = mineralesNoMetalicos;
+
+                    state.MineralesNoMetalicos.shift();
+                    for(let i=0; i<info.mineralesNoMetalicos.length; i++){
+                        state.mineralNoMetalicoId.push(info.mineralesNoMetalicos[i].id);
+
+                        let mineral={
+                            nombre:null,
+                            id:-1,
+                            total: 0,
+                            accordionKey:0
+                        }
+
+                        mineral.nombre=info.mineralesNoMetalicos[i].nombre;
+                        mineral.id=info.mineralesNoMetalicos[i].id;
+                        mineral.total=Number(info.mineralesNoMetalicos[i].total);
+
+                        state.MineralesNoMetalicos.push(mineral);
+                    }
+
+                    this.setState(() => ({
+                        mineralNoMetalicoId: state.mineralNoMetalicoId,
+                        MineralesNoMetalicos: state.MineralesNoMetalicos
+                    }));
+                }
+
+            }).catch((e) => {
+                console.log('Error en axios')
+            })
+        
+
+
+
+
+
+            
         /*for(let i=0; i<info.etapas.length; i++){
             let etapa={
                 fases: [{
@@ -2438,7 +3153,7 @@ export default class ConsultarExplotacion extends React.Component {
                                     <Form.Group controlId="YacimientosTamañoYacimiento"  className="inputsPaddingRight">
                                         <Form.Label className="formMarginsE cliente-title">Ubicación</Form.Label>
                                         {
-                                            (this.state.loadedyac)&&<FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>
+                                            (this.state.yacimiento.ubicacion.idParroquia)&&<FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>
                                         }
                                     </Form.Group>
                                     
@@ -2446,7 +3161,7 @@ export default class ConsultarExplotacion extends React.Component {
                             </Accordion.Collapse>
                         </Card>
                     </Accordion>
-                   
+                   {console.log('stateee', this.state)}
                     {
                         (this.state.minerales.length>0)&&
                         <Accordion defaultActiveKey={1} >
