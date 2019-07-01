@@ -93,6 +93,25 @@ const getYacimientoById = (req, res) => {
     })
 }
 
+const getYacimientoByIdExplotacion = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'select * from mu_yacimiento where fk_explotacion=($1)';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
 const createYacMineralMet = (values) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
@@ -130,6 +149,7 @@ module.exports = {
     getAllYacimientos,
     getAllYacimientoInfoById,
     getYacimientoById,
+    getYacimientoByIdExplotacion,
     insertTipoYacimiento,
     createYacMineralMet,
     createYacMineralNoMet

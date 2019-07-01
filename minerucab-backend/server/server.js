@@ -29,6 +29,7 @@ const VentasValidations = require('../validations/VentasValidations');
 const Yacimientos = require('../database/model/Yacimientos');
 const YacimientoMineral = require('../database/model/YacimientoMineral');
 const YacimientosValidations = require('../validations/YacimientosValidations');
+const InfoInventario = require('../database/model/InfoInventario');
 
 const express = require('express');
 const app = express();
@@ -105,6 +106,10 @@ app.get('/getHorarioEmpleadoByIdEmpleadoCargoFase/:id', Empleados.getHorarioEmpl
 /* -------------------- EXPLOTACIONES -------------------- */
 app.get('/getAllExplotaciones', Explotaciones.getAllExplotaciones)
 app.get('/getEtapasByIdExplotacion/:id', Explotaciones.getEtapasByIdExplotacion);
+app.get('/getFasesByIdEtapa/:id', Explotaciones.getFasesByIdEtapa);
+app.get('/getCargosExpByIdFase/:id', Explotaciones.getCargosExpByIdFase);
+app.get('/getEmpleadosByIdCargoFase/:id', Explotaciones.getEmpleadosByIdCargoFase);
+app.get('/getExplotacionById/:id', Explotaciones.getExplotacionById);
 /* -------------------- FASES -------------------- */
 app.get('/getFasesByIdEtapa/:id', Fases.getFasesByIdEtapa)
 /* -------------------- LUGAR -------------------- */
@@ -157,10 +162,12 @@ app.get('/getVentaInfo/:id', VentasValidations.getVentaInfo);
 /* -------------------- YACIMIENTOS -------------------- */
 app.get('/getAllYacimientos', Yacimientos.getAllYacimientos);
 app.get('/getAllYacimientoInfoById/:id', Yacimientos.getAllYacimientoInfoById);
+app.get('/getYacimientoByIdExplotacion/:id', Yacimientos.getYacimientoByIdExplotacion);
 /* -------------------- YACIMIENTO MINERAL -------------------- */
 app.get('/getAllMineralesMetalicosByIdYacimiento/:id', YacimientoMineral.getAllMineralesMetalicosByIdYacimiento)
 app.get('/getAllMineralesNoMetalicosByIdYacimiento/:id', YacimientoMineral.getAllMineralesNoMetalicosByIdYacimiento)
-
+/*-------------------- INVENTARIO --------------------*/
+app.get('/getInventario', InfoInventario.getInventario)
 
 /* ----------------------------------- UPDATE ----------------------------------- */
 /* -------------------- CLIENTES -------------------- */
