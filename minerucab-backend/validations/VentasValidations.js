@@ -1,9 +1,12 @@
+require('dotenv').config({ path: '.env.development' });
+const { Client } = require('pg');
 const Ventas = require('../database/model/Ventas');
 const ClientesNaturales = require('../database/model/ClientesNaturales');
 const DetalleVentas = require('../database/model/DetalleVentas');
 const Pago = require('../database/model/Pagos');
 const TipoPago = require('../database/model/TipoPago');
 const Explotaciones = require('../database/model/Explotaciones');
+const Inventario = require('../database/model/InfoInventario')
 
 const insertDetalleVenta = (claveVenta, info) => {
     let values = [];
@@ -114,15 +117,32 @@ const getVentaInfo = (req, res) => {
 }
 
 const updateVenta = (req, res) => {
+    console.log("ENTRO VENTA UPDATE")
     const venta = req.body.data
     console.log('update', req.body.data)
-    /*Explotaciones.getAllExplotacionesFkVentaConEstatusDiferenteAInactivo(function(fkVentaYacimientos) {
-        fkVentaYacimientos.forEach((fkVenta) => {
-            
-        })
-    })*/
-
+    console.log('update CANTIDAD', req.body.data2)
+    modifVenta(venta.estado, venta.venta)
+    Inventario.insertInventario(venta, req.body.data2)
     res.status(200).json({ operacion: 'exito' })
+}
+
+const modifVenta = (fk_estatus, claveVenta) => {
+    console.log("ENTRO MODIF VENTA")
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'UPDATE MU_VENTA SET fk_estatus=($1) WHERE clave=($2);';
+    const values = [fk_estatus, claveVenta];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+
+    })
 }
 
 module.exports = {

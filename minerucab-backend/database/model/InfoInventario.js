@@ -43,8 +43,28 @@ const getCantActualByIdPres = (req, res) => {
     })
 }
 
+const insertInventario = (info, cantidad) => {
+    console.log("ENTRO INSERT INVENTARIO")
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'insert into mu_inventario (Fecha, cantidad_actual, cantidad_transaccion, FK_EXPLOTACION, FK_PRESENTACION_MINERAL, FK_DETALLE_VENTA)\n\
+                    VALUES (NOW(),$1, $2, NULL, $3, $4);';
+    const values = [cantidad-(info.pedido[0].cantidad*info.pedido[0].precio), 0-(info.pedido[0].cantidad*info.pedido[0].precio), info.pedido[0].presentacion, info.pedido[0].clave];
+    client.query(text, values)
+    .then((res) => {
+        client.end();
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    })
+}
+
 module.exports = {
     getInventario,
+    insertInventario,
     getCantActualByIdPres,
     // ,[siguientes funciones]
 }

@@ -31,7 +31,7 @@ const getDetalleVentaByIdVenta = (req, response) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'SELECT Cantidad, Precio, fk_estatus, fk_presentacion_mineral FROM mu_detalle_venta WHERE fk_venta = ($1);';
+    const text = 'SELECT Clave, Cantidad, Precio, fk_estatus, fk_presentacion_mineral FROM mu_detalle_venta WHERE fk_venta = ($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((res) => {
