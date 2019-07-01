@@ -29,6 +29,7 @@ export default class VentasForm extends React.Component {
         showMessage1: false,
         showMessage2: false,
         conflicto: false,
+        modif: true,
     }
     componentDidMount = () => {
         console.log('this.props.match.params.id', this.props.match.params.id)
@@ -51,6 +52,11 @@ export default class VentasForm extends React.Component {
                     estatus: res.data[0].clave_estatus,
                     fecha: `${dia}-${mes}-${ano}`
                 }));
+                if(this.state.estatus===7){
+                    this.setState(() => ({
+                        modif: false
+                    }))
+                }
                 axios.get(`http://localhost:3000/getPagosChequeDeVenta/${this.props.match.params.id}`)
                     .then((res) => {
                         console.log('cheque', res.data.res)
@@ -1242,6 +1248,7 @@ export default class VentasForm extends React.Component {
                                                 id="update-venta"
                                                 defaultValue={this.state.estatus}
                                                 onChange={(e) => this.onChangeModificarVenta(e)}
+                                                disabled={!this.state.modif}
                                                 className="form-input form-input-dropdown-presentacion-venta">
                                                 <option value={7}>Procesada</option>
                                                 <option value={8}>En Proceso</option>
@@ -1391,12 +1398,15 @@ export default class VentasForm extends React.Component {
                                     </Col>
                                     <Col md={2}></Col>
                                     <Col md={5}>
-                                        <Button 
-                                            className="modal-ventasform-enviar-button btn-block div-ventas-pedido-form"
-                                            onClick={this.updateVenta}
-                                        >
-                                            Enviar
-                                        </Button>
+                                        {
+                                            (this.state.modif === true)&&
+                                            <Button 
+                                                className="modal-ventasform-enviar-button btn-block div-ventas-pedido-form"
+                                                onClick={this.updateVenta}
+                                            >
+                                                Enviar
+                                            </Button>
+                                        }
                                     </Col>
                                 </Row>
                             </Col>
