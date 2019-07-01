@@ -9,8 +9,8 @@ const ClientesJuridicos = require('../database/model/ClientesJuridicos');
 const ClientesNaturales = require('../database/model/ClientesNaturales');
 const DetalleVentas = require('../database/model/DetalleVentas');
 const Empleados = require('../database/model/Empleados');
-
 const Explotaciones = require('../database/model/Explotaciones');
+const ExplotacionesValidations = require('../validations/ExplotacionesValidations');
 const Fases = require('../database/model/Fases');
 const JasperReports = require('../reports/jasper-reports/jasper-reports-generator');
 const Lugares = require('../database/model/Lugares');
@@ -58,6 +58,8 @@ app.post('/createClienteNatural', ClientesNaturales.createClienteNatural);
 app.post('/createClienteJuridico', ClientesJuridicos.createClienteJuridico);
 /* -------------------- EMPLEADOS -------------------- */
 app.post('/crearEmpleado', EmpleadosValidations.crearEmpleado);
+/* -------------------- EXPLOTACIONES -------------------- */
+app.post('/crearExplotacion', ExplotacionesValidations.crearExplotacion);
 /* -------------------- MAQUINARIAS -------------------- */
 app.post('/createMaquinaria', Maquinarias.createMaquinaria);
 /* -------------------- MINERALES -------------------- */
@@ -207,6 +209,8 @@ app.delete('/deleteMineralMetalicoById/:id', Minerales.deleteMineralMetalicoById
 app.delete('/deleteMineralNoMetalicoById/:id', Minerales.deleteMineralNoMetalicoById);
 app.delete('/deletePresMin/:id', Minerales.deletePresMin);
 app.delete('/deleteCompMin/:id', Minerales.deleteCompMin);
+/* -------------------- VENTAS -------------------- */
+app.delete('/deleteVentaById/:id', Ventas.deleteVentaById);
 
 
 /* ------------------------------ DELETE ------------------------------ */

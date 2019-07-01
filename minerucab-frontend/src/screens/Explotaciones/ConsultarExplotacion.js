@@ -38,9 +38,9 @@ export default class ConsultarExplotacion extends React.Component {
         super(props);
         this.state = {
             aux: [],
-            loadedexp:false,
-            loadedyac:false,
-            loadedetapa:false,
+            loadedexp:true,
+            loadedyac:true,
+            loadedetapa:true,
             explotacion:{
                 id:null,
                 duracion:0,
@@ -627,7 +627,6 @@ export default class ConsultarExplotacion extends React.Component {
 
                 axios.get(`http://localhost:3000/getEtapasByIdExplotacion/${explotacion.id}`, config)
                     .then((res) => {
-                        console.log('res et', res)
                         let etapas = [{
                             nombre: "Etapa 1",
                             nombreV:null,
@@ -1013,7 +1012,6 @@ export default class ConsultarExplotacion extends React.Component {
 
                                                     axios.get(`http://localhost:3000/getMaquinariaByIdTipoMaquinariaFase/${tipoMaquinaria.id_tipo_maquinaria_fase}`, config)
                                                         .then((res) => {
-                                                            console.log('res-maq-fase', res, fase)
                                                             res.data.forEach((item) => {
                                                                 let maquinaria = {
                                                                     id: item.clave_maquinaria,
@@ -3155,7 +3153,7 @@ export default class ConsultarExplotacion extends React.Component {
                                     <Form.Group controlId="YacimientosTamañoYacimiento"  className="inputsPaddingRight">
                                         <Form.Label className="formMarginsE cliente-title">Ubicación</Form.Label>
                                         {
-                                            (this.state.loadedyac)&&<FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>
+                                            (this.state.yacimiento.ubicacion.idParroquia)&&<FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>
                                         }
                                     </Form.Group>
                                     

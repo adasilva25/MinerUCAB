@@ -270,8 +270,7 @@ export default class VentasForm extends React.Component {
     updateVenta = (e) => {
 
         const info = {
-            clave_venta: this.props.match.params.id,
-            estatus: this.state.estatus
+            pedido: this.state.pedidos
         }
 
         const config = {

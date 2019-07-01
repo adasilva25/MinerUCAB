@@ -483,6 +483,7 @@ export default class DataTable extends React.Component {
                                             this.props.modalEliminar(botonesEliminar[i])
                                         }
                                         else {
+                                            console.log('id', botonesEliminar[i].id)
                                             this.props.modalEliminar(botonesEliminar[i].id)
                                         }   
                                     }.bind(this)
