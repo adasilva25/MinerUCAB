@@ -33,7 +33,7 @@ export default class DataTable extends React.Component {
         let explotar = this.props.explotar === true
         let checktable = this.props.checktable === true;
         let modificarCheck = this.props.modificarCheck === true;
-        const listaModificarCheck=this.props.listaModificarCheck;
+        const listaModificarCheck = this.props.listaModificarCheck;
         let urlConsultar = this.props.urlConsultar;
         let urlModificar = this.props.urlModificar;
         let urlExplotar = this.props.urlExplotar;
@@ -99,12 +99,12 @@ export default class DataTable extends React.Component {
                                 values.push(item[key].toString());
                             }
                             else if (key.includes('fecha')){
-                                const date = new Date(item[key]).toLocaleString('sp-ve', { hour12: true })
-                                // const dia = date.getDate()
-                                // const mes = (date.getMonth() + 1)
-                                // const ano = date.getFullYear()
-                                // values.push(`${dia}/${mes}/${ano}`)
-                                values.push(date)
+                                const date = new Date(item[key])
+                                 const dia = date.getDate()
+                                 const mes = (date.getMonth() + 1)
+                                 const ano = date.getFullYear()
+                                 values.push(`${dia}/${mes}/${ano}`)
+                                //values.push(date)
                             }
                             else {
                                 values.push(item[key]);

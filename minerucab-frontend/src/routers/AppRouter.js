@@ -34,6 +34,7 @@ import Mineral from '../screens/Minerales/Mineral';
 import GestionarMineralMetalico from '../screens/Minerales/GestionarMineralMetalico';
 import GestionarMineralNoMetalico from '../screens/Minerales/GestionarMineralNoMetalico';
 import SolicitudCompra from '../screens/Compras/SolicitudCompra';
+import Inventario from '../screens/InfoInventario/Inventario';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -70,7 +71,7 @@ const AppRouter = () => (
         <Route path="/explotacion" component={Explotacion} />
         <Route path="/registrar_explotacion/:accion/:id" component={RegistrarExplotacion} />
         <Route path="/consultar_explotacion/:accion/:id" component={ConsultarExplotacion} />
-        <Route path="/modificar_explotacion" component={ModificarExplotacion} />
+        <Route path="/modificar_explotacion/:accion/:id" component={ModificarExplotacion} />
         {/* ------------------------ MAQUINARIAS ------------------------ */}
         <Route path="/maquinaria" component={Maquinaria} />
         <Route path="/gestionar_maquinaria/:accion/:id?" component={GestionarMaquinaria}/>
@@ -85,8 +86,10 @@ const AppRouter = () => (
         {/* ------------------------ YACIMIENTO ------------------------ */}
         <Route path="/yacimiento" component={Yacimiento} />
         <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />
-        <Route path="/modificar_yacimiento/:id" component={ModificarYacimiento} />
+        <Route path="/modificar_yacimiento/:accion/:id" component={ModificarYacimiento} />
         <Route path="/consultar_yacimiento/:accion/:id" component={ConsultarYacimiento} />
+        {/* ------------------------ INVENTARIO ------------------------ */}
+        <Route path="/inventario" component={Inventario} />
 
       </Switch>
     </div>

@@ -25,9 +25,9 @@ export default class Actividad extends React.Component {
             <Card.Body>
               <Card.Title>{act.titulo}</Card.Title>
               <Card.Text>
-                Descripcion actividad.{/*act.descripcion*/}
+                {act.descripcion}
               </Card.Text>
-              <Button variant="primary" onClick={()=>this.routeTo(act.link)}>Go somewhere</Button>
+              <Button variant="primary" onClick={()=>this.routeTo(act.link)}>Gestionar</Button>
             </Card.Body>
           </Card>
       )

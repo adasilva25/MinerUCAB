@@ -26,6 +26,7 @@ import ModalHeader from 'react-bootstrap/ModalHeader'
 import ModalTitle from 'react-bootstrap/ModalTitle'
 import ModalBody from 'react-bootstrap/ModalBody'
 import ModalFooter from 'react-bootstrap/ModalFooter'
+import axios from 'axios';
 
 // https://www.w3schools.com/jquery/html_removeclass.asp
 
@@ -35,14 +36,11 @@ const $ = require('jquery');
 export default class ConsultarExplotacion extends React.Component {
     constructor(props){
         super(props);
-
         this.state = {
-            eliminadosFases: [],
-            dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
-            actualizar:true,
-            eliminar:true,
-            prueba: true,
-            key:"Etapa 1",
+            aux: [],
+            loadedexp:false,
+            loadedyac:false,
+            loadedetapa:false,
             explotacion:{
                 id:null,
                 duracion:0,
@@ -84,512 +82,71 @@ export default class ConsultarExplotacion extends React.Component {
                     ano:0
                 }
             },
+            minerales:[],
+            mineralesNoMetalicos:[],
+            etapas: [],
+
+            eliminadosFases: [],
+            dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
+            actualizar:true,
+            eliminar:true,
+            prueba: true,
+            key:"Etapa 1",
             accordionKey:[],
             mineralShow:'inline',
             mineralId:[],
-            Minerales:[{
-                nombre:null,
-                id:-1,
-                total: 0,
-                accordionKey:0,
-               
-                
-            }],
             mineralNoMetalicoId:[],
             mineralNoMetalicoShow:'inline',
-            MineralesNoMetalicos:[{
-                nombre:null,
-                id:-1,
-                total: 0,
-                accordionKey:0,
-                
-            }],
-            etapas: [{
-                nombre: "Etapa 1",
-                nombreV:null,
-                id:null,
-                estatus:null,
-                finalizar:false,
-                duracion:0,
-                costo:0,
-                etapaShow:true,
-                numero: 1,
-                numeroV:1,
-                eliminar:true,
-                fechaI:{
-                    dia:0,
-                    mes:0,
-                    ano:0
-                },
-                fechaF:{
-                    dia:0,
-                    mes:0,
-                    ano:0
-                },
-                fechaFR:{
-                    dia:0,
-                    mes:0,
-                    ano:0
-                },
-                key:"Fase 1",
-                fases: [{
-                    nombre: "Fase 1",
-                    nombreV:null,
-                    id:null,
-                    duracion:0,
-                    finalizar:false,
-                    estatus:null,
-                    costo:0,
-                    faseShow:true,
-                    cargoShow:'inline',
-                    tipoMaquinariaShow:'inline',
-                    numero:1,
-                    numeroV:1,
-                    cargosId:[],
-                    checkInicialCargos:true,
-                    tipoMaquinariaId:[],
-                    checkInicialtipoMaquiaria:true,
-                    fechaI:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    fechaF:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    fechaFR:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    cargos:[{
-                        nombre:null,
-                        id:-1,
-                        sueldo:0,
-                        cantidad:0,
-                        estatus:null,
-                        accordionKey:0,
-                        empleadosShow:'inline',
-                        empleadosId:[],
-                        checkInicialEmpleado:true,
-                        empleados:[{
-                            id:-1,
-                            nombre:null,
-                            ci:null,
-                            accordionKey:0,
-                            sexo:null,
-                            estatus:null,
-                            dia:"Lunes",
-                            horario:[{
-                                dia:"Lunes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Martes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Miercoles",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Jueves",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Viernes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            }]
-                        }],
-                    }],
-                    tipoMaquinaria:[{
-                        nombre:null,
-                        id:-1,
-                        costo:0,
-                        cantidad:0,
-                        estatus:null,
-                        accordionKey:0,
-                        maquinariasShow:'none',
-                        maquinariasId:[],
-                        checkInicialMaquiaria:true,
-                        maquinarias:[{
-                            id:-1,
-                            serial:null,
-                            estatus:null,
-                        }],
-                    }]
-
-                }]
-            }]
         }
-
-        //this.handleOnClickAEtapa = this.handleOnClickAEtapa.bind(this);
-       // this.eliminarActivoEtapa = this.eliminarActivoEtapa.bind(this);
-        //this.eliminarActivoFase = this.eliminarActivoFase.bind(this);
     }
 
-
-     componentWillMount = () => {
-
-        const info = {
+    componentWillMount = () => {
+        const info = { //info
             yacimiento:{
                 id:1,
-                nombre:"Okinawa",
+                nombre:"Okinawiwis",
                 descripcion:"muy mineraloso",
                 estatus:null,
                 area:300,
                 tipo:"Autóctono",
                 tipoId:3,
-                ubicacion:{
+                ubicacion:{ //ubicacion
                     estado:"Sucre",
                     municipio:"Sucre",
                     parroquia:"Altagracia",
                     idParroquia:760
-                },
-                fecha:{
+                }, //ubicacion/
+                fecha:{ //fecha
                     dia:7,
                     mes:14,
                     ano:1999
-                }
+                } //fecha/
             },
-            minerales:[{
-                id:1,
-                total: 5,
-                nombre:"Epale",
-               
-            },
-            {
-                id:8,
-                total: 8,
-                nombre:"Epale2",
-               
-            }],
-            mineralesNoMetalicos:[{
-                id:1,
-                total: 5,
-                nombre:"ICabron",
-               
-            },
-            {
-                id:8,
-                total: 8,
-                nombre:"Alumina",
-                
-            }],
+            minerales:[],
+            mineralesNoMetalicos:[],
             explotacion:{
                 id:2,
                 duracion:41,
+                finalizar:false,
                 costo:0,
-                estatus:10,
-                fechaI:{
+                fechaI:{ //fechainicio
                     dia:12,
                     mes:3,
                     ano:2019
-                },
-                fechaF:{
+                }, //fechainicio/
+                fechaF:{ //fechafin
                     dia:25,
                     mes:5,
                     ano:2019
-                },
-                fechaFR:{
+                }, //fechafin/
+                fechaFR:{ //fechafinreal
                     dia:13,
                     mes:7,
                     ano:2017
-                }
+                } //fechafinreal/
             },
-            etapas: [{
-                id:2,
-                nombre: "diego",
-                duracion:10,
-                costo:30,
-                estatus:8,
-                fechaI:{
-                    dia:2,
-                    mes:2,
-                    ano:2
-                },
-                fechaF:{
-                    dia:1,
-                    mes:1,
-                    ano:1
-                },
-                fechaFR:{
-                    dia:14,
-                    mes:8,
-                    ano:2013
-                },
-                fases: [{
-                    id:1,
-                    nombre: "andrea",
-                    estatus:10,
-                    duracion:10,
-                    costo:4,
-                    checkInicialCargos:true,
-                    checkInicialtipoMaquiaria:true,
-                    fechaI:{
-                        dia:1,
-                        mes:30,
-                        ano:2018
-                    },
-                    fechaF:{
-                        dia:5,
-                        mes:8,
-                        ano:2010
-                    },
-                    fechaFR:{
-                        dia:14,
-                        mes:8,
-                        ano:2013
-                    },
-                    cargos:[{
-                        id:14,
-                        nombre:"Geólogo",
-                        sueldo:5,
-                        cantidad:7,
-                        empleados:[{
-                            id:2,
-                            nombre:"Diego",
-                            ci:"jcjcsdjdj",
-                            accordionKey:0,
-                            sexo:"Masculino",
-                            dia:"Lunes",
-                            horario:[{
-                                dia:"Lunes",
-                                horaEntrada:"d",
-                                horaSalida:null,
-                                value:0,
-                            },
-                            {
-                                dia:"Martes",
-                                horaEntrada:"76",
-                                horaSalida:null,
-                                value:0,
-                            },
-                            {
-                                dia:"Miercoles",
-                                horaEntrada:"753",
-                                horaSalida:"",
-                                value:2,
-                            },
-                            {
-                                dia:"Jueves",
-                                horaEntrada:"s",
-                                horaSalida:null,
-                                value:2,
-                            },
-                            {
-                                dia:"Viernes",
-                                horaEntrada:"sdd",
-                                horaSalida:null,
-                                value:1,
-                            }]
-                        },
-                        {
-                            id:3,
-                            nombre:"Alba",
-                            ci:"jcjcsdjdj",
-                            accordionKey:0,
-                            sexo:"Femenino",
-                            dia:"Lunes",
-                            horario:[{
-                                dia:"Lunes",
-                                horaEntrada:"dgs",
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Martes",
-                                horaEntrada:"76",
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Miercoles",
-                                horaEntrada:"753",
-                                horaSalida:"",
-                                value:1,
-                            },
-                            {
-                                dia:"Jueves",
-                                horaEntrada:"s",
-                                horaSalida:null,
-                                value:0,
-                            },
-                            {
-                                dia:"Viernes",
-                                horaEntrada:"sdd",
-                                horaSalida:null,
-                                value:2,
-                            }]
-                        }],
-                    }],
-                    tipoMaquinaria:[{
-                        id:5,
-                        nombre:"Plancha",
-                        costo:52,
-                        cantidad:7,
-                        maquinarias:[{
-                            id:1,
-                            serial:"edde",
-                            estatus:null,
-                        },
-                        {
-                            id:2,
-                            serial:"efer",
-                            estatus:null,
-                        }]
-                    }]
-                }/*,
-                {
-                    nombre: "Albita",
-                    duracion:1,
-                    costo:7.2,
-                    cargos:[{
-                        id:10,
-                        nombre:"Em",
-                        sueldo:8,
-                        cantidad:6,
-                    }],
-                    tipoMaquinaria:[{
-                        id:7,
-                        nombre:"Dibujante",
-                        costo:5,
-                        cantidad:9,
-                    }]
-                }*/]
-            },    
-            {
-                nombre: "Baudet",
-                id:4,
-                duracion:31,
-                costo:30,
-                estatus:10,
-                fechaI:{
-                    dia:12,
-                    mes:3,
-                    ano:2019
-                },
-                fechaF:{
-                    dia:25,
-                    mes:5,
-                    ano:2019
-                },
-                fechaFR:{
-                    dia:13,
-                    mes:7,
-                    ano:2017
-                },
-                fases: [{
-                    nombre: "Sanchéz",
-                    id:3,
-                    duracion:30,
-                    costo:5,
-                    estatus:8,
-                    checkInicialCargos:true,
-                    checkInicialtipoMaquiaria:true,
-                    fechaI:{
-                        dia:12,
-                        mes:3,
-                        ano:2019
-                    },
-                    fechaF:{
-                        dia:25,
-                        mes:5,
-                        ano:2019
-                    },
-                    fechaFR:{
-                        dia:13,
-                        mes:7,
-                        ano:2017
-                    },
-                    cargos:[{
-                        id:3,
-                        nombre:"Administrador",
-                        sueldo:8,
-                        cantidad:1,
-                        empleados:[],
-                    },
-                    {
-                        id:2,
-                        nombre:"Dibujante",
-                        sueldo:5,
-                        cantidad:9,
-                        empleados:[],
-                    }],
-                    tipoMaquinaria:[{
-                        id:6,
-                        nombre:"Excavadora",
-                        costo:2,
-                        cantidad:8,
-                        maquinarias:[{
-                            id:3,
-                            serial:"er",
-                            estatus:null,
-                        }],
-                    },
-                    {
-                        id:1,
-                        nombre:"Plancha",
-                        costo:9,
-                        cantidad:4,
-                        maquinarias:[]
-                    }]
-                },
-                {
-                    nombre: "Albita",
-                    id:4,
-                    duracion:1,
-                    estatus:2,
-                    costo:7.2,
-                    checkInicialCargos:true,
-                    checkInicialtipoMaquiaria:true,
-                    fechaI:{
-                        dia:12,
-                        mes:3,
-                        ano:2019
-                    },
-                    fechaF:{
-                        dia:25,
-                        mes:5,
-                        ano:2019
-                    },
-                    fechaFR:{
-                        dia:11,
-                        mes:9,
-                        ano:2017
-                    },
-                    cargos:[{
-                        id:10,
-                        nombre:"Geologo",
-                        sueldo:8,
-                        cantidad:6,
-                        empleados:[]
-                    }],
-                    tipoMaquinaria:[{
-                        id:7,
-                        nombre:"Horno",
-                        costo:5,
-                        cantidad:9,
-                        maquinarias:[],
-                    }]
-                }]
-            }]
-        }
-
-        console.log(info);
-
+            etapas: []
+        } //info/
         let state={
             eliminadosFases: [],
             dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
@@ -641,23 +198,10 @@ export default class ConsultarExplotacion extends React.Component {
             accordionKey:[],
             mineralShow:'inline',
             mineralId:[],
-            Minerales:[{
-                nombre:null,
-                id:-1,
-                total: 0,
-                accordionKey:0,
-               
-                
-            }],
+            minerales:[],
             mineralNoMetalicoId:[],
             mineralNoMetalicoShow:'inline',
-            MineralesNoMetalicos:[{
-                nombre:null,
-                id:-1,
-                total: 0,
-                accordionKey:0,
-                
-            }],
+            mineralesNoMetalicos:[],
             etapas: [{
                 nombre: "Etapa 1",
                 nombreV:null,
@@ -736,36 +280,7 @@ export default class ConsultarExplotacion extends React.Component {
                             sexo:null,
                             estatus:null,
                             dia:"Lunes",
-                            horario:[{
-                                dia:"Lunes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Martes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Miercoles",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Jueves",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Viernes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            }]
+                            horario:[]
                         }],
                     }],
                     tipoMaquinaria:[{
@@ -778,191 +293,360 @@ export default class ConsultarExplotacion extends React.Component {
                         maquinariasShow:'none',
                         maquinariasId:[],
                         checkInicialMaquiaria:true,
-                        maquinarias:[{
-                            id:-1,
-                            serial:null,
-                            estatus:null,
-                        }],
+                        maquinarias:[],
                     }]
-
                 }]
             }]
         }
-        state.yacimiento.id=info.yacimiento.id;
-        state.yacimiento.nombre=info.yacimiento.nombre;
-        state.yacimiento.descripcion = info.yacimiento.descripcion;
-        state.yacimiento.area = info.yacimiento.area;
-        state.yacimiento.tipo = info.yacimiento.tipo;
-        state.yacimiento.tipoId = info.yacimiento.tipoId;
-        state.yacimiento.ubicacion.estado = info.yacimiento.ubicacion.estado;
-        state.yacimiento.ubicacion.municipio = info.yacimiento.ubicacion.municipio;
-        state.yacimiento.ubicacion.parroquia = info.yacimiento.ubicacion.parroquia;
-        state.yacimiento.ubicacion.idParroquia = info.yacimiento.ubicacion.idParroquia;
-        state.yacimiento.fecha.dia = info.yacimiento.fecha.dia;
-        state.yacimiento.fecha.mes = info.yacimiento.fecha.mes;
-        state.yacimiento.fecha.ano = info.yacimiento.fecha.ano;
-
-        state.explotacion.id = info.explotacion.id;
-        state.explotacion.duracion = info.explotacion.duracion;
-        state.explotacion.costo = info.explotacion.costo;
-        state.explotacion.estatus = info.explotacion.estatus;
-
-        if(state.explotacion.estatus==10){
-            state.explotacion.finalizar=true;
+        const config = {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            responseType: 'json'
         }
+        axios.get(`http://localhost:3000/getExplotacionById/${this.props.match.params.id}`, config)
+            .then((res) => {
+                var fi = new Date(res.data[0].fecha_inicio);
+                var ff = new Date(res.data[0].fecha_fin);
+                var fr = new Date(res.data[0].fecha_fin_real);
+                info.explotacion.id = this.props.match.params.id;
+                info.explotacion.duracion = res.data[0].duracion;
+                info.explotacion.costo = res.data[0].costo_total;
+                info.explotacion.estatus = res.data[0].fk_estatus;
+                info.explotacion.fechaI.dia = fi.getDate();
+                info.explotacion.fechaI.mes = (fi.getMonth()+1);
+                info.explotacion.fechaI.ano = fi.getFullYear();
+                info.explotacion.fechaF.dia = ff.getDate();
+                info.explotacion.fechaF.mes = (ff.getMonth()+1);
+                info.explotacion.fechaF.ano = ff.getFullYear();
+                info.explotacion.fechaFR.dia = fr.getDate();
+                info.explotacion.fechaFR.mes = (fr.getMonth()+1);
+                info.explotacion.fechaFR.ano = fr.getFullYear();
+                if(info.explotacion.estatus===10){
+                    info.explotacion.finalizar=true;
+                }
+                this.setState(() => ({
+                    explotacion: info.explotacion,
+                    loadedexp:true,
+                }));
+        }).catch((e) => {
+              console.log('Error en axios')
+        })
+        axios.get(`http://localhost:3000/getYacimientoByIdExplotacion/${this.props.match.params.id}`, config)
+            .then((res) => {
+                info.yacimiento.id = res.data[0].clave;
+                info.yacimiento.nombre = res.data[0].nombre;
+                info.yacimiento.area = res.data[0].tamaño;
+                info.yacimiento.ubicacion.idParroquia = res.data[0].fk_lugar;
 
+                axios.get(`http://localhost:3000/getAllMineralesMetalicosByIdYacimiento/${info.yacimiento.id}`, config)
+                    .then((res) => {
+                        res.data.forEach(element => {
+                            let mineral={
+                                nombre:null,
+                                id:-1,
+                                total: -1,
+                                accordionKey:0,
+                            }
+                            mineral.nombre=element.nombre_mineral_metalico;
+                            mineral.id=element.clave_mineral_metalico;
+                            mineral.total=parseFloat(element.cantidad_mineral_metalico);
+                            info.minerales.push(mineral);
+                        })
+                        this.setState(() => ({
+                            yacimiento: info.yacimiento,
+                            minerales: info.minerales,
+                            loadedyac: true,
+                        }));
+                }).catch((e) => {
+                      console.log('Error en axios')
+                })
 
-        state.explotacion.fechaI.dia =  info.explotacion.fechaI.dia;
-        state.explotacion.fechaI.mes =  info.explotacion.fechaI.mes;
-        state.explotacion.fechaI.ano =  info.explotacion.fechaI.ano;
+                axios.get(`http://localhost:3000/getAllMineralesNoMetalicosByIdYacimiento/${info.yacimiento.id}`, config)
+                    .then((res) => {
+                        res.data.forEach(element => {
+                            let mineral={
+                                nombre:null,
+                                id:-1,
+                                total: -1,
+                                accordionKey:0,
+                            }
+                            mineral.nombre=element.nombre_mineral_metalico;
+                            mineral.id=element.clave_mineral_metalico;
+                            mineral.total=parseFloat(element.cantidad_mineral_metalico);
+                            info.mineralesNoMetalicos.push(mineral);
+                        })
+                        console.log(info)
+                        this.setState(() => ({
+                            yacimiento: info.yacimiento,
+                            minerales: info.minerales,
+                            mineralesNoMetalicos: info.mineralesNoMetalicos,
+                            loadedyac: true,
+                        }));
+                }).catch((e) => {
+                      console.log('Error en axios')
+                })
 
-        state.explotacion.fechaF.dia =  info.explotacion.fechaF.dia;
-        state.explotacion.fechaF.mes =  info.explotacion.fechaF.mes;
-        state.explotacion.fechaF.ano =  info.explotacion.fechaF.ano;
-
-        state.explotacion.fechaFR.dia =  info.explotacion.fechaFR.dia;
-        state.explotacion.fechaFR.mes =  info.explotacion.fechaFR.mes;
-        state.explotacion.fechaFR.ano =  info.explotacion.fechaFR.ano;
-
-
-        state.Minerales.shift();
-        for(let i=0; i<info.minerales.length; i++){
-
-           
-            state.mineralId.push(info.minerales[i].id);
-
-            let mineral={
-                nombre:null,
-                id:-1,
-                total: 0,
-                accordionKey:0,
-               
-                
-            }
-
-            mineral.nombre=info.minerales[i].nombre;
-            mineral.id=info.minerales[i].id;
-            mineral.total=info.minerales[i].total;
-
-            
-            state.Minerales.push(mineral);
-        }
-        
-
-
-        state.MineralesNoMetalicos.shift();
-        for(let i=0; i<info.mineralesNoMetalicos.length; i++){
-
-           
-            state.mineralNoMetalicoId.push(info.mineralesNoMetalicos[i].id);
-
-            let mineral={
-                nombre:null,
-                id:-1,
-                total: 0,
-                accordionKey:0,
-               
-            }
-
-            mineral.nombre=info.mineralesNoMetalicos[i].nombre;
-            mineral.id=info.mineralesNoMetalicos[i].id;
-            mineral.total=Number(info.mineralesNoMetalicos[i].total);
-
-            
-            state.MineralesNoMetalicos.push(mineral);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //console.log("minerales",state.Minerales);
-
-        state.etapas.shift();
-
-        if (info.etapas.length>1){
-            state.eliminar=false;
-        }
-        for(let i=0; i<info.etapas.length; i++){
-            let etapa={
-                nombre: "Etapa 1",
-                nombreV:null,
-                id:null,
-                estatus:null,
-                duracion:0,
-                finalizar:false,
-                costo:0,
-                etapaShow:true,
-                numero: 1,
-                numeroV:1,
-                eliminar:true,
-                fechaI:{
-                    dia:0,
-                    mes:0,
-                    ano:0
-                },
-                fechaF:{
-                    dia:0,
-                    mes:0,
-                    ano:0
-                },
-                fechaFR:{
-                    dia:0,
-                    mes:0,
-                    ano:0
-                },
-                key:"Fase 1",
-                fases: [{
-                    nombre: "Fase 1",
-                    nombreV:null,
-                    id:null,
-                    duracion:0,
-                    estatus:null,
-                    costo:0,
-                    faseShow:true,
-                    finalizar:false,
-                    cargoShow:'inline',
-                    tipoMaquinariaShow:'inline',
-                    numero:1,
-                    numeroV:1,
-                    cargosId:[],
-                    checkInicialCargos:true,
-                    tipoMaquinariaId:[],
-                    checkInicialtipoMaquiaria:true,
-                    fechaI:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    fechaF:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    fechaFR:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    cargos:[{
-                        nombre:null,
-                        id:-1,
-                        sueldo:0,
-                        cantidad:0,
+                this.setState(() => ({
+                    yacimiento: info.yacimiento,
+                    loadedyac: true,
+                }));
+        }).catch((e) => {
+              console.log('Error en axios')
+        })
+        axios.get(`http://localhost:3000/getEtapasByIdExplotacion/${this.props.match.params.id}`, config)
+            .then((res) => {
+                let i=0
+                res.data.forEach(element => {
+                    var fi = new Date(element.fecha_inicio);
+                    var ff = new Date(element.fecha_fin);
+                    var fr = new Date(element.fecha_fin_real);
+                    let etapa={
+                        id:null,
+                        nombreV:null,
                         estatus:null,
-                        accordionKey:0,
-                        empleadosShow:'inline',
-                        empleadosId:[],
-                        checkInicialEmpleado:true,
+                        duracion:0,
+                        finalizar:false,
+                        costo:0,
+                        etapaShow:true,
+                        eliminar:true,
+                        fechaI:{
+                            dia:0,
+                            mes:0,
+                            ano:0
+                        },
+                        fechaF:{
+                            dia:0,
+                            mes:0,
+                            ano:0
+                        },
+                        fechaFR:{
+                            dia:0,
+                            mes:0,
+                            ano:0
+                        },
+                        key:"Fase 1",
+                        fases:[],
+                    }
+                    etapa.nombreV=element.nombre;
+                    etapa.id=element.clave;
+                    etapa.estatus=element.fk_estatus;
+                    etapa.duracion=element.duracion;
+                    etapa.costo=element.costo_total;
+                    etapa.numero=i+1,
+                    etapa.numeroV=i+1,
+                    etapa.nombre= 'Etapa '+ (i+1),
+                    etapa.fechaI.dia = fi.getDate();
+                    etapa.fechaI.mes = (fi.getMonth()+1);
+                    etapa.fechaI.ano = fi.getFullYear();
+                    etapa.fechaF.dia = ff.getDate();
+                    etapa.fechaF.mes = (ff.getMonth()+1);
+                    etapa.fechaF.ano = ff.getFullYear();
+                    etapa.fechaFR.dia = fr.getDate();
+                    etapa.fechaFR.mes = (fr.getMonth()+1);
+                    etapa.fechaFR.ano = fr.getFullYear();
+                    if(etapa.estatus==10){
+                        etapa.finalizar = true;
+                    }
+
+                    axios.get(`http://localhost:3000/getFasesByIdEtapa/${etapa.id}`, config)
+                        .then((res) => {
+                            console.log(res)
+                            let j=0
+                            res.data.forEach(elementf => {
+                                var ffi = new Date(elementf.fecha_inicio);
+                                var fff = new Date(elementf.fecha_fin);
+                                var ffr = new Date(elementf.fecha_fin_real);
+                                let fase={
+                                    nombreV:null,
+                                    id:null,
+                                    duracion:0,
+                                    estatus:null,
+                                    costo:0,
+                                    faseShow:true,
+                                    finalizar:false,
+                                    cargoShow:'inline',
+                                    tipoMaquinariaShow:'inline',
+                                    cargosId:[],
+                                    checkInicialCargos:true,
+                                    tipoMaquinariaId:[],
+                                    checkInicialtipoMaquiaria:true,
+                                    cargos: [],
+                                    tipoMaquinaria: [],
+                                    fechaI:{
+                                        dia:0,
+                                        mes:0,
+                                        ano:0
+                                    },
+                                    fechaF:{
+                                        dia:0,
+                                        mes:0,
+                                        ano:0
+                                    },
+                                    fechaFR:{
+                                        dia:0,
+                                        mes:0,
+                                        ano:0
+                                    },
+                                }
+                                fase.nombreV=elementf.nombre;
+                                fase.id=elementf.clave;
+                                fase.estatus=elementf.fk_estatus;
+                                fase.duracion=elementf.duracion;
+                                fase.costo=elementf.costo;
+                                fase.numero=j+1,
+                                fase.numeroV=j+1,
+                                fase.nombre= 'Fase '+ (j+1),
+                                fase.fechaI.dia = ffi.getDate();
+                                fase.fechaI.mes = (ffi.getMonth()+1);
+                                fase.fechaI.ano = ffi.getFullYear();
+                                fase.fechaF.dia = fff.getDate();
+                                fase.fechaF.mes = (fff.getMonth()+1);
+                                fase.fechaF.ano = fff.getFullYear();
+                                fase.fechaFR.dia = ffr.getDate();
+                                fase.fechaFR.mes = (ffr.getMonth()+1);
+                                fase.fechaFR.ano = ffr.getFullYear();
+                                if(fase.estatus==10){
+                                    fase.finalizar = true;
+                                }
+
+                                axios.get(`http://localhost:3000/getCargosExpByIdFase/${fase.id}`, config)
+                                    .then((res) => {
+                                        res.data.forEach(elementc => {
+                                            let cargo={
+                                                relacion: 0,
+                                                nombre:null,
+                                                id:-1,
+                                                sueldo:0,
+                                                cantidad:0,
+                                                accordionKey:0,
+                                                empleadosShow:'inline',
+                                                empleadosId:[],
+                                                checkInicialEmpleado:true,
+                                                empleados:[]
+                                            }
+                                            cargo.nombre=elementc.nombre;
+                                            cargo.id=elementc.clave;
+                                            cargo.sueldo=elementc.sueldo;
+                                            cargo.cantidad=elementc.cantidad;
+                                            cargo.relacion=elementc.relacion;
+
+                                            axios.get(`http://localhost:3000/getEmpleadosByIdCargoFase/${cargo.relacion}`, config)
+                                                .then((res) => {
+                                                    res.data.forEach(elemente => {
+                                                        let empleado={
+                                                            id:-1,
+                                                            nombre:null,
+                                                            ci:null,
+                                                            accordionKey:0,
+                                                            sexo:null,
+                                                            dia:"Lunes",
+                                                            horario:[
+                                                                {
+                                                                    dia:"Lunes",
+                                                                    horaEntrada:null,
+                                                                    horaSalida:null,
+                                                                    value:1,
+                                                                },
+                                                                {
+                                                                    dia:"Martes",
+                                                                    horaEntrada:null,
+                                                                    horaSalida:null,
+                                                                    value:1,
+                                                                },
+                                                                {
+                                                                    dia:"Miercoles",
+                                                                    horaEntrada:null,
+                                                                    horaSalida:null,
+                                                                    value:1,
+                                                                },
+                                                                {
+                                                                    dia:"Jueves",
+                                                                    horaEntrada:null,
+                                                                    horaSalida:null,
+                                                                    value:1,
+                                                                },
+                                                                {
+                                                                    dia:"Viernes",
+                                                                    horaEntrada:null,
+                                                                    horaSalida:null,
+                                                                    value:1,
+                                                                }
+                                                            ]
+                                                        }
+                                                        empleado.nombre=elemente.p_nombre+' '+elemente.p_apellido;
+                                                        empleado.id=elemente.clave;
+                                                        empleado.ci = elemente.ci;
+                                                        empleado.sexo = elemente.sexo;
+                                                        empleado.relacion = elemente.relacion;
+
+                                                        /*axios.get(`http://localhost:3000/getEmpleadosByIdCargoFase/${empleado.relacion}`, config)
+                                                            .then((res) => {
+                                                                res.data.forEach(elementh => {
+                                                                    let turno={
+                                                                        dia:"Lunes",
+                                                                        horaEntrada:null,
+                                                                        horaSalida:null,
+                                                                        value:1,
+                                                                    }
+                                                                    if(turno.dia==="Lunes"){
+
+                                                                    }
+                                                        
+
+                                                                    
+
+                                        
+                                                                })
+                                                        }).catch((e) => {
+                                                              console.log('Error en axios')
+                                                        })*/
+
+                                                        cargo.empleados.push(empleado);
+                                                    })
+                                            }).catch((e) => {
+                                                  console.log('Error en axios')
+                                            })
+
+                                            fase.cargos.push(cargo);
+                                        })
+                                }).catch((e) => {
+                                      console.log('Error en axios')
+                                })
+
+                                etapa.fases.push(fase);
+                                j++;
+                            })
+                    }).catch((e) => {
+                          console.log('Error en axios')
+                    })
+                    info.etapas.push(etapa);
+                    i++;
+                })
+
+                this.setState(() => ({
+                    etapas: info.etapas,
+                    loadedetapa: true,
+                }));
+                this.setState((prevState) => ({
+                    aux: prevState.aux.map((etapaMap) => {
+                        if (etapaMap.id === aux.id){
+                            return {...etapaMap, b: 2}
+                        }
+                        else{
+                            return etapaMap
+                        }
+                    })
+                }));
+                console.log(this.state)
+            }).catch((e) => {
+                  console.log('Error en axios')
+            })
+
+        /*for(let i=0; i<info.etapas.length; i++){
+            let etapa={
+                fases: [{
+                    cargos:[{
                         empleados:[{
                             id:-1,
                             nombre:null,
@@ -971,36 +655,6 @@ export default class ConsultarExplotacion extends React.Component {
                             sexo:null,
                             estatus:null,
                             dia:"Lunes",
-                            horario:[{
-                                dia:"Lunes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Martes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Miercoles",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Jueves",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Viernes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            }]
                         }],
                     }],
                     tipoMaquinaria:[{
@@ -1023,289 +677,18 @@ export default class ConsultarExplotacion extends React.Component {
                 }]
             }
 
-            etapa.id=info.etapas[i].id;
-            etapa.numero=i+1;
-            etapa.numeroV=i+1;
-
-            etapa.nombre= 'Etapa '+ (i+1);
-            etapa.nombreV=info.etapas[i].nombre;
-
-            etapa.duracion=info.etapas[i].duracion;
-            etapa.costo= info.etapas[i].costo;
-            etapa.estatus= info.etapas[i].estatus;
-
-            if(etapa.estatus==10){
-                etapa.finalizar = true;
-            }
-
-            etapa.fechaI.dia =  info.etapas[i].fechaI.dia;
-            etapa.fechaI.mes =  info.etapas[i].fechaI.mes;
-            etapa.fechaI.ano =  info.etapas[i].fechaI.ano;
-
-            etapa.fechaF.dia =  info.etapas[i].fechaF.dia;
-            etapa.fechaF.mes =  info.etapas[i].fechaF.mes;
-            etapa.fechaF.ano =  info.etapas[i].fechaF.ano;
-
-            etapa.fechaFR.dia =  info.etapas[i].fechaFR.dia;
-            etapa.fechaFR.mes =  info.etapas[i].fechaFR.mes;
-            etapa.fechaFR.ano =  info.etapas[i].fechaFR.ano;
-
-            etapa.fases.shift();
             for(let j=0; j<info.etapas[i].fases.length; j++){
 
-                let fase ={
-                    nombre: "Fase 1",
-                    nombreV:null,
-                    id:null,
-                    duracion:0,
-                    estatus:null,
-                    costo:0,
-                    faseShow:true,
-                    cargoShow:'inline',
-                    tipoMaquinariaShow:'inline',
-                    numero:1,
-                    numeroV:1,
-                    finalizar:false,
-                    cargosId:[],
-                    checkInicialCargos:true,
-                    tipoMaquinariaId:[],
-                    checkInicialtipoMaquiaria:true,
-                    fechaI:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    fechaF:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    fechaFR:{
-                        dia:0,
-                        mes:0,
-                        ano:0
-                    },
-                    cargos:[{
-                        nombre:null,
-                        id:-1,
-                        sueldo:0,
-                        cantidad:0,
-                        estatus:null,
-                        accordionKey:0,
-                        empleadosShow:'inline',
-                        empleadosId:[],
-                        checkInicialEmpleado:true,
-                        empleados:[{
-                            id:-1,
-                            nombre:null,
-                            ci:null,
-                            accordionKey:0,
-                            sexo:null,
-                            estatus:null,
-                            dia:"Lunes",
-                            horario:[{
-                                dia:"Lunes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Martes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Miercoles",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Jueves",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Viernes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            }]
-                        }],
-                    }],
-                    tipoMaquinaria:[{
-                        nombre:null,
-                        id:-1,
-                        costo:0,
-                        cantidad:0,
-                        estatus:null,
-                        accordionKey:0,
-                        maquinariasShow:'none',
-                        maquinariasId:[],
-                        checkInicialMaquiaria:true,
-                        maquinarias:[{
-                            id:-1,
-                            serial:null,
-                            estatus:null,
-                        }],
-                    }]
-
-                }
-
-
-
-
-
-                fase.id=info.etapas[i].fases[j].id;
-                fase.numero=j+1;
-                fase.numeroV=j+1;
-
-                fase.nombre= 'Fase '+ (j+1);
-                fase.nombreV=info.etapas[i].fases[j].nombre;
-
-                fase.duracion=info.etapas[i].fases[j].duracion;
-                fase.costo= info.etapas[i].fases[j].costo;
-                fase.estatus = info.etapas[i].fases[j].estatus;
-
-                if(fase.estatus==10){
-                    fase.finalizar = true;
-                }
-                 
-                fase.fechaI.dia =  info.etapas[i].fases[j].fechaI.dia;
-                fase.fechaI.mes =  info.etapas[i].fases[j].fechaI.mes;
-                fase.fechaI.ano =  info.etapas[i].fases[j].fechaI.ano;
-
-                fase.fechaF.dia =  info.etapas[i].fases[j].fechaF.dia;
-                fase.fechaF.mes =  info.etapas[i].fases[j].fechaF.mes;
-                fase.fechaF.ano =  info.etapas[i].fases[j].fechaF.ano;
-
-                fase.fechaFR.dia =  info.etapas[i].fases[j].fechaFR.dia;
-                fase.fechaFR.mes =  info.etapas[i].fases[j].fechaFR.mes;
-                fase.fechaFR.ano =  info.etapas[i].fases[j].fechaFR.ano;
-
-                fase.cargos.shift();
-                for(let k=0; k<info.etapas[i].fases[j].cargos.length; k++){
-                    fase.cargosId.push(info.etapas[i].fases[j].cargos[k].id);
-
-                    let cargo={
-                        nombre:null,
-                        id:-1,
-                        sueldo:0,
-                        cantidad:0,
-                        estatus:null,
-                        accordionKey:0,
-                        empleadosShow:'inline',
-                        empleadosId:[],
-                        checkInicialEmpleado:true,
-                        empleados:[{
-                            id:-1,
-                            nombre:null,
-                            ci:null,
-                            accordionKey:0,
-                            sexo:null,
-                            estatus:null,
-                            dia:"Lunes",
-                            horario:[{
-                                dia:"Lunes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Martes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Miercoles",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Jueves",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Viernes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            }]
-                        }],
-                    }
-
-
-                    cargo.id=info.etapas[i].fases[j].cargos[k].id;
-                    cargo.sueldo=info.etapas[i].fases[j].cargos[k].sueldo;
-                    cargo.cantidad=info.etapas[i].fases[j].cargos[k].cantidad;
-                    cargo.nombre=info.etapas[i].fases[j].cargos[k].nombre;
-
-                    cargo.empleados.shift()
-                    console.log("IsUndefined?",info.etapas[i].fases[j].cargos[k].empleados,i,j,k);
+                for(let k=0; k<info.etapas[i].fases[j].cargos.length; k++){ 
+                    /*console.log("IsUndefined?",info.etapas[i].fases[j].cargos[k].empleados,i,j,k);
                     info.etapas[i].fases[j].cargos[k].empleados.forEach((empleadoR)=>{
                         cargo.empleadosId.push(empleadoR.id);
-                        let empleado={
-                            id:-1,
-                            nombre:null,
-                            ci:null,
-                            accordionKey:0,
-                            sexo:null,
-                            estatus:null,
-                            dia:"Lunes",
-                            horario:[{
-                                dia:"Lunes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Martes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Miercoles",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Jueves",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            },
-                            {
-                                dia:"Viernes",
-                                horaEntrada:null,
-                                horaSalida:null,
-                                value:1,
-                            }]
-                        }
-
-                        empleado.id = empleadoR.id;
-                        empleado.nombre = empleadoR.nombre;
-                        empleado.ci = empleadoR.ci;
-                        empleado.sexo = empleadoR.sexo;
                         
                         for(let y=0; y<empleadoR.horario.length; y++){
                             empleado.horario[y].horaEntrada = empleadoR.horario[y].horaEntrada;
                             empleado.horario[y].horaSalida = empleadoR.horario[y].horaSalida;
                             empleado.horario[y].value = empleadoR.horario[y].value;
                         }
-                        cargo.empleados.push(empleado);
-
-                    });
-
-
-                    fase.cargos.push(cargo);    
                 }
 
 
@@ -1355,7 +738,7 @@ export default class ConsultarExplotacion extends React.Component {
                     /*console.log("fase",fase);
                     console.log("Tipo",fase.tipoMaquinaria[k].maquinarias);
                     console.log("TipSasdwsdo",fase.tipoMaquinaria);
-                    console.log("Tipo",fase.tipoMaquinaria.maquinarias);*/
+                    console.log("Tipo",fase.tipoMaquinaria.maquinarias);
                     if(fase.tipoMaquinaria[k].maquinarias.length>0){
                         fase.tipoMaquinaria[k].maquinariasShow = 'inline';
                     }
@@ -1369,22 +752,11 @@ export default class ConsultarExplotacion extends React.Component {
             state.etapas.push(etapa);
         }
 
-        
-
-       
-
-        console.log("estado inicial",state);
-        console.log("estado inicial",state.mineralId);
         this.setState(() => ({
             eliminar: state.eliminar,
-            yacimiento: state.yacimiento,
-            explotacion: state.explotacion,
             mineralId: state.mineralId,
-            Minerales: state.Minerales,
             mineralNoMetalicoId: state.mineralNoMetalicoId,
-            MineralesNoMetalicos: state.MineralesNoMetalicos,
-            etapas: state.etapas
-        }));
+        }));*/
     }
 
     /*inicializarInputs=()=>{
@@ -1451,10 +823,6 @@ export default class ConsultarExplotacion extends React.Component {
             });
         }
     }*/
-
-
-
-   
     
     accordionf(e){
       //  console.log(this.state.accordionKey[e],e);
@@ -1502,7 +870,6 @@ export default class ConsultarExplotacion extends React.Component {
         }*/
     }
 
-
     accordionM(i){
        // console.log(this.state.Minerales[i].accordionKey,i);
      //   console.log(this.state.Minerales[i].accordionKey, "holoooA");
@@ -1537,8 +904,6 @@ export default class ConsultarExplotacion extends React.Component {
         }*/
     }
 
-
-
     accordionMNM(i){
        // console.log(this.state.Minerales[i].accordionKey,i);
      //   console.log(this.state.Minerales[i].accordionKey, "holoooA");
@@ -1572,8 +937,6 @@ export default class ConsultarExplotacion extends React.Component {
             this.setState({accordionKey: 1});
         }*/
     }
-
-
 
     accordionC(i,etapaNum,faseNum){
        // console.log(this.state.Cargos[i].accordionKey,i);
@@ -1646,17 +1009,13 @@ export default class ConsultarExplotacion extends React.Component {
         }*/
     }
 
-
     onSelectFase(etapa_num, Key){
         var etapa1= this.state.etapas.findIndex(x => x.numero === etapa_num );
         var Etapa= this.state.etapas[etapa1];
         Etapa.key= key;
     }
     
-
-
     eliminarActivoEtapa=()=>{
-
         let i=0;
         let activar=true;
         let etapas = this.state.etapas;
@@ -1674,12 +1033,9 @@ export default class ConsultarExplotacion extends React.Component {
             eliminar:activar
         }));
         console.log('Eliminar Etapa',activar,i);
-       
     }
 
-
     eliminarActivoFase=(etapaNum,e)=>{
-
         let i=0+e;
         let activar=true;
         let fases=this.state.etapas[etapaNum-1].fases;
@@ -1701,10 +1057,8 @@ export default class ConsultarExplotacion extends React.Component {
         this.setState(() => ({
             etapas: etapas
         }));
-         console.log('Eliminar Fase',activar,i);
-        
+         console.log('Eliminar Fase',activar,i);       
     }
-
 
     selectEmpleado = (id,name,ci,sexo,etapaNum,faseNum,auxNum) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         // console.log('entroCargos', id,etapaNum,faseNum);
@@ -1848,12 +1202,8 @@ export default class ConsultarExplotacion extends React.Component {
 
         this.actualizarCostos();
        // console.log(this.state.etapas);
-        //console.log(empleados);
-        
+        //console.log(empleados); 
     };
-
-
-
 
     selectMaquinaria = (id,name,etapaNum,faseNum,auxNum) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         console.log('entroTipoMaquinaria', id, name, etapaNum)
@@ -1864,11 +1214,6 @@ export default class ConsultarExplotacion extends React.Component {
         let costo_anterior = 0;
         let cantidad_anterior = 0;
         let id_a_eliminar=0;
-
-
-
-
-
 
         if(maquinarias[0].id === -1){
             maquinarias.shift();
@@ -1895,7 +1240,6 @@ export default class ConsultarExplotacion extends React.Component {
                 eliminado=true;
             }
            
-
         }
         /*if(eliminado){
             maquinarias.splice(id_a_eliminar,1);
@@ -1937,13 +1281,11 @@ export default class ConsultarExplotacion extends React.Component {
         console.log("eliminado",eliminado);
         console.log(maquinarias);
         console.log(this.state.etapas);
-        
     };
 
     nombreDT = (nombre) => {
-     console.log('fino')
+        console.log('fino')
     }
-
 
     selectFunctionCheckbox = (e,classN, id, name,ci,sexo,etapaNum,faseNum,auxNum) => {
         // console.log('selectFunctionCheckbox', boton.alt)
@@ -1989,35 +1331,27 @@ export default class ConsultarExplotacion extends React.Component {
 
             let max = (tipoMaquinaria.maquinariasShow=='none')?(tipoMaquinaria.cantidad-tipoMaquinaria.maquinarias.length+1 ): (tipoMaquinaria.cantidad-tipoMaquinaria.maquinarias.length);
             
-                if( max<=0 ){
-                    if(e.target.checked){
-                        console.log("Checked y max 0",max);
-                        e.target.checked=false;
-                    }
-                    else{
-                        console.log("not Checked y max 0",max);
-                       // e.target.disabled=true;
-                       this.selectMaquinaria(id,name,etapaNum,faseNum,auxNum);
-                    }
-                                                
+            if( max<=0 ){
+                if(e.target.checked){
+                    console.log("Checked y max 0",max);
+                    e.target.checked=false;
                 }
                 else{
-                    console.log(" max diferente de 0",max);
-                   // e.target.disabled=false;
-                   this.selectMaquinaria(id,name,etapaNum,faseNum,auxNum); 
+                    console.log("not Checked y max 0",max);
+                   // e.target.disabled=true;
+                   this.selectMaquinaria(id,name,etapaNum,faseNum,auxNum);
                 }
-            
-
-            
+                                            
+            }
+            else{
+                console.log(" max diferente de 0",max);
+               // e.target.disabled=false;
+               this.selectMaquinaria(id,name,etapaNum,faseNum,auxNum); 
+            }
         }
-        
     }
 
-
-
     handleOnClickSubmittData=()=>{
-
-
        const info = {
             yacimiento:{
                 id:null,
@@ -2300,18 +1634,12 @@ export default class ConsultarExplotacion extends React.Component {
         });
 
         console.log(info);
-
     }
-
-
-
 
     handleOnChangeCostoTipoMaq=(event,etapaNum,faseNum,tipoMaqNum)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
         const etapas1= this.state.etapas;
-
-        
 
         if(valueTrimmed){
             event.target.state='valid';
@@ -2348,17 +1676,12 @@ export default class ConsultarExplotacion extends React.Component {
             etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].costo=0;
             this.actualizarCostos();
         }
-        
-         
-
     }
 
     handleOnChangeCantidadTipoMaq=(event,etapaNum,faseNum,tipoMaqNum)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
         const etapas1= this.state.etapas;
-
-        
 
         if(valueTrimmed){
             event.target.state='valid';
@@ -2394,12 +1717,7 @@ export default class ConsultarExplotacion extends React.Component {
             etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].cantidad=0;
             this.actualizarCostos();
         }
-        
-
     }
-
-
-
 
     handleOnChangeSueldoCargo=(event,etapaNum,faseNum,cargoNum)=>{
         const value = event.target.value;
@@ -2445,16 +1763,10 @@ export default class ConsultarExplotacion extends React.Component {
         }
     }
 
-
-
-
-
     handleOnChangeCantidadCargo=(event,etapaNum,faseNum,cargoNum)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
         const etapas1= this.state.etapas;
-
-        
 
         if(valueTrimmed){
             event.target.state='valid';
@@ -2490,8 +1802,6 @@ export default class ConsultarExplotacion extends React.Component {
             etapas1[etapaNum-1].fases[faseNum-1].cargos[cargoNum].cantidad=0;
             this.actualizarCostos();
         }
-        
-
     }
 
     actualizarCostos=()=>{
@@ -2531,16 +1841,10 @@ export default class ConsultarExplotacion extends React.Component {
         //console.log('CostoTotal', this.state.explotacion.costo);
     }
 
-
-
-
-
     handleOnChangeDuracionFase=(event,etapaNum,faseNum)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
-        const etapas1= this.state.etapas;
-
-        
+        const etapas1= this.state.etapas;     
 
         if(valueTrimmed){
             event.target.state='valid';
@@ -2576,12 +1880,7 @@ export default class ConsultarExplotacion extends React.Component {
             etapas1[etapaNum-1].fases[faseNum-1].duracion=0;
             this.actualizarDuracion();
         }
-        
-
     }
-
-
-
 
     actualizarDuracion=()=>{
         let etapas1 = this.state.etapas;
@@ -2606,12 +1905,8 @@ export default class ConsultarExplotacion extends React.Component {
                     
         }));
         console.log('Duracion Total', this.state.explotacion.duracion);
-
     }
 
-
-
-    
     handleOnChangeMineral=(event,minNUm)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
@@ -2645,10 +1940,6 @@ export default class ConsultarExplotacion extends React.Component {
         }
     }
 
-
-
-   
-
     handleOnChangeMineralNo=(event,minNUm)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
@@ -2681,7 +1972,6 @@ export default class ConsultarExplotacion extends React.Component {
            
         }
     }
-
 
     handleOnChangeValidarNumeros=(event,Texto)=>{
         const value = event.target.value;
@@ -2754,7 +2044,7 @@ export default class ConsultarExplotacion extends React.Component {
         }
     }
 
-     renderEmpleadosModal=(sexo)=>{
+    renderEmpleadosModal=(sexo)=>{
         if(sexo=="Masculino"){
             return(<Image src="/images/empleado1.png" alt="empleado" fluid />)
         }else if(sexo=="Femenino"){
@@ -2831,8 +2121,7 @@ export default class ConsultarExplotacion extends React.Component {
         return(faltante);
     }
 
-
-     validarEmpleadoHorario=(etapaNum,faseNum,cargoNum,empleadoNum)=>{
+    validarEmpleadoHorario=(etapaNum,faseNum,cargoNum,empleadoNum)=>{
         let etapas=this.state.etapas;
         let empleado=etapas[etapaNum-1].fases[faseNum-1].cargos[cargoNum].empleados[empleadoNum];
         let faltantes=0;
@@ -2850,9 +2139,7 @@ export default class ConsultarExplotacion extends React.Component {
         }
         else{
             return("✓");
-        } 
-        
-        
+        }      
     }
 
     setDia=(key,etapaNum,faseNum,cargoNum,empleadoNum)=>{
@@ -2864,11 +2151,7 @@ export default class ConsultarExplotacion extends React.Component {
         }));
     }
 
-
-
-
     handleOnChangeFecha=()=>{
-
         const valueDia = document.getElementById("FechaDia0I").value;
         const valueMes = document.getElementById("FechaMes0I").value;
         const valueAno = document.getElementById("FechaAno0I").value;
@@ -2912,8 +2195,6 @@ export default class ConsultarExplotacion extends React.Component {
             document.getElementById("FechaInicioTexto").innerHTML = "Obligatorio";
            
         }
-       
-
     }
 
     setFechaCero=()=>{
@@ -2982,7 +2263,6 @@ export default class ConsultarExplotacion extends React.Component {
         }));
         console.log("Etapa, explotacion",etapas,explotacion);
     }
-
 
     actualizarFechas(fechaInicio){
         let etapas = this.state.etapas;
@@ -3057,63 +2337,56 @@ export default class ConsultarExplotacion extends React.Component {
         console.log("Etapa, explotacion",etapas,explotacion);
     }
 
-
-
     render(){
         
-       
         return ( 
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario="Diego Gutiérrez"/>
-  
                 <Container className="FormContainer">
-                   
+                    <FormTitulo titulo="Consultar Explotación" tamaño="BIG"/>
 
-                    <FormTitulo titulo="Registrar Explotación" tamaño="BIG"/>
-                     
                     <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[0]} onClick={() => this.accordionf(0)} className="accordion borderacc">
-                              
-                            <FormTitulo titulo="Información General"/>
+                                <FormTitulo titulo="Información General"/>
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
-
+                                    <Form.Row className="formMargins" >
+                                        {
+                                            (this.state.loadedexp)&&<FormFecha idF={"0I"} textoAuxiliar="" dia={(this.state.explotacion.fechaI.dia==0)?"- -":this.state.explotacion.fechaI.dia} mes={(this.state.explotacion.fechaI.mes==0)?"- -":this.state.explotacion.fechaI.mes} ano={(this.state.explotacion.fechaI.ano==0)?"- - - -":this.state.explotacion.fechaI.ano}  titulo="Fecha de Inicio de explotación"  clase="inputsPaddingLeft"  disabled={true}/>
+                                        }
+                                        {
+                                            (this.state.loadedexp)&&<FormFecha idF={"0F"} titulo="Fecha Final de explotación" clase="inputsPaddingLeft" textoAuxiliar="" dia={(this.state.explotacion.fechaF.dia==0)?"- -":this.state.explotacion.fechaF.dia} mes={(this.state.explotacion.fechaF.mes==0)?"- -":this.state.explotacion.fechaF.mes} ano={(this.state.explotacion.fechaF.ano==0)?"- - - -":this.state.explotacion.fechaF.ano} disabled={true}/>    
+                                        }
+                                    </Form.Row>
                                     <Form.Row className="formMargins">
-                                        <Form.Group as={Col} md="6"  className="inputsPaddingRight">
-                                            <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
-                                            <Form.Control 
-                                            as="select" 
-                                            className="form-input"
-                                            defaultValue={this.state.explotacion.estatus}
-                                            disabled
-                                            >
-                                                <option value={8}>En proceso</option>
-                                                <option value={2}>Inactivo</option>
-                                                <option value={10}>Finalizada</option>
-                                            </Form.Control>
-                                            <Form.Text className="text-muted">
-                                                Obligatorio
-                                            </Form.Text>    
+                                        {
+                                            (this.state.loadedexp)&&
+                                            <Form.Group as={Col} md="5"  className="inputsPaddingRight">
+                                                <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
+                                                <Form.Control 
+                                                as="select" 
+                                                className="form-input"
+                                                defaultValue={this.state.explotacion.estatus}
+                                                disabled
+                                                >
+                                                    <option value={8}>En proceso</option>
+                                                    <option value={2}>Inactivo</option>
+                                                    <option value={10}>Finalizada</option>
+                                                </Form.Control>
+                                            </Form.Group>
+                                        }
+                                        <Form.Group as={Col} md="1"></Form.Group>
+                                        <Form.Group style={{display: ((this.state.explotacion.estatus!=10)?'none':'contents')}}>
+                                            {
+                                                (this.state.loadedexp)&&<FormFecha idF={"0FR"} textoAuxiliar="" idTexto="FechaFinalRealTexto0FR" dia={this.state.explotacion.fechaFR.dia} mes={this.state.explotacion.fechaFR.mes} ano={this.state.explotacion.fechaFR.ano}  titulo="Fecha de Final Real de explotación" textoAuxiliar="" clase="inputsPaddingRight" disabled={true}/>
+                                            }
                                         </Form.Group>
                                     </Form.Row>
-
-
-                                    <Form.Row className="formMargins" >
-                                        <FormFecha idF={"0I"} textoAuxiliar="Obligatorio" dia={(this.state.explotacion.fechaI.dia==0)?"- -":this.state.explotacion.fechaI.dia} mes={(this.state.explotacion.fechaI.mes==0)?"- -":this.state.explotacion.fechaI.mes} ano={(this.state.explotacion.fechaI.ano==0)?"- - - -":this.state.explotacion.fechaI.ano}  titulo="Fecha de Inicio de explotación"  clase="inputsPaddingLeft"  disabled={true}/>
-                                        
-                                        <FormFecha idF={"0F"} titulo="Fecha Final de explotación" clase="inputsPaddingLeft" textoAuxiliar="Calculado" dia={(this.state.explotacion.fechaF.dia==0)?"- -":this.state.explotacion.fechaF.dia} mes={(this.state.explotacion.fechaF.mes==0)?"- -":this.state.explotacion.fechaF.mes} ano={(this.state.explotacion.fechaF.ano==0)?"- - - -":this.state.explotacion.fechaF.ano} disabled={true}/>    
-                                        
-                                    </Form.Row>
-
-                                    <Form.Row className="formMargins" style={{display: ((this.state.explotacion.estatus!=10)?'none':'inline')}}>
-                                        <FormFecha idF={"0FR"} textoAuxiliar="Calculado" idTexto="FechaFinalRealTexto0FR" dia={this.state.explotacion.fechaFR.dia} mes={this.state.explotacion.fechaFR.mes} ano={this.state.explotacion.fechaFR.ano}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
-                                    </Form.Row>
-
                                     <Form.Row className="formMargins">
-                                        <Form.Group as={Col} md="6" controlId={'YacimientosDuracionInfoExplotacion'} className="inputsPaddingRight">
+                                        <Form.Group as={Col} md="5" controlId={'YacimientosDuracionInfoExplotacion'} className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Duración de la Explotación</Form.Label>
                                             <InputGroup className="MyInputGroup">
                                                 <Form.Control type="text" className="form-input"  placeholder={this.state.explotacion.duracion} disabled/> 
@@ -3121,11 +2394,9 @@ export default class ConsultarExplotacion extends React.Component {
                                                     <InputGroup.Text  className="input-append-ventas-form" >días</InputGroup.Text>
                                                 </InputGroup.Append>
                                             </InputGroup>
-                                            <Form.Text className="text-muted">
-                                                Calculado
-                                            </Form.Text> 
                                         </Form.Group>
-                                        <Form.Group as={Col} md="6" controlId={'YacimientosCostoInfoExplotacion'} className="inputsPaddingLeft">
+                                        <Form.Group as={Col} md="1"></Form.Group>
+                                        <Form.Group as={Col} md="5" controlId={'YacimientosCostoInfoExplotacion'} className="inputsPaddingLeft">
                                             <Form.Label className="cliente-description-fields-text">Costo Total de la Explotación</Form.Label>
                                             <InputGroup className="MyInputGroup">
                                                 <Form.Control type="text" className="form-input" placeholder={this.state.explotacion.costo} disabled  /> 
@@ -3133,12 +2404,9 @@ export default class ConsultarExplotacion extends React.Component {
                                                         <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
                                                     </InputGroup.Append>
                                             </InputGroup>
-                                            <Form.Text className="text-muted">
-                                                Calculado
-                                            </Form.Text> 
                                         </Form.Group>  
+                                        <Form.Group as={Col} md="1"></Form.Group>
                                     </Form.Row>
-
                                 </Card.Body>
                             </Accordion.Collapse>
                         </Card>
@@ -3147,37 +2415,31 @@ export default class ConsultarExplotacion extends React.Component {
                     <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[0]} onClick={() => this.accordionf(0)} className="accordion borderacc">
-                              
                             <FormTitulo titulo="Información de Yacimiento"/>
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
-
-
                                     <Form.Row className="formMargins">
-                                        <Form.Group as={Col} md="6" controlId="YacimientosNombreYacimiento" className="inputsPaddingRight">
+                                        <Form.Group as={Col} md="5" controlId="YacimientosNombreYacimiento" className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
-                                            <Form.Control disabled type="text" className="form-input" defaultValue={this.state.yacimiento.nombre} placeholder="Introduzca nombre del yacimiento" />
-                                            
+                                            <Form.Control disabled type="text" className="form-input" defaultValue={this.state.yacimiento.nombre}/>
                                         </Form.Group>
-                                        
-                                    
-                                        <Form.Group as={Col} md="6"controlId="YacimientosTamañoYacimiento"  className="inputsPaddingRight">
+                                        <Form.Group as={Col} md="2"></Form.Group>
+                                        <Form.Group as={Col} md="5"controlId="YacimientosTamañoYacimiento"  className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Área</Form.Label>
                                             <InputGroup className="MyInputGroup">
-                                                <Form.Control disabled type="text" className="form-input" defaultValue={this.state.yacimiento.area} placeholder="Introduzca tamaño del yacimiento" /> 
+                                                <Form.Control disabled type="text" className="form-input" defaultValue={this.state.yacimiento.area}/> 
                                                 <InputGroup.Append>
                                                     <InputGroup.Text  className="input-append-ventas-form" >Km<sup>2</sup></InputGroup.Text>
                                                 </InputGroup.Append>
                                             </InputGroup>
-                                              
                                         </Form.Group>
-                                            
                                     </Form.Row>
-
                                     <Form.Group controlId="YacimientosTamañoYacimiento"  className="inputsPaddingRight">
-                                        <Form.Label className="cliente-description-fields-text formMarginsE">Ubicación</Form.Label>
-                                        <FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>
+                                        <Form.Label className="formMarginsE cliente-title">Ubicación</Form.Label>
+                                        {
+                                            (this.state.loadedyac)&&<FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>
+                                        }
                                     </Form.Group>
                                     
                                 </Card.Body>
@@ -3185,23 +2447,17 @@ export default class ConsultarExplotacion extends React.Component {
                         </Card>
                     </Accordion>
                    
-
-
-
-
-
-
-                    <Accordion defaultActiveKey={1} >
+                    {
+                        (this.state.minerales.length>0)&&
+                        <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
                                 <FormTitulo titulo="Minerales Metálicos"/>
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
-                    
-                                   
                                     <Container>
-                                        {this.state.Minerales.map((mineral,indexMin)=>{             
+                                        {this.state.minerales.map((mineral,indexMin)=>{             
                                             return(
                                                 <div style={{display: this.state.mineralShow}}>
                                                     <Accordion defaultActiveKey={1} >
@@ -3212,13 +2468,10 @@ export default class ConsultarExplotacion extends React.Component {
                                                             <Accordion.Collapse eventKey={1} >
                                                                 <Card.Body className="BodyAcc">
                                                                     <Form.Row className="formMargins">
-                                                                    
-                                                                    </Form.Row>
-                                                                    <Form.Row className="formMargins">
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineral(evt,mineral.id)} controlId={'YacimientosTotalMineral'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
-                                                                                <Form.Control disabled type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
+                                                                                <Form.Control disabled type="text" className="form-input" defaultValue={mineral.total}/> 
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>
@@ -3231,31 +2484,25 @@ export default class ConsultarExplotacion extends React.Component {
                                                     </Accordion>
                                                 </div>
                                             );
-                                        })}
+                                        })
+                                    }
                                     </Container>
                                 </Card.Body>
                             </Accordion.Collapse>
-
-
                         </Card>
-                    </Accordion>
-
-
-
-
-
-
-                    <Accordion defaultActiveKey={1} >
+                        </Accordion>
+                    }
+                    {
+                        (this.state.mineralesNoMetalicos.length>0)&&
+                        <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
                                 <FormTitulo titulo="Minerales No Metálicos"/>
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
-                    
-                                  
                                     <Container>
-                                        {this.state.MineralesNoMetalicos.map((mineral,indexMin)=>{             
+                                        {this.state.mineralesNoMetalicos.map((mineral,indexMin)=>{             
                                             return(
                                                 <div style={{display: this.state.mineralNoMetalicoShow}}>
                                                     <Accordion defaultActiveKey={1} >
@@ -3265,9 +2512,6 @@ export default class ConsultarExplotacion extends React.Component {
                                                             </Accordion.Toggle>
                                                             <Accordion.Collapse eventKey={1} >
                                                                 <Card.Body className="BodyAcc">
-                                                                    <Form.Row className="formMargins">
-                                                                    
-                                                                    </Form.Row>
                                                                     <Form.Row className="formMargins">
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineralNoMetalico(evt,mineral.id)} controlId={'YacimientosTotalMineralNoMetalico'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
@@ -3291,19 +2535,17 @@ export default class ConsultarExplotacion extends React.Component {
                                 </Card.Body>
                             </Accordion.Collapse>
                         </Card>
-                    </Accordion>
-
-
-
-                    <Accordion defaultActiveKey={1} >
+                        </Accordion>
+                    }
+                    {
+                        (this.state.loadedetapa===true)&&                        
+                        <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[3]} onClick={() => this.accordionf(3)} className="accordion borderacc">
                                 <FormTitulo titulo="Etapas y Fases" />
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
-                                    
-                                
                                     <FormTitulo titulo="Etapas"/>
                                     <br/>
                                     <Tabs
@@ -3320,7 +2562,12 @@ export default class ConsultarExplotacion extends React.Component {
                                                         <br/>
                                                         <FormTitulo titulo={"Información General de la Etapa "+etapa.numero}/>
                                                         <Form.Row className="formMargins">
-                                                            <Form.Group as={Col} md="6"  className="inputsPaddingRight">
+                                                            <FormFecha idF={etapa.numero+"I"} titulo="Fecha de Inicio de la Etapa" textoAuxiliar="" clase="inputsPaddingLeft"  dia={(etapa.fechaI.dia==0)?"- -":etapa.fechaI.dia} mes={(etapa.fechaI.mes==0)?"- -":etapa.fechaI.mes} ano={(etapa.fechaI.ano==0)?"- - - -":etapa.fechaI.ano} disabled={true}/>
+                                                            <FormFecha idF={etapa.numero+"F"} titulo="Fecha Final de la Etapa" textoAuxiliar="" clase="inputsPaddingLeft"  dia={(etapa.fechaF.dia==0)?"- -":etapa.fechaF.dia} mes={(etapa.fechaF.mes==0)?"- -":etapa.fechaF.mes} ano={(etapa.fechaF.ano==0)?"- - - -":etapa.fechaF.ano} disabled={true}/>            
+                                                        </Form.Row>
+
+                                                        <Form.Row className="formMargins">
+                                                            <Form.Group as={Col} md="5"  className="inputsPaddingRight">
                                                                 <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
                                                                 <Form.Control 
                                                                 as="select" 
@@ -3332,31 +2579,24 @@ export default class ConsultarExplotacion extends React.Component {
                                                                     <option value={2}>Inactivo</option>
                                                                     <option value={10}>Finalizada</option>
                                                                 </Form.Control>
-                                                                <Form.Text className="text-muted">
-                                                                    Obligatorio
-                                                                </Form.Text>    
+                                                            </Form.Group>
+                                                            <Form.Group as={Col} md="1"></Form.Group>
+                                                            <Form.Group style={{display: ((etapa.estatus!=10)?'none':'contents')}}>
+                                                                <FormFecha idF={etapa.numero+"FR"} textoAuxiliar="" idTexto={"FechaFinalRealTexto"+etapa.numero+"FR"} dia={etapa.fechaFR.dia} mes={etapa.fechaFR.mes} ano={etapa.fechaFR.ano}  titulo="Fecha de Final Real de etapa" textoAuxiliar="" clase="inputsPaddingLeft" disabled={true}/>
                                                             </Form.Group>
                                                         </Form.Row>
-                                                        <Form.Row className="formMargins">
-                                                            <FormFecha idF={etapa.numero+"I"} titulo="Fecha de Inicio de la Etapa" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(etapa.fechaI.dia==0)?"- -":etapa.fechaI.dia} mes={(etapa.fechaI.mes==0)?"- -":etapa.fechaI.mes} ano={(etapa.fechaI.ano==0)?"- - - -":etapa.fechaI.ano} disabled={true}/>
-                                                            <FormFecha idF={etapa.numero+"F"} titulo="Fecha Final de la Etapa" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(etapa.fechaF.dia==0)?"- -":etapa.fechaF.dia} mes={(etapa.fechaF.mes==0)?"- -":etapa.fechaF.mes} ano={(etapa.fechaF.ano==0)?"- - - -":etapa.fechaF.ano} disabled={true}/>            
-                                                        </Form.Row>
-
-                                                        <Form.Row className="formMargins" style={{display: ((etapa.estatus!=10)?'none':'inline')}}>
-                                                            <FormFecha idF={etapa.numero+"FR"} textoAuxiliar="Calculado" idTexto={"FechaFinalRealTexto"+etapa.numero+"FR"} dia={etapa.fechaFR.dia} mes={etapa.fechaFR.mes} ano={etapa.fechaFR.ano}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
-                                                        </Form.Row>
 
                                                         <Form.Row className="formMargins">
+                                                            <Form.Group as={Col} md="3"></Form.Group>
                                                             <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,'YacimientosNombreTextEtapa'+etapa.numeroV,"Introduzca un nombre válido")} controlId={'YacimientosNombreEtapa'+etapa.numeroV} className="inputsPaddingRight">
                                                                 <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
-                                                                <Form.Control disabled type="text" defaultValue={etapa.nombreV} className="form-input" placeholder="Introduzca nombre de la etapa" />
-                                                                
+                                                                <Form.Control disabled type="text" defaultValue={etapa.nombreV} className="form-input"/>
                                                             </Form.Group>
-                                                            
+                                                            <Form.Group as={Col} md="3"></Form.Group>
                                                         </Form.Row>
 
                                                         <Form.Row className="formMargins">
-                                                            <Form.Group as={Col} md="6" controlId={'YacimientosDuracionEtapa'+etapa.numeroV}className="inputsPaddingRight">
+                                                            <Form.Group as={Col} md="5" controlId={'YacimientosDuracionEtapa'+etapa.numeroV}className="inputsPaddingRight">
                                                                 <Form.Label className="cliente-description-fields-text">Duración de la Etapa</Form.Label>
                                                                 <InputGroup className="MyInputGroup">
                                                                     <Form.Control type="text" className="form-input" placeholder={etapa.duracion} disabled/> 
@@ -3364,11 +2604,9 @@ export default class ConsultarExplotacion extends React.Component {
                                                                         <InputGroup.Text  className="input-append-ventas-form" >días</InputGroup.Text>
                                                                     </InputGroup.Append>
                                                                 </InputGroup>
-                                                                <Form.Text className="text-muted">
-                                                                    Calculado
-                                                                </Form.Text> 
                                                             </Form.Group>
-                                                            <Form.Group as={Col} md="6" controlId={'YacimientosCostoEtapa'+etapa.numeroV} className="inputsPaddingLeft">
+                                                            <Form.Group as={Col} md="1"></Form.Group>
+                                                            <Form.Group as={Col} md="5" controlId={'YacimientosCostoEtapa'+etapa.numeroV} className="inputsPaddingLeft">
                                                                  <Form.Label className="cliente-description-fields-text">Costo Total de la Etapa</Form.Label>
                                                                 <InputGroup className="MyInputGroup">
                                                                     <Form.Control type="text" className="form-input" placeholder={etapa.costo} disabled /> 
@@ -3376,10 +2614,8 @@ export default class ConsultarExplotacion extends React.Component {
                                                                         <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
                                                                     </InputGroup.Append>
                                                                 </InputGroup>
-                                                                <Form.Text className="text-muted">
-                                                                    Calculado
-                                                                </Form.Text> 
                                                             </Form.Group>  
+                                                            <Form.Group as={Col} md="1"></Form.Group>
                                                         </Form.Row>
                                                         <FormTitulo titulo="Fases"/>
                                                         <br/>
@@ -3388,8 +2624,9 @@ export default class ConsultarExplotacion extends React.Component {
                                                             defaultActiveKey={this.state.etapas[etapa.numeroV-1].key}
                                                             onClick={this.prueba}
                                                         >
-                                                            {this.state.etapas[etapa.numeroV-1].fases.map((fase,indexf)=>{
-                                                                console.log()        
+                                                            {
+                                                                this.state.etapas[etapa.numeroV-1].fases.map((fase,indexf)=>{
+                                                                console.log("empl", fase.cargos)        
 
                                                                 if (fase.faseShow === true) 
 
@@ -3398,8 +2635,14 @@ export default class ConsultarExplotacion extends React.Component {
                                                                         
                                                                         <Container>
                                                                             <br/>
+
                                                                             <Form.Row className="formMargins">
-                                                                                <Form.Group as={Col} md="6"  className="inputsPaddingRight">
+                                                                                <FormFecha idF={etapa.numero+''+fase.numero+"I"} titulo="Fecha de Inicio de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft" dia={(fase.fechaI.dia==0)?"- -":fase.fechaI.dia} mes={(fase.fechaI.mes==0)?"- -":fase.fechaI.mes} ano={(fase.fechaI.ano==0)?"- - - -":fase.fechaI.ano} disabled={true}/>
+                                                                                <FormFecha idF={etapa.numero+''+fase.numero+"F"} titulo="Fecha Final de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(fase.fechaF.dia==0)?"- -":fase.fechaF.dia} mes={(fase.fechaF.mes==0)?"- -":fase.fechaF.mes} ano={(fase.fechaF.ano==0)?"- - - -":fase.fechaF.ano} disabled={true}/>            
+                                                                            </Form.Row>
+
+                                                                            <Form.Row className="formMargins">
+                                                                                <Form.Group as={Col} md="5"  className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
                                                                                     <Form.Control 
                                                                                     as="select" 
@@ -3415,25 +2658,23 @@ export default class ConsultarExplotacion extends React.Component {
                                                                                         Obligatorio
                                                                                     </Form.Text>    
                                                                                 </Form.Group>
+                                                                                <Form.Group as={Col} md="1"></Form.Group>
+                                                                                <Form.Group style={{display: ((fase.estatus!=10)?'none':'contents')}}>
+                                                                                    <FormFecha idF={etapa.numero+''+fase.numero+"FR"} textoAuxiliar="Obligatorio" idTexto={"FechaFinalRealTexto"+fase.numero+''+etapa.numero+"FR"} dia={fase.fechaFR.dia} mes={fase.fechaFR.mes} ano={fase.fechaFR.ano}  titulo="Fecha de Final Real de Fase" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
+                                                                                </Form.Group>
                                                                             </Form.Row>
-                                                                            <Form.Row className="formMargins">
-                                                                                <FormFecha idF={etapa.numero+''+fase.numero+"I"} titulo="Fecha de Inicio de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft" dia={(fase.fechaI.dia==0)?"- -":fase.fechaI.dia} mes={(fase.fechaI.mes==0)?"- -":fase.fechaI.mes} ano={(fase.fechaI.ano==0)?"- - - -":fase.fechaI.ano} disabled={true}/>
-                                                                                <FormFecha idF={etapa.numero+''+fase.numero+"F"} titulo="Fecha Final de la Fase" textoAuxiliar="Calculado" clase="inputsPaddingLeft"  dia={(fase.fechaF.dia==0)?"- -":fase.fechaF.dia} mes={(fase.fechaF.mes==0)?"- -":fase.fechaF.mes} ano={(fase.fechaF.ano==0)?"- - - -":fase.fechaF.ano} disabled={true}/>            
-                                                                            </Form.Row>
-                                                                            <Form.Row className="formMargins" style={{display: ((fase.estatus!=10)?'none':'inline')}}>
-                                                                                <FormFecha idF={etapa.numero+''+fase.numero+"FR"} textoAuxiliar="Obligatorio" idTexto={"FechaFinalRealTexto"+fase.numero+''+etapa.numero+"FR"} dia={fase.fechaFR.dia} mes={fase.fechaFR.mes} ano={fase.fechaFR.ano}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
-                                                                            </Form.Row>
+
                                                                             <FormTitulo titulo={"Información General de la Fase "+fase.numero}/>
                                                                             <Form.Row className="formMargins">
+                                                                                <Form.Group as={Col} md="3"></Form.Group>
                                                                                 <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,'YacimientosNombreTextEtapaFase'+etapa.numeroV+fase.numeroV,"Introduzca un nombre válido")} controlId={'YacimientosNombreEtapaFase'+etapa.numeroV+fase.numeroV} className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
                                                                                     <Form.Control disabled type="text" defaultValue={fase.nombreV} className="form-input" placeholder="Introduzca nombre de la fase" />
-                                                                                    
                                                                                 </Form.Group>
-                                                                               
+                                                                                <Form.Group as={Col} md="3"></Form.Group>
                                                                             </Form.Row>
                                                                             <Form.Row className="formMargins">
-                                                                                <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeDuracionFase(evt,etapa.numeroV,fase.numeroV)} controlId={'YacimientosDuracionEtapaFase'+etapa.numeroV+fase.numeroV} className="inputsPaddingRight">
+                                                                                <Form.Group as={Col} md="5" onChange={(evt)=>this.handleOnChangeDuracionFase(evt,etapa.numeroV,fase.numeroV)} controlId={'YacimientosDuracionEtapaFase'+etapa.numeroV+fase.numeroV} className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">Duración de la Fase</Form.Label>
                                                                                     <InputGroup className="MyInputGroup">
                                                                                         <Form.Control disabled type="text" className="form-input" defaultValue={fase.duracion} placeholder="Introduzca la duración de la fase"/> 
@@ -3441,9 +2682,9 @@ export default class ConsultarExplotacion extends React.Component {
                                                                                             <InputGroup.Text  className="input-append-ventas-form" placeholder="Introduzca la duración de la fase" >días</InputGroup.Text>
                                                                                         </InputGroup.Append>
                                                                                     </InputGroup>
-                                                                                    
                                                                                 </Form.Group>
-                                                                                <Form.Group as={Col} md="6" controlId={'YacimientosCostoEtapaFase'+etapa.numeroV+fase.numeroV} className="inputsPaddingLeft">
+                                                                                <Form.Group as={Col} md="1"></Form.Group>
+                                                                                <Form.Group as={Col} md="5" controlId={'YacimientosCostoEtapaFase'+etapa.numeroV+fase.numeroV} className="inputsPaddingLeft">
                                                                                      <Form.Label className="cliente-description-fields-text">Costo Total de la Fase</Form.Label>
                                                                                     <InputGroup className="MyInputGroup">
                                                                                         <Form.Control disabled type="text" className="form-input"  placeholder={fase.costo} disabled /> 
@@ -3451,139 +2692,112 @@ export default class ConsultarExplotacion extends React.Component {
                                                                                             <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
                                                                                         </InputGroup.Append>
                                                                                     </InputGroup>
-                                                                                    
                                                                                 </Form.Group>  
+                                                                                <Form.Group as={Col} md="1"></Form.Group>
                                                                             </Form.Row>
                                                                             <FormTitulo titulo="Cargos"/>
                                                                             
                                                                             <Container>
-                                                                            {fase.cargos.map((cargo,indexcar)=>{             
-                                                                                return(
-                                                                                    <div style={{display: fase.cargoShow}}>
-                                                                                        <Accordion defaultActiveKey={1} >
-                                                                                            <Card className="CardAcc">
-                                                                                                <Accordion.Toggle as={Card.Header} eventKey={cargo.accordionKey} onClick={() => this.accordionC(indexcar,etapa.numero,fase.numero)} className="accordion borderacc">
-                                                                                                    <FormTitulo titulo={cargo.nombre}/>
-                                                                                                </Accordion.Toggle>
-                                                                                                <Accordion.Collapse eventKey={1} >
-                                                                                                    <Card.Body className="BodyAcc">
-
-                                                                                                        <Form.Row className="formMargins">
-                                                                                                            <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeCantidadCargo(evt,etapa.numeroV,fase.numeroV,indexcar)} controlId={'YacimientosCantidadCargo'+etapa.numeroV+fase.numeroV+indexcar} className="inputsPaddingRight">
-                                                                                                                <Form.Label className="cliente-description-fields-text">Cantidad de empleados</Form.Label>
-                                                                                                                <Form.Control disabled type="text" className="form-input" defaultValue={cargo.cantidad} placeholder="Introduzca cantidad de empleados" />
-                                                                                                                
-                                                                                                            </Form.Group>
-                                                                                                            <Form.Group as={Col} onChange={(evt)=>this.handleOnChangeSueldoCargo(evt,etapa.numeroV,fase.numeroV,indexcar)} md="6" controlId={'YacimientosSueldoCargo'+etapa.numeroV+fase.numeroV+indexcar} className="inputsPaddingLeft">
-                                                                                                                 <Form.Label className="cliente-description-fields-text">Sueldo</Form.Label>
-                                                                                                                <InputGroup className="MyInputGroup">
-                                                                                                                    <Form.Control disabled type="text" className="form-input" defaultValue={cargo.sueldo}  placeholder="Introduzca sueldo por empleado" /> 
-                                                                                                                    <InputGroup.Append>
-                                                                                                                        <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
-                                                                                                                    </InputGroup.Append>
-                                                                                                                </InputGroup>
-                                                                                                                
-                                                                                                            </Form.Group>
-                                                                                                        </Form.Row>
-
-                                                                                                        <br/>
-                                                                                                        <div> {'Agregar '+ cargo.nombre + ' :'} </div>
-                                                                                                        <br/>
-                                                                                                        
-                                                                                                        <Container className="containerempleados">
-                                                                                                            <br/>
+                                                                                {fase.cargos.map((cargo,indexcar)=>{             
+                                                                                    return(
+                                                                                        <div style={{display: fase.cargoShow}}>
+                                                                                            <Accordion defaultActiveKey={1} >
+                                                                                                <Card className="CardAcc">
+                                                                                                    <Accordion.Toggle as={Card.Header} eventKey={cargo.accordionKey} onClick={() => this.accordionC(indexcar,etapa.numero,fase.numero)} className="accordion borderacc">
+                                                                                                        <FormTitulo titulo={cargo.nombre}/>
+                                                                                                    </Accordion.Toggle>
+                                                                                                    <Accordion.Collapse eventKey={1} >
+                                                                                                        <Card.Body className="BodyAcc">
+                                                                                                            <Form.Row className="formMargins">
+                                                                                                                <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeCantidadCargo(evt,etapa.numeroV,fase.numeroV,indexcar)} controlId={'YacimientosCantidadCargo'+etapa.numeroV+fase.numeroV+indexcar} className="inputsPaddingRight">
+                                                                                                                    <Form.Label className="cliente-description-fields-text">Cantidad de empleados</Form.Label>
+                                                                                                                    <Form.Control disabled type="text" className="form-input" defaultValue={cargo.cantidad} placeholder="Introduzca cantidad de empleados" />
+                                                                                                                </Form.Group>
+                                                                                                                <Form.Group as={Col} onChange={(evt)=>this.handleOnChangeSueldoCargo(evt,etapa.numeroV,fase.numeroV,indexcar)} md="6" controlId={'YacimientosSueldoCargo'+etapa.numeroV+fase.numeroV+indexcar} className="inputsPaddingLeft">
+                                                                                                                     <Form.Label className="cliente-description-fields-text">Sueldo</Form.Label>
+                                                                                                                    <InputGroup className="MyInputGroup">
+                                                                                                                        <Form.Control disabled type="text" className="form-input" defaultValue={cargo.sueldo}  placeholder="Introduzca sueldo por empleado" /> 
+                                                                                                                        <InputGroup.Append>
+                                                                                                                            <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
+                                                                                                                        </InputGroup.Append>
+                                                                                                                    </InputGroup>
+                                                                                                                </Form.Group>
+                                                                                                            </Form.Row>
                                                                                                             
-                                                                                                            <h4>
-                                                                                                                <Badge variant="secondary">{'Empleados: '+ cargo.cantidad}</Badge> 
-                                                                                                            </h4>
-                                                                                                            <Row>
-                                                                                                                
-                                                                                                                {cargo.empleados.map((empleado,indexem)=>{             
-                                                                                                                    return(
-                                                                                                                         
-                                                                                                                        <Col sm={6} md={4} style={{display: cargo.empleadosShow}} className={(empleado.sexo=="Masculino")?"empleadosImage":((empleado.sexo=="Femenino")?"empleadasImage":"empleadosImageOtro")}>
-                                                                                                                            {this.renderEmpleados(empleado.sexo)}
-                                                                                                                            <div className={(empleado.sexo=="Masculino")?"textoEmpleados":((empleado.sexo=="Femenino")?"textoEmpleadas":"textoEmpleadosOtro")}>
-                                                                                                                                <div>{empleado.nombre}</div>
-                                                                                                                                <div>{empleado.ci}</div>
-                                                                                                                            </div>
-                                                                                                                             <Button className={(empleado.sexo=="Masculino")?"BotonHorarioM":((empleado.sexo=="Femenino")?"BotonHorarioF":"BotonHorarioO")}variant="outline-primary"  onClick={()=>this.horario(etapa.numero,fase.numero,indexcar,indexem)}>Ver Horario</Button>
-                                                                                                                             
-
-
-                                                                                                                             <Modal show={empleado.accordionKey==1}  size="lg" dialogClassName="modal-dialog modal-xl" centered >
-                                                                                                                                <Modal.Header >
-                                                                                                                                    <Modal.Title>Horario</Modal.Title>
-                                                                                                                                </Modal.Header>
-                                                                                                                                <Modal.Body>
-                                                                                                                                    <Row>
-                                                                                                                                        <Col sm={3}>
-                                                                                                                                            {this.renderEmpleadosModal(empleado.sexo)}
-                                                                                                                                            <Container fluid className={(empleado.sexo=="Masculino")?"TextoModal":"TextoModalF"}variant="outline-primary"  >
-                                                                                                                                                <h3>
-                                                                                                                                                    <Badge variant="secondary">{empleado.nombre}</Badge> 
-                                                                                                                                                </h3>
-                                                                                                                                                <h3>
-                                                                                                                                                    <Badge variant="secondary">{empleado.ci}</Badge> 
-                                                                                                                                                </h3>
-                                                                                                                                              
-                                                                                                                                            </Container>
-                                                                                                                                        </Col>
-                                                                                                                                        <Col sm={9} className="HorariosCont">
-                                                                                                                                            <br/>
-                                                                                                                                            
-                                                                                                                                            Seleccione un Horario para cada Dia
-                                                                                                                                               <br/>
-                                                                                                                                                 {empleado.horario.map((horario,indexD)=>{             
-                                                                                                                                                    return(
-                                                                                                                                                        <div>
-                                                                                                                                                            
-                                                                                                                                                            <Form.Row >
-                                                                                                                                                                <Col sm={1}>
-                                                                                                                                                                </Col>
-                                                                                                                                                                <Form.Group as={Col} sm="8"controlId={"DropdownDia"+horario.dia+etapa.numero+fase.numero+indexcar+indexem}>
-                                                                                                                                                                    <Form.Label>{horario.dia}</Form.Label>
-                                                                                                                                                                    <Form.Control as="select" defaultValue={horario.value} disabled> 
-                                                                                                                                                                        <option value={0}>No aplica</option>
-                                                                                                                                                                        <option value={1}>Turno de Mañana 7:00-12:00</option>
-                                                                                                                                                                        <option value={2}>Turno de Tarde 14:00-18:00</option>
-                                                                                                                                                                    </Form.Control>
-                                                                                                                                                                    
-                                                                                                                                                                </Form.Group>
-                                                                                                                                                                <Col sm={3}>
-                                                                                                                                                                </Col>
-                                                                                                                                                            </Form.Row>
-                                                                                                                                                        </div>
-                                                                                                                                                       
-                                                                                                                                                    );
-                                                                                                                                                })}
-                                                                                                                                                
-                                                                                                                                           
-                                                                                                                                        </Col>
-                                                                                                                                    </Row>
-
-                                                                                                                                </Modal.Body>
-
-
-                                                                                                                                <Modal.Footer>
-                                                                                                                                    <Button variant="primary" onClick={()=>this.horario(etapa.numero,fase.numero,indexcar,indexem)}>
-                                                                                                                                        Volver
-                                                                                                                                    </Button>
-                                                                                                                                </Modal.Footer>
-                                                                                                                            </Modal>
-                                                                                                                        </Col>
-                                                                                                                    );
-                                                                                                                })}
-                                                                                                            </Row>
-                                                                                                        </Container>
-
-                                                                                                    </Card.Body>
-                                                                                                </Accordion.Collapse>
-                                                                                            </Card>
-                                                                                        </Accordion>
-                                                                                    </div>
-                                                                                );
-                                                                            })}
+                                                                                                            <Container className="containerempleados">
+                                                                                                                <br/>
+                                                                                                                <Row>
+                                                                                                                    {cargo.empleados.map((empleado,indexem)=>{             
+                                                                                                                        return(
+                                                                                                                            <Col sm={6} md={4} style={{display: cargo.empleadosShow}} className={(empleado.sexo=="Masculino")?"empleadosImage":((empleado.sexo=="Femenino")?"empleadasImage":"empleadosImageOtro")}>
+                                                                                                                                {this.renderEmpleados(empleado.sexo)}
+                                                                                                                                <div className={(empleado.sexo=="Masculino")?"textoEmpleados":((empleado.sexo=="Femenino")?"textoEmpleadas":"textoEmpleadosOtro")}>
+                                                                                                                                    <div>{empleado.nombre}</div>
+                                                                                                                                    <div>{empleado.ci}</div>
+                                                                                                                                </div>
+                                                                                                                                <Button className={(empleado.sexo=="Masculino")?"BotonHorarioM":((empleado.sexo=="Femenino")?"BotonHorarioF":"BotonHorarioO")}variant="outline-primary"  onClick={()=>this.horario(etapa.numero,fase.numero,indexcar,indexem)}>Ver Horario</Button>
+                                                                                                                                <Modal show={empleado.accordionKey==1}  size="lg" dialogClassName="modal-dialog modal-xl" centered >
+                                                                                                                                    <Modal.Header >
+                                                                                                                                        <Modal.Title>Horario</Modal.Title>
+                                                                                                                                    </Modal.Header>
+                                                                                                                                    <Modal.Body>
+                                                                                                                                        <Row>
+                                                                                                                                            <Col sm={3}>
+                                                                                                                                                {this.renderEmpleadosModal(empleado.sexo)}
+                                                                                                                                                <Container fluid className={(empleado.sexo=="Masculino")?"TextoModal":"TextoModalF"}variant="outline-primary"  >
+                                                                                                                                                    <h3>
+                                                                                                                                                        <Badge variant="secondary">{empleado.nombre}</Badge> 
+                                                                                                                                                    </h3>
+                                                                                                                                                    <h3>
+                                                                                                                                                        <Badge variant="secondary">{empleado.ci}</Badge> 
+                                                                                                                                                    </h3>
+                                                                                                                                                  
+                                                                                                                                                </Container>
+                                                                                                                                            </Col>
+                                                                                                                                            <Col sm={9} className="HorariosCont">
+                                                                                                                                                <br/>
+                                                                                                                                                   <br/>
+                                                                                                                                                     {empleado.horario.map((horario,indexD)=>{             
+                                                                                                                                                        return(
+                                                                                                                                                            <div>
+                                                                                                                                                                <Form.Row >
+                                                                                                                                                                    <Col sm={1}>
+                                                                                                                                                                    </Col>
+                                                                                                                                                                    <Form.Group as={Col} sm="8"controlId={"DropdownDia"+horario.dia+etapa.numero+fase.numero+indexcar+indexem}>
+                                                                                                                                                                        <Form.Label>{horario.dia}</Form.Label>
+                                                                                                                                                                        <Form.Control as="select" defaultValue={horario.value} disabled> 
+                                                                                                                                                                            <option value={0}>No aplica</option>
+                                                                                                                                                                            <option value={1}>Turno de Mañana 7:00-12:00</option>
+                                                                                                                                                                            <option value={2}>Turno de Tarde 14:00-18:00</option>
+                                                                                                                                                                        </Form.Control>
+                                                                                                                                                                    </Form.Group>
+                                                                                                                                                                    <Col sm={3}>
+                                                                                                                                                                    </Col>
+                                                                                                                                                                </Form.Row>
+                                                                                                                                                            </div>
+                                                                                                                                                        );
+                                                                                                                                                    })}
+                                                                                                                                            </Col>
+                                                                                                                                        </Row>
+                                                                                                                                    </Modal.Body>
+                                                                                                                                    <Modal.Footer>
+                                                                                                                                        <Button variant="primary" onClick={()=>this.horario(etapa.numero,fase.numero,indexcar,indexem)}>
+                                                                                                                                            Volver
+                                                                                                                                        </Button>
+                                                                                                                                    </Modal.Footer>
+                                                                                                                                </Modal>
+                                                                                                                            </Col>
+                                                                                                                        );
+                                                                                                                    })}
+                                                                                                                </Row>
+                                                                                                            </Container>
+                                                                                                        </Card.Body>
+                                                                                                    </Accordion.Collapse>
+                                                                                                </Card>
+                                                                                            </Accordion>
+                                                                                        </div>
+                                                                                    );
+                                                                                })}
                                                                             </Container>
                                                                             <FormTitulo titulo="Tipo de Maquinarias"/>
                                                                            
@@ -3617,14 +2831,8 @@ export default class ConsultarExplotacion extends React.Component {
                                                                                                             </Form.Group>
                                                                                                         </Form.Row>
                                                                                                         <br/>
-                                                                                                        <div> {'Agregar '+ tipoMaquinaria.nombre + ' :'} </div>
-                                                                                                        <br/>
-                                                                                                        
                                                                                                         <Container className="containerMaquinaria">
                                                                                                             <br/>
-                                                                                                            <h4>
-                                                                                                                <Badge className="badgeMaquinaria" variant="secondary">{'Maquinarias: '+ tipoMaquinaria.cantidad}</Badge> 
-                                                                                                            </h4>
                                                                                                             <Row>
                                                                                                                 {tipoMaquinaria.maquinarias.map((maquinaria,indexM)=>{             
                                                                                                                     return(
@@ -3664,11 +2872,12 @@ export default class ConsultarExplotacion extends React.Component {
                                 </Card.Body>
                             </Accordion.Collapse>
                         </Card>
-                    </Accordion>
+                        </Accordion>
+                    }
                     <div>
                     
-                    <Button className="RYacimiento-btn btn-block btn-margin-izq-vol" onClick={this.handleOnClickSubmittData}>
-                        Volver
+                    <Button className="RYacimiento-btn btn-block btn-margin-izq-vol">
+                        <a href='/explotacion'>Volver</a>
                     </Button>
                     </div>
                 </Container>
