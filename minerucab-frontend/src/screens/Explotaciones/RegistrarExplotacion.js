@@ -2484,11 +2484,11 @@ export default class RegistrarExplotacion extends React.Component {
                         
                         fase.fechaF = faseR.fechaF.ano+'-'+mes+'-'+dia;
 
-                        if((etapaR.numero==1)&&(etapaR.numero==1)){
-                            fase.estatus = 2 ;
+                        if((etapaR.numero==1)&&(faseR.numero==1)){
+                            fase.estatus = 8;
                         }
                         else{
-                            fase.estatus = 8;
+                            fase.estatus = 2;
                         }
                         
                         
