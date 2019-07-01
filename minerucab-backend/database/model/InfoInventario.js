@@ -24,7 +24,27 @@ const getInventario = (req, res) => {
     })
 }
 
+const getCantActualByIdPres = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'SELECT cantidad_actual, clave FROM MU_INVENTARIO WHERE FECHA = (SELECT MAX(FECHA) FROM MU_INVENTARIO WHERE FK_PRESENTACION_MINERAL = ($1));';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
 module.exports = {
-    getInventario
+    getInventario,
+    getCantActualByIdPres,
     // ,[siguientes funciones]
 }

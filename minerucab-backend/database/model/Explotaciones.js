@@ -363,14 +363,13 @@ const getExplotacionById = (req, res) => {
     })
 }
 
-
 const getAllExplotaciones = (req, res) => {
 
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    client.query('SELECT EX.Clave, EX.costo_total "Costo", EX.fecha_inicio "Fecha inicio", E.nombre estatus FROM MU_EXPLOTACION EX, MU_ESTATUS E WHERE EX.fk_estatus = E.Clave;')
+    client.query('SELECT EX.Clave, Y.nombre as Yacimiento, EX.costo_total "Costo", EX.fecha_inicio "Fecha inicio", E.nombre estatus FROM MU_EXPLOTACION EX, MU_ESTATUS E, MU_YACIMIENTO Y WHERE Y.fk_explotacion=EX.clave AND EX.fk_estatus = E.Clave;')
     .then((response) => {
         client.end();
         res.status(200).json(response.rows)

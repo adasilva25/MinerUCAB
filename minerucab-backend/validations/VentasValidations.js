@@ -114,13 +114,13 @@ const getVentaInfo = (req, res) => {
 }
 
 const updateVenta = (req, res) => {
-    const venta = req.body.
+    const venta = req.body.data
     console.log('update', req.body.data)
-    Explotaciones.getAllExplotacionesFkVentaConEstatusDiferenteAInactivo(function(fkVentaYacimientos) {
+    /*Explotaciones.getAllExplotacionesFkVentaConEstatusDiferenteAInactivo(function(fkVentaYacimientos) {
         fkVentaYacimientos.forEach((fkVenta) => {
             
         })
-    })
+    })*/
 
     res.status(200).json({ operacion: 'exito' })
 }

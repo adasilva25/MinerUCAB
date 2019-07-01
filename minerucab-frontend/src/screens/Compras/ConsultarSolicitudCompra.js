@@ -19,6 +19,7 @@ export default class SolicitudCompra extends React.Component {
         total: '',
         estatus: 0,
         flag:false,
+        initial:0,
         empresa: {
             clave: 0,
             nombre: '',
@@ -80,6 +81,7 @@ export default class SolicitudCompra extends React.Component {
                     total: res.data[0].total,
                     estatus: res.data[0].estatus,
                     flag: true,
+                    initial: res.data[0].estatus,
                 }));
 
 
@@ -210,7 +212,7 @@ export default class SolicitudCompra extends React.Component {
                         </Col>
                     </Row>
                         {
-                            (this.props.match.params.accion === 'CO')&&
+                            ((this.props.match.params.accion === 'CO')||(this.state.initial===11))&&
                             <Row>
                                 <Col md={8}>
                                     <h2 className="sc-subtitle">{this.state.empresa.nombre}</h2>
@@ -236,7 +238,7 @@ export default class SolicitudCompra extends React.Component {
                             </Row>
                         }
                         {
-                            ((this.props.match.params.accion === 'M')&&(this.state.flag === true))&&
+                            ((this.props.match.params.accion === 'M')&&(this.state.flag === true)&&(this.state.initial===8))&&
                             <Row>
                                 <Col md={6}>
                                     <h2 className="sc-subtitle">{this.state.empresa.nombre}</h2>
