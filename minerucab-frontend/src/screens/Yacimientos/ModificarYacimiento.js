@@ -18,8 +18,10 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Accordion from 'react-bootstrap/Accordion'
 import FormLugarPred from '../../components/FormLugarPred'
+
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
+
 
 // https://www.w3schools.com/jquery/html_removeclass.asp
 
@@ -37,7 +39,9 @@ export default class ModificarYacimiento extends React.Component {
             prueba: true,
             key:"Etapa 1",
             explotacion:{
+
                 id:null,
+
                 duracion:0,
                 costo:0,
                 estatus:null,
@@ -76,9 +80,11 @@ export default class ModificarYacimiento extends React.Component {
             }],
             mineralNoMetalicoId:[],
             mineralNoMetalicoShow:'inline',
+
             MineralesNoMetalicos:[],
             etapas: []
             
+
         }
 
         this.handleOnClickAEtapa = this.handleOnClickAEtapa.bind(this);
@@ -249,6 +255,8 @@ export default class ModificarYacimiento extends React.Component {
             }]
         }
 
+
+
         let state={
             eliminadosFases: [],
             actualizar:true,
@@ -297,7 +305,9 @@ export default class ModificarYacimiento extends React.Component {
             }],
             mineralNoMetalicoId:[],
             mineralNoMetalicoShow:'inline',
+
             MineralesNoMetalicos:[],
+
             etapas: [{
                 nombre: "Etapa 1",
                 nombreV:null,
@@ -344,6 +354,7 @@ export default class ModificarYacimiento extends React.Component {
                 }]
             }]
         }
+
 
         const config = {
             headers: {
@@ -1244,6 +1255,7 @@ export default class ModificarYacimiento extends React.Component {
 
 
 
+
         // //console.log("minerales",state.Minerales);
 
         // state.etapas.shift();
@@ -1352,6 +1364,8 @@ export default class ModificarYacimiento extends React.Component {
 
 
 
+
+
         //         fase.id=info.etapas[i].fases[j].id;
         //         fase.numero=j+1;
         //         fase.numeroV=j+1;
@@ -1415,9 +1429,11 @@ export default class ModificarYacimiento extends React.Component {
         //     state.etapas.push(etapa);
         // }
 
+
         
 
        
+
 
         // console.log("estado inicial",state);
         // console.log("estado inicial",state.mineralId);
@@ -1432,6 +1448,7 @@ export default class ModificarYacimiento extends React.Component {
         //     etapas: state.etapas,
         //     estatus: state.estatus,
         // }));
+
     }
 
     /*inicializarInputs=()=>{
@@ -3106,6 +3123,7 @@ export default class ModificarYacimiento extends React.Component {
     }
 
 
+
     handleOnChangeMineralNo=(event,minNUm)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
@@ -3141,6 +3159,7 @@ export default class ModificarYacimiento extends React.Component {
 
 
     
+
 
     handleOnChangeValidarNumeros=(event,Texto)=>{
         const value = event.target.value;
@@ -3243,7 +3262,9 @@ export default class ModificarYacimiento extends React.Component {
                                             <Form.Control 
                                             as="select" 
                                             className="form-input"
+
                                             value={this.state.estatus.nombre}
+
                                             onClick={(evt)=>this.handleOnClickEstatus(evt)}
                                             >
                                                 <option value="Activo">Activo</option>
@@ -3263,14 +3284,18 @@ export default class ModificarYacimiento extends React.Component {
                                     <Form.Row className="formMargins">
                                         <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,"YacimientosNombreYacimientoText","Introduzca un nombre válido")} controlId="YacimientosNombreYacimiento" className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
+
                                             <Form.Control type="text" className="form-input" value={this.state.yacimiento.nombre} placeholder="Introduzca nombre del yacimiento" />
+
                                             <Form.Text className="text-muted" id="YacimientosNombreYacimientoText">
                                                 Obligatorio
                                             </Form.Text>
                                         </Form.Group>
                                         <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,"YacimientosDescripcionYacimientoText","Introduzca una descripción válida")} controlId="YacimientosDescripcionYacimiento" className="inputsPaddingLeft">
                                             <Form.Label className="cliente-description-fields-text">Descripción</Form.Label>
+
                                             <Form.Control as="textarea" rows="1" className="form-input-juridico-textarea" value={this.state.yacimiento.descripcion} placeholder="Introduzca una descripción"/>
+
                                             <Form.Text className="text-muted" id="YacimientosDescripcionYacimientoText">
                                                 Obligatorio
                                             </Form.Text>
@@ -3282,7 +3307,9 @@ export default class ModificarYacimiento extends React.Component {
                                         <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarNumeros(evt,"YacimientosTamañoYacimientoText")} controlId="YacimientosTamañoYacimiento"  className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Área</Form.Label>
                                             <InputGroup className="MyInputGroup">
+
                                                 <Form.Control type="text" className="form-input" value={this.state.yacimiento.area} placeholder="Introduzca tamaño del yacimiento" /> 
+
                                                 <InputGroup.Append>
                                                     <InputGroup.Text  className="input-append-ventas-form" >Km<sup>2</sup></InputGroup.Text>
                                                 </InputGroup.Append>
@@ -3298,10 +3325,12 @@ export default class ModificarYacimiento extends React.Component {
                                         <Form.Group as={Col} md="6" controlId="YacimientosTipoYacimiento"  className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Tipo de Yacimiento</Form.Label>
                                             <Form.Control 
+
                                             type="text" 
                                             className="form-input"
                                             value={this.state.yacimiento.tipo}
                                             >
+
                                             </Form.Control>
                                             <Form.Text className="text-muted">
                                                 Obligatorio
@@ -3319,7 +3348,9 @@ export default class ModificarYacimiento extends React.Component {
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
+
                                     {this.state.yacimiento.ubicacion.idParroquia && <FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='M'/>}
+
                                 </Card.Body>
                             </Accordion.Collapse>
                         </Card>
@@ -3357,7 +3388,9 @@ export default class ModificarYacimiento extends React.Component {
                                                 checktable={true}
                                                 textoSingular={'mineral metálico'}
                                                 textoPlural={'minerales metálicos'}
+
                                                 size={500}
+
                                                 etapa={0}
                                                 fase={0}
                                             />
@@ -3382,7 +3415,9 @@ export default class ModificarYacimiento extends React.Component {
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineral(evt,mineral.id)} controlId={'YacimientosTotalMineral'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
+
                                                                                 <Form.Control type="text" className="form-input" value={mineral.total} placeholder="Introduzca cantidad" /> 
+
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>
@@ -3439,7 +3474,9 @@ export default class ModificarYacimiento extends React.Component {
                                                 checktable={true}
                                                 textoSingular={'mineral no metálico'}
                                                 textoPlural={'minerales no metálicos'}
+
                                                 size={500}
+
                                                 etapa={0}
                                                 fase={0}
                                             />
@@ -3465,6 +3502,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
                                                                                 <Form.Control type="text" className="form-input" value={mineral.total} placeholder="Introduzca cantidad" /> 
+
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>
@@ -3629,9 +3667,11 @@ export default class ModificarYacimiento extends React.Component {
                                                                             </Form.Row>
                                                                             <FormTitulo titulo="Cargos"/>
                                                                             <Row>
+
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
                                                                                     
+
                                                                                         <DataTable
 
                                                                                             selectCheck={this.selectFunctionCheckbox}
@@ -3645,7 +3685,9 @@ export default class ModificarYacimiento extends React.Component {
                                                                                             eliminar={false}
                                                                                             columns={'http://localhost:3000/column_names/mu_cargo'} 
                                                                                             data={'http://localhost:3000/getAllCargos'}
+
                                                                                             size={500}
+
                                                                                             url={'consultar_empleado/:'}
                                                                                             checktable={true}
                                                                                             textoSingular={'cargo'}
@@ -3673,7 +3715,9 @@ export default class ModificarYacimiento extends React.Component {
                                                                                                         <Form.Row className="formMargins">
                                                                                                             <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeCantidadCargo(evt,etapa.numeroV,fase.numeroV,indexcar)} controlId={'YacimientosCantidadCargo'+etapa.numeroV+fase.numeroV+indexcar} className="inputsPaddingRight">
                                                                                                                 <Form.Label className="cliente-description-fields-text">Cantidad de empleados</Form.Label>
+
                                                                                                                 <Form.Control type="text" className="form-input" value={cargo.cantidad} placeholder="Introduzca cantidad de empleados" />
+
                                                                                                                 <Form.Text className="text-muted" id={'YacimientosCantidadTextCargo'+etapa.numeroV+fase.numeroV+indexcar}>
                                                                                                                     Obligatorio
                                                                                                                 </Form.Text>
@@ -3681,7 +3725,9 @@ export default class ModificarYacimiento extends React.Component {
                                                                                                             <Form.Group as={Col} onChange={(evt)=>this.handleOnChangeSueldoCargo(evt,etapa.numeroV,fase.numeroV,indexcar)} md="6" controlId={'YacimientosSueldoCargo'+etapa.numeroV+fase.numeroV+indexcar} className="inputsPaddingLeft">
                                                                                                                  <Form.Label className="cliente-description-fields-text">Sueldo</Form.Label>
                                                                                                                 <InputGroup className="MyInputGroup">
+
                                                                                                                     <Form.Control type="text" className="form-input" value={cargo.sueldo}  placeholder="Introduzca sueldo por empleado" /> 
+
                                                                                                                     <InputGroup.Append>
                                                                                                                         <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
                                                                                                                     </InputGroup.Append>
@@ -3718,7 +3764,9 @@ export default class ModificarYacimiento extends React.Component {
                                                                                             eliminar={false}
                                                                                             columns={'http://localhost:3000/column_names/mu_tipo_maquinaria'} 
                                                                                             data={'http://localhost:3000/getAllTiposMaquinaria'}
+
                                                                                             size={300}
+
 
                                                                                             url={'consultar_empleado/:'}
                                                                                             checktable={true}
@@ -3800,4 +3848,6 @@ export default class ModificarYacimiento extends React.Component {
         ) 
     }
 
+
 }
+

@@ -55,7 +55,7 @@ const AppRouter = () => (
         {/* ------------------------ CARGOS ------------------------ */}
         <Route path="/cargo" component={Cargo} />
         <Route path="/registrar_cargo" component={RegistrarCargo} />
-        <Route path="/gestionar_cargos/:accion/:id?" component={GestionarCargos} />*/
+        <Route path="/gestionar_cargos/:accion/:id?" component={GestionarCargos} />
         {/* ------------------------ CLIENTES ------------------------ */}
         <Route path="/cliente" component={Cliente} />
         <Route path="/buscar_cliente" component={ModalBuscarCliente} />
@@ -92,6 +92,8 @@ const AppRouter = () => (
         <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />
         <Route path="/modificar_yacimiento/:accion/:id" component={ModificarYacimiento} />
         <Route path="/consultar_yacimiento/:accion/:id" component={ConsultarYacimiento} />
+
+
 
       </Switch>
     </div>

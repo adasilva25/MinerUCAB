@@ -300,9 +300,9 @@ export default class DataTable extends React.Component {
 
                                                 if(tipo=="E"){
                                                     checkboxesDT[k].alt = dataSet[m][0];//ID
-                                                    checkboxesDT[k].Name = dataSet[m][1];//CI
-                                                    checkboxesDT[k].align = dataSet[m][2]+' '+dataSet[m][4];//NOMBRE
-                                                    checkboxesDT[k].dirName = dataSet[m][7];//SEXO
+                                                    checkboxesDT[k].Name = dataSet[m][3];//CI
+                                                    checkboxesDT[k].align = dataSet[m][1]+' '+dataSet[m][2];//NOMBRE
+                                                    checkboxesDT[k].dirName = dataSet[m][4];//SEXO
                                                    
                                                 }
                                                 else{
@@ -320,7 +320,7 @@ export default class DataTable extends React.Component {
                                             }
                                             
 
-                                            m++;
+                                            m++; 
                                         }
 
                                         //      ANTERIOR EN CASO DE EMERGENCIA

@@ -65,10 +65,12 @@ export default class ModificarExplotacion extends React.Component {
                     ano:0
                 },
             },
+
             estatus:{
                 id:null,
                 nombre:null,
             },
+
             yacimiento:{
                 id:null,
                 nombre:null,
@@ -109,6 +111,89 @@ export default class ModificarExplotacion extends React.Component {
                 accordionKey:0,
                 
             }],
+
+           /* etapas: [{
+                nombre: "Etapa 1",
+                nombreV:null,
+                finalizar:false,
+                id:null,
+                estatus:null,
+                duracion:0,
+                costo:0,
+                etapaShow:true,
+                numero: 1,
+                numeroV:1,
+                eliminar:true,
+                fechaI:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                },
+                fechaF:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                },
+                fechaFR:{
+                    dia:0,
+                    mes:0,
+                    ano:0
+                },
+                key:"Fase 1",
+                fases: [{
+                    nombre: "Fase 1",
+                    nombreV:null,
+                    id:null,
+                    duracion:0,
+                    finalizar:false,
+                    estatus:null,
+                    costo:0,
+                    faseShow:true,
+                    cargoShow:'inline',
+                    tipoMaquinariaShow:'inline',
+                    numero:1,
+                    numeroV:1,
+                    cargosId:[],
+                    checkInicialCargos:true,
+                    tipoMaquinariaId:[],
+                    checkInicialtipoMaquiaria:true,
+                    fechaI:{
+                        dia:0,
+                        mes:0,
+                        ano:0
+                    },
+                    fechaF:{
+                        dia:0,
+                        mes:0,
+                        ano:0
+                    },
+                    fechaFR:{
+                        dia:0,
+                        mes:0,
+                        ano:0
+                    },
+                    cargos:[{
+                        nombre:null,
+                        id:-1,
+                        sueldo:0,
+                        cantidad:0,
+                        estatus:null,
+                        accordionKey:0,
+                        empleadosShow:'inline',
+                        empleadosId:[],
+                        checkInicialEmpleado:true,
+                        empleados:[{
+                            id:-1,
+                            nombre:null,
+                            ci:null,
+                            accordionKey:0,
+                            sexo:null,
+                            estatus:null,
+                            dia:"Lunes",
+                            horario:[{
+                                dia:"Lunes",
+                                horaEntrada:null,*/
+
             etapas: []
         }
 
@@ -397,23 +482,39 @@ export default class ModificarExplotacion extends React.Component {
                             horario:[{
                                 dia:"Lunes",
                                 horaEntrada:"dgs",
+
                                 horaSalida:null,
                                 value:1,
                             },
                             {
                                 dia:"Martes",
+
                                 horaEntrada:"76",
+
                                 horaSalida:null,
                                 value:1,
                             },
                             {
                                 dia:"Miercoles",
+
                                 horaEntrada:"753",
                                 horaSalida:"",
+
                                 value:1,
                             },
                             {
                                 dia:"Jueves",
+
+                                horaEntrada:null,
+                                horaSalida:null,
+                                value:1,
+                            },
+                            {
+                                dia:"Viernes",
+                                horaEntrada:null,
+                                horaSalida:null,
+                                value:1,
+
                                 horaEntrada:"s",
                                 horaSalida:null,
                                 value:0,
@@ -423,10 +524,12 @@ export default class ModificarExplotacion extends React.Component {
                                 horaEntrada:"sdd",
                                 horaSalida:null,
                                 value:2,
+
                             }]
                         }],
                     }],
                     tipoMaquinaria:[{
+
                         id:5,
                         nombre:"Plancha",
                         costo:52,
@@ -617,6 +720,7 @@ export default class ModificarExplotacion extends React.Component {
                 descripcion:null,
                 area:null,
                 estatus:null,
+
                 tipo:null,
                 tipoId:null,
                 ubicacion:{
@@ -651,6 +755,7 @@ export default class ModificarExplotacion extends React.Component {
                 accordionKey:0,
                 
             }],
+
             etapas: []
         }
 
@@ -689,6 +794,7 @@ export default class ModificarExplotacion extends React.Component {
                     duracion:0,
                     finalizar:false,
                     costo:0,
+
                     fechaI:{
                         dia:0,
                         mes:0,
@@ -703,6 +809,7 @@ export default class ModificarExplotacion extends React.Component {
                         dia:0,
                         mes:0,
                         ano:0
+
                     }
                 }
 
@@ -872,6 +979,7 @@ export default class ModificarExplotacion extends React.Component {
                                 id:null,
                                 finalizar:false,
                                 estatus:null,
+
                                 duracion:0,
                                 costo:0,
                                 etapaShow:true,
@@ -898,8 +1006,10 @@ export default class ModificarExplotacion extends React.Component {
                                     nombre: "Fase 1",
                                     nombreV:null,
                                     id:null,
+
                                     finalizar:false,
                                     duracion:0,
+
                                     estatus:null,
                                     costo:0,
                                     faseShow:true,
@@ -926,6 +1036,7 @@ export default class ModificarExplotacion extends React.Component {
                                         mes:0,
                                         ano:0
                                     },
+
                                     cargos:[],
                                     tipoMaquinaria:[]
                 
@@ -1000,6 +1111,7 @@ export default class ModificarExplotacion extends React.Component {
                                             duracion:0,
                                             estatus:null,
                                             costo:0,
+
                                             faseShow:true,
                                             cargoShow:'inline',
                                             tipoMaquinariaShow:'inline',
@@ -1024,8 +1136,10 @@ export default class ModificarExplotacion extends React.Component {
                                                 mes:0,
                                                 ano:0
                                             },
+
                                             cargos:[],
                                             tipoMaquinaria:[/*{     EN CASO DE ERROR QUITAR
+
                                                 nombre:null,
                                                 id:-1,
                                                 costo:0,
@@ -1035,6 +1149,7 @@ export default class ModificarExplotacion extends React.Component {
                                                 maquinariasShow:'none',
                                                 maquinariasId:[],
                                                 checkInicialMaquiaria:true,
+
                                                 maquinarias:[],
                                             }*/]
                                         }
@@ -1087,18 +1202,24 @@ export default class ModificarExplotacion extends React.Component {
                                         fase.duracion=element.duracion;
                                         fase.costo= element.costo;
                                         
+
                                         
                                 
                                         this.setState((prevState) => ({
                                             etapas: prevState.etapas.map((etapaMap) => {
                                                 if (etapaMap.id === etapa.id){
+
+                                                //    return {...etapaMap, fases: etapaMap.fases.concat(faseState)}
+
                                                     return {...etapaMap, fases: etapaMap.fases.concat(fase)}
+
                                                 }
                                                 else{
                                                     return etapaMap
                                                 }
                                             })
                                         }));
+
 
 
                                         // fase.tipoMaquinaria.shift();
@@ -1483,7 +1604,9 @@ export default class ModificarExplotacion extends React.Component {
 
             }).catch((e) => {
                 console.log('Error en axios')
+
             })
+
 
 
 
@@ -1833,6 +1956,7 @@ export default class ModificarExplotacion extends React.Component {
         //     }]
         // }
 
+
         // let state={
         //     eliminadosFases: [],
         //     dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
@@ -2031,6 +2155,7 @@ export default class ModificarExplotacion extends React.Component {
         //         }]
         //     }]
         // }
+
 
 
         // console.log(info);
@@ -2233,6 +2358,7 @@ export default class ModificarExplotacion extends React.Component {
         //         }]
         //     }]
         // }
+
 
         // state.yacimiento.id=info.yacimiento.id;
         // state.yacimiento.nombre=info.yacimiento.nombre;
@@ -2741,6 +2867,7 @@ export default class ModificarExplotacion extends React.Component {
         //                 empleado.ci = empleadoR.ci;
         //                 empleado.sexo = empleadoR.sexo;
                         
+
         //                 for(let y=0; y<empleadoR.horario.length; y++){
         //                     empleado.horario[y].horaEntrada = empleadoR.horario[y].horaEntrada;
         //                     empleado.horario[y].horaSalida = empleadoR.horario[y].horaSalida;
@@ -2815,9 +2942,11 @@ export default class ModificarExplotacion extends React.Component {
         //     state.etapas.push(etapa);
         // }
 
+
         
 
        
+
 
         // console.log("estado inicial",state);
         // console.log("estado inicial",state.mineralId);
@@ -2831,7 +2960,9 @@ export default class ModificarExplotacion extends React.Component {
         //     MineralesNoMetalicos: state.MineralesNoMetalicos,
         //     etapas: state.etapas
         // }));
+
     }
+
 
     /*inicializarInputs=()=>{
 
@@ -4716,7 +4847,11 @@ export default class ModificarExplotacion extends React.Component {
                                             <Form.Control 
                                             as="select" 
                                             className="form-input"
+
+                                           // value={this.state.explotacion.estatus}
+
                                             defaultValue={this.state.explotacion.estatus}
+
                                             disabled={true}
                                             >
                                                 <option value={8}>En proceso</option>
@@ -4806,7 +4941,9 @@ export default class ModificarExplotacion extends React.Component {
 
                                     <Form.Group controlId="YacimientosTamañoYacimiento"  className="inputsPaddingRight">
                                         <Form.Label className="cliente-description-fields-text formMarginsE">Ubicación</Form.Label>
+
                                         {this.state.yacimiento.ubicacion.idParroquia && <FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='M'/>}
+
                                     </Form.Group>
                                     
                                 </Card.Body>
@@ -4830,7 +4967,9 @@ export default class ModificarExplotacion extends React.Component {
                     
                                    
                                     <Container>
+
                                         {this.state.Minerales.map((mineral,indexMin)=>{       
+
                                             return(
                                                 <div style={{display: this.state.mineralShow}}>
                                                     <Accordion defaultActiveKey={1} >
@@ -4847,7 +4986,11 @@ export default class ModificarExplotacion extends React.Component {
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineral(evt,mineral.id)} controlId={'YacimientosTotalMineral'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
+
+                                                                                {/*<Form.Control disabled type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> */}
+
                                                                                 <Form.Control disabled type="text" className="form-input" value={mineral.total} placeholder="Introduzca cantidad" /> 
+
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>
@@ -4901,7 +5044,9 @@ export default class ModificarExplotacion extends React.Component {
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineralNoMetalico(evt,mineral.id)} controlId={'YacimientosTotalMineralNoMetalico'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
+
                                                                                 <Form.Control disabled type="text" className="form-input" value={mineral.total} placeholder="Introduzca cantidad" /> 
+
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>
@@ -5138,7 +5283,9 @@ export default class ModificarExplotacion extends React.Component {
                                                                                                                     consultar={false}
                                                                                                                     eliminar={false}
                                                                                                                     columns={'http://localhost:3000/column_names/mu_empleado'} 
+
                                                                                                                     data={`http://localhost:3000/getEmpleadosByIdCargo/${cargo.id}`}
+
                                                                                                                     size={200}
 
                                                                                                                     url={'consultar_empleado/:'}
@@ -5287,6 +5434,8 @@ export default class ModificarExplotacion extends React.Component {
                                                                                                         <br/>
                                                                                                         <div> {'Agregar '+ tipoMaquinaria.nombre + ' :'} </div>
                                                                                                         <br/>
+
+
                                                                                                         <Row style={{display: ((fase.finalizar==true)?'none':'inline')}}>
                                                                                                             <Col sm={0} md={1}></Col>
                                                                                                             <Col sm={12} md={10}>
