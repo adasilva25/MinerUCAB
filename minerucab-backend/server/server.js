@@ -29,6 +29,7 @@ const VentasValidations = require('../validations/VentasValidations');
 const Yacimientos = require('../database/model/Yacimientos');
 const YacimientoMineral = require('../database/model/YacimientoMineral');
 const YacimientosValidations = require('../validations/YacimientosValidations');
+const InfoInventario = require('../database/model/InfoInventario');
 
 const express = require('express');
 const app = express();
@@ -162,6 +163,8 @@ app.get('/getYacimientoByIdExplotacion/:id', Yacimientos.getYacimientoByIdExplot
 /* -------------------- YACIMIENTO MINERAL -------------------- */
 app.get('/getAllMineralesMetalicosByIdYacimiento/:id', YacimientoMineral.getAllMineralesMetalicosByIdYacimiento)
 app.get('/getAllMineralesNoMetalicosByIdYacimiento/:id', YacimientoMineral.getAllMineralesNoMetalicosByIdYacimiento)
+/*-------------------- INVENTARIO --------------------*/
+app.get('/getInventario', InfoInventario.getInventario)
 
 /* ----------------------------------- UPDATE ----------------------------------- */
 /* -------------------- CLIENTES -------------------- */

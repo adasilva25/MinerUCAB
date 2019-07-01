@@ -37,6 +37,7 @@ export default class ConsultarExplotacion extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            aux: [],
             loadedexp:false,
             loadedyac:false,
             loadedetapa:false,
@@ -509,7 +510,7 @@ export default class ConsultarExplotacion extends React.Component {
                                     fase.finalizar = true;
                                 }
 
-                                /*axios.get(`http://localhost:3000/getCargosExpByIdFase/${fase.id}`, config)
+                                axios.get(`http://localhost:3000/getCargosExpByIdFase/${fase.id}`, config)
                                     .then((res) => {
                                         res.data.forEach(elementc => {
                                             let cargo={
@@ -530,7 +531,7 @@ export default class ConsultarExplotacion extends React.Component {
                                             cargo.cantidad=elementc.cantidad;
                                             cargo.relacion=elementc.relacion;
 
-                                            /*axios.get(`http://localhost:3000/getEmpleadosByIdCargoFase/${cargo.relacion}`, config)
+                                            axios.get(`http://localhost:3000/getEmpleadosByIdCargoFase/${cargo.relacion}`, config)
                                                 .then((res) => {
                                                     res.data.forEach(elemente => {
                                                         let empleado={
@@ -599,7 +600,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                                 })
                                                         }).catch((e) => {
                                                               console.log('Error en axios')
-                                                        })
+                                                        })*/
 
                                                         cargo.empleados.push(empleado);
                                                     })
@@ -611,7 +612,7 @@ export default class ConsultarExplotacion extends React.Component {
                                         })
                                 }).catch((e) => {
                                       console.log('Error en axios')
-                                })*/
+                                })
 
                                 etapa.fases.push(fase);
                                 j++;
@@ -622,11 +623,21 @@ export default class ConsultarExplotacion extends React.Component {
                     info.etapas.push(etapa);
                     i++;
                 })
+
                 this.setState(() => ({
                     etapas: info.etapas,
                     loadedetapa: true,
                 }));
-                this.render();
+                this.setState((prevState) => ({
+                    aux: prevState.aux.map((etapaMap) => {
+                        if (etapaMap.id === aux.id){
+                            return {...etapaMap, b: 2}
+                        }
+                        else{
+                            return etapaMap
+                        }
+                    })
+                }));
                 console.log(this.state)
             }).catch((e) => {
                   console.log('Error en axios')
@@ -2526,7 +2537,8 @@ export default class ConsultarExplotacion extends React.Component {
                         </Card>
                         </Accordion>
                     }
-                    {                        
+                    {
+                        (this.state.loadedetapa===true)&&                        
                         <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[3]} onClick={() => this.accordionf(3)} className="accordion borderacc">
@@ -2614,7 +2626,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                         >
                                                             {
                                                                 this.state.etapas[etapa.numeroV-1].fases.map((fase,indexf)=>{
-                                                                console.log(this.state.etapas[etapa.numeroV-1].fases)        
+                                                                console.log("empl", fase.cargos)        
 
                                                                 if (fase.faseShow === true) 
 
@@ -2648,7 +2660,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                                                 </Form.Group>
                                                                                 <Form.Group as={Col} md="1"></Form.Group>
                                                                                 <Form.Group style={{display: ((fase.estatus!=10)?'none':'contents')}}>
-                                                                                    <FormFecha idF={etapa.numero+''+fase.numero+"FR"} textoAuxiliar="Obligatorio" idTexto={"FechaFinalRealTexto"+fase.numero+''+etapa.numero+"FR"} dia={fase.fechaFR.dia} mes={fase.fechaFR.mes} ano={fase.fechaFR.ano}  titulo="Fecha de Final Real de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
+                                                                                    <FormFecha idF={etapa.numero+''+fase.numero+"FR"} textoAuxiliar="Obligatorio" idTexto={"FechaFinalRealTexto"+fase.numero+''+etapa.numero+"FR"} dia={fase.fechaFR.dia} mes={fase.fechaFR.mes} ano={fase.fechaFR.ano}  titulo="Fecha de Final Real de Fase" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={true}/>
                                                                                 </Form.Group>
                                                                             </Form.Row>
 

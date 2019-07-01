@@ -34,6 +34,7 @@ import Mineral from '../screens/Minerales/Mineral';
 import GestionarMineralMetalico from '../screens/Minerales/GestionarMineralMetalico';
 import GestionarMineralNoMetalico from '../screens/Minerales/GestionarMineralNoMetalico';
 import SolicitudCompra from '../screens/Compras/SolicitudCompra';
+import Inventario from '../screens/InfoInventario/Inventario';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -87,6 +88,8 @@ const AppRouter = () => (
         <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />
         <Route path="/modificar_yacimiento/:id" component={ModificarYacimiento} />
         <Route path="/consultar_yacimiento/:accion/:id" component={ConsultarYacimiento} />
+        {/* ------------------------ INVENTARIO ------------------------ */}
+        <Route path="/inventario" component={Inventario} />
 
       </Switch>
     </div>
