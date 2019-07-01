@@ -46,6 +46,9 @@ export default class Explotacion extends React.Component {
                                 console.log("MinExp", res)
                                 res.data.forEach(element => {
                                     if((element.claveminnomet !== null)||(element.claveminnomet !== undefined)){
+                                        console.log(element)
+                                        const min = element.claveminnomet
+                                        console.log(typeof min)
                                         var mineralesnomet = []
                                         axios.get(`http://localhost:3000/getMinNoMetComponentesSolicitudDeCompra/${element.claveminnomet}`, config)
                                             .then((res) => {
@@ -70,7 +73,7 @@ export default class Explotacion extends React.Component {
                                             .catch((e) => {
                                                 console.log('Error con el modal explotar');
                                             })
-                                    }else if((element.claveminmet === null)||(element.claveminmet !== undefined)){
+                                    }else if((element.claveminmet !== null)||(element.claveminmet !== undefined)){
                                         var mineralesmet = []
                                         axios.get(`http://localhost:3000/getMinMetComponentesSolicitudDeCompra/${element.claveminmet}`, config)
                                             .then((res) => {
