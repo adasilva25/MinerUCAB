@@ -83,16 +83,7 @@ app.get('/getAllCargos', Cargos.getAllCargos);
 app.get('/getCargoByIdEmpleado/:id', Cargos.getCargoByIdEmpleado);
 app.get('/getAllRoles', Roles.getAllRoles);
 app.get('/getCargosByIdFase/:id', Cargos.getCargosByIdFase);
-<<<<<<< HEAD
-/* -------------------- EMPLEADO -------------------- */ 
-app.get('/getRolByIdEmpleado/:id', Roles.getRolByIdEmpleado);
-app.get('/getAllEmpleados', Empleados.getAllEmpleados);
-app.get('/getCriticInfoEmpleados', Empleados.getCriticInfoEmpleados)
-app.get('/getEmpleadoByCedula/:cedula', Empleados.getEmpleadoByCedula);
-app.get('/getEmpleadoById/:id', Empleados.getEmpleadoById);
-app.get('/getEmpleadosByIdCargo/:id', Empleados.getEmpleadosByIdCargo);
-=======
->>>>>>> develop
+
 /* -------------------- CLIENTES -------------------- */
 app.get('/getClienteNombreApellidoById/:id', ClientesNaturales.getClienteNombreApellidoById);
 app.get('/getAllClientes', ClientesNaturales.getAllClientes);

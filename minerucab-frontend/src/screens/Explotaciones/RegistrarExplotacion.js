@@ -22,17 +22,17 @@ import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal'
-<<<<<<< HEAD
+
 import ModalHeader from 'react-bootstrap/ModalHeader'
 import ModalTitle from 'react-bootstrap/ModalTitle'
 import ModalBody from 'react-bootstrap/ModalBody'
 import ModalFooter from 'react-bootstrap/ModalFooter'
 import axios from 'axios';
 import ModalAdvertencia from '../../components/ModalAdvertencia';
-=======
-import axios from 'axios';
 
->>>>>>> develop
+
+
+
 // https://www.w3schools.com/jquery/html_removeclass.asp
 
 
@@ -44,11 +44,10 @@ export default class RegistrarExplotacion extends React.Component {
 
         this.state = {
             eliminadosFases: [],
-<<<<<<< HEAD
+
             modalShowEliminar: false,
             mensajeError:'',
-=======
->>>>>>> develop
+
             dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
             actualizar:true,
             eliminar:true,
@@ -638,11 +637,9 @@ export default class RegistrarExplotacion extends React.Component {
 
                             axios.get(`http://localhost:3000/getFasesByIdEtapa/${etapa.id}`, config)
                                 .then((res) => {
-<<<<<<< HEAD
+
                                    // console.log('res fas', res)
-=======
-                                    console.log('res fas', res)
->>>>>>> develop
+
                                     let fases = [];
                                     res.data.forEach((element, j) => {
 
@@ -698,11 +695,9 @@ export default class RegistrarExplotacion extends React.Component {
                                         // fase.tipoMaquinaria.shift();
                                         axios.get(`http://localhost:3000/getTiposMaquinariaByIdFase/${fase.id}`, config)
                                             .then((res) => {
-<<<<<<< HEAD
+
                                                 //console.log('res tipoMaq', res)
-=======
-                                                console.log('res tipoMaq', res)
->>>>>>> develop
+
                                                 res.data.forEach((item) => {
                                                     let tipoMaquinaria = {
                                                         nombre:null,
@@ -711,36 +706,32 @@ export default class RegistrarExplotacion extends React.Component {
                                                         cantidad:0,
                                                         accordionKey:0,
                                                         maquinariasShow:'none',
-<<<<<<< HEAD
+
                                                         maquinarias:[{
                                                             id:-1,
                                                             serial:null,
                                                         }]
-=======
-                                                        maquinarias:[]
->>>>>>> develop
+
                                                     }
                                                     tipoMaquinaria.id = item.clave;
                                                     tipoMaquinaria.nombre = item.nombre;
                                                     tipoMaquinaria.costo = item.costo;
                                                     tipoMaquinaria.cantidad = item.cantidad;
-<<<<<<< HEAD
+
                                                     fase.tipoMaquinariaId.push(tipoMaquinaria.id);
                                                   //  console.log("Fase TIPO MAQU",tipoMaquinaria,"FaseId",fase.numero,"etapa",etapa.numero);
-=======
-                                                    // fase.tipoMaquinariaId.push(tipoMaquinaria.id)
->>>>>>> develop
+
 
                                                     this.setState((prevState) => ({
                                                         etapas: prevState.etapas.map((etapaMap) => {
                                                             if (etapaMap.id === etapa.id){
                                                                 return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
                                                                     if (faseMap.id === fase.id){
-<<<<<<< HEAD
-                                                                        return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.concat(tipoMaquinaria)}
-=======
+
+                                                                      //  return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.concat(tipoMaquinaria)}
+
                                                                         return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.concat(tipoMaquinaria), tipoMaquinariaId: faseMap.tipoMaquinariaId.concat(tipoMaquinaria.id)}
->>>>>>> develop
+
                                                                     }
                                                                     else {
                                                                         return faseMap
@@ -752,10 +743,9 @@ export default class RegistrarExplotacion extends React.Component {
                                                             }
                                                         })
                                                     }));
-<<<<<<< HEAD
+
                                                    // console.log("ESTADO  TIPO MAQUI",this.state);
-=======
->>>>>>> develop
+
                                                     // console.log('estado tm', this.state)
 
                                                     // axios.get(`http://localhost:3000/getMaquinariasByIdTipoMaquinaria/${item.clave}`, config)
@@ -983,19 +973,14 @@ export default class RegistrarExplotacion extends React.Component {
                     state.Minerales.push(mineral);
                 }
 
-<<<<<<< HEAD
 
-               
-
-=======
->>>>>>> develop
                 this.setState(() => ({
                     mineralId: state.mineralId,
                     minerales: mineralesMetalicos,
                 }));
                 console.log('state mm', this.state.minerales)
             }
-<<<<<<< HEAD
+
             else{
                 let mineral={
                         nombre:null,
@@ -1012,8 +997,7 @@ export default class RegistrarExplotacion extends React.Component {
                         mineralShow: state.mineralShow
                     }));
             }
-=======
->>>>>>> develop
+
         }).catch((e) => {
             console.log('Error en axios')
         })
@@ -1057,11 +1041,7 @@ export default class RegistrarExplotacion extends React.Component {
                     state.MineralesNoMetalicos.push(mineral);
                 }
 
-<<<<<<< HEAD
-                
 
-=======
->>>>>>> develop
                 this.setState(() => ({
                     mineralNoMetalicoId: state.mineralNoMetalicoId,
                     MineralesNoMetalicos: state.MineralesNoMetalicos
@@ -1069,7 +1049,7 @@ export default class RegistrarExplotacion extends React.Component {
 
                 console.log('state nm', this.state.mineralesNoMetalicos)
             }
-<<<<<<< HEAD
+
             else{
 
                     let mineral={
@@ -1088,8 +1068,7 @@ export default class RegistrarExplotacion extends React.Component {
                     }));
                 
             }
-=======
->>>>>>> develop
+
 
         }).catch((e) => {
             console.log('Error en axios')
@@ -2311,16 +2290,14 @@ export default class RegistrarExplotacion extends React.Component {
         
     }
 
-<<<<<<< HEAD
+
     modalErrorClose = () => {
         this.setState({ modalShowEliminar: false, reload: true });
     }
     modalErrorOpen = () => {
         this.setState({ modalShowEliminar: true })
     };
-=======
 
->>>>>>> develop
 
     handleOnClickSubmittData=()=>{
 
@@ -2378,11 +2355,9 @@ export default class RegistrarExplotacion extends React.Component {
         this.state.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value;
         this.state.yacimiento.descripcion*/
         //console.log('NOMBRE YACIMEITNO',incompleto);
-<<<<<<< HEAD
+
         info.yacimiento.id = Number(this.state.yacimiento.id);
-=======
-        info.yacimiento.id = this.state.yacimiento.id;
->>>>>>> develop
+
 
 
 
@@ -2436,11 +2411,9 @@ export default class RegistrarExplotacion extends React.Component {
                     }]
                 }
                 
-<<<<<<< HEAD
+
                 etapa.id = Number(etapaR.id);
-=======
-                etapa.id = etapaR.id;
->>>>>>> develop
+
 
                 
                 dia = (etapaR.fechaI.dia<10)? "0"+etapaR.fechaI.dia: etapaR.fechaI.dia;
@@ -2485,11 +2458,9 @@ export default class RegistrarExplotacion extends React.Component {
                             }]
                         }
 
-<<<<<<< HEAD
+
                         fase.id = Number(faseR.id);                
-=======
-                        fase.id = faseR.id;                
->>>>>>> develop
+
                         
                         dia = (faseR.fechaI.dia<10)? "0"+faseR.fechaI.dia: faseR.fechaI.dia;
                         mes = (faseR.fechaI.mes<10)? "0"+faseR.fechaI.mes: faseR.fechaI.mes;
@@ -2534,11 +2505,8 @@ export default class RegistrarExplotacion extends React.Component {
 
 
 
-<<<<<<< HEAD
                                 empleado.id = Number(empleadoR.id);
-=======
-                                empleado.id = empleadoR.id;
->>>>>>> develop
+
                                 empleado.estatus = 3;
 
                                 empleadoR.horario.forEach((horarioR)=>{
@@ -2596,11 +2564,9 @@ export default class RegistrarExplotacion extends React.Component {
                                     id:null,
                                 }
 
-<<<<<<< HEAD
+
                                 maquinaria.id = Number(maquinariaR.id);
-=======
-                                maquinaria.id = maquinariaR.id;
->>>>>>> develop
+
                                 maquinaria.estatus = 4;
 
                                 if((maquinaria.id!=0)&&(maquinaria.id>0)){
@@ -2622,7 +2588,7 @@ export default class RegistrarExplotacion extends React.Component {
 
         console.log(info);
 
-<<<<<<< HEAD
+
         //Verificaciones
         let error = false;
         if(info.explotacion.fechaI=='0-00-00'){
@@ -2738,8 +2704,7 @@ export default class RegistrarExplotacion extends React.Component {
 */
 
 
-=======
->>>>>>> develop
+
     }
 
 
@@ -3505,16 +3470,14 @@ export default class RegistrarExplotacion extends React.Component {
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario="Diego Gutiérrez"/>
-<<<<<<< HEAD
+
                 <ModalAdvertencia
                     show={this.state.modalShowEliminar}
                     onHide={this.modalErrorClose}
                     infoeliminar={this.state.mensajeError}
                     mensaje={''}
                 />
-=======
-  
->>>>>>> develop
+
                 <Container className="FormContainer">
                    
 
@@ -3531,11 +3494,9 @@ export default class RegistrarExplotacion extends React.Component {
 
 
                                     <Form.Row className="formMargins" >
-<<<<<<< HEAD
+
                                         <FormFecha idF={"0I"} onChangeF={this.handleOnChangeFecha}  idTexto="FechaInicioTexto" titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={false}/>
-=======
-                                        <FormFecha idF={"0I"} onChangeF={this.handleOnChangeFecha}  titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={false}/>
->>>>>>> develop
+
                                         
                                         <FormFecha idF={"0F"} titulo="Fecha Final de explotación" clase="inputsPaddingLeft" textoAuxiliar="Calculado" dia={(this.state.explotacion.fechaF.dia==0)?"- -":this.state.explotacion.fechaF.dia} mes={(this.state.explotacion.fechaF.mes==0)?"- -":this.state.explotacion.fechaF.mes} ano={(this.state.explotacion.fechaF.ano==0)?"- - - -":this.state.explotacion.fechaF.ano} disabled={true}/>    
                                     </Form.Row>
@@ -3605,11 +3566,9 @@ export default class RegistrarExplotacion extends React.Component {
 
                                     <Form.Group controlId="YacimientosTamañoYacimiento"  className="inputsPaddingRight">
                                         <Form.Label className="cliente-description-fields-text formMarginsE">Ubicación</Form.Label>
-<<<<<<< HEAD
-                                        <FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>
-=======
+
                                         {this.state.yacimiento.ubicacion.idParroquia && <FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>}
->>>>>>> develop
+
                                     </Form.Group>
                                     
                                 </Card.Body>
@@ -3623,11 +3582,9 @@ export default class RegistrarExplotacion extends React.Component {
 
 
 
-<<<<<<< HEAD
+
                     <Accordion defaultActiveKey={1} style={{display: this.state.mineralShow}} >
-=======
-                    <Accordion defaultActiveKey={1} >
->>>>>>> develop
+
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
                                 <FormTitulo titulo="Minerales Metálicos"/>
@@ -3681,11 +3638,9 @@ export default class RegistrarExplotacion extends React.Component {
 
 
 
-<<<<<<< HEAD
+
                     <Accordion defaultActiveKey={1} style={{display: this.state.mineralNoMetalicoShow}}  >
-=======
-                    <Accordion defaultActiveKey={1} >
->>>>>>> develop
+
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
                                 <FormTitulo titulo="Minerales No Metálicos"/>
@@ -4014,15 +3969,12 @@ export default class RegistrarExplotacion extends React.Component {
                                                                                 );
                                                                             })}
                                                                             </Container>
-<<<<<<< HEAD
+
 
                                                                             <div style={{display: ((fase.tipoMaquinaria==null)||(fase.tipoMaquinaria==undefined) || (fase.tipoMaquinaria.length==0))?'none':'inline'}}>
                                                                                 <FormTitulo titulo="Tipo de Maquinarias"/>
                                                                             </div>
-                                                                           
-=======
-                                                                            <FormTitulo titulo="Tipo de Maquinarias"/>
->>>>>>> develop
+
                                                                            
                                                                             <Container>
                                                                             {fase.tipoMaquinaria && fase.tipoMaquinaria.map((tipoMaquinaria,indexTM)=>{             
@@ -4136,11 +4088,9 @@ export default class RegistrarExplotacion extends React.Component {
                         Cancelar
                     </Button>
                     <Button className="RYacimiento-btn btn-block btn-margin-izq" onClick={this.handleOnClickSubmittData}>
-<<<<<<< HEAD
+
                         Registrar Explotación
-=======
-                        Iniciar Explotación
->>>>>>> develop
+
                     </Button>
                     </div>
                 </Container>
