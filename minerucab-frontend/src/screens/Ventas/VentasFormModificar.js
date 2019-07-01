@@ -9,6 +9,7 @@ import OpcionesLocales from '../../components/OpcionesLocales';
 import InputGroup from 'react-bootstrap/InputGroup';
 import OpcionesGlobales from '../../components/OpcionesGlobales';
 import axios from 'axios';
+import {history} from '../../routers/History';
 
 // https://stackoverflow.com/questions/469357/html-text-input-allow-only-numeric-input
 
@@ -159,11 +160,13 @@ export default class VentasForm extends React.Component {
                 .then((res) => {
                     res.data.forEach(element => {
                         let pedido = {
+                            clave: 0,
                             cantidad: '',
                             estatus: '',
                             presentacion: '',
                             precio: ''
                         }
+                        pedido.clave = element.clave;
                         pedido.cantidad = element.cantidad;
                         pedido.estatus = element.fk_estatus;
                         pedido.presentacion = element.fk_presentacion_mineral;
@@ -271,54 +274,58 @@ export default class VentasForm extends React.Component {
     updateVenta = (e) => {
         const info = {
             estado: document.getElementById('update-venta').value,
-            pedido: this.state.pedidos
+            pedido: this.state.pedidos,
+            venta: this.props.match.params.id,
         }
         console.log(info)
-        const config = {
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            responseType: 'json'
-        }
-        this.state.pedidos.forEach((element) => {
-            axios.get(`http://localhost:3000/getCantActualByIdPres/${element.presentacion}`, config)
-                .then((res) => {
-                    console.log('res pedidos m', res)
-                    if(res.data.length===0){
-                        this.setState((prevState) => ({
-                            conflicto: true
-                        }));
-                    }else{
-                        if(res.data[0].cantidad_actual<(element.precio*element.cantidad)){
+            console.log("paso")
+            const config = {
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                responseType: 'json'
+            }
+            this.state.pedidos.forEach((element) => {
+                axios.get(`http://localhost:3000/getCantActualByIdPres/${element.presentacion}`, config)
+                    .then((res) => {
+                        console.log('res pedidos m', res)
+                        if(res.data.length===0){
                             this.setState((prevState) => ({
                                 conflicto: true
                             }));
-                        }else if(res.data[0].cantidad_actual<(element.precio*element.cantidad)){
+                        }else{
+                            if(res.data[0].cantidad_actual<(element.precio*element.cantidad)){
+                                this.setState((prevState) => ({
+                                    conflicto: true
+                                }));
+                            }else if(res.data[0].cantidad_actual<(element.precio*element.cantidad)){
+                            }
                         }
-                    }
-                    if(this.state.conflicto===true){
-                        alert("El inventario no posee la cantidad necesaria para cubrir esta venta. Inicie una explotación de los minerales deseados.")
-                    }
-                    if(this.state.conflicto===false){
-                        const configup = {
-                            headers: {
-                              'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            responseType: 'json',
-                            data: info
+                        if(this.state.conflicto===true){
+                            alert("El inventario no posee la cantidad necesaria para cubrir esta venta. Inicie una explotación de los minerales deseados.")
                         }
+                        if((this.state.conflicto===false)&&(parseInt(info.estado) === 7)){
+                            const configup = {
+                                headers: {
+                                  'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                responseType: 'json',
+                                data: info,
+                                data2: res.data[0].cantidad_actual,
+                            }
 
-                        axios.put('http://localhost:3000/updateVenta', configup)
-                            .then((res) => {
-                            }).catch((e) => {
-                                console.log('Error en axios')
-                            })
-                    }
-                }).catch((e) => {
-                    console.log('Error en axios')
-                })
-        })
-    }
+                            axios.put('http://localhost:3000/updateVenta', configup)
+                                .then((res) => {
+                                    history.push('/home')
+                                }).catch((e) => {
+                                    console.log('Error en axios')
+                                })
+                        }
+                    }).catch((e) => {
+                        console.log('Error en axios')
+                    })
+            })
+        }
     dropdownChange = (e) => {
         const nombreMineral = this.state.minerales[e.target.value].nombre;
         console.log(nombreMineral)

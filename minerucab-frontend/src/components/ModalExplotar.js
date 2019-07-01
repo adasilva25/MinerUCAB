@@ -10,6 +10,9 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
 
 export default class ModalExplotar extends React.Component {
+  state = {
+    os: true,
+  }
   onSubmit = () => {
     const config = {
             headers: {
@@ -80,6 +83,9 @@ export default class ModalExplotar extends React.Component {
         })
     }
 
+    this.setState(() => ({
+      os: false,
+    }))
   }
     render() {
       return (
@@ -146,7 +152,7 @@ export default class ModalExplotar extends React.Component {
           <Modal.Footer className="button">
             <Container>
                 {
-                  (this.props.tipoSol==='NA')&&
+                  ((this.props.tipoSol==='NA')&&(this.state.os === true))&&
                   <Row>
                   <Col md={2}></Col>
                   <Col md={4}>
