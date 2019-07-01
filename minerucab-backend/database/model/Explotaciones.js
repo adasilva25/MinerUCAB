@@ -204,7 +204,7 @@ const getClaveTipoMaquinariaFase = (faseId, tipoMaquinariaId, callback) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'SELECT TMF.Clave FROM MU_TIPO_MAQUINARIA_FASE MTF WHERE TMF.fk_fase = ($1) AND TMF.fk_tipo_maquinaria = ($2);';
+    const text = 'SELECT TMF.Clave FROM MU_TIPO_MAQUINARIA_FASE TMF WHERE TMF.fk_fase = ($1) AND TMF.fk_tipo_maquinaria = ($2);';
     const values = [faseId, tipoMaquinariaId];
     client.query(text, values)
     .then((response) => {
@@ -390,7 +390,6 @@ const updateEstatus = (fk_estatus) => {
     client.query(text, values)
     .then((response) => {
         client.end();
-        res.status(200).json(response.rows)
     })
     .catch((e) => {
         client.end();

@@ -199,6 +199,24 @@ const updateEmpleadoById = (req, res) => {
     })
 }
 
+const updateEstatusEmpleadoById = (idEmpleado, estatus) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
+    });
+    client.connect();
+    const text = 'UPDATE MU_EMPLEADO SET fk_estatus = ($2) WHERE Clave = ($1);';
+    const values = [idEmpleado, estatus];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error: error.toString() });
+        client.end();
+    })
+}
+
 module.exports = {
     createEmpleado,
     getAllEmpleados,
@@ -209,6 +227,7 @@ module.exports = {
     getEmpleadosByIdCargoFase,
     getHorarioEmpleadoByIdEmpleadoCargoFase,
     updateEmpleadoById,
+    updateEstatusEmpleadoById,
     deleteEmpleadoById
     // ,[siguientes funciones]
 }

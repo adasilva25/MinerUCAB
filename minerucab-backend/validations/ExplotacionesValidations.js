@@ -1,5 +1,6 @@
 const Explotaciones = require('../database/model/Explotaciones');
 const MaquinariasModel = require('../database/model/Maquinarias');
+const Empleados = require('../database/model/Empleados');
 
 const insertIntoHorarioEmpleado = (claveEmpleadoCargoFase, horarios) => {
     for (let i = 0; i < horarios.length; i++){
@@ -12,6 +13,7 @@ const insertEmpleadosYCargosEnEmpleadoCargoFase = (claveCargoFase, empleados) =>
     empleados.forEach((empleado) => {
         Explotaciones.insertIntoEmpleadoCargoFase(claveCargoFase, empleado.id, empleado.estatus, function(claveEmpleadoCargoFase){
             insertIntoHorarioEmpleado(claveEmpleadoCargoFase, empleado.horario)
+            Empleados.updateEstatusEmpleadoById(empleado.id, empleado.estatus)
         })
     })
 }

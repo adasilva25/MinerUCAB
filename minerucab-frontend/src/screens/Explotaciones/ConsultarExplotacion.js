@@ -532,7 +532,10 @@ export default class ConsultarExplotacion extends React.Component {
             responseType: 'json'
         }
 
-        axios.get(`http://localhost:3000/getAllYacimientoInfoById/${this.props.match.params.id}`, config)
+        axios.get(`http://localhost:3000/getYacimientoByIdExplotacion/${this.props.match.params.id}`, config)
+            .then((res) => {
+                const idYacimiento = res.data[0].clave
+                axios.get(`http://localhost:3000/getAllYacimientoInfoById/${idYacimiento}`, config)
             .then((res) => {
                 console.log('res yac', res)
                 let yacimiento = {
@@ -582,7 +585,7 @@ export default class ConsultarExplotacion extends React.Component {
                 const mes = (date.getMonth() + 1)
                 const ano = date.getFullYear()
 
-                state.yacimiento.id = this.props.match.params.id
+                state.yacimiento.id = idYacimiento
                 state.yacimiento.nombre = res.data[0].nombre;
                 state.yacimiento.descripcion = res.data[0].descripcion;
                 state.yacimiento.area = res.data[0].area;
@@ -598,7 +601,7 @@ export default class ConsultarExplotacion extends React.Component {
                 explotacion.duracion = res.data[0].duracion_explotacion;
                 explotacion.costo = res.data[0].costo_explotacion;
 
-                axios.get(`http://localhost:3000/getExplotacionInfo/${this.props.match.params.id}`, config)
+                axios.get(`http://localhost:3000/getExplotacionInfo/${idYacimiento}`, config)
                     .then((res) => {
                         console.log('res explofoaf', res)
                             let date 
@@ -663,7 +666,7 @@ export default class ConsultarExplotacion extends React.Component {
 
 
 
-                axios.get(`http://localhost:3000/getTipoYacimientoByIdYacimiento/${this.props.match.params.id}`, config)
+                axios.get(`http://localhost:3000/getTipoYacimientoByIdYacimiento/${idYacimiento}`, config)
                 .then((res) => {
                     console.log('res tipo', res)
                     
@@ -1038,7 +1041,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                         cantidad:0,
                                                         accordionKey:0,
                                                         checkInicialMaquiaria:true,
-                                                        maquinariasShow:'none',
+                                                        maquinariasShow:'inline',
                                                         maquinariasId: [],
                                                         maquinarias:[]
                                                     }
@@ -1337,7 +1340,7 @@ export default class ConsultarExplotacion extends React.Component {
                 console.log('Error en axios')
             })
   
-            axios.get(`http://localhost:3000/getAllMineralesMetalicosByIdYacimiento/${this.props.match.params.id}`, config)
+            axios.get(`http://localhost:3000/getAllMineralesMetalicosByIdYacimiento/${idYacimiento}`, config)
             .then((res) => {
                 if (res.data.length > 0){
                     let mineralesMetalicos = []
@@ -1379,7 +1382,7 @@ export default class ConsultarExplotacion extends React.Component {
                 console.log('Error en axios')
             })
 
-        axios.get(`http://localhost:3000/getAllMineralesNoMetalicosByIdYacimiento/${this.props.match.params.id}`, config)
+        axios.get(`http://localhost:3000/getAllMineralesNoMetalicosByIdYacimiento/${idYacimiento}`, config)
             .then((res) => {
                 if (res.data.length > 0){
 
@@ -1423,6 +1426,12 @@ export default class ConsultarExplotacion extends React.Component {
             }).catch((e) => {
                 console.log('Error en axios')
             })
+            })
+            .catch((e) => {
+
+            })
+
+
         
 
 
