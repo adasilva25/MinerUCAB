@@ -28,6 +28,7 @@ export default class Explotacion extends React.Component {
     }
     modalExplotarClose = () => this.setState({ modalShowExplotar: false });
     modalExplotarOpen = (idExp) => {
+        console.log("Abre modal")
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -36,15 +37,19 @@ export default class Explotacion extends React.Component {
         }
         axios.get(`http://localhost:3000/getEstatusSolicitudDeCompraByIdExplotacion/${idExp}`, config)
                 .then((res) => {
+                    console.log("Primera consulta", res)
                     if(res.data.length === 0){
                         //No tiene solicitud de compra asociada
+                        console.log("NA")
                         axios.get(`http://localhost:3000/getMinExpSolicitudDeCompra/${idExp}`, config)
                             .then((res) => {
+                                console.log("MinExp", res)
                                 res.data.forEach(element => {
                                     if((element.claveminnomet !== null)||(element.claveminnomet !== undefined)){
                                         var mineralesnomet = []
                                         axios.get(`http://localhost:3000/getMinNoMetComponentesSolicitudDeCompra/${element.claveminnomet}`, config)
                                             .then((res) => {
+                                                console.log("resminnomet",res)
                                                 res.data.forEach(element => {
                                                     let minnomet = {
                                                         clave: 1,
@@ -166,7 +171,7 @@ export default class Explotacion extends React.Component {
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
                             <DataTable
-                                data={'http://localhost:3000/getAllYacimientosConEstatusInactivo'}
+                                data={'http://localhost:3000/getAllExplotaciones'}
                                 textoSingular={'yacimiento'}
                                 textoPlural={'yacimientos'}
                                 urlModificar={'/modificar_explotacion'}

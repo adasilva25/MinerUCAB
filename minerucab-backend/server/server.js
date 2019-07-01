@@ -183,6 +183,7 @@ app.get('/getAllMineralesMetalicosByIdYacimiento/:id', YacimientoMineral.getAllM
 app.get('/getAllMineralesNoMetalicosByIdYacimiento/:id', YacimientoMineral.getAllMineralesNoMetalicosByIdYacimiento)
 /*-------------------- INVENTARIO --------------------*/
 app.get('/getInventario', InfoInventario.getInventario)
+app.get('/getCantActualByIdPres/:id', InfoInventario.getCantActualByIdPres)
 
 
 

@@ -17,7 +17,7 @@ export default class ModalExplotar extends React.Component {
             },
             responseType: 'json'
         }
-        console.log(this.props.minMet)
+        console.log(this.props.minNoMet)
 
     for(let i=0; i<this.props.minNoMet.length; i++){
       axios.get(`http://localhost:3000/getEmpresaMinNoMetComponentesSolicitudDeCompra/${this.props.minNoMet[i].clave}`, config)
