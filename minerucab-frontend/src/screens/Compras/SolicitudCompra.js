@@ -48,13 +48,12 @@ export default class SolicitudCompra extends React.Component {
                         <Col sm={12} md={10}>
                             <DataTable
                                 data={'http://localhost:3000/getAllSolicitudesDeCompra'}
-                                urlModificar={'/modificar_yacimiento'}
+                                urlModificar={'/consultar_solicitud_compra'}
                                 urlConsultar={'/consultar_solicitud_compra'}
-                                urlCrear={'/registrar_yacimiento'}
-                                agregar={true}
+                                agregar={false}
                                 modificar={true}
                                 consultar={true}
-                                eliminar={true}
+                                eliminar={false}
                                 modalEliminar={this.modalEliminarOpen}
                                 reload={this.state.reload}
                                 checktable={false}

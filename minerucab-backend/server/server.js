@@ -190,6 +190,7 @@ app.put('/updateClienteJuridicoById', ClientesJuridicos.updateClienteJuridicoByI
 /* -------------------- EMPLEADOS -------------------- */
 app.put('/updateEmpleadoById', Empleados.updateEmpleadoById)
 app.put('/updateUsuarioById', Usuarios.updateUsuarioById)
+app.put('/updateSC', SolicitudesCompra.updateSC)
 /* -------------------- MAQUINARIAS -------------------- */
 app.put('/updateMaquinariaById/:id', Maquinarias.updateMaquinariaById)
 /* -------------------- MINERALES -------------------- */

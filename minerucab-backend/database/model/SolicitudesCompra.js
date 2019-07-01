@@ -37,12 +37,32 @@ const insertDetalleSolCompra = (claveS, info) => {
     })
 }
 
+const updateSC = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    console.log(req.body.data)
+    client.connect();
+    const text = 'UPDATE MU_SOLICITUD_COMPRA SET fk_estatus=($1) WHERE Clave = ($2);';
+    const values = [req.body.data.estatus, req.body.data.clave];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error: error.toString() });
+        client.end();
+    })
+}
+
 const getAllSolicitudesDeCompra = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    client.query('SELECT SC.Clave "Clave", SC.Fecha "Fecha", SC.Total "Total", E.Nombre FROM MU_SOLICITUD_COMPRA SC, MU_ESTATUS E WHERE SC.fk_estatus = E.Clave;')
+    client.query('SELECT SC.Clave "Clave", SC.Fecha "Fecha", SC.Total "Total", E.Nombre as Estatus FROM MU_SOLICITUD_COMPRA SC, MU_ESTATUS E WHERE SC.fk_estatus = E.Clave;')
     .then((response) => {
         client.end();
         res.status(200).json(response.rows)
@@ -59,7 +79,7 @@ const getSolicitudDeCompraInfoById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT SC.Total "total", SC.Fecha "fecha", E.Clave "clave_empresa", E.rif "rif", E.Nombre nombre_empresa, (SELECT m1.nombre FROM mu_lugar m1, mu_lugar m2, mu_lugar m3 WHERE m3.fk_lugar = m2.clave AND m2.fk_lugar = m1.clave AND m3.clave = E.fk_lugar) as "estado", (SELECT m2.nombre FROM mu_lugar m1, mu_lugar m2, mu_lugar m3 WHERE m3.fk_lugar = m2.clave AND m2.fk_lugar = m1.clave AND m3.clave = E.fk_lugar) as municipio, (SELECT m3.nombre FROM mu_lugar m1, mu_lugar m2, mu_lugar m3 WHERE m3.fk_lugar = m2.clave AND m2.fk_lugar = m1.clave AND m3.clave = E.fk_lugar) as "parroquia" FROM MU_SOLICITUD_COMPRA SC, MU_EMPRESA E WHERE SC.fk_empresa = E.Clave AND SC.clave =($1);';
+    const text = 'SELECT SC.fk_estatus as estatus, SC.Total "total", SC.Fecha "fecha", E.Clave "clave_empresa", E.rif "rif", E.Nombre nombre_empresa, (SELECT m1.nombre FROM mu_lugar m1, mu_lugar m2, mu_lugar m3 WHERE m3.fk_lugar = m2.clave AND m2.fk_lugar = m1.clave AND m3.clave = E.fk_lugar) as "estado", (SELECT m2.nombre FROM mu_lugar m1, mu_lugar m2, mu_lugar m3 WHERE m3.fk_lugar = m2.clave AND m2.fk_lugar = m1.clave AND m3.clave = E.fk_lugar) as municipio, (SELECT m3.nombre FROM mu_lugar m1, mu_lugar m2, mu_lugar m3 WHERE m3.fk_lugar = m2.clave AND m2.fk_lugar = m1.clave AND m3.clave = E.fk_lugar) as "parroquia" FROM MU_SOLICITUD_COMPRA SC, MU_EMPRESA E WHERE SC.fk_empresa = E.Clave AND SC.clave =($1);';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -243,5 +263,6 @@ module.exports = {
     getEmpresaMinNoMetComponentesSolicitudDeCompra,
     getSolicitudDeCompraInfoById,
     insertSolCompra,
-    insertDetalleSolCompra
+    insertDetalleSolCompra,
+    updateSC
 }
