@@ -204,7 +204,7 @@ const getClaveTipoMaquinariaFase = (faseId, tipoMaquinariaId, callback) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'SELECT TMF.Clave FROM MU_TIPO_MAQUINARIA_FASE MTF WHERE TMF.fk_fase = ($1) AND TMF.fk_tipo_maquinaria = ($2);';
+    const text = 'SELECT TMF.Clave FROM MU_TIPO_MAQUINARIA_FASE TMF WHERE TMF.fk_fase = ($1) AND TMF.fk_tipo_maquinaria = ($2);';
     const values = [faseId, tipoMaquinariaId];
     client.query(text, values)
     .then((response) => {
@@ -244,7 +244,7 @@ const getEtapasByIdExplotacion = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'SELECT E.Clave clave, E.nombre nombre, E.costo_total costo_total, E.Fecha_inicio fecha_inicio, E.fecha_fin fecha_fin, E.fecha_fin_real fecha_fin_real, E.duracion duracion, ES.Nombre estatus FROM MU_ETAPA E, MU_ESTATUS ES WHERE E.fk_explotacion = ($1) AND E.fk_estatus = ES.Clave';
+    const text = 'SELECT E.Clave clave, E.nombre nombre, E.costo_total costo_total, E.Fecha_inicio fecha_inicio, E.fecha_fin fecha_fin, E.fecha_fin_real fecha_fin_real, E.duracion duracion, ES.Nombre estatus, E.fk_estatus clave_estatus FROM MU_ETAPA E, MU_ESTATUS ES WHERE E.fk_explotacion = ($1) AND E.fk_estatus = ES.Clave';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -380,22 +380,76 @@ const getAllExplotaciones = (req, res) => {
     })
 }
 
-const updateEstatus = (fk_estatus) => {
+const updateEstatus = (clave, fk_estatus) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'UPDATE MU_YACIMIENTO SET fk_estatus = ($1);';
-    const values = [fk_estatus];
+    const text = 'UPDATE MU_YACIMIENTO SET fk_estatus = ($1) WHERE Clave = ($2);';
+    const values = [fk_estatus, clave];
     client.query(text, values)
     .then((response) => {
         client.end();
-        res.status(200).json(response.rows)
     })
     .catch((e) => {
         client.end();
         console.error(e.stack);
 
+    })
+}
+
+const updateFaseEstatus = (clave, estatus) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'UPDATE MU_FASE SET fk_estatus = ($1) where clave = ($2);';
+    const values = [estatus, clave];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+
+    })
+}
+
+const updateEtapaEstatus = (clave, estatus) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'UPDATE MU_ETAPA SET fk_estatus = ($1) where clave = ($2);';
+    const values = [estatus, clave];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+
+    })
+}
+
+const deleteExplotacionById = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'DELETE FROM MU_EXPLOTACION WHERE Clave = ($1);';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
     })
 }
 
@@ -405,6 +459,7 @@ module.exports = {
     createFase,
     createCargoFase,
     createTipoMaquinariaFase,
+    deleteExplotacionById,
     getAllExplotacionesFkVentaConEstatusDiferenteAInactivo,
     getEtapasByIdExplotacion,
     getFasesByIdEtapa,
@@ -420,6 +475,8 @@ module.exports = {
     insertHorarioEmpleado,
     insertIntoEmpleadoCargoFase,
     insertIntoMaquinariaTipoMaquinariaFase,
-    updateEstatus
+    updateEstatus,
+    updateFaseEstatus,
+    updateEtapaEstatus
     // ,[siguientes funciones]
 }

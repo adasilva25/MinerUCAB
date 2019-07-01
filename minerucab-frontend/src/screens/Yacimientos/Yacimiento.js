@@ -11,11 +11,12 @@ import ModalYesNo from '../../components/ModalYesNo';
 export default class Yacimiento extends React.Component {
     state = {
         modalShowEliminar: false,
-        infoEliminar: ''
+        infoEliminar: '',
+        idEliminar: null
     }
     modalEliminarClose = () => this.setState({ modalShowEliminar: false });
-    modalEliminarOpen = () => {
-        this.setState({ modalShowEliminar: true });
+    modalEliminarOpen = (i) => {
+        this.setState({ idEliminar: i, modalShowEliminar: true });
     }
     render(){
         return (
@@ -39,8 +40,8 @@ export default class Yacimiento extends React.Component {
                     show={this.state.modalShowEliminar}
                     onHide={this.modalEliminarClose}
                     mensaje={'¿Está seguro que desea eliminar el yacimiento'}
-                    infoeliminar={this.state.infoEliminar}
-                    urleliminar={`http://localhost:3000/FALTAPORDEFINIR/${this.state.idEliminar}`}
+                    infoeliminar={''}
+                    urleliminar={`http://localhost:3000/deleteYacimientoById/${this.state.idEliminar}`}
                 />
                 <Container className="pagecontent">
                     <Row>

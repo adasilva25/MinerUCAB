@@ -773,7 +773,10 @@ export default class ModificarExplotacion extends React.Component {
             responseType: 'json'
         }
 
-        axios.get(`http://localhost:3000/getAllYacimientoInfoById/${this.props.match.params.id}`, config)
+        axios.get(`http://localhost:3000/getYacimientoByIdExplotacion/${this.props.match.params.id}`, config)
+            .then((res) => {
+                const idYacimiento = res.data[0].clave
+                axios.get(`http://localhost:3000/getAllYacimientoInfoById/${idYacimiento}`, config)
             .then((res) => {
                 console.log('res yac', res)
                 let yacimiento = {
@@ -826,7 +829,7 @@ export default class ModificarExplotacion extends React.Component {
                 const mes = (date.getMonth() + 1)
                 const ano = date.getFullYear()
 
-                state.yacimiento.id = this.props.match.params.id
+                state.yacimiento.id = idYacimiento
                 state.yacimiento.nombre = res.data[0].nombre;
                 state.yacimiento.descripcion = res.data[0].descripcion;
                 state.yacimiento.area = res.data[0].area;
@@ -856,7 +859,7 @@ export default class ModificarExplotacion extends React.Component {
 
                 console.log('state', this.state)
 
-                axios.get(`http://localhost:3000/getTipoYacimientoByIdYacimiento/${this.props.match.params.id}`, config)
+                axios.get(`http://localhost:3000/getTipoYacimientoByIdYacimiento/${idYacimiento}`, config)
                 .then((res) => {
                     console.log('res tipo', res)
                     
@@ -1202,7 +1205,7 @@ export default class ModificarExplotacion extends React.Component {
                                         }
 
 
-                                        fase.estatus = element.estatus
+                                        fase.estatus = element.fk_estatus
                                         fase.id=element.clave;
                                         fase.numero=j+1;
                                         fase.numeroV=j+1;
@@ -1547,7 +1550,7 @@ export default class ModificarExplotacion extends React.Component {
                 console.log('Error en axios')
             })
   
-        axios.get(`http://localhost:3000/getAllMineralesMetalicosByIdYacimiento/${this.props.match.params.id}`, config)
+        axios.get(`http://localhost:3000/getAllMineralesMetalicosByIdYacimiento/${idYacimiento}`, config)
             .then((res) => {
                 if (res.data.length > 0){
                     let mineralesMetalicos = []
@@ -1605,7 +1608,7 @@ export default class ModificarExplotacion extends React.Component {
                 console.log('Error en axios')
             })
 
-        axios.get(`http://localhost:3000/getAllMineralesNoMetalicosByIdYacimiento/${this.props.match.params.id}`, config)
+        axios.get(`http://localhost:3000/getAllMineralesNoMetalicosByIdYacimiento/${idYacimiento}`, config)
             .then((res) => {
                 if (res.data.length > 0){
 
@@ -1666,6 +1669,10 @@ export default class ModificarExplotacion extends React.Component {
 
             }).catch((e) => {
                 console.log('Error en axios')
+
+            })
+            })
+            .catch((e) => {
 
             })
 

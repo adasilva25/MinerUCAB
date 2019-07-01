@@ -1,5 +1,6 @@
 const Explotaciones = require('../database/model/Explotaciones');
 const MaquinariasModel = require('../database/model/Maquinarias');
+const Empleados = require('../database/model/Empleados');
 
 const insertIntoHorarioEmpleado = (claveEmpleadoCargoFase, horarios) => {
     for (let i = 0; i < horarios.length; i++){
@@ -12,6 +13,7 @@ const insertEmpleadosYCargosEnEmpleadoCargoFase = (claveCargoFase, empleados) =>
     empleados.forEach((empleado) => {
         Explotaciones.insertIntoEmpleadoCargoFase(claveCargoFase, empleado.id, empleado.estatus, function(claveEmpleadoCargoFase){
             insertIntoHorarioEmpleado(claveEmpleadoCargoFase, empleado.horario)
+            Empleados.updateEstatusEmpleadoById(empleado.id, empleado.estatus)
         })
     })
 }
@@ -29,8 +31,13 @@ const insertIntoCargoFase = (faseId, cargos) => {
 const insertMaquinariaTipoMaquinariaFase = (claveTipoMaquinariaFase, maquinarias) => {
     console.log('maquinarias', maquinarias)
     maquinarias.forEach((maquinaria) => {
-        Explotaciones.insertIntoMaquinariaTipoMaquinariaFase(claveTipoMaquinariaFase, maquinaria.id)
-        MaquinariasModel.updateEstatusMaquinaria(maquinaria.id, maquinaria.estatus)
+        if ((maquinaria.estatus === null) || (maquinaria.id === null)){
+
+        }
+        else{
+            Explotaciones.insertIntoMaquinariaTipoMaquinariaFase(claveTipoMaquinariaFase, maquinaria.id)
+            MaquinariasModel.updateEstatusMaquinaria(maquinaria.id, maquinaria.estatus)
+        }
     })
 }
 
@@ -49,7 +56,7 @@ const insertIntoFasesInfo = (fases) => {
         Explotaciones.insertFechasFases(fase.fechaI, fase.fechaF, fase.estatus, fase.id)
         insertIntoCargoFase(fase.id, fase.cargos)
         insertIntoTipoMaquinariaFase(fase.id, fase.tipoMaquinaria)
-        
+        Explotaciones.updateFaseEstatus(fase.id, fase.estatus)
     })
 }
 
@@ -59,6 +66,7 @@ const insertIntoEtapaInfo = (etapas) => {
         Explotaciones.insertFechasEtapas(etapa.fechaI, etapa.fechaF, etapa.estatus, etapa.id)
         insertIntoFasesInfo(etapa.fases)
         console.log('etapa', etapa.id)
+        Explotaciones.updateEtapaEstatus(etapa.id, etapa.estatus)
     })
 }
 
@@ -71,7 +79,7 @@ const crearExplotacion = (req, res) => {
     console.log('explotacion', explotacion)
     console.log('etapas', etapas)
 
-    Explotaciones.updateEstatus(5)
+    Explotaciones.updateEstatus(yacimiento.id, 5)
     Explotaciones.insertFechas(explotacion.fechaI, explotacion.fechaF, explotacion.estatus)
     insertIntoEtapaInfo(etapas);
     res.status(200).json()
