@@ -2371,7 +2371,7 @@ export default class RegistrarExplotacion extends React.Component {
 
         
         info.explotacion.id = this.state.explotacion.id;
-        info.explotacion.estatus = 2;
+        info.explotacion.estatus = 8;
 
         let dia = (this.state.explotacion.fechaI.dia<10)? "0"+this.state.explotacion.fechaI.dia: this.state.explotacion.fechaI.dia;
         let mes = (this.state.explotacion.fechaI.mes<10)? "0"+this.state.explotacion.fechaI.mes: this.state.explotacion.fechaI.mes;
@@ -2434,8 +2434,13 @@ export default class RegistrarExplotacion extends React.Component {
                 etapa.fechaF = etapaR.fechaF.ano+'-'+mes+'-'+dia;
 
 
+                if(etapaR.numero==1){
+                    etapa.estatus = 8;
+                }
+                else{
+                    etapa.estatus = 2;
+                }
                 
-                etapa.estatus = 2;
                 
                 
 
@@ -2479,8 +2484,13 @@ export default class RegistrarExplotacion extends React.Component {
                         
                         fase.fechaF = faseR.fechaF.ano+'-'+mes+'-'+dia;
 
+                        if((etapaR.numero==1)&&(etapaR.numero==1)){
+                            fase.estatus = 2 ;
+                        }
+                        else{
+                            fase.estatus = 8;
+                        }
                         
-                        fase.estatus = 2 ;
                         
                         
 

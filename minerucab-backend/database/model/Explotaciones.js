@@ -434,6 +434,24 @@ const updateEtapaEstatus = (clave, estatus) => {
     })
 }
 
+const updateEstatusExplotaciones = (clave, estatus, fechaI, fechaF) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'UPDATE MU_EXPLOTACION SET fk_estatus = ($1), fecha_inicio = ($3), fecha_fin = ($4) where clave = ($2);';
+    const values = [estatus, clave, fechaI, fechaF];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+
+    })
+}
+
 const deleteExplotacionById = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
@@ -477,6 +495,7 @@ module.exports = {
     insertIntoMaquinariaTipoMaquinariaFase,
     updateEstatus,
     updateFaseEstatus,
-    updateEtapaEstatus
+    updateEtapaEstatus,
+    updateEstatusExplotaciones
     // ,[siguientes funciones]
 }
