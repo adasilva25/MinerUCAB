@@ -93,7 +93,6 @@ const updateEstatusMaquinaria = (clave, fk_estatus) => {
     client.query(text, values)
     .then((response) => {
         client.end();
-        res.status(200).json(response.rows)
     })
     .catch((error) => {
         console.log(error);

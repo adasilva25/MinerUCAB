@@ -2011,7 +2011,7 @@ export default class ConsultarExplotacion extends React.Component {
         let cantidad_anterior = 0;
         let id_a_eliminar=0;
 
-        if(maquinarias[0].id === -1){
+        if((maquinarias[0].id === -1) || (maquinarias[0].id === null)){
             maquinarias.shift();
 
         }

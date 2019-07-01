@@ -380,13 +380,49 @@ const getAllExplotaciones = (req, res) => {
     })
 }
 
-const updateEstatus = (fk_estatus) => {
+const updateEstatus = (clave, fk_estatus) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'UPDATE MU_YACIMIENTO SET fk_estatus = ($1);';
-    const values = [fk_estatus];
+    const text = 'UPDATE MU_YACIMIENTO SET fk_estatus = ($1) WHERE Clave = ($2);';
+    const values = [fk_estatus, clave];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+
+    })
+}
+
+const updateFaseEstatus = (clave, estatus) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'UPDATE MU_FASE SET fk_estatus = ($1) where clave = ($2);';
+    const values = [estatus, clave];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+
+    })
+}
+
+const updateEtapaEstatus = (clave, estatus) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'UPDATE MU_ETAPA SET fk_estatus = ($1) where clave = ($2);';
+    const values = [estatus, clave];
     client.query(text, values)
     .then((response) => {
         client.end();
@@ -439,6 +475,8 @@ module.exports = {
     insertHorarioEmpleado,
     insertIntoEmpleadoCargoFase,
     insertIntoMaquinariaTipoMaquinariaFase,
-    updateEstatus
+    updateEstatus,
+    updateFaseEstatus,
+    updateEtapaEstatus
     // ,[siguientes funciones]
 }
