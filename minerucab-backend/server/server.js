@@ -163,6 +163,8 @@ app.get('/getVentaInfo/:id', VentasValidations.getVentaInfo);
 app.get('/getAllYacimientos', Yacimientos.getAllYacimientos);
 app.get('/getAllYacimientoInfoById/:id', Yacimientos.getAllYacimientoInfoById);
 app.get('/getYacimientoByIdExplotacion/:id', Yacimientos.getYacimientoByIdExplotacion);
+app.get('/getAllYacimientosConEstatusInactivo', Yacimientos.getAllYacimientosConEstatusInactivo);
+app.get('/getAllYacimientosConEstatusDiferenteAInactivo', Yacimientos.getAllYacimientosConEstatusDiferenteAInactivo);
 /* -------------------- YACIMIENTO MINERAL -------------------- */
 app.get('/getAllMineralesMetalicosByIdYacimiento/:id', YacimientoMineral.getAllMineralesMetalicosByIdYacimiento)
 app.get('/getAllMineralesNoMetalicosByIdYacimiento/:id', YacimientoMineral.getAllMineralesNoMetalicosByIdYacimiento)
@@ -185,6 +187,8 @@ app.put('/updatePresMinMet', Minerales.updatePresMinMet)
 app.put('/updatePresMinNoMet', Minerales.updatePresMinNoMet)
 app.put('/updateCompMinMet', Minerales.updateCompMinMet)
 app.put('/updateCompMinNoMet', Minerales.updateCompMinNoMet)
+/* -------------------- VENTAS -------------------- */
+app.put('/updateVenta', VentasValidations.updateVenta);
 
 
 

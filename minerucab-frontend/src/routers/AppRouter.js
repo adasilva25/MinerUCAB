@@ -11,6 +11,7 @@ import RegistrarClienteNatural from '../screens/Clientes/RegistrarClienteNatural
 import RegistrarClienteJuridico from '../screens/Clientes/RegistrarClienteJuridico';
 import VentasForm from '../screens/Ventas/VentasForm';
 import VentasFormConsultar from '../screens/Ventas/VentasFormConsultar';
+import VentasFormModificar from '../screens/Ventas/VentasFormModificar';
 import ModalYesNo from '../components/ModalYesNo';
 import GestionarCargos from '../screens/Cargos/GestionarCargos';
 import RegistrarYacimiento from '../screens/Yacimientos/RegistrarYacimiento';
@@ -61,9 +62,6 @@ const AppRouter = () => (
         <Route path="/registrar_cliente_natural/:accion/:id?" component={RegistrarClienteNatural} />
         <Route path="/registrar_cliente_juridico/:accion/:id?" component={RegistrarClienteJuridico} />
         <Route path="/borar_cliente" component={ModalYesNo} />
-        {/* ------------------------ SOLICITUDES DE COMPRA ------------------------ */}
-        <Route path="/solicitud_compra" component={SolicitudCompra} />
-        <Route path="/consultar_solicitud_compra/:accion/:id" component={ConsultarSolicitudCompra} />
         {/* ------------------------ EMPLEADOS ------------------------ */}
         <Route path="/empleado" component={Empleado} />
         <Route path="/gestionar_empleado/:accion/:id?" component={GestionarEmpleado} />
@@ -72,6 +70,8 @@ const AppRouter = () => (
         <Route path="/registrar_explotacion/:accion/:id" component={RegistrarExplotacion} />
         <Route path="/consultar_explotacion/:accion/:id" component={ConsultarExplotacion} />
         <Route path="/modificar_explotacion/:accion/:id" component={ModificarExplotacion} />
+        {/* ------------------------ INVENTARIO ------------------------ */}
+        <Route path="/inventario" component={Inventario} />
         {/* ------------------------ MAQUINARIAS ------------------------ */}
         <Route path="/maquinaria" component={Maquinaria} />
         <Route path="/gestionar_maquinaria/:accion/:id?" component={GestionarMaquinaria}/>
@@ -79,17 +79,19 @@ const AppRouter = () => (
         <Route path="/mineral" component={Mineral} />
         <Route path="/gestionar_mineral_metalico/:accion/:id?" component={GestionarMineralMetalico} />
         <Route path="/gestionar_mineral_no_metalico/:accion/:id?" component={GestionarMineralNoMetalico} />
+        {/* ------------------------ SOLICITUDES DE COMPRA ------------------------ */}
+        <Route path="/solicitud_compra" component={SolicitudCompra} />
+        <Route path="/consultar_solicitud_compra/:accion/:id" component={ConsultarSolicitudCompra} />
         {/* ------------------------ VENTAS ------------------------ */}
         <Route path="/venta" component={Venta} />
         <Route path="/gestionar_ventas/:id?" component={VentasForm} />
         <Route path="/consultar_ventas/:accion/:id?" component={VentasFormConsultar} />
+        <Route path="/modificar_ventas/:accion/:id?" component={VentasFormModificar} />
         {/* ------------------------ YACIMIENTO ------------------------ */}
         <Route path="/yacimiento" component={Yacimiento} />
         <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />
         <Route path="/modificar_yacimiento/:accion/:id" component={ModificarYacimiento} />
         <Route path="/consultar_yacimiento/:accion/:id" component={ConsultarYacimiento} />
-        {/* ------------------------ INVENTARIO ------------------------ */}
-        <Route path="/inventario" component={Inventario} />
 
       </Switch>
     </div>

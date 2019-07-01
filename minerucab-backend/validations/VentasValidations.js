@@ -3,6 +3,7 @@ const ClientesNaturales = require('../database/model/ClientesNaturales');
 const DetalleVentas = require('../database/model/DetalleVentas');
 const Pago = require('../database/model/Pagos');
 const TipoPago = require('../database/model/TipoPago');
+const Explotaciones = require('../database/model/Explotaciones');
 
 const insertDetalleVenta = (claveVenta, info) => {
     let values = [];
@@ -112,7 +113,17 @@ const getVentaInfo = (req, res) => {
     })
 }
 
+const updateVenta = (req, res) => {
+    console.log('update', req.body.data)
+    Explotaciones.getAllExplotacionesFkVentaConEstatusDiferenteAInactivo(function(fkVentaYacimientos) {
+        console.log('fkVentaYacimientos', fkVentaYacimientos)
+    })
+
+    res.status(200).json({ operacion: 'exito' })
+}
+
 module.exports = {
     createVenta,
-    getVentaInfo
+    getVentaInfo,
+    updateVenta
 }

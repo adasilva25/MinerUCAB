@@ -84,7 +84,7 @@ export class Venta extends React.Component {
                               <Col sm={12} md={10}>
                                   <DataTable
                                       data={'http://localhost:3000/getAllVentasClientesNaturales'}
-                                      urlModificar={'/registrar_cliente_juridico'}
+                                      urlModificar={'/modificar_ventas'}
                                       urlConsultar={'/consultar_ventas'}
                                       urlEliminar={'/home'}
                                       agregar={false}
@@ -126,7 +126,7 @@ export class Venta extends React.Component {
                               <Col sm={12} md={10}>
                                   <DataTable
                                       data={'http://localhost:3000/getAllVentasClientesJuridicos'}
-                                      urlModificar={'/registrar_cliente_juridico'}
+                                      urlModificar={'/modificar_ventas'}
                                       urlConsultar={'/consultar_ventas'}
                                       urlEliminar={'/home'}
                                       agregar={true}

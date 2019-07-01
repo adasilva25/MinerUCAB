@@ -159,6 +159,24 @@ const getCargosExpByIdFase = (req, res) => {
     })
 }
 
+const getAllExplotacionesFkVentaConEstatusDiferenteAInactivo = (callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'SELECT EX.fk_venta FROM MU_EXPLOTACION EX, MU_ESTATUS E WHERE E.Nombre != ($1);'
+    const values = ['Inactivo'];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        callback(response.rows)
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
 const getEmpleadosByIdCargoFase = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
@@ -224,7 +242,7 @@ module.exports = {
     createFase,
     createCargoFase,
     createTipoMaquinariaFase,
-
+    getAllExplotacionesFkVentaConEstatusDiferenteAInactivo,
     getEtapasByIdExplotacion,
     getFasesByIdEtapa,
     getCargosExpByIdFase,

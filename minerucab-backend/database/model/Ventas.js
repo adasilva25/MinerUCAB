@@ -51,7 +51,7 @@ const getVentaById = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT V.Total, E.Nombre, V.Fecha FROM MU_VENTA V, MU_ESTATUS E WHERE V.Clave = ($1) AND V.fk_estatus = E.Clave;';
+    const text = 'SELECT V.Total, E.Nombre, E.clave clave_estatus, V.Fecha FROM MU_VENTA V, MU_ESTATUS E WHERE V.Clave = ($1) AND V.fk_estatus = E.Clave;';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -70,7 +70,7 @@ const getAllVentasClientesNaturales = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
-    client.query('SELECT V.Clave as Clave, C.p_nombre as Nombre, C.p_apellido as Apellido, V.Total as "Total", V.Fecha as Fecha FROM MU_VENTA V, MU_CLIENTE_NATURAL C WHERE V.fk_cliente_natural IS NOT NULL AND V.fk_cliente_natural = C.Clave;')
+    client.query('SELECT V.Clave as Clave, C.p_nombre as Nombre, C.p_apellido as Apellido, V.Total as "Total", V.Fecha as Fecha, E.Nombre "Estatus" FROM MU_VENTA V, MU_CLIENTE_NATURAL C, MU_ESTATUS E WHERE V.fk_cliente_natural IS NOT NULL AND V.fk_cliente_natural = C.Clave AND V.fk_estatus = E.Clave;')
     .then((response) => {
         client.end();
         // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
@@ -88,7 +88,7 @@ const getAllVentasClientesJuridicos = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
-    client.query('SELECT V.Clave as Clave, C.nombre as Nombre, V.Total as "Total", V.Fecha as Fecha FROM MU_VENTA V, MU_CLIENTE_JURIDICO C WHERE V.fk_cliente_juridico IS NOT NULL AND V.fk_cliente_juridico = C.Clave;')
+    client.query('SELECT V.Clave as Clave, C.nombre as Nombre, V.Total as "Total", V.Fecha as Fecha, E.Nombre "Estatus" FROM MU_VENTA V, MU_CLIENTE_JURIDICO C, MU_ESTATUS E WHERE V.fk_cliente_juridico IS NOT NULL AND V.fk_cliente_juridico = C.Clave AND E.Clave = V.fk_estatus;')
     .then((response) => {
         client.end();
         // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
@@ -103,7 +103,7 @@ const getAllVentasClientesJuridicos = (req, res) => {
 
 const getFkClienteNaturalEnVentaById = (claveVenta, callback) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     console.log('claveClienteNatural');
     client.connect();
@@ -124,7 +124,7 @@ const getFkClienteNaturalEnVentaById = (claveVenta, callback) => {
 
 const getFkClienteJuridicoEnVentaById = (claveVenta, callback) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     console.log('claveClienteJuridico');
     client.connect();
