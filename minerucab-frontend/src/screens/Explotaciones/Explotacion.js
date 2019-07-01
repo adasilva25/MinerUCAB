@@ -160,6 +160,26 @@ export default class Explotacion extends React.Component {
                           </Col>
                       </Row>
                 </Container>
+                <ModalYesNo
+                    show={this.state.modalShowEliminar}
+                    onHide={this.modalEliminarClose}
+                    mensaje={'¿Está seguro que desea eliminar la explotación'}
+                    infoeliminar={this.state.infoEliminar}
+                    urleliminar={`http://localhost:3000/FALTAPORDEFINIR/${this.state.idEliminar}`}
+                />
+                <Container>
+                      <Row>
+                          <Col md={1}></Col>
+                          <Col md={11}>
+                              <Row>
+                                  <Col md={11}>
+                                      <h6 className="horizontal-line-title-ventas-form cliente-title">Yacimientos Disponibles para Explotación</h6>
+                                  </Col>
+                                  <Col md={1}></Col>
+                              </Row>
+                          </Col>
+                      </Row>
+                </Container>
                 <Container className="pagecontent">
                     <Row>
                         <Col sm={0} md={1}></Col>
@@ -171,7 +191,7 @@ export default class Explotacion extends React.Component {
                                 urlModificar={'/modificar_explotacion'}
                                 urlConsultar={'/consultar_explotacion'}
                                 urlCrear={'/registrar_explotacion'}
-                                modalExplotar={this.modalExplotarOpen}
+                                urlExplotar={'/registrar_explotacion'}
                                 agregar={false}
                                 modificar={true}
                                 consultar={true}
@@ -211,7 +231,7 @@ export default class Explotacion extends React.Component {
                                 textoPlural={'yacimientos'}
                                 urlModificar={'/modificar_explotacion'}
                                 urlConsultar={'/consultar_explotacion'}
-                                urlExplotar={'/registrar_explotacion'}
+                                urlCrear={'/registrar_explotacion'}
                                 modalExplotar={this.modalExplotarOpen}
                                 agregar={false}
                                 modificar={true}
