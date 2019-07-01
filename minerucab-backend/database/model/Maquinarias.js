@@ -83,6 +83,25 @@ const updateMaquinariaById = (req, res) => {
     })
 }
 
+const updateEstatusMaquinaria = (clave, fk_estatus) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
+    });
+    client.connect();
+    const text = 'UPDATE MU_MAQUINARIA SET fk_estatus = ($1) WHERE Clave = ($2);';
+    const values = [fk_estatus, clave];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
 const getMaquinariasByIdTipoMaquinaria = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
@@ -150,6 +169,7 @@ module.exports = {
     getMaquinariasByIdTipoMaquinaria,
     getMaquinariaByIdTipoMaquinariaFase,
     updateMaquinariaById,
+    updateEstatusMaquinaria,
     deleteMaquinariaById
     // ,[siguientes funciones]
 }
