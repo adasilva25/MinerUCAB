@@ -26,7 +26,8 @@ import ModalHeader from 'react-bootstrap/ModalHeader'
 import ModalTitle from 'react-bootstrap/ModalTitle'
 import ModalBody from 'react-bootstrap/ModalBody'
 import ModalFooter from 'react-bootstrap/ModalFooter'
-import axios from 'axios';
+import ModalAdvertencia from '../../components/ModalAdvertencia';
+import axios from 'axios'; 
 
 // https://www.w3schools.com/jquery/html_removeclass.asp
 
@@ -42,12 +43,18 @@ export default class ModificarExplotacion extends React.Component {
             dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
             actualizar:true,
             eliminar:true,
+            empleadosInsertados:false,
+            maquinariasInsertadas:false,
+            modalShowEliminar: false,
+            mensajeError:'',
+            fechaInsertar:false,
             prueba: true,
             key:"Etapa 1",
             explotacion:{
                 id:null,
                 duracion:0,
                 finalizar:false,
+                estatus:null,
                 costo:0,
                 fechaI:{
                     dia:0,
@@ -793,6 +800,7 @@ export default class ModificarExplotacion extends React.Component {
                     id:null,
                     duracion:0,
                     finalizar:false,
+                    estatus:0,
                     costo:0,
 
                     fechaI:{
@@ -842,7 +850,8 @@ export default class ModificarExplotacion extends React.Component {
                 }));
 
                 this.setState(() => ({
-                    estatus: state.estatus
+                    estatus: state.estatus,
+                    fechaInsertar:true
                 }));
 
                 console.log('state', this.state)
@@ -931,31 +940,31 @@ export default class ModificarExplotacion extends React.Component {
                                             dia:"Lunes",
                                             horaEntrada:null,
                                             horaSalida:null,
-                                            value:1,
+                                            value:0,
                                         },
                                         {
                                             dia:"Martes",
                                             horaEntrada:null,
                                             horaSalida:null,
-                                            value:1,
+                                            value:0,
                                         },
                                         {
                                             dia:"Miercoles",
                                             horaEntrada:null,
                                             horaSalida:null,
-                                            value:1,
+                                            value:0,
                                         },
                                         {
                                             dia:"Jueves",
                                             horaEntrada:null,
                                             horaSalida:null,
-                                            value:1,
+                                            value:0,
                                         },
                                         {
                                             dia:"Viernes",
                                             horaEntrada:null,
                                             horaSalida:null,
-                                            value:1,
+                                            value:0,
                                         }]
                                     }],
                                     
@@ -1074,9 +1083,9 @@ export default class ModificarExplotacion extends React.Component {
                                 mes = (date.getMonth() + 1)
                                 ano = date.getFullYear()
 
-                                etapa.fechaI.dia = dia
-                                etapa.fechaI.mes = mes
-                                etapa.fechaI.ano = ano
+                                etapa.fechaF.dia = dia
+                                etapa.fechaF.mes = mes
+                                etapa.fechaF.ano = ano
                             }
 
                             if (item.fecha_fin_real){
@@ -1085,9 +1094,9 @@ export default class ModificarExplotacion extends React.Component {
                                 mes = (date.getMonth() + 1)
                                 ano = date.getFullYear()
 
-                                etapa.fechaI.dia = dia
-                                etapa.fechaI.mes = mes
-                                etapa.fechaI.ano = ano
+                                etapa.fechaFR.dia = dia
+                                etapa.fechaFR.mes = mes
+                                etapa.fechaFR.ano = ano
                             }
                             
                             etapa.fases.shift();
@@ -1176,9 +1185,9 @@ export default class ModificarExplotacion extends React.Component {
                                             mes = (date.getMonth() + 1)
                                             ano = date.getFullYear()
 
-                                            fase.fechaI.dia = dia
-                                            fase.fechaI.mes = mes
-                                            fase.fechaI.ano = ano
+                                            fase.fechaF.dia = dia
+                                            fase.fechaF.mes = mes
+                                            fase.fechaF.ano = ano
                                         }
 
                                         if (element.fecha_fin_real){
@@ -1187,9 +1196,9 @@ export default class ModificarExplotacion extends React.Component {
                                             mes = (date.getMonth() + 1)
                                             ano = date.getFullYear()
     
-                                            fase.fechaI.dia = dia
-                                            fase.fechaI.mes = mes
-                                            fase.fechaI.ano = ano
+                                            fase.fechaFR.dia = dia
+                                            fase.fechaFR.mes = mes
+                                            fase.fechaFR.ano = ano
                                         }
 
 
@@ -1266,6 +1275,7 @@ export default class ModificarExplotacion extends React.Component {
                                                     axios.get(`http://localhost:3000/getMaquinariaByIdTipoMaquinariaFase/${tipoMaquinaria.id_tipo_maquinaria_fase}`, config)
                                                         .then((res) => {
                                                             console.log('res-maq-fase', res, fase)
+                                                            let longitud=0;
                                                             res.data.forEach((item) => {
                                                                 let maquinaria = {
                                                                     id: item.clave_maquinaria,
@@ -1298,6 +1308,13 @@ export default class ModificarExplotacion extends React.Component {
                                                                         }
                                                                     })
                                                                 }));
+
+                                                                longitud++;
+                                                                if(longitud==res.data.length){
+                                                                    this.setState(() => ({
+                                                                        maquinariasInsertar :true
+                                                                    }));
+                                                                }
 
                                                             })
                                                         })  
@@ -1357,6 +1374,7 @@ export default class ModificarExplotacion extends React.Component {
 
                                                             axios.get(`http://localhost:3000/getEmpleadosByIdCargoFase/${item.clave_cargo_fase}`, config)
                                                                 .then((res) => {
+                                                                    let longitud1=0;
                                                                     res.data.forEach((element) => {
                                                                         let empleado = {
                                                                             id:-1,
@@ -1371,35 +1389,35 @@ export default class ModificarExplotacion extends React.Component {
                                                                                 dia:"Lunes",
                                                                                 horaEntrada:null,
                                                                                 horaSalida:null,
-                                                                                value:1,
+                                                                                value:0,
                                                                             },
                                                                             {
                                                                                 id: null,
                                                                                 dia:"Martes",
                                                                                 horaEntrada:null,
                                                                                 horaSalida:null,
-                                                                                value:1,
+                                                                                value:0,
                                                                             },
                                                                             {
                                                                                 id: null,
                                                                                 dia:"Miercoles",
                                                                                 horaEntrada:null,
                                                                                 horaSalida:null,
-                                                                                value:1,
+                                                                                value:0,
                                                                             },
                                                                             {
                                                                                 id: null,
                                                                                 dia:"Jueves",
                                                                                 horaEntrada:null,
                                                                                 horaSalida:null,
-                                                                                value:1,
+                                                                                value:0,
                                                                             },
                                                                             {
                                                                                 id: null,
                                                                                 dia:"Viernes",
                                                                                 horaEntrada:null,
                                                                                 horaSalida:null,
-                                                                                value:1,
+                                                                                value:0,
                                                                             }]
                                                                         }
                                                                         empleado.ci = element.ci;
@@ -1435,6 +1453,13 @@ export default class ModificarExplotacion extends React.Component {
                                                                             })
                                                                         }));
 
+                                                                        longitud1++;
+                                                                        if(longitud1==res.data.length){
+                                                                            this.setState(() => ({
+                                                                                empleadosInsertados:true
+                                                                            }));
+                                                                        }
+
                                                                         axios.get(`http://localhost:3000/getHorarioEmpleadoByIdEmpleadoCargoFase/${empleado.clave_empleado_cargo_fase}`, config)
                                                                             .then((res) => {
                                                                                 res.data.forEach((item) => {
@@ -1448,6 +1473,9 @@ export default class ModificarExplotacion extends React.Component {
 
                                                                                             if (item.clave_horario % 2 === 0){
                                                                                                 horario.value = 2
+                                                                                            }
+                                                                                            else{
+                                                                                                horario.value = 1
                                                                                             }
                                                                                         }
                                                                                     })
@@ -1557,6 +1585,22 @@ export default class ModificarExplotacion extends React.Component {
                         minerales: mineralesMetalicos,
                     }));
                 }
+                else{
+                let mineral={
+                        nombre:null,
+                        id:-1,
+                        total: 0,
+                        accordionKey:0,
+                        
+                    }
+                state.mineralShow='none',
+                    
+                    state.Minerales.push(mineral);
+                    this.setState(() => ({
+                        minerales: state.Minerales,
+                        mineralShow: state.mineralShow
+                    }));
+            }
             }).catch((e) => {
                 console.log('Error en axios')
             })
@@ -1601,6 +1645,24 @@ export default class ModificarExplotacion extends React.Component {
                         MineralesNoMetalicos: state.MineralesNoMetalicos
                     }));
                 }
+                else{
+
+                    let mineral={
+                        nombre:null,
+                        id:-1,
+                        total: 0,
+                        accordionKey:0,
+                        
+                    }
+                    state.MineralesNoMetalicos.push(mineral);
+                    state.mineralNoMetalicoShow='none',
+                    this.setState(() => ({
+                        
+                        MineralesNoMetalicos: state.MineralesNoMetalicos,
+                        mineralNoMetalicoShow: state.mineralNoMetalicoShow
+                    }));
+                
+            }
 
             }).catch((e) => {
                 console.log('Error en axios')
@@ -1608,7 +1670,7 @@ export default class ModificarExplotacion extends React.Component {
             })
 
 
-
+console.log();
 
 
         // const info = {
@@ -3591,7 +3653,13 @@ export default class ModificarExplotacion extends React.Component {
     }
 
 
-
+    modalErrorClose = () => {
+        this.setState({ modalShowEliminar: false, reload: true });
+    }
+    modalErrorOpen = () => {
+        this.setState({ modalShowEliminar: true })
+    };
+    
     handleOnClickSubmittData=()=>{
 
 
@@ -3603,6 +3671,7 @@ export default class ModificarExplotacion extends React.Component {
                 id:null,
                 fechaI:null,
                 fechaF:null,
+                fechaFR:null,
                 estatus:null,
             },
             etapas: [{
@@ -3610,10 +3679,12 @@ export default class ModificarExplotacion extends React.Component {
                 estatus:null,
                 fechaI:null,
                 fechaF:null,
+                fechaFR:null,
                 fases: [{
                     id:null,
                     fechaI:null,
                     fechaF:null,
+                    fechaFR:null,
                     estatus:null,
                     cargos:[{
                         id:0,
@@ -3667,6 +3738,11 @@ export default class ModificarExplotacion extends React.Component {
         
         info.explotacion.fechaF = this.state.explotacion.fechaF.ano+'-'+mes+'-'+dia;
 
+        dia = (this.state.explotacion.fechaFR.dia<10)? "0"+this.state.explotacion.fechaFR.dia: this.state.explotacion.fechaFR.dia;
+        mes = (this.state.explotacion.fechaFR.mes<10)? "0"+this.state.explotacion.fechaFR.mes: this.state.explotacion.fechaFR.mes;
+        
+        info.explotacion.fechaFR = this.state.explotacion.fechaFR.ano+'-'+mes+'-'+dia;
+
 
 
 
@@ -3679,10 +3755,12 @@ export default class ModificarExplotacion extends React.Component {
                     estatus:null,
                     fechaI:null,
                     fechaF:null,
+                    fechaFR:null,
                     fases: [{
                         id:null,
                         fechaI:null,
                         fechaF:null,
+                        fechaFR:null,
                         estatus:null,
                         cargos:[{
                             id:0,
@@ -3715,9 +3793,14 @@ export default class ModificarExplotacion extends React.Component {
                 
                 etapa.fechaF = etapaR.fechaF.ano+'-'+mes+'-'+dia;
 
+                dia = (etapaR.fechaFR.dia<10)? "0"+etapaR.fechaFR.dia: etapaR.fechaFR.dia;
+                mes = (etapaR.fechaFR.mes<10)? "0"+etapaR.fechaFR.mes: etapaR.fechaFR.mes;
+                
+                etapa.fechaFR = etapaR.fechaFR.ano+'-'+mes+'-'+dia;
+
 
                 
-                etapa.estatus = 2;
+                etapa.estatus = etapaR.estatus;
                 
                 
 
@@ -3729,6 +3812,7 @@ export default class ModificarExplotacion extends React.Component {
                             id:null,
                             fechaI:null,
                             fechaF:null,
+                            fechaFR:null,
                             estatus:null,
                             cargos:[{
                                 id:0,
@@ -3759,7 +3843,12 @@ export default class ModificarExplotacion extends React.Component {
                         
                         fase.fechaF = faseR.fechaF.ano+'-'+mes+'-'+dia;
 
-                        fase.estatus = 2 ;
+                        dia = (faseR.fechaFR.dia<10)? "0"+faseR.fechaFR.dia: faseR.fechaFR.dia;
+                        mes = (faseR.fechaFR.mes<10)? "0"+faseR.fechaFR.mes: faseR.fechaFR.mes;
+                        
+                        fase.fechaFR = faseR.fechaFR.ano+'-'+mes+'-'+dia;
+
+                        fase.estatus = faseR.estatus ;
                         
                         
 
@@ -3870,6 +3959,75 @@ export default class ModificarExplotacion extends React.Component {
         });
 
         console.log(info);
+
+
+
+
+        let error = false;
+        if(info.explotacion.fechaI=='0-00-00'){
+            this.setState({ mensajeError: 'La fecha de inicio ingresada no es una fecha válida' })
+            this.modalErrorOpen();
+            error =true;
+        }
+
+        let etapaNum=0;
+        let faseNum=0;
+        let auxNum=0;
+
+       
+        if(error==false){
+            for(let i=0; i<info.etapas.length;i++){
+
+                for(let j=0; j<info.etapas[i].fases.length; j++){
+                
+                    for(let k=0; k<info.etapas[i].fases[j].cargos.length; k++){
+                
+                        if((info.etapas[i].fases[j].cargos[k].empleados==undefined)||(info.etapas[i].fases[j].cargos[k].empleados==null)||(info.etapas[i].fases[j].cargos[k].empleados.length==0)){
+                            
+                            
+                            console.log(info);
+                            if(error==false){
+                                this.setState({ mensajeError: 'Debe asignar al menos un empleado al cargo '+this.state.etapas[i].fases[j].cargos[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
+                            
+                                this.modalErrorOpen();
+                                console.log(this.state.mensajeError,this.state.modalShowEliminar);
+                                error =true;
+                            }
+                            
+                        }
+                        else{
+                            for(let m=0; m<info.etapas[i].fases[j].cargos[k].empleados.length; m++){
+                                if((info.etapas[i].fases[j].cargos[k].empleados[m].horario==undefined)||(info.etapas[i].fases[j].cargos[k].empleados[m].horario==null)||(info.etapas[i].fases[j].cargos[k].empleados[m].horario.length==0)){
+                                    
+                                    if(error==false){
+                                         this.setState({ mensajeError: 'Debe asignar un horario al empleado '+this.state.etapas[i].fases[j].cargos[k].empleados[m].nombre+' del cargo '+this.state.etapas[i].fases[j].cargos[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
+                            
+
+                                        this.modalErrorOpen();
+                                        error =true;
+                                    }
+                                   
+                                }
+                            }
+                        }
+
+                    }
+                    for(let k=0; k<info.etapas[i].fases[j].tipoMaquinaria.length; k++){
+                    
+                        if((info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias==undefined)||(info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias==null)||(info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias.length==0)){
+                            if(error==false){
+                                this.setState({ mensajeError: 'Debe asignar al menos una maquinaria al tipo de maquinaria '+this.state.etapas[i].fases[j].tipoMaquinaria[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
+                                
+                                this.modalErrorOpen();
+                                error =true;
+                            }
+                        }
+                         
+                    }
+                }
+
+            }
+        }
 
     }
 
@@ -4221,7 +4379,7 @@ export default class ModificarExplotacion extends React.Component {
     
 
 
-    handleOnChangeMineralNo=(event,minNUm)=>{
+    handleOnChangeMineralNoMetalico=(event,minNUm)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
         const minerales= this.state.MineralesNoMetalicos;
@@ -4826,13 +4984,20 @@ export default class ModificarExplotacion extends React.Component {
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario="Diego Gutiérrez"/>
+
+                <ModalAdvertencia
+                    show={this.state.modalShowEliminar}
+                    onHide={this.modalErrorClose}
+                    infoeliminar={this.state.mensajeError}
+                    mensaje={''}
+                />
   
                 <Container className="FormContainer">
                    
 
-                    <FormTitulo titulo="Registrar Explotación" tamaño="BIG"/>
+                    <FormTitulo titulo="Modificar Explotación" tamaño="BIG"/>
                      
-                    <Accordion defaultActiveKey={1} >
+                    {this.state.fechaInsertar && <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[0]} onClick={() => this.accordionf(0)} className="accordion borderacc">
                               
@@ -4905,7 +5070,7 @@ export default class ModificarExplotacion extends React.Component {
                                 </Card.Body>
                             </Accordion.Collapse>
                         </Card>
-                    </Accordion>
+                    </Accordion>}
                     
                     <Accordion defaultActiveKey={1} >
                         <Card className="CardAcc">
@@ -4957,7 +5122,7 @@ export default class ModificarExplotacion extends React.Component {
 
 
 
-                    <Accordion defaultActiveKey={1} >
+                    <Accordion defaultActiveKey={1} style={{display: this.state.mineralShow}}>
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
                                 <FormTitulo titulo="Minerales Metálicos"/>
@@ -5017,7 +5182,7 @@ export default class ModificarExplotacion extends React.Component {
 
 
 
-                    <Accordion defaultActiveKey={1} >
+                    <Accordion defaultActiveKey={1} style={{display: this.state.mineralNoMetalicoShow}}>
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
                                 <FormTitulo titulo="Minerales No Metálicos"/>
@@ -5270,7 +5435,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                                                         <Row style={{display: ((fase.finalizar==true)?'none':'inline')}}>
                                                                                                             <Col sm={0} md={1}></Col>
                                                                                                             <Col sm={12} md={10}>
-                                                                                                                <DataTable
+                                                                                                                {this.state.empleadosInsertados && <DataTable
                                                                                                                     
                                                                                                                     selectCheck={null}
                                                                                                                     selectCheck2={this.selectFunctionCheckbox}
@@ -5298,7 +5463,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                                                                     id={indexcar}
                                                                                                                     tipo={"E"}
                                                                                                                     max={(cargo.empleadosShow=='none')?(cargo.cantidad-cargo.empleados.length+1 ): (cargo.cantidad-cargo.empleados.length)}
-                                                                                                                />
+                                                                                                                />}
                                                                                                             </Col>
                                                                                                             <Col sm={0} md={1}></Col>
                                                                                                         </Row>
@@ -5322,7 +5487,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                                                                                 <div>{empleado.nombre}</div>
                                                                                                                                 <div>{empleado.ci}</div>
                                                                                                                             </div>
-                                                                                                                             <Button className={(empleado.sexo=="Masculino")?"BotonHorarioM":((empleado.sexo=="Femenino")?"BotonHorarioF":"BotonHorarioO")}variant="outline-primary"  onClick={()=>this.horario(etapa.numero,fase.numero,indexcar,indexem)}>{"Horario "+this.validarEmpleadoHorario(etapa.numero,fase.numero,indexcar,indexem)}</Button>
+                                                                                                                             { (this.state.empleadosInsertados) && <Button className={(empleado.sexo=="Masculino")?"BotonHorarioM":((empleado.sexo=="Femenino")?"BotonHorarioF":"BotonHorarioO")}variant="outline-primary"  onClick={()=>this.horario(etapa.numero,fase.numero,indexcar,indexem)}>{"Horario "+this.validarEmpleadoHorario(etapa.numero,fase.numero,indexcar,indexem)}</Button>}
                                                                                                                              
 
 
@@ -5400,10 +5565,12 @@ export default class ModificarExplotacion extends React.Component {
                                                                                 );
                                                                             })}
                                                                             </Container>
-                                                                            <FormTitulo titulo="Tipo de Maquinarias"/>
+                                                                            <div style={{display: ((fase.tipoMaquinaria==null)||(fase.tipoMaquinaria==undefined) || (fase.tipoMaquinaria.length==0))?'none':'inline'}}>
+                                                                                <FormTitulo titulo="Tipo de Maquinarias"/>
+                                                                            </div>
                                                                            
                                                                             <Container>
-                                                                            {fase.tipoMaquinaria.map((tipoMaquinaria,indexTM)=>{             
+                                                                            {fase.tipoMaquinaria && fase.tipoMaquinaria.map((tipoMaquinaria,indexTM)=>{             
                                                                                 return(
                                                                                     <div style={{display: fase.tipoMaquinariaShow}}>
                                                                                         <Accordion defaultActiveKey={1} >
@@ -5439,7 +5606,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                                                         <Row style={{display: ((fase.finalizar==true)?'none':'inline')}}>
                                                                                                             <Col sm={0} md={1}></Col>
                                                                                                             <Col sm={12} md={10}>
-                                                                                                                <DataTable
+                                                                                                               {this.state.maquinariasInsertar && <DataTable
 
                                                                                                                     selectCheck={null}
                                                                                                                     selectCheck2={this.selectFunctionCheckbox}
@@ -5465,7 +5632,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                                                                     id={indexTM}
                                                                                                                     tipo={"M"}
                                                                                                                     max={((tipoMaquinaria.maquinariasShow=='none')?(tipoMaquinaria.cantidad-tipoMaquinaria.maquinarias.length+1 ): (tipoMaquinaria.cantidad-tipoMaquinaria.maquinarias.length))}
-                                                                                                                />
+                                                                                                                />}
                                                                                                             </Col>
                                                                                                             <Col sm={0} md={1}></Col>
                                                                                                         </Row>
