@@ -53,6 +53,7 @@ const insertIntoTipoMaquinariaFase = (faseId, tipoMaquinarias) => {
 const insertIntoFasesInfo = (fases) => {
     console.log('fases')
     fases.forEach((fase) => {
+        console.log('fase', fase)
         Explotaciones.insertFechasFases(fase.fechaI, fase.fechaF, fase.estatus, fase.id)
         insertIntoCargoFase(fase.id, fase.cargos)
         insertIntoTipoMaquinariaFase(fase.id, fase.tipoMaquinaria)
@@ -79,6 +80,7 @@ const crearExplotacion = (req, res) => {
     console.log('explotacion', explotacion)
     console.log('etapas', etapas)
 
+    Explotaciones.updateEstatusExplotaciones(explotacion.id, explotacion.estatus, explotacion.fechaI, explotacion.fechaF)
     Explotaciones.updateEstatus(yacimiento.id, 5)
     Explotaciones.insertFechas(explotacion.fechaI, explotacion.fechaF, explotacion.estatus)
     insertIntoEtapaInfo(etapas);

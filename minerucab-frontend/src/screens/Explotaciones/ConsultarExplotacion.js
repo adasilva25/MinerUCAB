@@ -2221,7 +2221,7 @@ export default class ConsultarExplotacion extends React.Component {
         info.explotacion.fechaF = mes+'-'+dia+'-'+this.state.explotacion.fechaF.ano;
 
 
-
+        let primeraFase=0;
 
         info.etapas.shift();
         
@@ -2315,7 +2315,9 @@ export default class ConsultarExplotacion extends React.Component {
                         
                         fase.fechaF = mes+'-'+dia+'-'+faseR.fechaF.ano;
 
-                        if((etapaR.numero==1) && (faseR.numero==1)){
+                        primeraFase++;
+
+                        if(primeraFase==1){
                             fase.estatus = 8;
                         }
                         else{
