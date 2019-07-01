@@ -34,6 +34,7 @@ export default class ConsultarYacimiento extends React.Component {
             andreita: false,
             eliminadosFases: [],
             actualizar:true,
+            fechaRender:false,
             eliminar:true,
             prueba: true,
             key:"Etapa 1",
@@ -257,6 +258,8 @@ export default class ConsultarYacimiento extends React.Component {
             actualizar:true,
             eliminar:true,
             prueba: true,
+            fechaRender:false,
+
             key:"Etapa 1",
             explotacion:{
                 id:null,
@@ -334,6 +337,8 @@ export default class ConsultarYacimiento extends React.Component {
                 info.yacimiento.fecha.mes = mes;
                 info.yacimiento.fecha.ano = ano;
 
+               
+
                 info.estatus.id = res.data[0].clave_estatus;
                 info.estatus.nombre = res.data[0].estatus;
 
@@ -357,6 +362,8 @@ export default class ConsultarYacimiento extends React.Component {
                 state.yacimiento.fecha.mes = mes;
                 state.yacimiento.fecha.ano = ano;
 
+                state.fechaRender = true,
+
                 state.explotacion.id = info.explotacion.id;
                 state.explotacion.duracion = info.explotacion.duracion;
                 state.explotacion.costo = info.explotacion.costo;
@@ -373,7 +380,8 @@ export default class ConsultarYacimiento extends React.Component {
                     this.setState(() => ({
                         yacimiento: state.yacimiento,
                         explotacion: state.explotacion,
-                        estatus: state.estatus
+                        estatus: state.estatus,
+                        fechaRender: state.fechaRender,
                     }));
                     console.log('state', this.state.yacimiento)
 
@@ -709,6 +717,22 @@ export default class ConsultarYacimiento extends React.Component {
                         Minerales: state.Minerales,
                     }));
                 }
+                else{
+                let mineral={
+                        nombre:null,
+                        id:-1,
+                        total: 0,
+                        accordionKey:0,
+                        
+                    }
+                state.mineralShow='none',
+                    
+                    state.Minerales.push(mineral);
+                    this.setState(() => ({
+                        minerales: state.Minerales,
+                        mineralShow: state.mineralShow
+                    }));
+            }
             }).catch((e) => {
                 console.log('Error en axios')
             })
@@ -755,6 +779,24 @@ export default class ConsultarYacimiento extends React.Component {
                     mineralNoMetalicoId: state.mineralNoMetalicoId,
                     MineralesNoMetalicos: state.MineralesNoMetalicos
                 }));
+            }
+             else{
+
+                    let mineral={
+                        nombre:null,
+                        id:-1,
+                        total: 0,
+                        accordionKey:0,
+                        
+                    }
+                    state.MineralesNoMetalicos.push(mineral);
+                    state.mineralNoMetalicoShow='none',
+                    this.setState(() => ({
+                        
+                        MineralesNoMetalicos: state.MineralesNoMetalicos,
+                        mineralNoMetalicoShow: state.mineralNoMetalicoShow
+                    }));
+                
             }
 
         }).catch((e) => {
@@ -1499,7 +1541,12 @@ export default class ConsultarYacimiento extends React.Component {
                                                 Obligatorio
                                             </Form.Text>    
                                         </Form.Group>
-                                        <FormFecha titulo="Fecha de Registro" clase="inputsPaddingLeft" dia={this.state.yacimiento.fecha.dia} mes={this.state.yacimiento.fecha.mes} ano={this.state.yacimiento.fecha.ano} disabled={true}/>    
+                                        
+
+                                        {
+                                            (this.state.fechaRender) && <FormFecha titulo="Fecha de Registro" clase="inputsPaddingLeft" dia={this.state.yacimiento.fecha.dia} mes={this.state.yacimiento.fecha.mes} ano={this.state.yacimiento.fecha.ano} disabled={true}/>    
+                                        }
+
                                     </Form.Row>
 
                                     <Form.Row className="formMargins">
@@ -1538,7 +1585,7 @@ export default class ConsultarYacimiento extends React.Component {
 
 
 
-                    <Accordion defaultActiveKey={1} >
+                    <Accordion defaultActiveKey={1}  style={{display: this.state.mineralShow}}>
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
                                 <FormTitulo titulo="Minerales Metálicos"/>
@@ -1595,7 +1642,7 @@ export default class ConsultarYacimiento extends React.Component {
 
 
 
-                    <Accordion defaultActiveKey={1} >
+                    <Accordion defaultActiveKey={1} style={{display: this.state.mineralNoMetalicoShow}}  >
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
                                 <FormTitulo titulo="Minerales No Metálicos"/>
@@ -1832,7 +1879,10 @@ export default class ConsultarYacimiento extends React.Component {
                                                                                 );
                                                                             })}
                                                                             </Container>
-                                                                            <FormTitulo titulo="Tipo de Maquinarias"/>
+                                                                            
+                                                                            <div style={{display: ((fase.tipoMaquinaria==null)||(fase.tipoMaquinaria==undefined) || (fase.tipoMaquinaria.length==0))?'none':'inline'}}>
+                                                                                <FormTitulo titulo="Tipo de Maquinarias"/>
+                                                                            </div>
                                                                             
                                                                             <Container>
                                                                             {fase.tipoMaquinaria && fase.tipoMaquinaria.map((tipoMaquinaria,indexTM)=>{             

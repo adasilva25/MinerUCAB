@@ -131,7 +131,6 @@ export default class Explotacion extends React.Component {
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario={'Andrea Da Silva'}/>
-                <Container className="pagecontent">
                 <ModalYesNo
                     show={this.state.modalShowEliminar}
                     onHide={this.modalEliminarClose}
@@ -148,22 +147,66 @@ export default class Explotacion extends React.Component {
                     minNoMet={this.state.mineralesNoMet}
                     exp={this.state.expl}
                 />
+                <Container>
                       <Row>
                           <Col md={1}></Col>
                           <Col md={11}>
                               <Row>
                                   <Col md={11}>
-                                      <h4 className="horizontal-line-title-ventas-form cliente-title">Explotaciones</h4>
+                                      <h6 className="horizontal-line-title-ventas-form cliente-title">Yacimientos Disponibles para Explotación</h6>
                                   </Col>
                                   <Col md={1}></Col>
                               </Row>
                           </Col>
                       </Row>
+                </Container>
+                <Container className="pagecontent">
                     <Row>
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
                             <DataTable
-                                data={'http://localhost:3000/getAllExplotaciones'}
+                                data={'http://localhost:3000/getAllYacimientosConEstatusInactivo'}
+                                textoSingular={'yacimiento'}
+                                textoPlural={'yacimientos'}
+                                urlModificar={'/modificar_explotacion'}
+                                urlConsultar={'/consultar_explotacion'}
+                                urlCrear={'/registrar_explotacion'}
+                                modalExplotar={this.modalExplotarOpen}
+                                agregar={false}
+                                modificar={true}
+                                consultar={true}
+                                eliminar={true}
+                                explotar={true}
+                                modalEliminar={this.modalEliminarOpen}
+                                reload={this.state.reload}
+                                checktable={false}
+                                textoSingular={'explotación'}
+                                textoPlural={'explotaciones'}
+                                size={500}
+                            />
+                        </Col>
+                        <Col sm={0} md={1}></Col>
+                    </Row>
+                </Container>
+                <Container>
+                      <Row>
+                          <Col md={1}></Col>
+                          <Col md={11}>
+                              <Row>
+                                  <Col md={11}>
+                                      <h6 className="horizontal-line-title-ventas-form cliente-title">Explotaciones Culminadas</h6>
+                                  </Col>
+                                  <Col md={1}></Col>
+                              </Row>
+                          </Col>
+                      </Row>
+                </Container>
+                <Container className="pagecontent">
+                    <Row>
+                        <Col sm={0} md={1}></Col>
+                        <Col sm={12} md={10}>
+                            <DataTable
+                                data={'http://localhost:3000/getAllYacimientosConEstatusDiferenteAInactivo'}
                                 textoSingular={'yacimiento'}
                                 textoPlural={'yacimientos'}
                                 urlModificar={'/modificar_explotacion'}

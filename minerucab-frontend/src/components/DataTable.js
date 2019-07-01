@@ -32,7 +32,7 @@ export default class DataTable extends React.Component {
         let explotar = this.props.explotar === true
         let checktable = this.props.checktable === true;
         let modificarCheck = this.props.modificarCheck === true;
-        const listaModificarCheck=this.props.listaModificarCheck;
+        const listaModificarCheck = this.props.listaModificarCheck;
         let urlConsultar = this.props.urlConsultar;
         let urlModificar = this.props.urlModificar;
         let urlExplotar = this.props.urlExplotar;
@@ -301,9 +301,9 @@ export default class DataTable extends React.Component {
 
                                                 if(tipo=="E"){
                                                     checkboxesDT[k].alt = dataSet[m][0];//ID
-                                                    checkboxesDT[k].Name = dataSet[m][1];//CI
-                                                    checkboxesDT[k].align = dataSet[m][2]+' '+dataSet[m][4];//NOMBRE
-                                                    checkboxesDT[k].dirName = dataSet[m][7];//SEXO
+                                                    checkboxesDT[k].Name = dataSet[m][3];//CI
+                                                    checkboxesDT[k].align = dataSet[m][1]+' '+dataSet[m][2];//NOMBRE
+                                                    checkboxesDT[k].dirName = dataSet[m][4];//SEXO
                                                    
                                                 }
                                                 else{
@@ -321,7 +321,7 @@ export default class DataTable extends React.Component {
                                             }
                                             
 
-                                            m++;
+                                            m++; 
                                         }
 
                                         //      ANTERIOR EN CASO DE EMERGENCIA
@@ -484,6 +484,7 @@ export default class DataTable extends React.Component {
                                             this.props.modalEliminar(botonesEliminar[i])
                                         }
                                         else {
+                                            console.log('id', botonesEliminar[i].id)
                                             this.props.modalEliminar(botonesEliminar[i].id)
                                         }   
                                     }.bind(this)

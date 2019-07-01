@@ -21,7 +21,7 @@ const getAllTiposMaquinaria = (req, res) => {
 
 const getTipoMaquinariaById = (req, res) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     client.connect();
     const text = 'SELECT * FROM mu_tipo_maquinaria WHERE Clave = ($1);';
@@ -40,10 +40,10 @@ const getTipoMaquinariaById = (req, res) => {
 
 const getTiposMaquinariaByIdFase = (req, res) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     client.connect();
-    const text = 'SELECT TMF.Cantidad cantidad, TMF.Costo costo, TM.Clave clave, TM.Nombre nombre FROM mu_tipo_maquinaria_fase TMF, MU_TIPO_MAQUINARIA TM WHERE TMF.fk_fase = ($1) AND TMF.fk_tipo_maquinaria = TM.Clave;';
+    const text = 'SELECT TMF.Clave clave_tipo_maquinaria_fase, TMF.Cantidad cantidad, TMF.Costo costo, TM.Clave clave, TM.Nombre nombre FROM mu_tipo_maquinaria_fase TMF, MU_TIPO_MAQUINARIA TM WHERE TMF.fk_fase = ($1) AND TMF.fk_tipo_maquinaria = TM.Clave;';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {

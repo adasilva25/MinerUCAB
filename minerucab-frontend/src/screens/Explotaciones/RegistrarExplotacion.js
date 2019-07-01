@@ -22,11 +22,16 @@ import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import Image from 'react-bootstrap/Image';
 import Modal from 'react-bootstrap/Modal'
+
 import ModalHeader from 'react-bootstrap/ModalHeader'
 import ModalTitle from 'react-bootstrap/ModalTitle'
 import ModalBody from 'react-bootstrap/ModalBody'
 import ModalFooter from 'react-bootstrap/ModalFooter'
 import axios from 'axios';
+import ModalAdvertencia from '../../components/ModalAdvertencia';
+
+
+
 
 // https://www.w3schools.com/jquery/html_removeclass.asp
 
@@ -39,6 +44,10 @@ export default class RegistrarExplotacion extends React.Component {
 
         this.state = {
             eliminadosFases: [],
+
+            modalShowEliminar: false,
+            mensajeError:'',
+
             dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
             actualizar:true,
             eliminar:true,
@@ -628,7 +637,9 @@ export default class RegistrarExplotacion extends React.Component {
 
                             axios.get(`http://localhost:3000/getFasesByIdEtapa/${etapa.id}`, config)
                                 .then((res) => {
-                                    console.log('res fas', res)
+
+                                   // console.log('res fas', res)
+
                                     let fases = [];
                                     res.data.forEach((element, j) => {
 
@@ -684,7 +695,9 @@ export default class RegistrarExplotacion extends React.Component {
                                         // fase.tipoMaquinaria.shift();
                                         axios.get(`http://localhost:3000/getTiposMaquinariaByIdFase/${fase.id}`, config)
                                             .then((res) => {
-                                                console.log('res tipoMaq', res)
+
+                                                //console.log('res tipoMaq', res)
+
                                                 res.data.forEach((item) => {
                                                     let tipoMaquinaria = {
                                                         nombre:null,
@@ -693,20 +706,32 @@ export default class RegistrarExplotacion extends React.Component {
                                                         cantidad:0,
                                                         accordionKey:0,
                                                         maquinariasShow:'none',
-                                                        maquinarias:[]
+
+                                                        maquinarias:[{
+                                                            id:-1,
+                                                            serial:null,
+                                                        }]
+
                                                     }
                                                     tipoMaquinaria.id = item.clave;
                                                     tipoMaquinaria.nombre = item.nombre;
                                                     tipoMaquinaria.costo = item.costo;
                                                     tipoMaquinaria.cantidad = item.cantidad;
-                                                    fase.tipoMaquinariaId.push(tipoMaquinaria.id)
+
+                                                    fase.tipoMaquinariaId.push(tipoMaquinaria.id);
+                                                  //  console.log("Fase TIPO MAQU",tipoMaquinaria,"FaseId",fase.numero,"etapa",etapa.numero);
+
 
                                                     this.setState((prevState) => ({
                                                         etapas: prevState.etapas.map((etapaMap) => {
                                                             if (etapaMap.id === etapa.id){
                                                                 return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
                                                                     if (faseMap.id === fase.id){
-                                                                        return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.concat(tipoMaquinaria)}
+
+                                                                      //  return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.concat(tipoMaquinaria)}
+
+                                                                        return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.concat(tipoMaquinaria), tipoMaquinariaId: faseMap.tipoMaquinariaId.concat(tipoMaquinaria.id)}
+
                                                                     }
                                                                     else {
                                                                         return faseMap
@@ -718,6 +743,9 @@ export default class RegistrarExplotacion extends React.Component {
                                                             }
                                                         })
                                                     }));
+
+                                                   // console.log("ESTADO  TIPO MAQUI",this.state);
+
                                                     // console.log('estado tm', this.state)
 
                                                     // axios.get(`http://localhost:3000/getMaquinariasByIdTipoMaquinaria/${item.clave}`, config)
@@ -945,12 +973,31 @@ export default class RegistrarExplotacion extends React.Component {
                     state.Minerales.push(mineral);
                 }
 
+
                 this.setState(() => ({
                     mineralId: state.mineralId,
                     minerales: mineralesMetalicos,
                 }));
                 console.log('state mm', this.state.minerales)
             }
+
+            else{
+                let mineral={
+                        nombre:null,
+                        id:-1,
+                        total: 0,
+                        accordionKey:0,
+                        
+                    }
+                state.mineralShow='none',
+                    
+                    state.Minerales.push(mineral);
+                    this.setState(() => ({
+                        minerales: state.Minerales,
+                        mineralShow: state.mineralShow
+                    }));
+            }
+
         }).catch((e) => {
             console.log('Error en axios')
         })
@@ -994,6 +1041,7 @@ export default class RegistrarExplotacion extends React.Component {
                     state.MineralesNoMetalicos.push(mineral);
                 }
 
+
                 this.setState(() => ({
                     mineralNoMetalicoId: state.mineralNoMetalicoId,
                     MineralesNoMetalicos: state.MineralesNoMetalicos
@@ -1001,6 +1049,26 @@ export default class RegistrarExplotacion extends React.Component {
 
                 console.log('state nm', this.state.mineralesNoMetalicos)
             }
+
+            else{
+
+                    let mineral={
+                        nombre:null,
+                        id:-1,
+                        total: 0,
+                        accordionKey:0,
+                        
+                    }
+                    state.MineralesNoMetalicos.push(mineral);
+                    state.mineralNoMetalicoShow='none',
+                    this.setState(() => ({
+                        
+                        MineralesNoMetalicos: state.MineralesNoMetalicos,
+                        mineralNoMetalicoShow: state.mineralNoMetalicoShow
+                    }));
+                
+            }
+
 
         }).catch((e) => {
             console.log('Error en axios')
@@ -2223,6 +2291,13 @@ export default class RegistrarExplotacion extends React.Component {
     }
 
 
+    modalErrorClose = () => {
+        this.setState({ modalShowEliminar: false, reload: true });
+    }
+    modalErrorOpen = () => {
+        this.setState({ modalShowEliminar: true })
+    };
+
 
     handleOnClickSubmittData=()=>{
 
@@ -2280,7 +2355,9 @@ export default class RegistrarExplotacion extends React.Component {
         this.state.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value;
         this.state.yacimiento.descripcion*/
         //console.log('NOMBRE YACIMEITNO',incompleto);
-        info.yacimiento.id = this.state.yacimiento.id;
+
+        info.yacimiento.id = Number(this.state.yacimiento.id);
+
 
 
 
@@ -2334,7 +2411,9 @@ export default class RegistrarExplotacion extends React.Component {
                     }]
                 }
                 
-                etapa.id = etapaR.id;
+
+                etapa.id = Number(etapaR.id);
+
 
                 
                 dia = (etapaR.fechaI.dia<10)? "0"+etapaR.fechaI.dia: etapaR.fechaI.dia;
@@ -2379,7 +2458,9 @@ export default class RegistrarExplotacion extends React.Component {
                             }]
                         }
 
-                        fase.id = faseR.id;                
+
+                        fase.id = Number(faseR.id);                
+
                         
                         dia = (faseR.fechaI.dia<10)? "0"+faseR.fechaI.dia: faseR.fechaI.dia;
                         mes = (faseR.fechaI.mes<10)? "0"+faseR.fechaI.mes: faseR.fechaI.mes;
@@ -2424,7 +2505,8 @@ export default class RegistrarExplotacion extends React.Component {
 
 
 
-                                empleado.id = empleadoR.id;
+                                empleado.id = Number(empleadoR.id);
+
                                 empleado.estatus = 3;
 
                                 empleadoR.horario.forEach((horarioR)=>{
@@ -2482,7 +2564,9 @@ export default class RegistrarExplotacion extends React.Component {
                                     id:null,
                                 }
 
-                                maquinaria.id = maquinariaR.id;
+
+                                maquinaria.id = Number(maquinariaR.id);
+
                                 maquinaria.estatus = 4;
 
                                 if((maquinaria.id!=0)&&(maquinaria.id>0)){
@@ -2503,6 +2587,144 @@ export default class RegistrarExplotacion extends React.Component {
         });
 
         console.log(info);
+
+
+        //Verificaciones
+        // let error = false;
+        // if(info.explotacion.fechaI=='0-00-00'){
+        //     this.setState({ mensajeError: 'La fecha de inicio ingresada no es una fecha válida' })
+        //     this.modalErrorOpen();
+        //     error =true;
+        // }
+        // let etapaNum=0;
+        // let faseNum=0;
+        // let auxNum=0;
+
+       
+        // if(error==false){
+        //     for(let i=0; i<info.etapas.length;i++){
+
+        //         for(let j=0; j<info.etapas[i].fases.length; j++){
+                
+        //             for(let k=0; k<info.etapas[i].fases[j].cargos.length; k++){
+                
+        //                 if((info.etapas[i].fases[j].cargos[k].empleados==undefined)||(info.etapas[i].fases[j].cargos[k].empleados==null)||(info.etapas[i].fases[j].cargos[k].empleados.length==0)){
+                            
+                            
+        //                     console.log(info);
+        //                     if(error==false){
+        //                         this.setState({ mensajeError: 'Debe asignar al menos un empleado al cargo '+this.state.etapas[i].fases[j].cargos[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
+                            
+        //                         this.modalErrorOpen();
+        //                         console.log(this.state.mensajeError,this.state.modalShowEliminar);
+        //                         error =true;
+        //                     }
+                            
+        //                 }
+        //                 else{
+        //                     for(let m=0; m<info.etapas[i].fases[j].cargos[k].empleados.length; m++){
+        //                         if((info.etapas[i].fases[j].cargos[k].empleados[m].horario==undefined)||(info.etapas[i].fases[j].cargos[k].empleados[m].horario==null)||(info.etapas[i].fases[j].cargos[k].empleados[m].horario.length==0)){
+                                    
+        //                             if(error==false){
+        //                                  this.setState({ mensajeError: 'Debe asignar un horario al empleado '+this.state.etapas[i].fases[j].cargos[k].empleados[m].nombre+' del cargo '+this.state.etapas[i].fases[j].cargos[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
+                            
+
+        //                                 this.modalErrorOpen();
+        //                                 error =true;
+        //                             }
+                                   
+        //                         }
+        //                     }
+        //                 }
+
+        //             }
+        //             for(let k=0; k<info.etapas[i].fases[j].tipoMaquinaria.length; k++){
+                    
+        //                 if((info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias==undefined)||(info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias==null)||(info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias.length==0)){
+        //                     if(error==false){
+        //                         this.setState({ mensajeError: 'Debe asignar al menos una maquinaria al tipo de maquinaria '+this.state.etapas[i].fases[j].tipoMaquinaria[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
+                                
+        //                         this.modalErrorOpen();
+        //                         error =true;
+        //                     }
+        //                 }
+                         
+        //             }
+        //         }
+
+        //     }
+        // }
+
+        // if (error === false){
+
+            const config = {
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                responseType: 'json',
+                data: info
+            }
+
+            axios.post('http://localhost:3000/crearExplotacion', config)
+                .then((res) => {
+                    console.log(res)
+                    // this.props.history.push('/cliente')
+                }).catch((e) => {
+                    console.log('catch', e)
+                    this.setState({ mensajeError: 'Error creando la explotacion' })
+                    this.modalErrorOpen()
+                })
+        // }
+
+
+       /* info.etapas.forEach((etapa)=>{
+            faseNum=0;
+            etapa.fases.forEach((fase)=>{
+                console.log(etapaNum,faseNum);
+                console.log(info.etapas);
+                fase.cargos.forEach((cargo)=>{
+                   
+                    console.log('entre pero no me importo');
+                    if((cargo.empleados==undefined)||(cargo.empleados==null)||(cargo.empleados.length==0)||(cargo.empleados.id<=0)){
+                        
+                        if(this.state.modalShowEliminar==false){
+                            console.log("Entre");
+                            console.log("maqu", etapaNum,faseNum);
+                            this.setState({ mensajeError: 'Debe asignar al menos un empleado al cargo '+this.state.etapas[etapaNum].fases[faseNum].cargos[auxNum].nombre+' en la fase '+(this.state.etapas[etapaNum].fases[faseNum].numero )+' de la etapa '+(this.state.etapas[etapaNum].numero)});
+                            
+                            this.modalErrorOpen();
+                           
+                        }
+                        
+                        
+                    }
+                    auxNum++;
+                });
+                auxNum=0;
+                
+                fase.tipoMaquinaria.forEach((tipoMaquinaria)=>{
+
+                    if(this.state.modalShowEliminar==false){
+
+                        if((tipoMaquinaria.maquinarias==undefined)||(tipoMaquinaria.maquinarias==null)||(tipoMaquinaria.maquinarias.length==0)){
+                        
+                        this.setState({ mensajeError: 'Debe asignar al menos una maquinaria al tipo de maquinaria '+this.state.etapas[etapaNum].fases[faseNum].tipoMaquinaria[auxNum].nombre+' en la fase '+(faseNum+1)+' de la etapa '+(etapaNum+1)});
+                        
+                        this.modalErrorOpen();
+                        }
+                        auxNum++;
+                    }
+                });
+                faseNum++;
+                
+                
+                
+            });
+            etapaNum++;
+        });
+*/
+
+
 
     }
 
@@ -3269,7 +3491,14 @@ export default class RegistrarExplotacion extends React.Component {
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario="Diego Gutiérrez"/>
-  
+
+                <ModalAdvertencia
+                    show={this.state.modalShowEliminar}
+                    onHide={this.modalErrorClose}
+                    infoeliminar={this.state.mensajeError}
+                    mensaje={''}
+                />
+
                 <Container className="FormContainer">
                    
 
@@ -3286,7 +3515,9 @@ export default class RegistrarExplotacion extends React.Component {
 
 
                                     <Form.Row className="formMargins" >
-                                        <FormFecha idF={"0I"} onChangeF={this.handleOnChangeFecha}  titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={false}/>
+
+                                        <FormFecha idF={"0I"} onChangeF={this.handleOnChangeFecha}  idTexto="FechaInicioTexto" titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft" disabled={false}/>
+
                                         
                                         <FormFecha idF={"0F"} titulo="Fecha Final de explotación" clase="inputsPaddingLeft" textoAuxiliar="Calculado" dia={(this.state.explotacion.fechaF.dia==0)?"- -":this.state.explotacion.fechaF.dia} mes={(this.state.explotacion.fechaF.mes==0)?"- -":this.state.explotacion.fechaF.mes} ano={(this.state.explotacion.fechaF.ano==0)?"- - - -":this.state.explotacion.fechaF.ano} disabled={true}/>    
                                     </Form.Row>
@@ -3356,7 +3587,9 @@ export default class RegistrarExplotacion extends React.Component {
 
                                     <Form.Group controlId="YacimientosTamañoYacimiento"  className="inputsPaddingRight">
                                         <Form.Label className="cliente-description-fields-text formMarginsE">Ubicación</Form.Label>
-                                        <FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>
+
+                                        {this.state.yacimiento.ubicacion.idParroquia && <FormLugarPred idParroquia={this.state.yacimiento.ubicacion.idParroquia} predet={true} accion='CO'/>}
+
                                     </Form.Group>
                                     
                                 </Card.Body>
@@ -3370,7 +3603,9 @@ export default class RegistrarExplotacion extends React.Component {
 
 
 
-                    <Accordion defaultActiveKey={1} >
+
+                    <Accordion defaultActiveKey={1} style={{display: this.state.mineralShow}} >
+
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
                                 <FormTitulo titulo="Minerales Metálicos"/>
@@ -3424,7 +3659,9 @@ export default class RegistrarExplotacion extends React.Component {
 
 
 
-                    <Accordion defaultActiveKey={1} >
+
+                    <Accordion defaultActiveKey={1} style={{display: this.state.mineralNoMetalicoShow}}  >
+
                         <Card className="CardAcc">
                             <Accordion.Toggle as={Card.Header} eventKey={this.state.accordionKey[2]} onClick={() => this.accordionf(2)} className="accordion borderacc">
                                 <FormTitulo titulo="Minerales No Metálicos"/>
@@ -3753,7 +3990,12 @@ export default class RegistrarExplotacion extends React.Component {
                                                                                 );
                                                                             })}
                                                                             </Container>
-                                                                            <FormTitulo titulo="Tipo de Maquinarias"/>
+
+
+                                                                            <div style={{display: ((fase.tipoMaquinaria==null)||(fase.tipoMaquinaria==undefined) || (fase.tipoMaquinaria.length==0))?'none':'inline'}}>
+                                                                                <FormTitulo titulo="Tipo de Maquinarias"/>
+                                                                            </div>
+
                                                                            
                                                                             <Container>
                                                                             {fase.tipoMaquinaria && fase.tipoMaquinaria.map((tipoMaquinaria,indexTM)=>{             
@@ -3867,7 +4109,9 @@ export default class RegistrarExplotacion extends React.Component {
                         Cancelar
                     </Button>
                     <Button className="RYacimiento-btn btn-block btn-margin-izq" onClick={this.handleOnClickSubmittData}>
-                        Iniciar Explotación
+
+                        Registrar Explotación
+
                     </Button>
                     </div>
                 </Container>
