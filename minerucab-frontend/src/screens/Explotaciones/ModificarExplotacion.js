@@ -442,7 +442,7 @@ export default class ModificarExplotacion extends React.Component {
             }]
         }
 
-         const config = {
+       /*  const config = {
             headers: {
               'Content-Type': 'application/json'
             },
@@ -926,10 +926,10 @@ export default class ModificarExplotacion extends React.Component {
                                         
                                         //  YEYO*/
                                     
-                                    axios.get(`http://localhost:3000/getTiposMaquinariaByIdFase/${fase.id}`, config)
+                                   /* axios.get(`http://localhost:3000/getTiposMaquinariaByIdFase/${fase.id}`, config)
                                         .then((res) => {
                                             let tiposMaquinaria = [];
-                                            console.log('Tipo de Maquinaria', res)
+                                           // console.log('Tipo de Maquinaria', res)
                                             res.data.forEach((item) => {
                                                 let tipoMaquinaria={
                                                     nombre:null,
@@ -991,7 +991,7 @@ export default class ModificarExplotacion extends React.Component {
                                                 // faseState.tipoMaquinaria.push(tipoMaquinariaState);
 
 */
-                                                this.setState((prevState) => ({
+                                                /*this.setState((prevState) => ({
                                                     etapas: prevState.etapas.map((etapaMap) => {
                                                         if (etapaMap.id === etapa.id){
                                                             return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
@@ -1083,7 +1083,7 @@ export default class ModificarExplotacion extends React.Component {
                                             console.log('Error en axios')
                                         })
     */
-                                        fases.push(fase)
+                                        /*fases.push(fase)
 
                                         // YEYO
                                         // console.log('faseStateCargo', faseState.cargos)
@@ -2453,7 +2453,7 @@ export default class ModificarExplotacion extends React.Component {
             }
             state.etapas.push(etapa);
         }
-*/
+
 
         
 
@@ -2472,7 +2472,7 @@ export default class ModificarExplotacion extends React.Component {
         //     MineralesNoMetalicos: state.MineralesNoMetalicos,
         //     etapas: state.etapas
         // }));
-    }
+    */}
 
     /*inicializarInputs=()=>{
 

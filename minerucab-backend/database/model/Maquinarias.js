@@ -89,7 +89,7 @@ const getMaquinariasByIdTipoMaquinaria = (req, res) => {
     });
     console.log(req.body.data)
     client.connect();
-    const text = 'SELECT MA.Clave clave, MA.Identificador identificador FROM MU_MAQUINARIA MA, MU_TIPO_MAQUINARIA TM WHERE TM.Clave = MA.fk_tipo_maquinaria AND TM.Clave = ($1);';
+    const text = 'SELECT MA.Clave clave, MA.Identificador identificador FROM MU_MAQUINARIA MA, MU_TIPO_MAQUINARIA TM WHERE TM.Clave = MA.fk_tipo_maquinaria AND TM.Clave = ($1) AND MA.fk_estatus = 1;';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {

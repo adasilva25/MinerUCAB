@@ -26,7 +26,7 @@ const createEmpleado = (info, callback) => {
 
 const getAllEmpleados = (req, res) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     client.connect();
 
@@ -106,7 +106,7 @@ const getEmpleadosByIdCargo = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     client.connect();
-    const text = 'SELECT E.Clave "Clave", E.p_nombre "Nombre", E.p_apellido "Apellido", E.ci "Cédula", E.sexo "Sexo" FROM mu_empleado E, MU_CARGO C WHERE C.clave = ($1) AND C.Clave = E.fk_cargo;';
+    const text = 'SELECT E.Clave "Clave", E.p_nombre "Nombre", E.p_apellido "Apellido", E.ci "Cédula", E.sexo "Sexo" FROM mu_empleado E, MU_CARGO C WHERE C.clave = ($1) AND C.Clave = E.fk_cargo AND E.fk_estatus = 1;';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {

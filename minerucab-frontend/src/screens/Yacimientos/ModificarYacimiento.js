@@ -36,7 +36,7 @@ export default class ModificarYacimiento extends React.Component {
             prueba: true,
             key:"Etapa 1",
             explotacion:{
-                id:null,
+                id:null, 
                 duracion:0,
                 costo:0,
                 estatus:null,

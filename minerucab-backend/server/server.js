@@ -82,7 +82,7 @@ app.get('/getAllCargos', Cargos.getAllCargos);
 app.get('/getCargoByIdEmpleado/:id', Cargos.getCargoByIdEmpleado);
 app.get('/getAllRoles', Roles.getAllRoles);
 app.get('/getCargosByIdFase/:id', Cargos.getCargosByIdFase);
-/* -------------------- EMPLEADO -------------------- */
+/* -------------------- EMPLEADO -------------------- */ 
 app.get('/getRolByIdEmpleado/:id', Roles.getRolByIdEmpleado);
 app.get('/getAllEmpleados', Empleados.getAllEmpleados);
 app.get('/getCriticInfoEmpleados', Empleados.getCriticInfoEmpleados)
@@ -103,9 +103,6 @@ app.get('/getDetalleVentaByIdVenta/:id', DetalleVentas.getDetalleVentaByIdVenta)
 /* -------------------- EXPLOTACIONES -------------------- */
 app.get('/getAllExplotaciones', Explotaciones.getAllExplotaciones)
 app.get('/getEtapasByIdExplotacion/:id', Explotaciones.getEtapasByIdExplotacion);
-app.get('/getAllInfoExplotacionById/:id', Explotaciones.getAllInfoExplotacionById);
-app.get('/getEtapasYEstatusByIdExplotacion/:id', Explotaciones.getEtapasYEstatusByIdExplotacion);
-app.get('/getFasesYEstatusByIdEtapa/:id', Explotaciones.getFasesYEstatusByIdEtapa);
 /* -------------------- FASES -------------------- */
 app.get('/getFasesByIdEtapa/:id', Fases.getFasesByIdEtapa)
 /* -------------------- LUGAR -------------------- */
