@@ -860,10 +860,7 @@ export default class ModificarExplotacion extends React.Component {
                                     cantidad:0,
                                     accordionKey:0,
                                     maquinariasShow:'none',
-                                    maquinarias:[{
-                                        id:-1,
-                                        serial:null,
-                                    }],
+                                    maquinarias:[],
                                 }]
             
                             }]
@@ -930,22 +927,7 @@ export default class ModificarExplotacion extends React.Component {
                                         ano:0
                                     },
                                     cargos:[],
-                                    tipoMaquinaria:[{
-                                        nombre:null,
-                                        id:-1,
-                                        costo:0,
-                                        cantidad:0,
-                                        estatus:null,
-                                        accordionKey:0,
-                                        maquinariasShow:'none',
-                                        maquinariasId:[],
-                                        checkInicialMaquiaria:true,
-                                        maquinarias:[{
-                                            id:-1,
-                                            serial:null,
-                                            estatus:null,
-                                        }],
-                                    }]
+                                    tipoMaquinaria:[]
                 
                                 }]
                             }
@@ -1043,7 +1025,7 @@ export default class ModificarExplotacion extends React.Component {
                                                 ano:0
                                             },
                                             cargos:[],
-                                            tipoMaquinaria:[{
+                                            tipoMaquinaria:[/*{     EN CASO DE ERROR QUITAR
                                                 nombre:null,
                                                 id:-1,
                                                 costo:0,
@@ -1053,12 +1035,8 @@ export default class ModificarExplotacion extends React.Component {
                                                 maquinariasShow:'none',
                                                 maquinariasId:[],
                                                 checkInicialMaquiaria:true,
-                                                maquinarias:[{
-                                                    id:-1,
-                                                    serial:null,
-                                                    estatus:null,
-                                                }],
-                                            }]
+                                                maquinarias:[],
+                                            }*/]
                                         }
 
                                         let date 
@@ -1135,6 +1113,7 @@ export default class ModificarExplotacion extends React.Component {
                                                         cantidad:0,
                                                         accordionKey:0,
                                                         maquinariasShow:'none',
+                                                        maquinariasId: [],
                                                         maquinarias:[]
                                                     }
                                                     tipoMaquinaria.id_tipo_maquinaria_fase = item.clave_tipo_maquinaria_fase;
@@ -1161,14 +1140,48 @@ export default class ModificarExplotacion extends React.Component {
                                                             }
                                                         })
                                                     }));
-                                                    // console.log('estado tm', this.state)
+                                                    
 
                                                     axios.get(`http://localhost:3000/getMaquinariaByIdTipoMaquinariaFase/${tipoMaquinaria.id_tipo_maquinaria_fase}`, config)
                                                         .then((res) => {
+                                                            console.log('res-maq-fase', res, fase)
+                                                            res.data.forEach((item) => {
+                                                                let maquinaria = {
+                                                                    id: item.clave_maquinaria,
+                                                                    estatus: item.estatus,
+                                                                    serial: item.serial
+                                                                }
+                                                                tipoMaquinaria.maquinariasId.push(item.clave_maquinaria);
 
+                                                                this.setState((prevState) => ({
+                                                                    etapas: prevState.etapas.map((etapaMap) => {
+                                                                        if (etapaMap.id === etapa.id){
+                                                                            return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
+                                                                                if (faseMap.id === fase.id){
+                                                                                    return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.map((tipoMaquinariaMap) => {
+                                                                                        if (tipoMaquinariaMap.id === tipoMaquinaria.id){
+                                                                                            return{...tipoMaquinariaMap, maquinarias: tipoMaquinariaMap.maquinarias.concat(maquinaria)}
+                                                                                        }
+                                                                                        else{
+                                                                                            return tipoMaquinariaMap
+                                                                                        }
+                                                                                    })}
+                                                                                }
+                                                                                else {
+                                                                                    return faseMap
+                                                                                }
+                                                                            })}
+                                                                        }
+                                                                        else{
+                                                                            return etapaMap
+                                                                        }
+                                                                    })
+                                                                }));
+
+                                                            })
                                                         })  
                                                         .catch((e) => {
-
+                                                            console.log('Error en axios')
                                                         })  
                                                     })
                                                 })
@@ -1307,7 +1320,6 @@ export default class ModificarExplotacion extends React.Component {
                                                                                     
                                                                                     empleado.horario.forEach((horario) => {
                                                                                         if (horario.dia === item.dia){
-                                                                                            console.log('iguales', horario.dia, item.dia)
                                                                                             horario.id = item.clave_horario
                                                                                             horario.dia = item.dia
                                                                                             horario.horaEntrada = item.hora_entrada
@@ -1386,7 +1398,92 @@ export default class ModificarExplotacion extends React.Component {
                 console.log('Error en axios')
             })
   
+        axios.get(`http://localhost:3000/getAllMineralesMetalicosByIdYacimiento/${this.props.match.params.id}`, config)
+            .then((res) => {
+                if (res.data.length > 0){
+                    let mineralesMetalicos = []
+                    res.data.forEach((item) => {
+                        let mineral = {}
+                        mineral.id = item.clave_mineral_metalico;
+                        mineral.total = item.cantidad_mineral_metalico;
+                        mineral.nombre = item.nombre_mineral_metalico;
+                        mineralesMetalicos.push(mineral)
+                    })
+    
+                    state.Minerales.shift();
+    
+                    for(let i=0; i<mineralesMetalicos.length; i++){
+    
+                        
+                        state.mineralId.push(mineralesMetalicos[i].id);
+    
+                        let mineral = {
+                            nombre:null,
+                            id:-1,
+                            total: 0,
+                            accordionKey:0,
+                        }
+    
+                        mineral.nombre=mineralesMetalicos.nombre;
+                        mineral.id=mineralesMetalicos.id;
+                        mineral.total=mineralesMetalicos.total;
+    
+                        state.Minerales.push(mineral);
+                    }
+    
+                    this.setState(() => ({
+                        mineralId: state.mineralId,
+                        minerales: mineralesMetalicos,
+                    }));
+                }
+            }).catch((e) => {
+                console.log('Error en axios')
+            })
 
+        axios.get(`http://localhost:3000/getAllMineralesNoMetalicosByIdYacimiento/${this.props.match.params.id}`, config)
+            .then((res) => {
+                if (res.data.length > 0){
+
+                    let mineralesNoMetalicos = []
+                    res.data.forEach((item) => {
+                        let mineral = {}
+                        mineral.id = item.clave_mineral_metalico;
+                        mineral.total = item.cantidad_mineral_metalico;
+                        mineral.nombre = item.nombre_mineral_metalico;
+                        mineralesNoMetalicos.push(mineral)
+
+                        // console.log('mu nom', mineral.nombre)
+                    })
+
+                    info.mineralesNoMetalicos = mineralesNoMetalicos;
+
+                    state.MineralesNoMetalicos.shift();
+                    for(let i=0; i<info.mineralesNoMetalicos.length; i++){
+                        state.mineralNoMetalicoId.push(info.mineralesNoMetalicos[i].id);
+
+                        let mineral={
+                            nombre:null,
+                            id:-1,
+                            total: 0,
+                            accordionKey:0
+                        }
+
+                        mineral.nombre=info.mineralesNoMetalicos[i].nombre;
+                        mineral.id=info.mineralesNoMetalicos[i].id;
+                        mineral.total=Number(info.mineralesNoMetalicos[i].total);
+
+                        state.MineralesNoMetalicos.push(mineral);
+                    }
+
+                    this.setState(() => ({
+                        mineralNoMetalicoId: state.mineralNoMetalicoId,
+                        MineralesNoMetalicos: state.MineralesNoMetalicos
+                    }));
+                }
+
+            }).catch((e) => {
+                console.log('Error en axios')
+            })
 
 
 
@@ -4733,7 +4830,7 @@ export default class ModificarExplotacion extends React.Component {
                     
                                    
                                     <Container>
-                                        {this.state.Minerales.map((mineral,indexMin)=>{             
+                                        {this.state.Minerales.map((mineral,indexMin)=>{       
                                             return(
                                                 <div style={{display: this.state.mineralShow}}>
                                                     <Accordion defaultActiveKey={1} >
@@ -4750,7 +4847,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineral(evt,mineral.id)} controlId={'YacimientosTotalMineral'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
-                                                                                <Form.Control disabled type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
+                                                                                <Form.Control disabled type="text" className="form-input" value={mineral.total} placeholder="Introduzca cantidad" /> 
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>
@@ -4804,7 +4901,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineralNoMetalico(evt,mineral.id)} controlId={'YacimientosTotalMineralNoMetalico'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
-                                                                                <Form.Control disabled type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
+                                                                                <Form.Control disabled type="text" className="form-input" value={mineral.total} placeholder="Introduzca cantidad" /> 
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
                                                                                 </InputGroup.Append>

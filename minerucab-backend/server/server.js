@@ -82,15 +82,6 @@ app.get('/getAllCargos', Cargos.getAllCargos);
 app.get('/getCargoByIdEmpleado/:id', Cargos.getCargoByIdEmpleado);
 app.get('/getAllRoles', Roles.getAllRoles);
 app.get('/getCargosByIdFase/:id', Cargos.getCargosByIdFase);
-/* -------------------- EMPLEADO -------------------- */
-app.get('/getRolByIdEmpleado/:id', Roles.getRolByIdEmpleado);
-app.get('/getAllEmpleados', Empleados.getAllEmpleados);
-app.get('/getCriticInfoEmpleados', Empleados.getCriticInfoEmpleados)
-app.get('/getEmpleadoByCedula/:cedula', Empleados.getEmpleadoByCedula);
-app.get('/getEmpleadoById/:id', Empleados.getEmpleadoById);
-app.get('/getEmpleadosByIdCargo/:id', Empleados.getEmpleadosByIdCargo);
-app.get('/getEmpleadosByIdCargoFase/:id', Empleados.getEmpleadosByIdCargoFase);
-app.get('/getHorarioEmpleadoByIdEmpleadoCargoFase/:id', Empleados.getHorarioEmpleadoByIdEmpleadoCargoFase);
 /* -------------------- CLIENTES -------------------- */
 app.get('/getClienteNombreApellidoById/:id', ClientesNaturales.getClienteNombreApellidoById);
 app.get('/getAllClientes', ClientesNaturales.getAllClientes);
@@ -102,6 +93,15 @@ app.get('/getClienteById/:id', ClientesNaturales.getClienteById);
 app.get('/getClienteJuridicoById/:id', ClientesJuridicos.getClienteJuridicoById);
 /* -------------------- DETALLES DE VENTAS -------------------- */
 app.get('/getDetalleVentaByIdVenta/:id', DetalleVentas.getDetalleVentaByIdVenta);
+/* -------------------- EMPLEADO -------------------- */
+app.get('/getRolByIdEmpleado/:id', Roles.getRolByIdEmpleado);
+app.get('/getAllEmpleados', Empleados.getAllEmpleados);
+app.get('/getCriticInfoEmpleados', Empleados.getCriticInfoEmpleados)
+app.get('/getEmpleadoByCedula/:cedula', Empleados.getEmpleadoByCedula);
+app.get('/getEmpleadoById/:id', Empleados.getEmpleadoById);
+app.get('/getEmpleadosByIdCargo/:id', Empleados.getEmpleadosByIdCargo);
+app.get('/getEmpleadosByIdCargoFase/:id', Empleados.getEmpleadosByIdCargoFase);
+app.get('/getHorarioEmpleadoByIdEmpleadoCargoFase/:id', Empleados.getHorarioEmpleadoByIdEmpleadoCargoFase);
 /* -------------------- EXPLOTACIONES -------------------- */
 app.get('/getAllExplotaciones', Explotaciones.getAllExplotaciones)
 app.get('/getEtapasByIdExplotacion/:id', Explotaciones.getEtapasByIdExplotacion);
@@ -116,6 +116,7 @@ app.get('/getLugarByIdParroquia/:id', Lugares.getLugarByIdParroquia);
 app.get('/getAllMaquinarias', Maquinarias.getAllMaquinarias);
 app.get('/getMaquinariaById/:id', Maquinarias.getMaquinariaById);
 app.get('/getMaquinariasByIdTipoMaquinaria/:id', Maquinarias.getMaquinariasByIdTipoMaquinaria);
+app.get('/getMaquinariaByIdTipoMaquinariaFase/:id', Maquinarias.getMaquinariaByIdTipoMaquinariaFase)
 /* -------------------- MINERALES -------------------- */
 app.get('/getAllMineralesMetalicos', Minerales.getAllMineralesMetalicos);
 app.get('/getAllMineralesNoMetalicos', Minerales.getAllMineralesNoMetalicos);
@@ -130,6 +131,11 @@ app.get('/getAllComponentesByIdMineralNoMetalico/:id', Minerales.getAllComponent
 app.get('/getAllPresentaciones', Presentaciones.getAllPresentaciones);
 app.get('/getAllPresentacionesByIdMineralMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralMetalico);
 app.get('/getAllPresentacionesByIdMineralNoMetalico/:id', Presentaciones.getAllPresentacionesByIdMineralNoMetalico);
+/* -------------------- PAGOS -------------------- */
+app.get('/getPagosChequeDeVenta/:id', PagosValidations.getPagosChequeDeVenta);
+app.get('/getPagosTarjetaCreditoDeVenta/:id', PagosValidations.getPagosTarjetaCreditoDeVenta);
+app.get('/getPagosTarjetaDebitoDeVenta/:id', PagosValidations.getPagosTarjetaDebitoDeVenta);
+app.get('/getPagosTransferenciaDeVenta/:id', PagosValidations.getPagosTransferenciaDeVenta);
 /* -------------------- SOLICITUDES DE COMPRA -------------------- */
 app.get('/getAllSolicitudesDeCompra', SolicitudesCompra.getAllSolicitudesDeCompra);
 app.get('/getSolicitudDeCompraInfoById/:id', SolicitudesCompra.getSolicitudDeCompraInfoById);
@@ -138,7 +144,6 @@ app.get('/getDetalleSolicitudCompraMineralNoMetalicoById/:id', SolicitudesCompra
 /* -------------------- TIPOS DE MAQUINARIAS -------------------- */
 app.get('/getAllTiposMaquinaria', TiposMaquinaria.getAllTiposMaquinaria);
 app.get('/getTiposMaquinariaByIdFase/:id', TiposMaquinaria.getTiposMaquinariaByIdFase);
-app.get('/getMaquinariaByIdTipoMaquinariaFase/:id', TiposMaquinaria.getMaquinariaByIdTipoMaquinariaFase)
 /* -------------------- TIPOS DE YACIMIENTOS -------------------- */
 app.get('/getAllTiposYacimiento', TiposYacimiento.getAllTiposYacimiento);
 app.get('/getTipoYacimientoByIdYacimiento/:id', TiposYacimiento.getTipoYacimientoByIdYacimiento);
@@ -149,11 +154,6 @@ app.get('/getVentaById/:id', Ventas.getVentaById);
 app.get('/getAllVentasClientesNaturales', Ventas.getAllVentasClientesNaturales);
 app.get('/getAllVentasClientesJuridicos', Ventas.getAllVentasClientesJuridicos);
 app.get('/getVentaInfo/:id', VentasValidations.getVentaInfo);
-/* -------------------- PAGOS -------------------- */
-app.get('/getPagosChequeDeVenta/:id', PagosValidations.getPagosChequeDeVenta);
-app.get('/getPagosTarjetaCreditoDeVenta/:id', PagosValidations.getPagosTarjetaCreditoDeVenta);
-app.get('/getPagosTarjetaDebitoDeVenta/:id', PagosValidations.getPagosTarjetaDebitoDeVenta);
-app.get('/getPagosTransferenciaDeVenta/:id', PagosValidations.getPagosTransferenciaDeVenta);
 /* -------------------- YACIMIENTOS -------------------- */
 app.get('/getAllYacimientos', Yacimientos.getAllYacimientos);
 app.get('/getAllYacimientoInfoById/:id', Yacimientos.getAllYacimientoInfoById);
