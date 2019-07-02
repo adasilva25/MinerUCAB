@@ -3135,6 +3135,10 @@ export default class ConsultarExplotacion extends React.Component {
         console.log("Etapa, explotacion",etapas,explotacion);
     }
 
+    goback=()=>{
+        history.push('/explotacion')
+    }
+
     render(){
         
         return ( 
@@ -3672,8 +3676,8 @@ export default class ConsultarExplotacion extends React.Component {
                     }
                     <div>
                     
-                    <Button className="RYacimiento-btn btn-block btn-margin-izq-vol">
-                        <a href='/explotacion'>Volver</a>
+                    <Button className="RYacimiento-btn btn-block btn-margin-izq-vol" onClick={this.goback}>
+                        Volver
                     </Button>
                     </div>
                 </Container>
