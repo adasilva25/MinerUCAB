@@ -2484,11 +2484,11 @@ export default class RegistrarExplotacion extends React.Component {
                         
                         fase.fechaF = faseR.fechaF.ano+'-'+mes+'-'+dia;
 
-                        if((etapaR.numero==1)&&(etapaR.numero==1)){
-                            fase.estatus = 2 ;
+                        if((etapaR.numero==1)&&(faseR.numero==1)){
+                            fase.estatus = 8;
                         }
                         else{
-                            fase.estatus = 8;
+                            fase.estatus = 2;
                         }
                         
                         
@@ -2685,6 +2685,7 @@ export default class RegistrarExplotacion extends React.Component {
             axios.post('http://localhost:3000/crearExplotacion', config)
                 .then((res) => {
                     console.log(res)
+                    history.push('/explotacion')
                     // this.props.history.push('/cliente')
                 }).catch((e) => {
                     console.log('catch', e)
@@ -3499,7 +3500,9 @@ export default class RegistrarExplotacion extends React.Component {
         console.log("Etapa, explotacion",etapas,explotacion);
     }
 
-
+    goback=()=>{
+        history.push('/explotacion')
+    }
 
     render(){
         
@@ -4122,7 +4125,7 @@ export default class RegistrarExplotacion extends React.Component {
                         </Card>
                     </Accordion>
                     <div>
-                    <Button className="RYacimiento-btn btn-block">
+                    <Button className="RYacimiento-btn btn-block" onClick={this.goback}>
                         Cancelar
                     </Button>
                     <Button className="RYacimiento-btn btn-block btn-margin-izq" onClick={this.handleOnClickSubmittData}>

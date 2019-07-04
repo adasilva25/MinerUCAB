@@ -1477,7 +1477,9 @@ export default class ConsultarYacimiento extends React.Component {
         
     }
 
-
+    goback=()=>{
+        history.push('/yacimiento')
+    }
    
     render(){
         
@@ -1942,10 +1944,10 @@ export default class ConsultarYacimiento extends React.Component {
                     </Accordion>
                     <div>
                     
-                    <Button className="RYacimiento-btn btn-block">
+                    <Button className="RYacimiento-btn btn-block" onClick={this.goback}>
                         Volver
                     </Button>
-                    {this.renderOpcionExplotacion()}
+                    
                     
                     </div>
                 </Container>
