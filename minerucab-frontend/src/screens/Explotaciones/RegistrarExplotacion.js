@@ -2606,73 +2606,73 @@ export default class RegistrarExplotacion extends React.Component {
         console.log(info);
 
 
-        //Verificaciones
-        // let error = false;
-        // if(info.explotacion.fechaI=='0-00-00'){
-        //     this.setState({ mensajeError: 'La fecha de inicio ingresada no es una fecha válida' })
-        //     this.modalErrorOpen();
-        //     error =true;
-        // }
-        // let etapaNum=0;
-        // let faseNum=0;
-        // let auxNum=0;
+        Verificaciones
+         let error = false;
+         if(info.explotacion.fechaI=='0-00-00'){
+             this.setState({ mensajeError: 'La fecha de inicio ingresada no es una fecha válida' })
+             this.modalErrorOpen();
+             error =true;
+         }
+         let etapaNum=0;
+         let faseNum=0;
+         let auxNum=0;
 
        
-        // if(error==false){
-        //     for(let i=0; i<info.etapas.length;i++){
+         if(error==false){
+             for(let i=0; i<info.etapas.length;i++){
 
-        //         for(let j=0; j<info.etapas[i].fases.length; j++){
+                 for(let j=0; j<info.etapas[i].fases.length; j++){
                 
-        //             for(let k=0; k<info.etapas[i].fases[j].cargos.length; k++){
+                     for(let k=0; k<info.etapas[i].fases[j].cargos.length; k++){
                 
-        //                 if((info.etapas[i].fases[j].cargos[k].empleados==undefined)||(info.etapas[i].fases[j].cargos[k].empleados==null)||(info.etapas[i].fases[j].cargos[k].empleados.length==0)){
+                         if((info.etapas[i].fases[j].cargos[k].empleados==undefined)||(info.etapas[i].fases[j].cargos[k].empleados==null)||(info.etapas[i].fases[j].cargos[k].empleados.length==0)){
                             
                             
-        //                     console.log(info);
-        //                     if(error==false){
-        //                         this.setState({ mensajeError: 'Debe asignar al menos un empleado al cargo '+this.state.etapas[i].fases[j].cargos[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
+                             console.log(info);
+                             if(error==false){
+                                 this.setState({ mensajeError: 'Debe asignar al menos un empleado al cargo '+this.state.etapas[i].fases[j].cargos[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
                             
-        //                         this.modalErrorOpen();
-        //                         console.log(this.state.mensajeError,this.state.modalShowEliminar);
-        //                         error =true;
-        //                     }
+                                 this.modalErrorOpen();
+                                 console.log(this.state.mensajeError,this.state.modalShowEliminar);
+                                 error =true;
+                             }
                             
-        //                 }
-        //                 else{
-        //                     for(let m=0; m<info.etapas[i].fases[j].cargos[k].empleados.length; m++){
-        //                         if((info.etapas[i].fases[j].cargos[k].empleados[m].horario==undefined)||(info.etapas[i].fases[j].cargos[k].empleados[m].horario==null)||(info.etapas[i].fases[j].cargos[k].empleados[m].horario.length==0)){
+                         }
+                         else{
+                             for(let m=0; m<info.etapas[i].fases[j].cargos[k].empleados.length; m++){
+                                 if((info.etapas[i].fases[j].cargos[k].empleados[m].horario==undefined)||(info.etapas[i].fases[j].cargos[k].empleados[m].horario==null)||(info.etapas[i].fases[j].cargos[k].empleados[m].horario.length==0)){
                                     
-        //                             if(error==false){
-        //                                  this.setState({ mensajeError: 'Debe asignar un horario al empleado '+this.state.etapas[i].fases[j].cargos[k].empleados[m].nombre+' del cargo '+this.state.etapas[i].fases[j].cargos[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
+                                     if(error==false){
+                                          this.setState({ mensajeError: 'Debe asignar un horario al empleado '+this.state.etapas[i].fases[j].cargos[k].empleados[m].nombre+' del cargo '+this.state.etapas[i].fases[j].cargos[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
                             
 
-        //                                 this.modalErrorOpen();
-        //                                 error =true;
-        //                             }
+                                         this.modalErrorOpen();
+                                         error =true;
+                                     }
                                    
-        //                         }
-        //                     }
-        //                 }
+                                 }
+                             }
+                         }
 
-        //             }
-        //             for(let k=0; k<info.etapas[i].fases[j].tipoMaquinaria.length; k++){
+                     }
+                     for(let k=0; k<info.etapas[i].fases[j].tipoMaquinaria.length; k++){
                     
-        //                 if((info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias==undefined)||(info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias==null)||(info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias.length==0)){
-        //                     if(error==false){
-        //                         this.setState({ mensajeError: 'Debe asignar al menos una maquinaria al tipo de maquinaria '+this.state.etapas[i].fases[j].tipoMaquinaria[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
+                         if((info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias==undefined)||(info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias==null)||(info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias.length==0)){
+                             if(error==false){
+                                 this.setState({ mensajeError: 'Debe asignar al menos una maquinaria al tipo de maquinaria '+this.state.etapas[i].fases[j].tipoMaquinaria[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
                                 
-        //                         this.modalErrorOpen();
-        //                         error =true;
-        //                     }
-        //                 }
+                                 this.modalErrorOpen();
+                                 error =true;
+                             }
+                         }
                          
-        //             }
-        //         }
+                     }
+                 }
 
-        //     }
-        // }
+             }
+         }
 
-        // if (error === false){
+         if (error === false){
 
             const config = {
                 headers: {
@@ -2691,7 +2691,7 @@ export default class RegistrarExplotacion extends React.Component {
                     this.setState({ mensajeError: 'Error creando la explotacion' })
                     this.modalErrorOpen()
                 })
-        // }
+         }
 
 
        /* info.etapas.forEach((etapa)=>{
