@@ -18,8 +18,35 @@ export default class Mineral extends React.Component {
         idEliminar: 0,
         reloadMet: false,
         reloadNoMet: false,
-        urlEliminar: ''
+        urlEliminar: '',
+        c: false,
+        r: false,
+        u: false,
+        d: false
     };
+    componentWillMount = () => {
+        const userInfoString = localStorage.getItem('user')
+        const userInfo = JSON.parse(userInfoString);
+        console.log(userInfo)
+
+        userInfo.forEach((info) => {
+            if (info.nombre.toLowerCase().includes('mineral')){
+                if (info.tipo_privilegio === 'C') {
+                    this.setState({ c: true });
+                }
+                if (info.tipo_privilegio === 'R') {
+                    this.setState({ r: true });
+                }
+                if (info.tipo_privilegio === 'U') {
+                    this.setState({ u: true });
+                }
+                if (info.tipo_privilegio === 'D') {
+                    this.setState({ d: true });
+                }
+            }
+        })
+        console.log('state', this.state)
+    }
     modalEliminarClose = () => {
         this.setState({ modalShowEliminar: false, reloadMet: true });
     }
@@ -123,9 +150,9 @@ export default class Mineral extends React.Component {
                                 urlModificar={'/gestionar_mineral_metalico'}
                                 urlConsultar={'/gestionar_mineral_metalico'}
                                 agregar={false}
-                                modificar={true}
-                                consultar={true}
-                                eliminar={true}
+                                modificar={this.state.u}
+                                consultar={this.state.r}
+                                eliminar={this.state.d}
                                 modalEliminar={this.modalEliminarOpen}
                                 modalCrear={this.modalCrearMineralOpen}
                                 reload={this.state.reloadMet}
@@ -150,10 +177,10 @@ export default class Mineral extends React.Component {
                                 data={'http://localhost:3000/getAllMineralesNoMetalicos'}
                                 urlModificar={'/gestionar_mineral_no_metalico'}
                                 urlConsultar={'/gestionar_mineral_no_metalico'}
-                                agregar={true}
-                                modificar={true}
-                                consultar={true}
-                                eliminar={true}
+                                agregar={this.state.c}
+                                modificar={this.state.u}
+                                consultar={this.state.r}
+                                eliminar={this.state.d}
                                 modalEliminar={this.modalEliminarOpen}
                                 modalCrear={this.modalCrearMineralOpen}
                                 reload={this.state.reloadNoMet}

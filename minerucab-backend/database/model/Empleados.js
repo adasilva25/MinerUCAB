@@ -125,7 +125,7 @@ const getEmpleadosByIdCargoFase = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     client.connect();
-    const text = 'SELECT E.Clave clave, E.CI ci, E.p_nombre nombre, E.Sexo sexo, ES.Nombre estatus, ECF.Clave clave_empleado_cargo_fase FROM MU_EMPLEADO E, MU_ESTATUS ES, MU_EMPLEADO_CARGO_FASE ECF WHERE ECF.fk_cargo_fase = ($1) AND E.Clave = ECF.fk_empleado AND ECF.fk_estatus = ES.Clave';
+    const text = 'SELECT E.Clave clave, E.CI ci, E.p_nombre nombre, E.p_apellido apellido, E.Sexo sexo, ES.Nombre estatus, ECF.Clave clave_empleado_cargo_fase FROM MU_EMPLEADO E, MU_ESTATUS ES, MU_EMPLEADO_CARGO_FASE ECF WHERE ECF.fk_cargo_fase = ($1) AND E.Clave = ECF.fk_empleado AND ECF.fk_estatus = ES.Clave';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {

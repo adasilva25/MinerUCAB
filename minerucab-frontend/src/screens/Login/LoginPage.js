@@ -18,6 +18,9 @@ export class LoginPage extends React.Component {
         modalShowEliminar: false,
         mensajeError: ''
     }
+    componentWillMount = () => {
+        localStorage.removeItem('user');
+    }
     modalErrorClose = () => {
         this.setState({ modalShowEliminar: false, reload: true });
     }
@@ -49,6 +52,7 @@ export class LoginPage extends React.Component {
                         res.data.password = this.state.password;
                         console.log(res)
                         this.props.login(res.data)
+                        localStorage.setItem('user', JSON.stringify(res.data))
                         history.push('/home')
                     }
                     else{

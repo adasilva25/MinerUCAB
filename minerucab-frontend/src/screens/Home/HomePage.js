@@ -10,10 +10,58 @@ import Container from 'react-bootstrap/Container'
 
 export class HomePage extends React.Component {
     state = { 
-        modalShow: false
-    };
+        modalShow: false,
+        yacimiento: null,
+        mineral: null,
+        explotacion: null,
+        venta: null,
+        solicitud: null,
+        empleado: false,
+        cliente: null,
+        inventario: null,
+        rol: null
+    }
     constructor(props){
         super(props);
+    }
+    componentDidMount = () => {
+        const userInfoString = localStorage.getItem('user')
+        const userInfo = JSON.parse(userInfoString);
+        console.log(userInfo)
+
+        userInfo.forEach((info) => {
+            console.log('info', info.nombre.toLowerCase().includes('empleado'))
+            if (info.nombre.toLowerCase().includes('yacimiento')){
+                this.setState({ yacimiento: true });
+            }
+            if (info.nombre.toLowerCase().includes('mineral')){
+                this.setState({ mineral: true });
+            }
+            if (info.nombre.toLowerCase().includes('explotación')){
+                this.setState({ explotacion: true });
+            }
+            if (info.nombre.toLowerCase().includes('venta')){
+                this.setState({ venta: true });
+            }
+            if (info.nombre.toLowerCase().includes('solicitud')){
+                this.setState({ solicitud: true });
+            }
+            if (info.nombre.toLowerCase().includes('empleado')){
+                console.log('entro en empleado')
+                this.setState({ empleado: true });
+                console.log('empleado', this.state)
+            }
+            if (info.nombre.toLowerCase().includes('cliente')){
+                this.setState({ cliente: true });
+            }
+            if (info.nombre.toLowerCase().includes('inventario')){
+                this.setState({ inventario: true });
+            }
+            if (info.nombre.toLowerCase().includes('rol')){
+                this.setState({ rol: true });
+            }
+        })
+        console.log('state', this.state)
     }
     modalClose = () => this.setState({ modalShow: false });
     modalOpen = () => {
@@ -21,12 +69,48 @@ export class HomePage extends React.Component {
     }  
     render(){
 
+        const userInfoString = localStorage.getItem('user')
+        const userInfo = JSON.parse(userInfoString);
+        console.log(userInfo)
+
+        userInfo.forEach((info) => {
+            if (info.nombre.toLowerCase().includes('yacimiento') && this.state.yacimiento !== true){
+                this.setState({ yacimiento: true });
+            }
+            if (info.nombre.toLowerCase().includes('mineral') && this.state.mineral !== true){
+                this.setState({ mineral: true });
+            }
+            if (info.nombre.toLowerCase().includes('explotación') && (this.state.explotacion !== true)){
+                this.setState({ explotacion: true });
+            }
+            if (info.nombre.toLowerCase().includes('venta') && this.state.venta !== true){
+                this.setState({ venta: true });
+            }
+            if (info.nombre.toLowerCase().includes('solicitud') && this.state.solicitud !== true){
+                this.setState({ solicitud: true });
+            }
+            if (info.nombre.toLowerCase().includes('empleado') && !this.state.empleado){
+                this.setState({ empleado: true });
+            }
+            if (info.nombre.toLowerCase().includes('cliente') && this.state.cliente !== true){
+                this.setState({ cliente: true });
+            }
+            if (info.nombre.toLowerCase().includes('inventario') && this.state.inventario !== true){
+                this.setState({ inventario: true });
+            }
+            if (info.nombre.toLowerCase().includes('rol') && this.state.rol !== true){
+                this.setState({ rol: true });
+            }
+        })
+        console.log('state', this.state)
+
         let actividades = [
             {
                 titulo: 'Yacimientos',
                 link:'/yacimiento',
                 image:'/images/Yacimientos.jpg',
-                descripcion:""
+                descripcion:"",
+                show: this.state.yacimiento
             },
 
             /*{
@@ -40,49 +124,56 @@ export class HomePage extends React.Component {
                 titulo: 'Minerales',
                 link:'/mineral',
                 image:'/images/Minerales.jpg',
-                descripcion:""
+                descripcion:"",
+                show: this.state.mineral
             },
 
             {
                 titulo: 'Explotaciones',
                 link:'/explotacion',
                 image:'/images/Explotaciones.jpg',
-                descripcion:""
+                descripcion:"",
+                show: this.state.explotacion
             },
 
             {
                 titulo: 'Ventas',
                 link:'/venta',
                 image:'/images/Ventas.png',
-                descripcion:""
+                descripcion:"",
+                show: this.state.venta
             },
 
             {
                 titulo: 'Solicitudes de compra',
                 link:'/solicitud_compra',
                 image:'/images/Compras.jpg',
-                descripcion:""
+                descripcion:"",
+                show: this.state.solicitud
             },
 
             {
                 titulo: 'Empleados',
                 link:'/empleado',
                 image:'/images/Empleados.jpg',
-                descripcion:""
+                descripcion:"",
+                show: this.state.empleado
             },
 
             {
                 titulo: 'Clientes',
                 link:'/cliente',
                 image:'/images/Clientes.jpg',
-                descripcion:""
+                descripcion:"",
+                show: this.state.cliente
             },
 
             {
                 titulo: 'Inventario',
                 link:'/inventario',
                 image:'/images/inventario.jpg',
-                descripcion:""
+                descripcion:"",
+                show: this.state.inventario
             },
             /*{
                 titulo: 'Empresas Aliadas',
@@ -109,6 +200,7 @@ export class HomePage extends React.Component {
                 actividad[k].push([""]);
             }
         }
+        
 
         var opciones = "Diego Gutiérrez";
 
