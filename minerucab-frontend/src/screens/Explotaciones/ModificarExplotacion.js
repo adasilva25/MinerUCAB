@@ -40,7 +40,7 @@ export default class ModificarExplotacion extends React.Component {
 
         this.state = {
             eliminadosFases: [],
-            dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
+            dias:["Lunes","Martes","Miércoles","Jueves","Viernes"],
             actualizar:true,
             eliminar:true,
             empleadosInsertados:false,
@@ -2400,6 +2400,7 @@ export default class ModificarExplotacion extends React.Component {
         info.explotacion.fechaFR = this.state.explotacion.fechaFR.ano+'-'+mes+'-'+dia;
 
 
+        let etapas_finalizadas = true;
 
 
         info.etapas.shift();
@@ -2458,9 +2459,13 @@ export default class ModificarExplotacion extends React.Component {
                 
                 etapa.estatus = etapaR.estatus;
                 
-                
+                if(etapa.estatus!=10){
+                    etapas_finalizadas = false;
+                }
 
                 etapa.fases.shift();
+
+                let fases_finalizadas = true;
 
                 etapaR.fases.forEach((faseR)=>{
                     if(faseR.numero != 0){
@@ -2507,7 +2512,10 @@ export default class ModificarExplotacion extends React.Component {
                         fase.estatus = faseR.estatus ;
                         
                         
-
+                        if(fase.estatus!=10){
+                            fases_finalizadas = false;
+                            fase.fechaFR = '0-00-00';
+                        }
 
                         
                         fase.cargos.shift();
@@ -2550,7 +2558,7 @@ export default class ModificarExplotacion extends React.Component {
                                                 case "Martes":
                                                     empleado.horario.push((horarioR.value==1)?3:4);
                                                     break;
-                                                case "Miercoles":
+                                                case "Miércoles":
                                                     empleado.horario.push((horarioR.value==1)?5:6);
                                                     break;
                                                 case "Jueves":
@@ -2610,11 +2618,19 @@ export default class ModificarExplotacion extends React.Component {
                         etapa.fases.push(fase);
                     }
                 });
+                
+                if(fases_finalizadas==false){
+                    etapa.fechaFR = '0-00-00';
+                }
                 info.etapas.push(etapa);
             }
         });
 
-        console.log('info',info);
+        if(etapas_finalizadas==false){
+            info.explotacion.fechaFR = '0-00-00';
+        }
+
+        console.log('infooooooooooooooooooooo',info);
 
 
 
@@ -2656,16 +2672,19 @@ export default class ModificarExplotacion extends React.Component {
                                 if((info.etapas[i].fases[j].cargos[k].empleados[m].horario==undefined)||(info.etapas[i].fases[j].cargos[k].empleados[m].horario==null)||(info.etapas[i].fases[j].cargos[k].empleados[m].horario.length==0)){
                                     
                                     if(error==false){
-                                         this.setState({ mensajeError: 'Debe asignar un horario al empleado '+this.state.etapas[i].fases[j].cargos[k].empleados[m].nombre+' del cargo '+this.state.etapas[i].fases[j].cargos[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
+                                        this.setState({ mensajeError: 'Debe asignar un horario al empleado '+this.state.etapas[i].fases[j].cargos[k].empleados[m].nombre+' del cargo '+this.state.etapas[i].fases[j].cargos[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
                             
 
                                         this.modalErrorOpen();
                                         error =true;
                                     }
+
                                    
                                 }
                             }
                         }
+
+                       
 
                     }
                     for(let k=0; k<info.etapas[i].fases[j].tipoMaquinaria.length; k++){
@@ -2680,6 +2699,16 @@ export default class ModificarExplotacion extends React.Component {
                         }
                          
                     }
+
+
+                    if((error==false)&&(info.etapas[i].fases[j].estatus==10)&&(info.etapas[i].fases[j].fechaFR=='0-00-00'))
+                    {
+                        this.setState({ mensajeError: 'La fecha final real asignada a la fase ' + (j+1) +' de la etapa '+(i+1)+' no es una fecha válida'});
+
+                        this.modalErrorOpen();
+                        error = true;
+                    }
+
                 }
 
             }
@@ -3466,6 +3495,7 @@ export default class ModificarExplotacion extends React.Component {
 
                 }
                 else{
+                    this.setFechaRCero(etapaNum,faseNum);
                     document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "La Fecha Final Real debe ser mayor a la Fecha de Inicio";
                 }
                 
@@ -3473,23 +3503,63 @@ export default class ModificarExplotacion extends React.Component {
             }
             else{
                
-                    
+                this.setFechaRCero(etapaNum,faseNum);
                 document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Introduzca una fecha válida";
                    
             }    
         }
         else{
             event.target.state='invalid';
-            
+            this.setFechaRCero(etapaNum,faseNum);
             document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Introduzca una fecha válida";
             console.log("invalido");
         }
             
         if(!valueDia && !valueMes && !valueAno){
             event.target.state='';
+            this.setFechaRCero(etapaNum,faseNum);
             document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Obligatorio";   
         }
     }
+
+
+
+    setFechaRCero=(etapaNum,faseNum)=>{
+        let etapas = this.state.etapas;
+        let explotacion = this.state.explotacion;
+
+        explotacion.fechaFR.dia = 0;
+        explotacion.fechaFR.mes = 0;
+        explotacion.fechaFR.ano = 0;
+
+        document.getElementById("FechaDia0FR").value =  "- -";
+        document.getElementById("FechaMes0FR").value =  "- -";
+        document.getElementById("FechaAno0FR").value =  "- - - -";
+
+
+
+        etapas[etapaNum-1].fechaFR.dia = 0;
+        etapas[etapaNum-1].fechaFR.mes = 0;
+        etapas[etapaNum-1].fechaFR.ano = 0;
+
+        document.getElementById("FechaDia"+etapaNum+"FR").value = "- -";
+        document.getElementById("FechaMes"+etapaNum+"FR").value = "- -";
+        document.getElementById("FechaAno"+etapaNum+"FR").value = "- - - -";
+
+
+
+        etapas[etapaNum-1].fases[faseNum-1].fechaFR.dia = 0;
+        etapas[etapaNum-1].fases[faseNum-1].fechaFR.mes = 0;
+        etapas[etapaNum-1].fases[faseNum-1].fechaFR.ano = 0;
+
+
+        this.setState(() => ({
+            etapas: etapas,
+            explotacion: explotacion
+        }));
+        console.log("Etapa, explotacion",etapas,explotacion);
+    }
+
 
     actualizarEstatus=(event,etapaNum,faseNum)=>{
 
@@ -3671,7 +3741,7 @@ export default class ModificarExplotacion extends React.Component {
 
                                            // value={this.state.explotacion.estatus}
 
-                                            defaultValue={this.state.explotacion.estatus}
+                                            value={this.state.explotacion.estatus}
 
                                             disabled={true}
                                             >
