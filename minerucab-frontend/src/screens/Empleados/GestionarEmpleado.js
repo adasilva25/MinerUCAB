@@ -14,6 +14,8 @@ import OpcionesLocales from '../../components/OpcionesLocales';
 import OpcionesGlobales from '../../components/OpcionesGlobales';
 import FormLugar from '../../components/FormLugar'
 import FormLugarPred from '../../components/FormLugarPred'
+import Tooltip from 'react-bootstrap/Tooltip'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import axios from 'axios';
 import $ from 'jquery'
 
@@ -235,7 +237,7 @@ export default class GestionarEmpleado extends React.Component {
                         as="select" 
                         id="cargo-empleado"
                         className="form-input form-input-dropdown-cargo-empleado">
-                        value={this.state.cargo.clave}
+                        
                         onChange={(e) => this.handleChange(e)}
                         {
                             this.renderOptions('cargo')
@@ -253,9 +255,12 @@ export default class GestionarEmpleado extends React.Component {
                         id="rol-usuario"
                         className="form-input form-input-dropdown-rol-usuario">
                         value={this.state.rol.clave}
-                        onClick={this.onInputChange}
+                        onChange={(e) => this.handleChange(e)}
                         {
                             this.renderOptions('rol')
+                        }
+                        {
+                            (this.state.poseeusuario)&&this.renderPred('rol')
                         }
                     </Form.Control>
                 )
@@ -366,139 +371,145 @@ export default class GestionarEmpleado extends React.Component {
             }));
         }
     }
+    deleteUser = (e) => {
+        if((this.state.poseeusuario===true)){
+            const config = {
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                responseType: 'json'
+            }
+            axios.delete(`http://localhost:3000/deleteUsuarioById/${this.state.claveUsuario}`, config)
+                .then((res) => {
+                  console.log(res);
+                  history.push('/empleado')
+                })
+                .catch((e) => {
+                  console.log(e)
+                })
+        }
+    }
     onSubmit = (e) => {
         if((this.state.pnombre.length>0)&&(this.state.papellido.length>0)&&(this.state.ci.length>0)
             &&(this.state.nacimd>0)&&(this.state.nacimd<=31)&&(this.state.nacimm>0)&&(this.state.nacimm<=12)
             &&(this.state.nacima>0)&&(this.state.nacimd<=2019)&&(this.state.telefono.length>0)){
-            var sex
-            if(this.state.sexo === 'M'){
-                sex = 'Masculino'
-            }else if(this.state.sexo === "F"){
-                sex = 'Femenino'
-            }else if(this.state.sexo === 'O'){
-                sex = 'Otro'
-            }
-            var segn
-            if((this.state.snombre === null) || (this.state.snombre.length===0)){
-                segn = null
-            }else{
-                segn = this.state.snombre
-            }
-            var sega
-            if((this.state.sapellido === null) || (this.state.sapellido.length===0)){
-                sega = null
-            }else{
-                sega = this.state.sapellido
-            }
             var user
             if((this.state.usuario.length>0)&&(this.state.contrasena.length>0)){
                 user = true
             }else{
                 user = false
             }
-            let empleado = {
-                empleadoid: this.props.match.params.id,
-                pnombre: this.state.pnombre,
-                snombre: segn,
-                papellido: this.state.papellido,
-                sapellido: sega,
-                ci: this.state.nacionalidad+this.state.ci,
-                fecha_nacimiento: this.state.nacima.toString()+'-'+this.state.nacimm.toString()+'-'+this.state.nacimd.toString(),
-                sexo: sex,
-                nivel: this.state.nivel,
-                telefono: this.state.telefono.toString(),
-                fk_estatus: document.getElementById('estatus-empleado').value,
-                fk_cargo: document.getElementById('cargo-empleado').value,
-                fk_lugar: document.getElementById('LugarParroquia').value,
-                usuarioasoc: user,
-                claveusuario: parseInt(this.state.claveUsuario),
-                usuario: this.state.usuario,
-                contrasena: this.state.contrasena,
-                fk_rol:document.getElementById('rol-usuario').value,
-            }
-            console.log(empleado)
+            if((this.state.poseeusuario===true)&&(user===false)){
+                alert("No se pueden dejar campos vacios, si desea eliminar el usuario presione el botón.")
+            }else{
+                var sex
+                if(this.state.sexo === 'M'){
+                    sex = 'Masculino'
+                }else if(this.state.sexo === "F"){
+                    sex = 'Femenino'
+                }else if(this.state.sexo === 'O'){
+                    sex = 'Otro'
+                }
+                var segn
+                if((this.state.snombre === null) || (this.state.snombre.length===0)){
+                    segn = null
+                }else{
+                    segn = this.state.snombre
+                }
+                var sega
+                if((this.state.sapellido === null) || (this.state.sapellido.length===0)){
+                    sega = null
+                }else{
+                    sega = this.state.sapellido
+                }
+                let empleado = {
+                    empleadoid: this.props.match.params.id,
+                    pnombre: this.state.pnombre,
+                    snombre: segn,
+                    papellido: this.state.papellido,
+                    sapellido: sega,
+                    ci: this.state.nacionalidad+this.state.ci,
+                    fecha_nacimiento: this.state.nacima.toString()+'-'+this.state.nacimm.toString()+'-'+this.state.nacimd.toString(),
+                    sexo: sex,
+                    nivel: this.state.nivel,
+                    telefono: this.state.telefono.toString(),
+                    fk_estatus: document.getElementById('estatus-empleado').value,
+                    fk_cargo: document.getElementById('cargo-empleado').value,
+                    fk_lugar: document.getElementById('LugarParroquia').value,
+                    usuarioasoc: user,
+                    claveusuario: parseInt(this.state.claveUsuario),
+                    usuario: this.state.usuario,
+                    contrasena: this.state.contrasena,
+                    fk_rol:document.getElementById('rol-usuario').value,
+                }
+                console.log(empleado)
 
-            if(this.props.match.params.accion === 'CR'){
-                const config = {
-                    headers: {
-                      'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    responseType: 'json',
-                    data: empleado
-                }
-                
-                axios.post('http://localhost:3000/crearEmpleado', config)
-                    .then((res) => {
-                    }).catch((e) => {
-                        console.log('Error en axios')
-                    })
-                history.push('/home');
-            }
-            if(this.props.match.params.accion === 'M'){
-                const config = {
-                    headers: {
-                      'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    responseType: 'json',
-                    data: empleado
-                }
-                axios.put('http://localhost:3000/updateEmpleadoById', config)
-                .then((res) => {
-                    console.log(res)
-                    if((this.state.poseeusuario===true)&&(empleado.usuarioasoc===true)){
-                        const config = {
-                            headers: {
-                              'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            responseType: 'json',
-                            data: empleado
-                        }
-                        axios.put('http://localhost:3000/updateUsuarioById', config)
+                if(this.props.match.params.accion === 'CR'){
+                    const config = {
+                        headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        responseType: 'json',
+                        data: empleado
+                    }
+                    
+                    axios.post('http://localhost:3000/crearEmpleado', config)
                         .then((res) => {
-                            console.log(res)
                         }).catch((e) => {
-                            console.log(e)
+                            console.log('Error en axios')
                         })
-                    }else if((this.state.poseeusuario===false)&&(empleado.usuarioasoc===true)){
-                        const config = {
-                            headers: {
-                              'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            responseType: 'json',
-                            data: empleado
-                        }
-                        axios.post('http://localhost:3000/insertUsuario', config)
+                    history.push('/home');
+                }
+                if(this.props.match.params.accion === 'M'){
+                    const config = {
+                        headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        responseType: 'json',
+                        data: empleado
+                    }
+                    axios.put('http://localhost:3000/updateEmpleadoById', config)
+                    .then((res) => {
+                        console.log(res)
+                        if((this.state.poseeusuario===true)&&(empleado.usuarioasoc===true)){
+                            const config = {
+                                headers: {
+                                  'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                responseType: 'json',
+                                data: empleado
+                            }
+                            axios.put('http://localhost:3000/updateUsuarioById', config)
                             .then((res) => {
                                 console.log(res)
                             }).catch((e) => {
                                 console.log(e)
                             })
-                    }else if((this.state.poseeusuario===true)&&(empleado.usuarioasoc===false)){
-                        const config = {
-                            headers: {
-                              'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            responseType: 'json'
+                        }else if((this.state.poseeusuario===false)&&(empleado.usuarioasoc===true)){
+                            const config = {
+                                headers: {
+                                  'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                responseType: 'json',
+                                data: empleado
+                            }
+                            axios.post('http://localhost:3000/insertUsuario', config)
+                                .then((res) => {
+                                    console.log(res)
+                                }).catch((e) => {
+                                    console.log(e)
+                                })
                         }
-                        axios.delete(`http://localhost:3000/deleteUsuarioById/${this.state.claveUsuario}`, config)
-                            .then((res) => {
-                              console.log(res);
-                            })
-                            .catch((e) => {
-                              console.log(e)
-                            })
-                    }
-                    history.push('/home')
-                }).catch((e) => {
-                    console.log(e)
-                    history.push('/home')
-                })
+                        history.push('/home')
+                    }).catch((e) => {
+                        console.log(e)
+                        history.push('/home')
+                    })
+                }
             }
-        }
-        else{
+        }else{
             alert("Existen campos invalidos. Revise e intente de nuevo.")
         }
-
     }
     renderTitle = () => {
       if (this.props.match.params.accion === 'CR'){
@@ -522,10 +533,10 @@ export default class GestionarEmpleado extends React.Component {
     renderPred = (tipo) => {
         if(this.props.match.params.accion !== 'CR'){
             if((tipo === 'cargo')&&(this.state.cpredet===false)){
-                $(".form-input-dropdown-cargo-empleado").val(this.state.cargo.clave).change()
+                $(".form-input-dropdown-cargo-empleado").val(this.state.cargo.clave).change();
             }
-            if((tipo === 'rol')&&(this.state.rpredet===false)){
-                $(".form-input-dropdown-rol-usuario").val(this.state.rol.clave).change()
+            if((tipo === 'rol')&&(this.state.rpredet===false)&&(this.state.poseeusuario)){
+                $(".form-input-dropdown-rol-usuario").val(this.state.rol.clave).change();
             }
         }
     }
@@ -913,7 +924,7 @@ export default class GestionarEmpleado extends React.Component {
 					                                	<Col md={1}></Col>
 					                                	<Col md={8}>
 						                                	<Row>
-							                                    <Col md={5}>
+							                                    <Col md={4}>
 							                                        <Form.Group>
 							                                            <Form.Label className="cliente-description-fields-text">Usuario</Form.Label>
 							                                            <Form.Control 
@@ -929,7 +940,7 @@ export default class GestionarEmpleado extends React.Component {
 							                                        </Form.Group>
 							                                    </Col>
 							                                    <Col md={1}></Col>
-							                                    <Col md={5}>
+							                                    <Col md={4}>
 							                                        <Form.Group>
 							                                            <Form.Label className="cliente-description-fields-text">Contraseña</Form.Label>
 							                                            <Form.Control 
@@ -945,6 +956,31 @@ export default class GestionarEmpleado extends React.Component {
 							                                        </Form.Group>
 							                                    </Col>
 							                                    <Col md={1}></Col>
+                                                                {
+                                                                    (this.props.match.params.accion==='M')?
+                                                                    <Col md={2}>
+                                                                        <Form.Label className="cliente-description-fields-text"></Form.Label>
+                                                                            <OverlayTrigger
+                                                                              key='right'
+                                                                              placement='right'
+                                                                              overlay={
+                                                                                <Tooltip id='tooltip-right'>
+                                                                                  Eliminar el usuario refrescará la página.
+                                                                                </Tooltip>
+                                                                              }
+                                                                            >
+                                                                            <Button 
+                                                                                variant="outline-danger"
+                                                                                className="btn-block"
+                                                                                onClick={this.deleteUser}
+                                                                            >
+                                                                                x
+                                                                            </Button>
+                                                                            </OverlayTrigger>
+                                                                    </Col>
+                                                                    :
+                                                                    <Col md={2}></Col>
+                                                                }
 						                                    </Row>
 						                                </Col>
 					                                </Form.Row>
