@@ -19,8 +19,35 @@ export class Venta extends React.Component {
     }  
     state = { 
         modalShow: false,
-        modalShowEliminar: false
-    };                        
+        modalShowEliminar: false,
+        c: false,
+        r: false,
+        u: false,
+        d: false
+    }; 
+    componentWillMount = () => {
+        const userInfoString = localStorage.getItem('user')
+        const userInfo = JSON.parse(userInfoString);
+        console.log(userInfo)
+
+        userInfo.forEach((info) => {
+            if (info.nombre.toLowerCase().includes('venta')){
+                if (info.tipo_privilegio === 'C') {
+                    this.setState({ c: true });
+                }
+                if (info.tipo_privilegio === 'R') {
+                    this.setState({ r: true });
+                }
+                if (info.tipo_privilegio === 'U') {
+                    this.setState({ u: true });
+                }
+                if (info.tipo_privilegio === 'D') {
+                    this.setState({ d: true });
+                }
+            }
+        })
+        console.log('state', this.state)
+    }                       
     modalClose = () => this.setState({ modalShow: false });
     modalOpen = () => {
         this.setState({ modalShow: true });

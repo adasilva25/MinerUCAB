@@ -40,7 +40,7 @@ export default class ModificarExplotacion extends React.Component {
 
         this.state = {
             eliminadosFases: [],
-            dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
+            dias:["Lunes","Martes","Miércoles","Jueves","Viernes"],
             actualizar:true,
             eliminar:true,
             empleadosInsertados:false,
@@ -260,65 +260,6 @@ export default class ModificarExplotacion extends React.Component {
     //             ano:0
     //         },
     //         fechaF:{
-    //             dia:0,
-    //             mes:0,
-    //             ano:0
-    //         },
-    //         fechaFR:{
-    //             dia:0,
-    //             mes:0,
-    //             ano:0
-    //         },
-            // cargos:[{
-            //     nombre:null,
-            //     id:-1,
-            //     sueldo:0,
-            //     cantidad:0,
-            //     estatus:null,
-            //     accordionKey:0,
-            //     empleadosShow:'inline',
-            //     empleadosId:[],
-            //     checkInicialEmpleado:true,
-            //     empleados:[{
-            //         id:-1,
-            //         nombre:null,
-            //         ci:null,
-            //         accordionKey:0,
-            //         sexo:null,
-            //         estatus:null,
-            //         dia:"Lunes",
-            //         horario:[{
-            //             dia:"Lunes",
-            //             horaEntrada:null,
-            //             horaSalida:null,
-            //             value:1,
-            //         },
-            //         {
-            //             dia:"Martes",
-            //             horaEntrada:null,
-            //             horaSalida:null,
-            //             value:1,
-            //         },
-            //         {
-            //             dia:"Miercoles",
-            //             horaEntrada:null,
-            //             horaSalida:null,
-            //             value:1,
-            //         },
-            //         {
-            //             dia:"Jueves",
-            //             horaEntrada:null,
-            //             horaSalida:null,
-            //             value:1,
-            //         },
-            //         {
-            //             dia:"Viernes",
-            //             horaEntrada:null,
-            //             horaSalida:null,
-            //             value:1,
-            //         }]
-            //     }],
-            // }],
     //         tipoMaquinaria:[]
 
     //     }]
@@ -776,6 +717,7 @@ export default class ModificarExplotacion extends React.Component {
         axios.get(`http://localhost:3000/getYacimientoByIdExplotacion/${this.props.match.params.id}`, config)
             .then((res) => {
                 const idYacimiento = res.data[0].clave
+
                 axios.get(`http://localhost:3000/getAllYacimientoInfoById/${idYacimiento}`, config)
             .then((res) => {
                 console.log('res yac', res)
@@ -848,14 +790,67 @@ export default class ModificarExplotacion extends React.Component {
                 state.estatus.id = res.data[0].clave_estatus;
                 state.estatus.nombre = res.data[0].estatus;
                 
-                this.setState(() => ({
-                    explotacion: explotacion
-                }));
+                axios.get(`http://localhost:3000/getExplotacionInfo/${idYacimiento}`, config)
+                    .then((res) => {
+                            console.log('res explotacion info', res)
+                            let date 
+                            let dia 
+                            let mes 
+                            let ano 
 
-                this.setState(() => ({
-                    estatus: state.estatus,
-                    fechaInsertar:true
-                }));
+                            explotacion.estatus = res.data[0].estatus
+                            if(explotacion.estatus===10){
+                                explotacion.finalizar=true;
+                            }
+
+                            if (res.data[0].fecha_inicio){
+                                console.log('entro')
+                                let date = new Date(res.data[0].fecha_inicio)
+                                let dia = date.getDate()
+                                let mes = (date.getMonth() + 1)
+                                let ano = date.getFullYear()
+
+                                explotacion.fechaI.dia = dia
+                                explotacion.fechaI.mes = mes
+                                explotacion.fechaI.ano = ano
+                            }
+
+                            if (res.data[0].fecha_fin){
+                                date = new Date(res.data[0].fecha_fin)
+                                dia = date.getDate()
+                                mes = (date.getMonth() + 1)
+                                ano = date.getFullYear()
+
+                                explotacion.fechaF.dia = dia
+                                explotacion.fechaF.mes = mes
+                                explotacion.fechaF.ano = ano
+                            }
+
+                            if (res.data[0].fecha_fin_real){
+                                date = new Date(res.data[0].fecha_fin_real)
+                                dia = date.getDate()
+                                mes = (date.getMonth() + 1)
+                                ano = date.getFullYear()
+
+                                explotacion.fechaFR.dia = dia
+                                explotacion.fechaFR.mes = mes
+                                explotacion.fechaFR.ano = ano
+                            }
+
+                            this.setState(() => ({
+                                explotacion: explotacion,
+                                fechaInsertar:true,
+                                estatus: state.estatus,
+                            }));
+
+                            
+
+                            console.log('state exp', this.state.explotacion)
+                    })
+                    .catch((e) => {
+                        console.log('Error en axios')
+                    })
+
 
                 console.log('state', this.state)
 
@@ -885,6 +880,7 @@ export default class ModificarExplotacion extends React.Component {
                             id:null,
                             duracion:0,
                             costo:0,
+                            finalizar:false,    
                             etapaShow:true,
                             numero: 1,
                             numeroV:1,
@@ -904,6 +900,7 @@ export default class ModificarExplotacion extends React.Component {
                                 nombre: "Fase 1",
                                 nombreV:null,
                                 id:null,
+                                finalizar:false,
                                 duracion:0,
                                 costo:0,
                                 faseShow:true,
@@ -1062,7 +1059,10 @@ export default class ModificarExplotacion extends React.Component {
                             etapa.nombre= 'Etapa '+ (i+1);
                             etapa.numero=i+1;
                             etapa.numeroV=i+1;
-                            etapa.estatus = item.estatus
+                            etapa.estatus = item.clave_estatus
+                            if(etapa.estatus===10){
+                                etapa.finalizar=true;
+                            }
 
                             let date 
                             let dia 
@@ -1214,7 +1214,9 @@ export default class ModificarExplotacion extends React.Component {
                                         fase.duracion=element.duracion;
                                         fase.costo= element.costo;
                                         
-
+                                        if(fase.estatus===10){
+                                            fase.finalizar=true;
+                                        }
                                         
                                 
                                         this.setState((prevState) => ({
@@ -1403,7 +1405,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                             },
                                                                             {
                                                                                 id: null,
-                                                                                dia:"Miercoles",
+                                                                                dia:"Miércoles",
                                                                                 horaEntrada:null,
                                                                                 horaSalida:null,
                                                                                 value:0,
@@ -1424,7 +1426,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                             }]
                                                                         }
                                                                         empleado.ci = element.ci;
-                                                                        empleado.nombre = element.nombre;
+                                                                        empleado.nombre = element.nombre + ' ' + element.apellido;
                                                                         empleado.sexo = element.sexo;
                                                                         empleado.id = element.clave;
                                                                         empleado.estatus = element.estatus;
@@ -1465,6 +1467,7 @@ export default class ModificarExplotacion extends React.Component {
 
                                                                         axios.get(`http://localhost:3000/getHorarioEmpleadoByIdEmpleadoCargoFase/${empleado.clave_empleado_cargo_fase}`, config)
                                                                             .then((res) => {
+                                                                                console.log('res horario', res, empleado.nombre, etapa.numero, fase.numero)
                                                                                 res.data.forEach((item) => {
                                                                                     
                                                                                     empleado.horario.forEach((horario) => {
@@ -1675,1360 +1678,6 @@ export default class ModificarExplotacion extends React.Component {
             .catch((e) => {
 
             })
-
-
-console.log();
-
-
-        // const info = {
-        //     yacimiento:{
-        //         id:1,
-        //         nombre:"Okinawa",
-        //         descripcion:"muy mineraloso",
-        //         estatus:null,
-        //         area:300,
-        //         tipo:"Autóctono",
-        //         tipoId:3,
-        //         ubicacion:{
-        //             estado:"Sucre",
-        //             municipio:"Sucre",
-        //             parroquia:"Altagracia",
-        //             idParroquia:760
-        //         },
-        //         fecha:{
-        //             dia:7,
-        //             mes:14,
-        //             ano:1999
-        //         }
-        //     },
-        //     minerales:[{
-        //         id:1,
-        //         total: 5,
-        //         nombre:"Epale",
-               
-        //     },
-        //     {
-        //         id:8,
-        //         total: 8,
-        //         nombre:"Epale2",
-                
-        //     }],
-        //     mineralesNoMetalicos:[{
-        //         id:1,
-        //         total: 5,
-        //         nombre:"ICabron",
-               
-        //     },
-        //     {
-        //         id:8,
-        //         total: 8,
-        //         nombre:"Alumina",
-               
-        //     }],
-        //     explotacion:{
-        //         id:2,
-        //         duracion:41,
-        //         costo:0,
-        //         estatus:8,
-        //         fechaI:{
-        //             dia:12,
-        //             mes:3,
-        //             ano:2019
-        //         },
-        //         fechaF:{
-        //             dia:25,
-        //             mes:5,
-        //             ano:2019
-        //         },
-        //         fechaFR:{
-        //             dia:13,
-        //             mes:7,
-        //             ano:2017
-        //         }
-        //     },
-        //     etapas: [{
-        //         id:2,
-        //         nombre: "diego",
-        //         duracion:10,
-        //         costo:30,
-        //         estatus:2,
-        //         fechaI:{
-        //             dia:2,
-        //             mes:2,
-        //             ano:2
-        //         },
-        //         fechaF:{
-        //             dia:1,
-        //             mes:1,
-        //             ano:1
-        //         },
-        //         fechaFR:{
-        //             dia:14,
-        //             mes:8,
-        //             ano:2013
-        //         },
-        //         fases: [{
-        //             id:1,
-        //             nombre: "andrea",
-        //             estatus:2,
-        //             duracion:2,
-        //             costo:4,
-        //             checkInicialCargos:true,
-        //             checkInicialtipoMaquiaria:true,
-        //             fechaI:{
-        //                 dia:1,
-        //                 mes:7,
-        //                 ano:2018
-        //             },
-        //             fechaF:{
-        //                 dia:5,
-        //                 mes:8,
-        //                 ano:2010
-        //             },
-        //             fechaFR:{
-        //                 dia:14,
-        //                 mes:8,
-        //                 ano:2013
-        //             },
-        //             cargos:[{
-        //                 id:14,
-        //                 nombre:"Geólogo",
-        //                 sueldo:5,
-        //                 cantidad:7,
-        //                 empleados:[{
-        //                     id:2,
-        //                     nombre:"Diego",
-        //                     ci:"jcjcsdjdj",
-        //                     accordionKey:0,
-        //                     sexo:"Masculino",
-        //                     dia:"Lunes",
-        //                     horario:[{
-        //                         dia:"Lunes",
-        //                         horaEntrada:"d",
-        //                         horaSalida:null,
-        //                         value:0,
-        //                     },
-        //                     {
-        //                         dia:"Martes",
-        //                         horaEntrada:"76",
-        //                         horaSalida:null,
-        //                         value:0,
-        //                     },
-        //                     {
-        //                         dia:"Miercoles",
-        //                         horaEntrada:"753",
-        //                         horaSalida:"",
-        //                         value:2,
-        //                     },
-        //                     {
-        //                         dia:"Jueves",
-        //                         horaEntrada:"s",
-        //                         horaSalida:null,
-        //                         value:2,
-        //                     },
-        //                     {
-        //                         dia:"Viernes",
-        //                         horaEntrada:"sdd",
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     }]
-        //                 },
-        //                 {
-        //                     id:3,
-        //                     nombre:"Alba",
-        //                     ci:"jcjcsdjdj",
-        //                     accordionKey:0,
-        //                     sexo:"Femenino",
-        //                     dia:"Lunes",
-        //                     horario:[{
-        //                         dia:"Lunes",
-        //                         horaEntrada:"dgs",
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Martes",
-        //                         horaEntrada:"76",
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Miercoles",
-        //                         horaEntrada:"753",
-        //                         horaSalida:"",
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Jueves",
-        //                         horaEntrada:"s",
-        //                         horaSalida:null,
-        //                         value:0,
-        //                     },
-        //                     {
-        //                         dia:"Viernes",
-        //                         horaEntrada:"sdd",
-        //                         horaSalida:null,
-        //                         value:2,
-        //                     }]
-        //                 }],
-        //             }],
-                    // tipoMaquinaria:[{
-                    //     id:5,
-                    //     nombre:"Plancha",
-                    //     costo:52,
-                    //     cantidad:7,
-                    //     maquinarias:[{
-                    //         id:1,
-                    //         serial:"edde",
-                    //         estatus:null,
-                    //     },
-                    //     {
-                    //         id:2,
-                    //         serial:"efer",
-                    //         estatus:null,
-                    //     }]
-                    // }]
-        //         }/*,
-        //         {
-        //             nombre: "Albita",
-        //             duracion:1,
-        //             costo:7.2,
-        //             cargos:[{
-        //                 id:10,
-        //                 nombre:"Em",
-        //                 sueldo:8,
-        //                 cantidad:6,
-        //             }],
-        //             tipoMaquinaria:[{
-        //                 id:7,
-        //                 nombre:"Dibujante",
-        //                 costo:5,
-        //                 cantidad:9,
-        //             }]
-        //         }*/]
-        //     },    
-        //     {
-        //         nombre: "Baudet",
-        //         id:4,
-        //         duracion:31,
-        //         costo:30,
-        //         estatus:8,
-        //         fechaI:{
-        //             dia:12,
-        //             mes:3,
-        //             ano:2019
-        //         },
-        //         fechaF:{
-        //             dia:25,
-        //             mes:5,
-        //             ano:2019
-        //         },
-        //         fechaFR:{
-        //             dia:13,
-        //             mes:7,
-        //             ano:2017
-        //         },
-        //         fases: [{
-        //             nombre: "Sanchéz",
-        //             id:8,
-        //             duracion:30,
-        //             costo:5,
-        //             estatus:2,
-        //             checkInicialCargos:true,
-        //             checkInicialtipoMaquiaria:true,
-        //             fechaI:{
-        //                 dia:12,
-        //                 mes:3,
-        //                 ano:2019
-        //             },
-        //             fechaF:{
-        //                 dia:25,
-        //                 mes:5,
-        //                 ano:2019
-        //             },
-        //             fechaFR:{
-        //                 dia:13,
-        //                 mes:7,
-        //                 ano:2017
-        //             },
-        //             cargos:[{
-        //                 id:3,
-        //                 nombre:"Administrador",
-        //                 sueldo:8,
-        //                 cantidad:1,
-        //                 empleados:[],
-        //             },
-        //             {
-        //                 id:2,
-        //                 nombre:"Dibujante",
-        //                 sueldo:5,
-        //                 cantidad:9,
-        //                 empleados:[],
-        //             }],
-        //             tipoMaquinaria:[{
-        //                 id:6,
-        //                 nombre:"Excavadora",
-        //                 costo:2,
-        //                 cantidad:8,
-        //                 maquinarias:[{
-        //                     id:3,
-        //                     serial:"er",
-        //                     estatus:null,
-        //                 }],
-        //             },
-        //             {
-        //                 id:1,
-        //                 nombre:"Plancha",
-        //                 costo:9,
-        //                 cantidad:4,
-        //                 maquinarias:[]
-        //             }]
-        //         },
-        //         {
-        //             nombre: "Albita",
-        //             id:4,
-        //             duracion:1,
-        //             estatus:10,
-        //             costo:7.2,
-        //             checkInicialCargos:true,
-        //             checkInicialtipoMaquiaria:true,
-        //             fechaI:{
-        //                 dia:12,
-        //                 mes:3,
-        //                 ano:2019
-        //             },
-        //             fechaF:{
-        //                 dia:25,
-        //                 mes:5,
-        //                 ano:2019
-        //             },
-        //             fechaFR:{
-        //                 dia:11,
-        //                 mes:9,
-        //                 ano:2017
-        //             },
-        //             cargos:[{
-        //                 id:10,
-        //                 nombre:"Geologo",
-        //                 sueldo:8,
-        //                 cantidad:6,
-        //                 empleados:[]
-        //             }],
-        //             tipoMaquinaria:[{
-        //                 id:7,
-        //                 nombre:"Horno",
-        //                 costo:5,
-        //                 cantidad:9,
-        //                 maquinarias:[],
-        //             }]
-        //         }]
-        //     }]
-        // }
-
-
-        // let state={
-        //     eliminadosFases: [],
-        //     dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
-        //     actualizar:true,
-        //     eliminar:true,
-        //     prueba: true,
-        //     key:"Etapa 1",
-        //     explotacion:{
-        //         id:null,
-        //         duracion:0,
-        //         finalizar:false,
-        //         costo:0,
-        //         fechaI:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //         fechaF:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //         fechaFR:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //     },
-        //     yacimiento:{
-        //         id:null,
-        //         nombre:null,
-        //         descripcion:null,
-        //         area:null,
-        //         estatus:null,
-        //         tipo:null,
-        //         tipoId:null,
-        //         ubicacion:{
-        //             estado:null,
-        //             municipio:null,
-        //             parroquia:null,
-        //             idParroquia:null,
-        //         },
-        //         fecha:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         }
-        //     },
-        //     accordionKey:[],
-        //     mineralShow:'inline',
-        //     mineralId:[],
-        //     Minerales:[{
-        //         nombre:null,
-        //         id:-1,
-        //         total: 0,
-        //         accordionKey:0,
-              
-                
-        //     }],
-        //     mineralNoMetalicoId:[],
-        //     mineralNoMetalicoShow:'inline',
-        //     MineralesNoMetalicos:[{
-        //         nombre:null,
-        //         id:-1,
-        //         total: 0,
-        //         accordionKey:0,
-                
-        //     }],
-        //     etapas: [{
-        //         nombre: "Etapa 1",
-        //         nombreV:null,
-        //         id:null,
-        //         finalizar:false,
-        //         estatus:null,
-        //         duracion:0,
-        //         costo:0,
-        //         etapaShow:true,
-        //         numero: 1,
-        //         numeroV:1,
-        //         eliminar:true,
-        //         fechaI:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //         fechaF:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //         fechaFR:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //         key:"Fase 1",
-        //         fases: [{
-        //             nombre: "Fase 1",
-        //             nombreV:null,
-        //             id:null,
-        //             finalizar:false,
-        //             duracion:0,
-        //             estatus:null,
-        //             costo:0,
-        //             faseShow:true,
-        //             cargoShow:'inline',
-        //             tipoMaquinariaShow:'inline',
-        //             numero:1,
-        //             numeroV:1,
-        //             cargosId:[],
-        //             checkInicialCargos:true,
-        //             tipoMaquinariaId:[],
-        //             checkInicialtipoMaquiaria:true,
-        //             fechaI:{
-        //                 dia:0,
-        //                 mes:0,
-        //                 ano:0
-        //             },
-        //             fechaF:{
-        //                 dia:0,
-        //                 mes:0,
-        //                 ano:0
-        //             },
-        //             fechaFR:{
-        //                 dia:0,
-        //                 mes:0,
-        //                 ano:0
-        //             },
-        //             cargos:[{
-        //                 nombre:null,
-        //                 id:-1,
-        //                 sueldo:0,
-        //                 cantidad:0,
-        //                 estatus:null,
-        //                 accordionKey:0,
-        //                 empleadosShow:'inline',
-        //                 empleadosId:[],
-        //                 checkInicialEmpleado:true,
-        //                 empleados:[{
-        //                     id:-1,
-        //                     nombre:null,
-        //                     ci:null,
-        //                     accordionKey:0,
-        //                     sexo:null,
-        //                     estatus:null,
-        //                     dia:"Lunes",
-        //                     horario:[{
-        //                         dia:"Lunes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Martes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Miercoles",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Jueves",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Viernes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     }]
-        //                 }],
-        //             }],
-        //             tipoMaquinaria:[{
-        //                 nombre:null,
-        //                 id:-1,
-        //                 costo:0,
-        //                 cantidad:0,
-        //                 estatus:null,
-        //                 accordionKey:0,
-        //                 maquinariasShow:'none',
-        //                 maquinariasId:[],
-        //                 checkInicialMaquiaria:true,
-        //                 maquinarias:[{
-        //                     id:-1,
-        //                     serial:null,
-        //                     estatus:null,
-        //                 }],
-        //             }]
-
-        //         }]
-        //     }]
-        // }
-
-
-
-        // console.log(info);
-
-        // let state={
-        //     eliminadosFases: [],
-        //     dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
-        //     actualizar:true,
-        //     eliminar:true,
-        //     prueba: true,
-        //     key:"Etapa 1",
-        //     explotacion:{
-        //         id:null,
-        //         duracion:0,
-        //         finalizar:false,
-        //         costo:0,
-        //         fechaI:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //         fechaF:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //         fechaFR:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //     },
-        //     yacimiento:{
-        //         id:null,
-        //         nombre:null,
-        //         descripcion:null,
-        //         area:null,
-        //         estatus:null,
-        //         tipo:null,
-        //         tipoId:null,
-        //         ubicacion:{
-        //             estado:null,
-        //             municipio:null,
-        //             parroquia:null,
-        //             idParroquia:null,
-        //         },
-        //         fecha:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         }
-        //     },
-        //     accordionKey:[],
-        //     mineralShow:'inline',
-        //     mineralId:[],
-        //     Minerales:[{
-        //         nombre:null,
-        //         id:-1,
-        //         total: 0,
-        //         accordionKey:0,
-              
-                
-        //     }],
-        //     mineralNoMetalicoId:[],
-        //     mineralNoMetalicoShow:'inline',
-        //     MineralesNoMetalicos:[{
-        //         nombre:null,
-        //         id:-1,
-        //         total: 0,
-        //         accordionKey:0,
-                
-        //     }],
-        //     etapas: [{
-        //         nombre: "Etapa 1",
-        //         nombreV:null,
-        //         id:null,
-        //         finalizar:false,
-        //         estatus:null,
-        //         duracion:0,
-        //         costo:0,
-        //         etapaShow:true,
-        //         numero: 1,
-        //         numeroV:1,
-        //         eliminar:true,
-        //         fechaI:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //         fechaF:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //         fechaFR:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //         key:"Fase 1",
-                // fases: [{
-                //     nombre: "Fase 1",
-                //     nombreV:null,
-                //     id:null,
-                //     finalizar:false,
-                //     duracion:0,
-                //     estatus:null,
-                //     costo:0,
-                //     faseShow:true,
-                //     cargoShow:'inline',
-                //     tipoMaquinariaShow:'inline',
-                //     numero:1,
-                //     numeroV:1,
-                //     cargosId:[],
-                //     checkInicialCargos:true,
-                //     tipoMaquinariaId:[],
-                //     checkInicialtipoMaquiaria:true,
-                //     fechaI:{
-                //         dia:0,
-                //         mes:0,
-                //         ano:0
-                //     },
-                //     fechaF:{
-                //         dia:0,
-                //         mes:0,
-                //         ano:0
-                //     },
-                //     fechaFR:{
-                //         dia:0,
-                //         mes:0,
-                //         ano:0
-                //     },
-                //     cargos:[{
-                //         nombre:null,
-                //         id:-1,
-                //         sueldo:0,
-                //         cantidad:0,
-                //         estatus:null,
-                //         accordionKey:0,
-                //         empleadosShow:'inline',
-                //         empleadosId:[],
-                //         checkInicialEmpleado:true,
-                //         empleados:[{
-                //             id:-1,
-                //             nombre:null,
-                //             ci:null,
-                //             accordionKey:0,
-                //             sexo:null,
-                //             estatus:null,
-                //             dia:"Lunes",
-                //             horario:[{
-                //                 dia:"Lunes",
-                //                 horaEntrada:null,
-                //                 horaSalida:null,
-                //                 value:1,
-                //             },
-                //             {
-                //                 dia:"Martes",
-                //                 horaEntrada:null,
-                //                 horaSalida:null,
-                //                 value:1,
-                //             },
-                //             {
-                //                 dia:"Miercoles",
-                //                 horaEntrada:null,
-                //                 horaSalida:null,
-                //                 value:1,
-                //             },
-                //             {
-                //                 dia:"Jueves",
-                //                 horaEntrada:null,
-                //                 horaSalida:null,
-                //                 value:1,
-                //             },
-                //             {
-                //                 dia:"Viernes",
-                //                 horaEntrada:null,
-                //                 horaSalida:null,
-                //                 value:1,
-                //             }]
-                //         }],
-                //     }],
-                //     tipoMaquinaria:[{
-                //         nombre:null,
-                //         id:-1,
-                //         costo:0,
-                //         cantidad:0,
-                //         estatus:null,
-                //         accordionKey:0,
-                //         maquinariasShow:'none',
-                //         maquinariasId:[],
-                //         checkInicialMaquiaria:true,
-                //         maquinarias:[{
-                //             id:-1,
-                //             serial:null,
-                //             estatus:null,
-                //         }],
-                //     }]
-
-        //         }]
-        //     }]
-        // }
-
-
-        // state.yacimiento.id=info.yacimiento.id;
-        // state.yacimiento.nombre=info.yacimiento.nombre;
-        // state.yacimiento.descripcion = info.yacimiento.descripcion;
-        // state.yacimiento.area = info.yacimiento.area;
-        // state.yacimiento.tipo = info.yacimiento.tipo;
-        // state.yacimiento.tipoId = info.yacimiento.tipoId;
-        // state.yacimiento.ubicacion.estado = info.yacimiento.ubicacion.estado;
-        // state.yacimiento.ubicacion.municipio = info.yacimiento.ubicacion.municipio;
-        // state.yacimiento.ubicacion.parroquia = info.yacimiento.ubicacion.parroquia;
-        // state.yacimiento.ubicacion.idParroquia = info.yacimiento.ubicacion.idParroquia;
-        // state.yacimiento.fecha.dia = info.yacimiento.fecha.dia;
-        // state.yacimiento.fecha.mes = info.yacimiento.fecha.mes;
-        // state.yacimiento.fecha.ano = info.yacimiento.fecha.ano;
-
-        // state.explotacion.id = info.explotacion.id;
-        // state.explotacion.duracion = info.explotacion.duracion;
-        // state.explotacion.costo = info.explotacion.costo;
-        // state.explotacion.estatus = info.explotacion.estatus;
-
-        // if(state.explotacion.estatus==10){
-        //     state.explotacion.finalizar=true;
-        // }
-
-
-        // state.explotacion.fechaI.dia =  info.explotacion.fechaI.dia;
-        // state.explotacion.fechaI.mes =  info.explotacion.fechaI.mes;
-        // state.explotacion.fechaI.ano =  info.explotacion.fechaI.ano;
-
-        // state.explotacion.fechaF.dia =  info.explotacion.fechaF.dia;
-        // state.explotacion.fechaF.mes =  info.explotacion.fechaF.mes;
-        // state.explotacion.fechaF.ano =  info.explotacion.fechaF.ano;
-
-        // state.explotacion.fechaFR.dia =  info.explotacion.fechaFR.dia;
-        // state.explotacion.fechaFR.mes =  info.explotacion.fechaFR.mes;
-        // state.explotacion.fechaFR.ano =  info.explotacion.fechaFR.ano;
-
-
-        // state.Minerales.shift();
-        // for(let i=0; i<info.minerales.length; i++){
-
-           
-        //     state.mineralId.push(info.minerales[i].id);
-
-        //     let mineral={
-        //         nombre:null,
-        //         id:-1,
-        //         total: 0,
-        //         accordionKey:0,
-               
-                
-        //     }
-
-        //     mineral.nombre=info.minerales[i].nombre;
-        //     mineral.id=info.minerales[i].id;
-        //     mineral.total=info.minerales[i].total;
-
-            
-        //     state.Minerales.push(mineral);
-        // }
-        
-
-
-        // state.MineralesNoMetalicos.shift();
-        // for(let i=0; i<info.mineralesNoMetalicos.length; i++){
-
-            
-        //     state.mineralNoMetalicoId.push(info.mineralesNoMetalicos[i].id);
-
-        //     let mineral={
-        //         nombre:null,
-        //         id:-1,
-        //         total: 0,
-        //         accordionKey:0,
-                
-        //     }
-
-        //     mineral.nombre=info.mineralesNoMetalicos[i].nombre;
-        //     mineral.id=info.mineralesNoMetalicos[i].id;
-        //     mineral.total=Number(info.mineralesNoMetalicos[i].total);
-
-            
-        //     state.MineralesNoMetalicos.push(mineral);
-        // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //console.log("minerales",state.Minerales);
-
-        // state.etapas.shift();
-
-        // if (info.etapas.length>1){
-        //     state.eliminar=false;
-        // }
-        // for(let i=0; i<info.etapas.length; i++){
-        //     let etapa={
-        //         nombre: "Etapa 1",
-        //         nombreV:null,
-        //         id:null,
-        //         estatus:null,
-        //         finalizar:false,
-        //         duracion:0,
-        //         costo:0,
-        //         etapaShow:true,
-        //         numero: 1,
-        //         numeroV:1,
-        //         eliminar:true,
-        //         fechaI:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //         fechaF:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //         fechaFR:{
-        //             dia:0,
-        //             mes:0,
-        //             ano:0
-        //         },
-        //         key:"Fase 1",
-        //         fases: [{
-        //             nombre: "Fase 1",
-        //             nombreV:null,
-        //             id:null,
-        //             duracion:0,
-        //             finalizar:false,
-        //             estatus:null,
-        //             costo:0,
-        //             faseShow:true,
-        //             cargoShow:'inline',
-        //             tipoMaquinariaShow:'inline',
-        //             numero:1,
-        //             numeroV:1,
-        //             cargosId:[],
-        //             checkInicialCargos:true,
-        //             tipoMaquinariaId:[],
-        //             checkInicialtipoMaquiaria:true,
-        //             fechaI:{
-        //                 dia:0,
-        //                 mes:0,
-        //                 ano:0
-        //             },
-        //             fechaF:{
-        //                 dia:0,
-        //                 mes:0,
-        //                 ano:0
-        //             },
-        //             fechaFR:{
-        //                 dia:0,
-        //                 mes:0,
-        //                 ano:0
-        //             },
-        //             cargos:[{
-        //                 nombre:null,
-        //                 id:-1,
-        //                 sueldo:0,
-        //                 cantidad:0,
-        //                 estatus:null,
-        //                 accordionKey:0,
-        //                 empleadosShow:'inline',
-        //                 empleadosId:[],
-        //                 checkInicialEmpleado:true,
-        //                 empleados:[{
-        //                     id:-1,
-        //                     nombre:null,
-        //                     ci:null,
-        //                     accordionKey:0,
-        //                     sexo:null,
-        //                     estatus:null,
-        //                     dia:"Lunes",
-        //                     horario:[{
-        //                         dia:"Lunes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Martes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Miercoles",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Jueves",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Viernes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     }]
-        //                 }],
-        //             }],
-        //             tipoMaquinaria:[{
-        //                 nombre:null,
-        //                 id:-1,
-        //                 costo:0,
-        //                 cantidad:0,
-        //                 estatus:null,
-        //                 accordionKey:0,
-        //                 maquinariasShow:'none',
-        //                 maquinariasId:[],
-        //                 checkInicialMaquiaria:true,
-        //                 maquinarias:[{
-        //                     id:-1,
-        //                     serial:null,
-        //                     estatus:null,
-        //                 }],
-        //             }]
-
-        //         }]
-        //     }
-
-        //     etapa.id=info.etapas[i].id;
-        //     etapa.numero=i+1;
-        //     etapa.numeroV=i+1;
-
-        //     etapa.nombre= 'Etapa '+ (i+1);
-        //     etapa.nombreV=info.etapas[i].nombre;
-
-        //     etapa.duracion=info.etapas[i].duracion;
-        //     etapa.costo= info.etapas[i].costo;
-        //     etapa.estatus= info.etapas[i].estatus;
-
-        //     if(etapa.estatus==10){
-        //         etapa.finalizar = true;
-        //     }
-
-        //     etapa.fechaI.dia =  info.etapas[i].fechaI.dia;
-        //     etapa.fechaI.mes =  info.etapas[i].fechaI.mes;
-        //     etapa.fechaI.ano =  info.etapas[i].fechaI.ano;
-
-        //     etapa.fechaF.dia =  info.etapas[i].fechaF.dia;
-        //     etapa.fechaF.mes =  info.etapas[i].fechaF.mes;
-        //     etapa.fechaF.ano =  info.etapas[i].fechaF.ano;
-
-        //     etapa.fechaFR.dia =  info.etapas[i].fechaFR.dia;
-        //     etapa.fechaFR.mes =  info.etapas[i].fechaFR.mes;
-        //     etapa.fechaFR.ano =  info.etapas[i].fechaFR.ano;
-
-        //     etapa.fases.shift();
-        //     for(let j=0; j<info.etapas[i].fases.length; j++){
-
-        //         let fase ={
-        //             nombre: "Fase 1",
-        //             nombreV:null,
-        //             id:null,
-        //             duracion:0,
-        //             estatus:null,
-        //             costo:0,
-        //             finalizar:false,
-        //             faseShow:true,
-        //             cargoShow:'inline',
-        //             tipoMaquinariaShow:'inline',
-        //             numero:1,
-        //             numeroV:1,
-        //             cargosId:[],
-        //             checkInicialCargos:true,
-        //             tipoMaquinariaId:[],
-        //             checkInicialtipoMaquiaria:true,
-        //             fechaI:{
-        //                 dia:0,
-        //                 mes:0,
-        //                 ano:0
-        //             },
-        //             fechaF:{
-        //                 dia:0,
-        //                 mes:0,
-        //                 ano:0
-        //             },
-        //             fechaFR:{
-        //                 dia:0,
-        //                 mes:0,
-        //                 ano:0
-        //             },
-        //             cargos:[{
-        //                 nombre:null,
-        //                 id:-1,
-        //                 sueldo:0,
-        //                 cantidad:0,
-        //                 estatus:null,
-        //                 accordionKey:0,
-        //                 empleadosShow:'inline',
-        //                 empleadosId:[],
-        //                 checkInicialEmpleado:true,
-        //                 empleados:[{
-        //                     id:-1,
-        //                     nombre:null,
-        //                     ci:null,
-        //                     accordionKey:0,
-        //                     sexo:null,
-        //                     estatus:null,
-        //                     dia:"Lunes",
-        //                     horario:[{
-        //                         dia:"Lunes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Martes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Miercoles",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Jueves",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Viernes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     }]
-        //                 }],
-        //             }],
-        //             tipoMaquinaria:[{
-        //                 nombre:null,
-        //                 id:-1,
-        //                 costo:0,
-        //                 cantidad:0,
-        //                 estatus:null,
-        //                 accordionKey:0,
-        //                 maquinariasShow:'none',
-        //                 maquinariasId:[],
-        //                 checkInicialMaquiaria:true,
-        //                 maquinarias:[{
-        //                     id:-1,
-        //                     serial:null,
-        //                     estatus:null,
-        //                 }],
-        //             }]
-
-        //         }
-
-
-
-
-
-        //         fase.id=info.etapas[i].fases[j].id;
-        //         fase.numero=j+1;
-        //         fase.numeroV=j+1;
-
-        //         fase.nombre= 'Fase '+ (j+1);
-        //         fase.nombreV=info.etapas[i].fases[j].nombre;
-
-        //         fase.duracion=info.etapas[i].fases[j].duracion;
-        //         fase.costo= info.etapas[i].fases[j].costo;
-        //         fase.estatus = info.etapas[i].fases[j].estatus;
-
-        //         if(fase.estatus==10){
-        //             fase.finalizar = true;
-        //         }
-                 
-        //         fase.fechaI.dia =  info.etapas[i].fases[j].fechaI.dia;
-        //         fase.fechaI.mes =  info.etapas[i].fases[j].fechaI.mes;
-        //         fase.fechaI.ano =  info.etapas[i].fases[j].fechaI.ano;
-
-        //         fase.fechaF.dia =  info.etapas[i].fases[j].fechaF.dia;
-        //         fase.fechaF.mes =  info.etapas[i].fases[j].fechaF.mes;
-        //         fase.fechaF.ano =  info.etapas[i].fases[j].fechaF.ano;
-
-        //         fase.fechaFR.dia =  info.etapas[i].fases[j].fechaFR.dia;
-        //         fase.fechaFR.mes =  info.etapas[i].fases[j].fechaFR.mes;
-        //         fase.fechaFR.ano =  info.etapas[i].fases[j].fechaFR.ano;
-
-        //         fase.cargos.shift();
-        //         for(let k=0; k<info.etapas[i].fases[j].cargos.length; k++){
-        //             fase.cargosId.push(info.etapas[i].fases[j].cargos[k].id);
-
-        //             let cargo={
-        //                 nombre:null,
-        //                 id:-1,
-        //                 sueldo:0,
-        //                 cantidad:0,
-        //                 estatus:null,
-        //                 accordionKey:0,
-        //                 empleadosShow:'inline',
-        //                 empleadosId:[],
-        //                 checkInicialEmpleado:true,
-        //                 empleados:[{
-        //                     id:-1,
-        //                     nombre:null,
-        //                     ci:null,
-        //                     accordionKey:0,
-        //                     sexo:null,
-        //                     estatus:null,
-        //                     dia:"Lunes",
-        //                     horario:[{
-        //                         dia:"Lunes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Martes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Miercoles",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Jueves",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Viernes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     }]
-        //                 }],
-        //             }
-
-
-        //             cargo.id=info.etapas[i].fases[j].cargos[k].id;
-        //             cargo.sueldo=info.etapas[i].fases[j].cargos[k].sueldo;
-        //             cargo.cantidad=info.etapas[i].fases[j].cargos[k].cantidad;
-        //             cargo.nombre=info.etapas[i].fases[j].cargos[k].nombre;
-
-        //             cargo.empleados.shift()
-        //             console.log("IsUndefined?",info.etapas[i].fases[j].cargos[k].empleados,i,j,k);
-        //             info.etapas[i].fases[j].cargos[k].empleados.forEach((empleadoR)=>{
-        //                 cargo.empleadosId.push(empleadoR.id);
-        //                 let empleado={
-        //                     id:-1,
-        //                     nombre:null,
-        //                     ci:null,
-        //                     accordionKey:0,
-        //                     sexo:null,
-        //                     estatus:null,
-        //                     dia:"Lunes",
-        //                     horario:[{
-        //                         dia:"Lunes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Martes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Miercoles",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Jueves",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     },
-        //                     {
-        //                         dia:"Viernes",
-        //                         horaEntrada:null,
-        //                         horaSalida:null,
-        //                         value:1,
-        //                     }]
-        //                 }
-
-        //                 empleado.id = empleadoR.id;
-        //                 empleado.nombre = empleadoR.nombre;
-        //                 empleado.ci = empleadoR.ci;
-        //                 empleado.sexo = empleadoR.sexo;
-                        
-
-        //                 for(let y=0; y<empleadoR.horario.length; y++){
-        //                     empleado.horario[y].horaEntrada = empleadoR.horario[y].horaEntrada;
-        //                     empleado.horario[y].horaSalida = empleadoR.horario[y].horaSalida;
-        //                     empleado.horario[y].value = empleadoR.horario[y].value;
-        //                 }
-        //                 cargo.empleados.push(empleado);
-
-        //             });
-
-
-        //             fase.cargos.push(cargo);    
-        //         }
-
-
-        //         fase.tipoMaquinaria.shift();
-        //         for(let k=0; k<info.etapas[i].fases[j].tipoMaquinaria.length; k++){
-        //             fase.tipoMaquinariaId.push(info.etapas[i].fases[j].tipoMaquinaria[k].id);
-        //             let tipoMaquinaria={
-        //                 nombre:null,
-        //                 id:-1,
-        //                 costo:0,
-        //                 cantidad:0,
-        //                 estatus:null,
-        //                 accordionKey:0,
-        //                 maquinariasShow:'none',
-        //                 maquinariasId:[],
-        //                 checkInicialMaquiaria:true,
-        //                 maquinarias:[{
-        //                     id:-1,
-        //                     serial:null,
-        //                     estatus:null,
-        //                 }],
-        //             }
-
-
-        //             tipoMaquinaria.id=info.etapas[i].fases[j].tipoMaquinaria[k].id;
-        //             tipoMaquinaria.sueldo=info.etapas[i].fases[j].tipoMaquinaria[k].sueldo;
-        //             tipoMaquinaria.cantidad=info.etapas[i].fases[j].tipoMaquinaria[k].cantidad;
-        //             tipoMaquinaria.nombre=info.etapas[i].fases[j].tipoMaquinaria[k].nombre;
-
-        //             tipoMaquinaria.maquinarias.shift();
-        //             info.etapas[i].fases[j].tipoMaquinaria[k].maquinarias.forEach((maquinariaR)=>{
-        //                 tipoMaquinaria.maquinariasId.push(maquinariaR.id);
-        //                 let maquinaria = {
-        //                     id:-1,
-        //                     serial:null,
-        //                     estatus:null,
-        //                 }
-
-        //                 maquinaria.id = maquinariaR.id;
-        //                 maquinaria.serial = maquinariaR.serial;
-
-        //                 tipoMaquinaria.maquinarias.push(maquinaria);
-
-        //             });
-
-        //             fase.tipoMaquinaria.push(tipoMaquinaria);
-        //             /*console.log("fase",fase);
-        //             console.log("Tipo",fase.tipoMaquinaria[k].maquinarias);
-        //             console.log("TipSasdwsdo",fase.tipoMaquinaria);
-        //             console.log("Tipo",fase.tipoMaquinaria.maquinarias);*/
-        //             if(fase.tipoMaquinaria[k].maquinarias.length>0){
-        //                 fase.tipoMaquinaria[k].maquinariasShow = 'inline';
-        //             }
-        //         }
-                
-        //         etapa.fases.push(fase); 
-        //     }
-        //     if (etapa.fases.length>1){
-        //         etapa.eliminar=false;
-        //     }
-        //     state.etapas.push(etapa);
-        // }
-
-
-        
-
-       
-
-
-        // console.log("estado inicial",state);
-        // console.log("estado inicial",state.mineralId);
-        // this.setState(() => ({
-        //     eliminar: state.eliminar,
-        //     yacimiento: state.yacimiento,
-        //     explotacion: state.explotacion,
-        //     mineralId: state.mineralId,
-        //     Minerales: state.Minerales,
-        //     mineralNoMetalicoId: state.mineralNoMetalicoId,
-        //     MineralesNoMetalicos: state.MineralesNoMetalicos,
-        //     etapas: state.etapas
-        // }));
 
     }
 
@@ -3751,6 +2400,7 @@ console.log();
         info.explotacion.fechaFR = this.state.explotacion.fechaFR.ano+'-'+mes+'-'+dia;
 
 
+        let etapas_finalizadas = true;
 
 
         info.etapas.shift();
@@ -3809,9 +2459,13 @@ console.log();
                 
                 etapa.estatus = etapaR.estatus;
                 
-                
+                if(etapa.estatus!=10){
+                    etapas_finalizadas = false;
+                }
 
                 etapa.fases.shift();
+
+                let fases_finalizadas = true;
 
                 etapaR.fases.forEach((faseR)=>{
                     if(faseR.numero != 0){
@@ -3858,7 +2512,10 @@ console.log();
                         fase.estatus = faseR.estatus ;
                         
                         
-
+                        if(fase.estatus!=10){
+                            fases_finalizadas = false;
+                            fase.fechaFR = '0-00-00';
+                        }
 
                         
                         fase.cargos.shift();
@@ -3901,7 +2558,7 @@ console.log();
                                                 case "Martes":
                                                     empleado.horario.push((horarioR.value==1)?3:4);
                                                     break;
-                                                case "Miercoles":
+                                                case "Miércoles":
                                                     empleado.horario.push((horarioR.value==1)?5:6);
                                                     break;
                                                 case "Jueves":
@@ -3961,11 +2618,19 @@ console.log();
                         etapa.fases.push(fase);
                     }
                 });
+                
+                if(fases_finalizadas==false){
+                    etapa.fechaFR = '0-00-00';
+                }
                 info.etapas.push(etapa);
             }
         });
 
-        console.log(info);
+        if(etapas_finalizadas==false){
+            info.explotacion.fechaFR = '0-00-00';
+        }
+
+        console.log('infooooooooooooooooooooo',info);
 
 
 
@@ -4007,16 +2672,19 @@ console.log();
                                 if((info.etapas[i].fases[j].cargos[k].empleados[m].horario==undefined)||(info.etapas[i].fases[j].cargos[k].empleados[m].horario==null)||(info.etapas[i].fases[j].cargos[k].empleados[m].horario.length==0)){
                                     
                                     if(error==false){
-                                         this.setState({ mensajeError: 'Debe asignar un horario al empleado '+this.state.etapas[i].fases[j].cargos[k].empleados[m].nombre+' del cargo '+this.state.etapas[i].fases[j].cargos[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
+                                        this.setState({ mensajeError: 'Debe asignar un horario al empleado '+this.state.etapas[i].fases[j].cargos[k].empleados[m].nombre+' del cargo '+this.state.etapas[i].fases[j].cargos[k].nombre+' de la etapa '+(i+1)+' en la fase '+(j+1)});
                             
 
                                         this.modalErrorOpen();
                                         error =true;
                                     }
+
                                    
                                 }
                             }
                         }
+
+                       
 
                     }
                     for(let k=0; k<info.etapas[i].fases[j].tipoMaquinaria.length; k++){
@@ -4031,6 +2699,16 @@ console.log();
                         }
                          
                     }
+
+
+                    if((error==false)&&(info.etapas[i].fases[j].estatus==10)&&(info.etapas[i].fases[j].fechaFR=='0-00-00'))
+                    {
+                        this.setState({ mensajeError: 'La fecha final real asignada a la fase ' + (j+1) +' de la etapa '+(i+1)+' no es una fecha válida'});
+
+                        this.modalErrorOpen();
+                        error = true;
+                    }
+
                 }
 
             }
@@ -4817,6 +3495,7 @@ console.log();
 
                 }
                 else{
+                    this.setFechaRCero(etapaNum,faseNum);
                     document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "La Fecha Final Real debe ser mayor a la Fecha de Inicio";
                 }
                 
@@ -4824,23 +3503,63 @@ console.log();
             }
             else{
                
-                    
+                this.setFechaRCero(etapaNum,faseNum);
                 document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Introduzca una fecha válida";
                    
             }    
         }
         else{
             event.target.state='invalid';
-            
+            this.setFechaRCero(etapaNum,faseNum);
             document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Introduzca una fecha válida";
             console.log("invalido");
         }
             
         if(!valueDia && !valueMes && !valueAno){
             event.target.state='';
+            this.setFechaRCero(etapaNum,faseNum);
             document.getElementById("FechaFinalRealTexto"+faseNum+''+etapaNum+"FR").innerHTML = "Obligatorio";   
         }
     }
+
+
+
+    setFechaRCero=(etapaNum,faseNum)=>{
+        let etapas = this.state.etapas;
+        let explotacion = this.state.explotacion;
+
+        explotacion.fechaFR.dia = 0;
+        explotacion.fechaFR.mes = 0;
+        explotacion.fechaFR.ano = 0;
+
+        document.getElementById("FechaDia0FR").value =  "- -";
+        document.getElementById("FechaMes0FR").value =  "- -";
+        document.getElementById("FechaAno0FR").value =  "- - - -";
+
+
+
+        etapas[etapaNum-1].fechaFR.dia = 0;
+        etapas[etapaNum-1].fechaFR.mes = 0;
+        etapas[etapaNum-1].fechaFR.ano = 0;
+
+        document.getElementById("FechaDia"+etapaNum+"FR").value = "- -";
+        document.getElementById("FechaMes"+etapaNum+"FR").value = "- -";
+        document.getElementById("FechaAno"+etapaNum+"FR").value = "- - - -";
+
+
+
+        etapas[etapaNum-1].fases[faseNum-1].fechaFR.dia = 0;
+        etapas[etapaNum-1].fases[faseNum-1].fechaFR.mes = 0;
+        etapas[etapaNum-1].fases[faseNum-1].fechaFR.ano = 0;
+
+
+        this.setState(() => ({
+            etapas: etapas,
+            explotacion: explotacion
+        }));
+        console.log("Etapa, explotacion",etapas,explotacion);
+    }
+
 
     actualizarEstatus=(event,etapaNum,faseNum)=>{
 
@@ -5022,7 +3741,7 @@ console.log();
 
                                            // value={this.state.explotacion.estatus}
 
-                                            defaultValue={this.state.explotacion.estatus}
+                                            value={this.state.explotacion.estatus}
 
                                             disabled={true}
                                             >
@@ -5037,7 +3756,7 @@ console.log();
                                     </Form.Row>
 
                                     <Form.Row className="formMargins" >
-                                        <FormFecha idF={"0I"} idTexto="FechaInicioTexto" onChangeF={()=>this.handleOnChangeFecha()} textoAuxiliar="Obligatorio" dia={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaI.dia:""} mes={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaI.mes:""} ano={(this.state.explotacion.finalizar==true)?this.state.explotacion.fechaI.ano:""}   titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft"  disabled={(this.state.explotacion.finalizar==true)?true:false}/>
+                                        <FormFecha idF={"0I"} idTexto="FechaInicioTexto" onChangeF={()=>this.handleOnChangeFecha()} textoAuxiliar="Obligatorio" dia={this.state.explotacion.fechaI.dia} mes={this.state.explotacion.fechaI.mes} ano={this.state.explotacion.fechaI.ano}   titulo="Fecha de Inicio de explotación" textoAuxiliar="Obligatorio" clase="inputsPaddingLeft"  disabled={(this.state.explotacion.finalizar==true)?true:false}/>
                                         
                                         <FormFecha idF={"0F"} titulo="Fecha Final de explotación" clase="inputsPaddingLeft" textoAuxiliar="Calculado" dia={(this.state.explotacion.fechaF.dia==0)?"- -":this.state.explotacion.fechaF.dia} mes={(this.state.explotacion.fechaF.mes==0)?"- -":this.state.explotacion.fechaF.mes} ano={(this.state.explotacion.fechaF.ano==0)?"- - - -":this.state.explotacion.fechaF.ano} disabled={true}/>    
                                         

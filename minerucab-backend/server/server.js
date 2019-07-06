@@ -13,6 +13,7 @@ const Explotaciones = require('../database/model/Explotaciones');
 const ExplotacionesValidations = require('../validations/ExplotacionesValidations');
 const Fases = require('../database/model/Fases');
 const JasperReports = require('../reports/jasper-reports/jasper-reports-generator');
+const JasperServer = require('../reports/jasper-reports/jasper-reports-server')
 const Lugares = require('../database/model/Lugares');
 const Maquinarias = require('../database/model/Maquinarias');
 const Minerales = require('../database/model/Minerales');
@@ -44,7 +45,7 @@ app.use( bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'));
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+  res.header("Access-Control-Allow-Origin", "http://localhost:8081");
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
@@ -54,6 +55,8 @@ app.get('/', (req, res) => {
   res.send('<h1>Hello Express!</h1>');
 });
 
+/* ----------------------------------- REPORTES ----------------------------------- */
+app.get('/getReporte1', JasperServer.getReporte1);
 
 /* ----------------------------------- POST ----------------------------------- */
 app.post('/crearSolCompra', SolCompraValidations.crearSolCompra);
@@ -113,6 +116,9 @@ app.get('/getEmpleadosByIdCargoFase/:id', Empleados.getEmpleadosByIdCargoFase);
 app.get('/getHorarioEmpleadoByIdEmpleadoCargoFase/:id', Empleados.getHorarioEmpleadoByIdEmpleadoCargoFase);
 /* -------------------- EXPLOTACIONES -------------------- */
 app.get('/getAllExplotaciones', Explotaciones.getAllExplotaciones)
+app.get('/getAllExplotacionesConEstatusEnProceso', Explotaciones.getAllExplotacionesConEstatusEnProceso)
+app.get('/getAllExplotacionesConEstatusFinalizado', Explotaciones.getAllExplotacionesConEstatusFinalizado);
+app.get('/getAllExplotacionesConEstatusInactivo', Explotaciones.getAllExplotacionesConEstatusInactivo)
 app.get('/getEtapasByIdExplotacion/:id', Explotaciones.getEtapasByIdExplotacion);
 app.get('/getFasesByIdEtapa/:id', Explotaciones.getFasesByIdEtapa);
 app.get('/getCargosExpByIdFase/:id', Explotaciones.getCargosExpByIdFase);
@@ -183,7 +189,7 @@ app.get('/getAllYacimientoInfoById/:id', Yacimientos.getAllYacimientoInfoById);
 app.get('/getYacimientoByIdExplotacion/:id', Yacimientos.getYacimientoByIdExplotacion);
 app.get('/getAllYacimientosConEstatusInactivo', Yacimientos.getAllYacimientosConEstatusInactivo);
 app.get('/getAllYacimientosConEstatusDiferenteAInactivo', Yacimientos.getAllYacimientosConEstatusDiferenteAInactivo);
-app.get('/getAllExplotacionesConEstatusInactivo', Yacimientos.getAllExplotacionesConEstatusInactivo);
+// app.get('/getAllExplotacionesConEstatusInactivo', Yacimientos.getAllExplotacionesConEstatusInactivo);
 app.get('/getAllExplotacionesConEstatusDiferenteAInactivo', Yacimientos.getAllExplotacionesConEstatusDiferenteAInactivo);
 app.get('/getExplotacionInfo/:id', Yacimientos.getExplotacionInfo)
 /* -------------------- YACIMIENTO MINERAL -------------------- */

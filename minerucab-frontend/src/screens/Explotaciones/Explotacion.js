@@ -20,7 +20,34 @@ export default class Explotacion extends React.Component {
         mineralesMet: [],
         mineralesNoMet: [],
         expl: 0,
-        idEliminar: null
+        idEliminar: null,
+        c: false,
+        r: false,
+        u: false,
+        d: false
+    }
+    componentWillMount = () => {
+        const userInfoString = localStorage.getItem('user')
+        const userInfo = JSON.parse(userInfoString);
+        console.log(userInfo)
+
+        userInfo.forEach((info) => {
+            if (info.nombre.toLowerCase().includes('explotación')){
+                if (info.tipo_privilegio === 'C') {
+                    this.setState({ c: true });
+                }
+                if (info.tipo_privilegio === 'R') {
+                    this.setState({ r: true });
+                }
+                if (info.tipo_privilegio === 'U') {
+                    this.setState({ u: true });
+                }
+                if (info.tipo_privilegio === 'D') {
+                    this.setState({ d: true });
+                }
+            }
+        })
+        console.log('state', this.state)
     }
     modalEliminarClose = () => this.setState({ modalShowEliminar: false });
     modalEliminarOpen = (i) => {
@@ -174,7 +201,7 @@ export default class Explotacion extends React.Component {
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
                             <DataTable
-                                data={'http://localhost:3000/getAllExplotaciones'}
+                                data={'http://localhost:3000/getAllExplotacionesConEstatusInactivo'}
                                 textoSingular={'yacimiento'}
                                 textoPlural={'yacimientos'}
                                 urlModificar={'/modificar_explotacion'}
@@ -182,16 +209,98 @@ export default class Explotacion extends React.Component {
                                 urlCrear={'/registrar_explotacion'}
                                 modalExplotar={this.modalExplotarOpen}
                                 agregar={false}
-                                modificar={true}
-                                consultar={true}
-                                eliminar={true}
-                                explotar={true}
+                                modificar={this.state.u}
+                                consultar={this.state.r}
+                                eliminar={this.state.d}
+                                explotar={this.state.c}
                                 modalEliminar={this.modalEliminarOpen}
                                 reload={this.state.reload}
                                 checktable={false}
                                 textoSingular={'explotación'}
                                 textoPlural={'explotaciones'}
-                                size={500}
+                                size={150}
+                            />
+                        </Col>
+                        <Col sm={0} md={1}></Col>
+                    </Row>
+                </Container>
+                <Container>
+                      <Row>
+                          <Col md={1}></Col>
+                          <Col md={11}>
+                              <Row>
+                                  <Col md={11}>
+                                      <h6 className="horizontal-line-title-ventas-form cliente-title">Explotaciones en Proceso</h6>
+                                  </Col>
+                                  <Col md={1}></Col>
+                              </Row>
+                          </Col>
+                      </Row>
+                </Container>
+                <Container className="pagecontent">
+                    <Row>
+                        <Col sm={0} md={1}></Col>
+                        <Col sm={12} md={10}>
+                            <DataTable
+                                data={'http://localhost:3000/getAllExplotacionesConEstatusEnProceso'}
+                                textoSingular={'yacimiento'}
+                                textoPlural={'yacimientos'}
+                                urlModificar={'/modificar_explotacion'}
+                                urlConsultar={'/consultar_explotacion'}
+                                urlCrear={'/registrar_explotacion'}
+                                modalExplotar={this.modalExplotarOpen}
+                                agregar={false}
+                                modificar={this.state.u}
+                                consultar={this.state.r}
+                                eliminar={this.state.d}
+                                explotar={this.state.c}
+                                modalEliminar={this.modalEliminarOpen}
+                                reload={this.state.reload}
+                                checktable={false}
+                                textoSingular={'explotación'}
+                                textoPlural={'explotaciones'}
+                                size={200}
+                            />
+                        </Col>
+                        <Col sm={0} md={1}></Col>
+                    </Row>
+                </Container>
+                <Container>
+                      <Row>
+                          <Col md={1}></Col>
+                          <Col md={11}>
+                              <Row>
+                                  <Col md={11}>
+                                      <h6 className="horizontal-line-title-ventas-form cliente-title">Explotaciones Finalizadas</h6>
+                                  </Col>
+                                  <Col md={1}></Col>
+                              </Row>
+                          </Col>
+                      </Row>
+                </Container>
+                <Container className="pagecontent">
+                    <Row>
+                        <Col sm={0} md={1}></Col>
+                        <Col sm={12} md={10}>
+                            <DataTable
+                                data={'http://localhost:3000/getAllExplotacionesConEstatusFinalizado'}
+                                textoSingular={'yacimiento'}
+                                textoPlural={'yacimientos'}
+                                urlModificar={'/modificar_explotacion'}
+                                urlConsultar={'/consultar_explotacion'}
+                                urlCrear={'/registrar_explotacion'}
+                                modalExplotar={this.modalExplotarOpen}
+                                agregar={false}
+                                modificar={this.state.u}
+                                consultar={this.state.r}
+                                eliminar={this.state.d}
+                                explotar={this.state.c}
+                                modalEliminar={this.modalEliminarOpen}
+                                reload={this.state.reload}
+                                checktable={false}
+                                textoSingular={'explotación'}
+                                textoPlural={'explotaciones'}
+                                size={400}
                             />
                         </Col>
                         <Col sm={0} md={1}></Col>

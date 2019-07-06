@@ -11,7 +11,34 @@ import ModalYesNo from '../../components/ModalYesNo';
 export default class SolicitudCompra extends React.Component {
     state = {
         modalShowEliminar: false,
-        infoEliminar: ''
+        infoEliminar: '',
+        c: false,
+        r: false,
+        u: false,
+        d: false
+    }
+    componentWillMount = () => {
+        const userInfoString = localStorage.getItem('user')
+        const userInfo = JSON.parse(userInfoString);
+        console.log(userInfo)
+
+        userInfo.forEach((info) => {
+            if (info.nombre.toLowerCase().includes('solicitud')){
+                if (info.tipo_privilegio === 'C') {
+                    this.setState({ c: true });
+                }
+                if (info.tipo_privilegio === 'R') {
+                    this.setState({ r: true });
+                }
+                if (info.tipo_privilegio === 'U') {
+                    this.setState({ u: true });
+                }
+                if (info.tipo_privilegio === 'D') {
+                    this.setState({ d: true });
+                }
+            }
+        })
+        console.log('state', this.state)
     }
     modalEliminarClose = () => this.setState({ modalShowEliminar: false });
     modalEliminarOpen = () => {
@@ -51,9 +78,9 @@ export default class SolicitudCompra extends React.Component {
                                 urlModificar={'/consultar_solicitud_compra'}
                                 urlConsultar={'/consultar_solicitud_compra'}
                                 agregar={false}
-                                modificar={true}
-                                consultar={true}
-                                eliminar={false}
+                                modificar={this.state.u}
+                                consultar={this.state.r}
+                                eliminar={this.state.d}
                                 modalEliminar={this.modalEliminarOpen}
                                 reload={this.state.reload}
                                 checktable={false}

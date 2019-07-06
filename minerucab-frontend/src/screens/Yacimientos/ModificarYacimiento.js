@@ -2566,32 +2566,23 @@ export default class ModificarYacimiento extends React.Component {
 
 
 
-     handleOnClickSubmittData=()=>{
-
+    handleOnClickSubmittData=()=>{
 
         const info = {
             yacimiento:{
                 id:null,
+                estatus:null,
                 nombre:null,
                 descripcion:null,
                 area:null,
                 tipo:null,
-                tipoId:null,
+                fecha:null,
                 ubicacion:{
                     estado:null,
                     municipio:null,
                     parroquia:null,
                     parroquiaId:null,
-                },
-                fecha:{
-                    dia:null,
-                    mes:null,
-                    ano:null
                 }
-            },
-            estatus:{
-                id:null,
-                nombre:null,
             },
             minerales:[{
                 id:0,
@@ -2612,13 +2603,11 @@ export default class ModificarYacimiento extends React.Component {
                 nombre: null,
                 id:null,
                 duracion:0,
-                estatus:0,
                 costo:0,
                 fases: [{
                     nombre: null,
                     id:null,
                     duracion:0,
-                    estatus:0,
                     costo:0,
                     cargos:[{
                         id:0,
@@ -2661,8 +2650,7 @@ export default class ModificarYacimiento extends React.Component {
         info.yacimiento.fecha.mes = Number(document.getElementById("FechaMes").value.trim());
         info.yacimiento.fecha.ano = Number(document.getElementById("FechaAno").value.trim());
 
-        info.estatus.id = this.state.estatus.id;
-        info.estatus.nombre = this.state.estatus.nombre;
+        info.yacimiento.estatus.id = this.state.estatus.id;
 
         info.minerales.shift();
         for(let i=0; i<this.state.Minerales.length; i++){
@@ -2718,13 +2706,13 @@ export default class ModificarYacimiento extends React.Component {
                 let etapa= {
                     nombre: null,
                     duracion:0,
+                    id: null,
                     costo:0,
-                    estatus:0,
                     fases: [{
                         nombre: null,
                         duracion:0,
+                        id: null,
                         costo:0,
-                        estatus:0,
                         cargos:[{
                             id:0,
                             sueldo:0,
@@ -2742,7 +2730,6 @@ export default class ModificarYacimiento extends React.Component {
                 etapa.nombre = document.getElementById('YacimientosNombreEtapa'+etapaR.numeroV).value.trim();
                 etapa.duracion = etapaR.duracion;
                 etapa.costo = etapaR.costo;
-                etapa.estatus = 2;
 
                 etapa.fases.shift();
                 etapaR.fases.forEach((faseR)=>{
@@ -2750,8 +2737,8 @@ export default class ModificarYacimiento extends React.Component {
                         let fase= {
                             nombre: null,
                             duracion:0,
+                            id: null,
                             costo:0,
-                            estatus:0,
                             cargos:[{
                                 id:0,
                                 sueldo:0,
@@ -2768,7 +2755,6 @@ export default class ModificarYacimiento extends React.Component {
                         fase.nombre = document.getElementById('YacimientosNombreEtapaFase'+etapaR.numeroV+faseR.numeroV).value.trim();
                         fase.duracion = faseR.duracion;
                         fase.costo = faseR.costo;
-                        fase.estatus = 2;
                         
                         fase.cargos.shift();
                         fase.tipoMaquinaria.shift();

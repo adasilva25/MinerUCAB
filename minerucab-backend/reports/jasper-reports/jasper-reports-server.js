@@ -10,6 +10,48 @@ let cookie;
 let exportId;
 let requestId;
 
+getReporte1 = (req, response) => {
+    const config = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        auth: {
+            'username': 'jasperadmin',
+            'password': 'jasperadmin'
+        },
+        responseType: 'document',
+        withCredentials: true
+    }
+    
+
+    axios.get('http://localhost:8080/jasperserver/rest_v2/reports/reports/MinerUCAB/Reporte1.html', config)
+        .then((res) => {
+            cookie = res.headers["set-cookie"][0].split(' ').splice(0, 2);
+            console.log(cookie);
+            cookie = `$Version=0; ${cookie.join(' ')}`;
+            console.log(cookie);
+            const link = path.join(__dirname, '../outputs/Reporte1.html')
+
+            fs.writeFile(path.join(__dirname, '../outputs/Reporte1.html'), (res.data), (err) => {
+                if (err){
+                    logout()
+                    throw err;
+                }
+                else{
+                    response.status(200).json({link: link})
+                    console.log('The file has been saved!');
+                }
+                logout()
+            });
+            
+            logout()
+
+            // console.log(res)
+        }).catch((e) => {
+            console.log('Error')
+        })
+}
+
 exports.getDynamicReport = () => {
     
     const config = {
@@ -159,8 +201,12 @@ const logout = () => {
 
     axios.get('http://localhost:8080/jasperserver//logout.html', config)
         .then((res) => {
-            console.log('logout')
+            console.log('logout', res)
         }).catch((e) => {
             console.log('error loging out')
         })
+}
+
+module.exports = {
+    getReporte1
 }

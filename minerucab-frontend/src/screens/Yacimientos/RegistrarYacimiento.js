@@ -19,6 +19,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import axios from 'axios';
+import ModalAdvertencia from '../../components/ModalAdvertencia';
 
 // https://www.w3schools.com/jquery/html_removeclass.asp
 
@@ -32,6 +33,8 @@ export default class RegistrarYacimiento extends React.Component {
         this.state = {
             eliminadosFases: [],
             eliminar:true,
+            modalShowEliminar: false,
+            mensajeError:'',
             prueba: true,
             key:"Etapa 1",
             explotacion:{
@@ -1121,6 +1124,17 @@ export default class RegistrarYacimiento extends React.Component {
         }
     }
 
+
+
+
+
+    modalErrorClose = () => {
+        this.setState({ modalShowEliminar: false, reload: true });
+    }
+    modalErrorOpen = () => {
+        this.setState({ modalShowEliminar: true })
+    };
+
     handleOnClickSubmittData=()=>{
 
         const info = {
@@ -1414,31 +1428,42 @@ export default class RegistrarYacimiento extends React.Component {
         }
             //Yacimientos
         if(info.yacimiento.nombre.length===0){
-            alert("Introduzca el nombre del yacimiento")
+            this.setState({ mensajeError: ("Introduzca el nombre del yacimiento") });
+            this.modalErrorOpen();
         }else if((isNaN(info.yacimiento.area))||(info.yacimiento.area<=0)){
-            alert("Introduzca el tamaño del yacimiento")
+            this.setState({ mensajeError: ("Introduzca el tamaño del yacimiento") });
+            this.modalErrorOpen();
             //Minerales
         }else if((info.minerales.length===0)&&(info.mineralesNoMetalicos.length===0)){
-            alert("El yacimiento debe tener al menos un mineral")
+            this.setState({ mensajeError: ("El yacimiento debe tener al menos un mineral") });
+            this.modalErrorOpen();
         }else if(verifMineral===1){
-            alert("Introduzca la cantidad de los minerales")
+            this.setState({ mensajeError: ("Introduzca la cantidad de los minerales") });
+            this.modalErrorOpen();
             //Etapas
         }else if(info.etapas.length===0){
-            alert("Cada etapa debe tener un nombre asociado")
+            this.setState({ mensajeError: ("Cada etapa debe tener un nombre asociado") });
+            this.modalErrorOpen();
             //Fases
         }else if(verifFase===1){
-            alert("Cada fase debe tener un nombre asociado")
+            this.setState({ mensajeError: ("Cada fase debe tener un nombre asociado") });
+            this.modalErrorOpen();
         }else if(verifFaseDuracion===1){
-            alert("Introduzca la duración de cada una de las fases")
+            this.setState({ mensajeError: ("Introduzca la duración de cada una de las fases") });
+            this.modalErrorOpen();
         }else if(verifNombre===1){
-            alert("Las etapas y las fases de una misma etapa no pueden tener el mismo nombre")
+            this.setState({ mensajeError: ("Las etapas y las fases de una misma etapa no pueden tener el mismo nombre") });
+            this.modalErrorOpen();
             //Cargos
         }else if(verifCargoFase===1){
-            alert("Todas las fases deben tener al menos un cargo asociado")
+            this.setState({ mensajeError: ("Todas las fases deben tener al menos un cargo asociado") });
+            this.modalErrorOpen();
         }else if(verifCantidadCargo===1){
-            alert("Debe indicar la cantidad de los cargos escogidos con su respectivo sueldo")
+            this.setState({ mensajeError: ("Debe indicar la cantidad de los cargos escogidos con su respectivo sueldo") });
+            this.modalErrorOpen();
         }else if(verifMaquinaria===1){
-            alert("Debe indicar la cantidad de los tipos de maquinaria escogidos con su respectivo costo")
+            this.setState({ mensajeError: ("Debe indicar la cantidad de los tipos de maquinaria escogidos con su respectivo costo") });
+            this.modalErrorOpen();
         }else{
             const config = {
                 headers: {
@@ -1869,7 +1894,14 @@ export default class RegistrarYacimiento extends React.Component {
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario="Diego Gutiérrez"/>
-  
+                
+                 <ModalAdvertencia
+                    show={this.state.modalShowEliminar}
+                    onHide={this.modalErrorClose}
+                    infoeliminar={this.state.mensajeError}
+                    mensaje={''}
+                />
+
                 <Container className="FormContainer">
                    
 
