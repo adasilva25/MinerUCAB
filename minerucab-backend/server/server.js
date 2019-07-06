@@ -20,6 +20,8 @@ const MineralesValidations = require('../validations/MineralesValidations');
 const PagosValidations = require('../validations/PagosValidations');
 const Presentaciones = require('../database/model/Presentaciones');
 const Roles = require('../database/model/Roles');
+const RolesValidations = require('../validations/RolesValidations');
+const Privilegios = require('../database/model/Privilegios');
 const SolicitudesCompra = require('../database/model/SolicitudesCompra');
 const SolCompraValidations = require('../validations/SolCompraValidation')
 const TiposMaquinaria = require('../database/model/TiposMaquinaria');
@@ -71,6 +73,8 @@ app.post('/insertCompMinMet', Minerales.insertCompMinMet);
 app.post('/insertCompMinNoMet', Minerales.insertCompMinNoMet);
 app.post('/crearMineralMetalico', MineralesValidations.crearMineralMetalico);
 app.post('/crearMineralNoMetalico', MineralesValidations.crearMineralNoMetalico);
+/* -------------------- ROLES -------------------- */
+app.post('/crearRol', RolesValidations.crearRol);
 /* -------------------- USUARIOS -------------------- */
 app.post('/validateUser', Usuarios.validateUser)
 app.post('/insertUsuario', Usuarios.insertUsuario)
@@ -145,6 +149,10 @@ app.get('/getPagosChequeDeVenta/:id', PagosValidations.getPagosChequeDeVenta);
 app.get('/getPagosTarjetaCreditoDeVenta/:id', PagosValidations.getPagosTarjetaCreditoDeVenta);
 app.get('/getPagosTarjetaDebitoDeVenta/:id', PagosValidations.getPagosTarjetaDebitoDeVenta);
 app.get('/getPagosTransferenciaDeVenta/:id', PagosValidations.getPagosTransferenciaDeVenta);
+/* -------------------- ROLES -------------------- */
+app.get('/getRolById/:id', Roles.getRolById);
+app.get('/getAllPrivilegios', Privilegios.getAllPrivilegios);
+app.get('/getAllPrivilegiosByIdRol/:id', Privilegios.getAllPrivilegiosByIdRol);
 /* -------------------- SOLICITUDES DE COMPRA -------------------- */
 app.get('/getAllSolicitudesDeCompra', SolicitudesCompra.getAllSolicitudesDeCompra);
 app.get('/getEstatusSolicitudDeCompraByIdExplotacion/:id', SolicitudesCompra.getEstatusSolicitudDeCompraByIdExplotacion);
@@ -204,6 +212,8 @@ app.put('/updatePresMinMet', Minerales.updatePresMinMet)
 app.put('/updatePresMinNoMet', Minerales.updatePresMinNoMet)
 app.put('/updateCompMinMet', Minerales.updateCompMinMet)
 app.put('/updateCompMinNoMet', Minerales.updateCompMinNoMet)
+/* -------------------- ROLES -------------------- */
+app.put('/modificarRol', RolesValidations.modificarRol);
 /* -------------------- VENTAS -------------------- */
 app.put('/updateVenta', VentasValidations.updateVenta);
 
@@ -225,6 +235,8 @@ app.delete('/deleteMineralMetalicoById/:id', Minerales.deleteMineralMetalicoById
 app.delete('/deleteMineralNoMetalicoById/:id', Minerales.deleteMineralNoMetalicoById);
 app.delete('/deletePresMin/:id', Minerales.deletePresMin);
 app.delete('/deleteCompMin/:id', Minerales.deleteCompMin);
+/* -------------------- ROLES -------------------- */
+app.delete('/deleteRolById/:id', Roles.deleteRolById)
 /* -------------------- VENTAS -------------------- */
 app.delete('/deleteVentaById/:id', Ventas.deleteVentaById);
 /* -------------------- YACIMIENTOS -------------------- */

@@ -22,19 +22,6 @@ export class HomePage extends React.Component {
     render(){
 
         let actividades = [
-            {
-                titulo: 'Yacimientos',
-                link:'/yacimiento',
-                image:'/images/Yacimientos.jpg',
-                descripcion:""
-            },
-
-            /*{
-                titulo: 'Cargos',
-                link:'/cargo',
-                image:'/images/Cargos.png',
-                descripcion:" 
-            },*/
 
             {
                 titulo: 'Minerales',
@@ -44,9 +31,23 @@ export class HomePage extends React.Component {
             },
 
             {
+                titulo: 'Yacimientos',
+                link:'/yacimiento',
+                image:'/images/Yacimientos.jpg',
+                descripcion:""
+            },
+
+            {
                 titulo: 'Explotaciones',
                 link:'/explotacion',
                 image:'/images/Explotaciones.jpg',
+                descripcion:""
+            },
+
+            {
+                titulo: 'Clientes',
+                link:'/cliente',
+                image:'/images/Clientes.jpg',
                 descripcion:""
             },
 
@@ -65,6 +66,13 @@ export class HomePage extends React.Component {
             },
 
             {
+                titulo: 'Inventario',
+                link:'/inventario',
+                image:'/images/inventario.jpg',
+                descripcion:""
+            },
+
+            {
                 titulo: 'Empleados',
                 link:'/empleado',
                 image:'/images/Empleados.jpg',
@@ -72,18 +80,12 @@ export class HomePage extends React.Component {
             },
 
             {
-                titulo: 'Clientes',
-                link:'/cliente',
-                image:'/images/Clientes.jpg',
+                titulo: 'Roles',
+                link:'/rol',
+                image:'/images/Cargos.png',
                 descripcion:""
             },
-
-            {
-                titulo: 'Inventario',
-                link:'/inventario',
-                image:'/images/inventario.jpg',
-                descripcion:""
-            },
+            
             /*{
                 titulo: 'Empresas Aliadas',
                 link:'#45',
