@@ -55,11 +55,25 @@ export class HomePage extends React.Component {
             },
 
             {
+                titulo: 'Yacimientos',
+                link:'/yacimiento',
+                image:'/images/Yacimientos.jpg',
+                descripcion:""
+            },
+
+            {
                 titulo: 'Explotaciones',
                 link:'/explotacion',
                 image:'/images/Explotaciones.jpg',
                 descripcion:"",
                 show: this.state.explotacion
+            },
+
+            {
+                titulo: 'Clientes',
+                link:'/cliente',
+                image:'/images/Clientes.jpg',
+                descripcion:""
             },
 
             {
@@ -107,7 +121,14 @@ export class HomePage extends React.Component {
                 image:'/images/inventario.jpg',
                 descripcion:"",
                 show: this.state.inventario
-            }
+            },
+            {
+                titulo: 'Roles',
+                link:'/rol',
+                image:'/images/Cargos.png',
+                descripcion:""
+            },
+            
             /*{
                 titulo: 'Empresas Aliadas',
                 link:'#45',

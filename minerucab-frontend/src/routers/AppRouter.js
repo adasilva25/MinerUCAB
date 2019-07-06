@@ -29,6 +29,8 @@ import Yacimiento from '../screens/Yacimientos/Yacimiento';
 import ModalBuscarCliente from '../components/ModalBuscarCliente';
 import RegistrarCargo from '../screens/Cargos/RegistrarCargo';
 import Venta from '../screens/Ventas/Venta';
+import Rol from '../screens/Roles/Rol';
+import GesionarRol from '../screens/Roles/GestionarRol';
 import Maquinaria from '../screens/Maquinarias/Maquinaria';
 import GestionarMaquinaria from '../screens/Maquinarias/GestionarMaquinaria';
 import Mineral from '../screens/Minerales/Mineral';
@@ -82,6 +84,9 @@ const AppRouter = () => (
         <Route path="/gestionar_mineral_no_metalico/:accion/:id?" component={GestionarMineralNoMetalico} />
         {/* ------------------------ REPORTES ------------------------ */}
         <Route path="/reporte" component={Reporte} />
+        {/* ------------------------ ROLES ------------------------ */}
+        <Route path="/rol" component={Rol} />
+        <Route path="/gestionar_rol/:accion/:id?" component={GesionarRol} />
         {/* ------------------------ SOLICITUDES DE COMPRA ------------------------ */}
         <Route path="/solicitud_compra" component={SolicitudCompra} />
         <Route path="/consultar_solicitud_compra/:accion/:id" component={ConsultarSolicitudCompra} />
