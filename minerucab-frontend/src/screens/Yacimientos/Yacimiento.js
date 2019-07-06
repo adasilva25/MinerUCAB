@@ -12,8 +12,35 @@ export default class Yacimiento extends React.Component {
     state = {
         modalShowEliminar: false,
         infoEliminar: '',
-        idEliminar: null
+        idEliminar: null,
+        c: false,
+        r: false,
+        u: false,
+        d: false
     }
+    componentWillMount = () => {
+        const userInfoString = localStorage.getItem('user')
+        const userInfo = JSON.parse(userInfoString);
+        console.log(userInfo)
+
+        userInfo.forEach((info) => {
+            if (info.nombre.toLowerCase().includes('yacimiento')){
+                if (info.tipo_privilegio === 'C') {
+                    this.setState({ c: true });
+                }
+                if (info.tipo_privilegio === 'R') {
+                    this.setState({ r: true });
+                }
+                if (info.tipo_privilegio === 'U') {
+                    this.setState({ u: true });
+                }
+                if (info.tipo_privilegio === 'D') {
+                    this.setState({ d: true });
+                }
+            }
+        })
+        console.log('state', this.state)
+    } 
     modalEliminarClose = () => this.setState({ modalShowEliminar: false });
     modalEliminarOpen = (i) => {
         this.setState({ idEliminar: i, modalShowEliminar: true });
@@ -54,10 +81,10 @@ export default class Yacimiento extends React.Component {
                                 urlModificar={'/modificar_yacimiento'}
                                 urlConsultar={'/consultar_yacimiento'}
                                 urlCrear={'/registrar_yacimiento'}
-                                agregar={true}
-                                modificar={true}
-                                consultar={true}
-                                eliminar={true}
+                                agregar={this.state.c}
+                                modificar={this.state.u}
+                                consultar={this.state.r}
+                                eliminar={this.state.d}
                                 modalEliminar={this.modalEliminarOpen}
                                 reload={this.state.reload}
                                 checktable={false}

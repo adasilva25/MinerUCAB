@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import DataTable from '../../components/DataTable';
 import OpcionesLocales from '../../components/OpcionesLocales';
 import OpcionesGlobales from '../../components/OpcionesGlobales';
@@ -13,35 +13,8 @@ export default class Cliente extends React.Component {
         modalShowEliminar: false,
         infoEliminar: '',
         idEliminar: 0,
-        reload: false,
-        c: false,
-        r: false,
-        u: false,
-        d: false
+        reload: false
     };
-    componentWillMount = () => {
-        const userInfoString = localStorage.getItem('user')
-        const userInfo = JSON.parse(userInfoString);
-        console.log(userInfo)
-
-        userInfo.forEach((info) => {
-            if (info.nombre.toLowerCase().includes('empleado')){
-                if (info.tipo_privilegio === 'C') {
-                    this.setState({ c: true });
-                }
-                if (info.tipo_privilegio === 'R') {
-                    this.setState({ r: true });
-                }
-                if (info.tipo_privilegio === 'U') {
-                    this.setState({ u: true });
-                }
-                if (info.tipo_privilegio === 'D') {
-                    this.setState({ d: true });
-                }
-            }
-        })
-        console.log('state', this.state)
-    }
     modalEliminarClose = () => {
         this.setState({ modalShowEliminar: false, reload: true });
     }
@@ -53,9 +26,9 @@ export default class Cliente extends React.Component {
             },
             responseType: 'json'
         }
-        axios.get(`http://localhost:3000/getEmpleadoById/${i}`, config)
+        axios.get(`http://localhost:3000/getRolById/${i}`, config)
             .then((res) => {
-                this.setState({ infoEliminar: `${res.data[0].p_nombre} ${res.data[0].p_apellido}` })
+                this.setState({ infoEliminar: `${res.data[0].nombre}` })
                 this.setState
                 this.setState(
                     { 
@@ -76,9 +49,9 @@ export default class Cliente extends React.Component {
                 <ModalYesNo
                     show={this.state.modalShowEliminar}
                     onHide={this.modalEliminarClose}
-                    mensaje={'¿Está seguro que desea eliminar el empleado'}
+                    mensaje={'¿Está seguro que desea eliminar el rol'}
                     infoeliminar={this.state.infoEliminar}
-                    urleliminar={`http://localhost:3000/deleteEmpleadoById/${this.state.idEliminar}`}
+                    urleliminar={`http://localhost:3000/deleteRolById/${this.state.idEliminar}`}
                 />
                 <Container className="pagecontent">
                     <div className="pagecontent">
@@ -88,7 +61,7 @@ export default class Cliente extends React.Component {
                                 <Col md={11}>
                                     <Row>
                                         <Col md={11}>
-                                            <h4 className="horizontal-line-title-ventas-form cliente-title">Empleados</h4>
+                                            <h4 className="horizontal-line-title-ventas-form cliente-title">Roles</h4>
                                         </Col>
                                         <Col md={1}></Col>
                                     </Row>
@@ -100,21 +73,21 @@ export default class Cliente extends React.Component {
                                     <Col sm={0} md={1}></Col>
                                     <Col sm={12} md={10}>
                                         <DataTable
-                                            columns={'http://localhost:3000/column_names/mu_empleado'} 
-                                            data={'http://localhost:3000/getCriticInfoEmpleados'}
-                                            urlCrear={'/gestionar_empleado/CR'}
-                                            urlModificar={'/gestionar_empleado'}
-                                            urlConsultar={'/gestionar_empleado'}
-                                            agregar={this.state.c}
-                                            modificar={this.state.u}
-                                            consultar={this.state.r}
-                                            eliminar={this.state.d}
+                                            columns={'http://localhost:3000/column_names/mu_rol'} 
+                                            data={'http://localhost:3000/getAllRoles'}
+                                            urlCrear={'/gestionar_rol/CR'}
+                                            urlModificar={'/gestionar_rol'}
+                                            urlConsultar={'/gestionar_rol'}
+                                            agregar={true}
+                                            modificar={true}
+                                            consultar={true}
+                                            eliminar={true}
                                             modalEliminar={this.modalEliminarOpen}
                                             reload={this.state.reload}
                                             checktable={false}
-                                            textoSingular={'empleado'}
-                                            textoPlural={'empleados'}
-                                            size={500}
+                                            textoSingular={'rol'}
+                                            textoPlural={'roles'}
+                                            size={300}
                                             //selectCheck={this.selectCheck}
                                         />
                                     </Col>

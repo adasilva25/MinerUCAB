@@ -1525,11 +1525,14 @@ INSERT INTO MU_ROL (nombre) VALUES
 
 -------------------------------------    PRIVILEGIO     -------------------------------------
 INSERT INTO MU_PRIVILEGIO (nombre, tipo) VALUES
-    ('Explotaciones', 'C'), ('Explotaciones', 'R'), ('Explotaciones', 'U'), ('Explotaciones', 'D'),
-    ('Minerales', 'C'), ('Minerales', 'R'), ('Minerales', 'U'), ('Minerales', 'D'),
-    ('Ventas', 'C'), ('Ventas', 'R'), ('Ventas', 'U'), ('Ventas', 'D'),
-    ('Empleados', 'C'), ('Empleados', 'R'), ('Empleados', 'U'), ('Empleados', 'D'),
-    ('Clientes', 'C'), ('Clientes', 'R'), ('Clientes', 'U'), ('Clientes', 'D');
+    ('Explotación', 'C'), ('Explotación', 'R'), ('Explotación', 'U'), ('Explotación', 'D'),
+    ('Yacimiento', 'C'), ('Yacimiento', 'R'), ('Yacimiento', 'U'), ('Yacimiento', 'D'),
+    ('Mineral', 'C'), ('Mineral', 'R'), ('Mineral', 'U'), ('Mineral', 'D'),
+    ('Venta', 'C'), ('Venta', 'R'), ('Venta', 'U'), ('Venta', 'D'),
+    ('Empleado', 'C'), ('Empleado', 'R'), ('Empleado', 'U'), ('Empleado', 'D'),
+    ('Cliente', 'C'), ('Cliente', 'R'), ('Cliente', 'U'), ('Cliente', 'D'),
+    ('Rol', 'C'), ('Rol', 'R'), ('Rol', 'U'), ('Rol', 'D'),
+    ('Solicitud de compra', 'R'), ('Solicitud de compra', 'U'), ('Solicitud de compra', 'D'), ('Inventario', 'R');
 
 -------------------------------------    PRESENTACIÓN     -------------------------------------
 INSERT INTO MU_PRESENTACION (Nombre) VALUES

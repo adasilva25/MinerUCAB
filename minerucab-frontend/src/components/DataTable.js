@@ -98,7 +98,7 @@ export default class DataTable extends React.Component {
                             if (typeof item[key] === 'number'){
                                 values.push(item[key].toString());
                             }
-                            else if (key.includes('fecha')){
+                            else if ((key.includes('fecha')) || key.includes('Fecha')){
                                 const date = new Date(item[key])
                                  const dia = date.getDate()
                                  const mes = (date.getMonth() + 1)

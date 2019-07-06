@@ -244,7 +244,7 @@ const getEtapasByIdExplotacion = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'SELECT E.Clave clave, E.nombre nombre, E.costo_total costo_total, E.Fecha_inicio fecha_inicio, E.fecha_fin fecha_fin, E.fecha_fin_real fecha_fin_real, E.duracion duracion, ES.Nombre estatus, E.fk_estatus clave_estatus FROM MU_ETAPA E, MU_ESTATUS ES WHERE E.fk_explotacion = ($1) AND E.fk_estatus = ES.Clave';
+    const text = 'SELECT E.Clave clave, E.nombre nombre, E.costo_total costo_total, E.Fecha_inicio fecha_inicio, E.fecha_fin fecha_fin, E.fecha_fin_real fecha_fin_real, E.duracion duracion, ES.Clave clave_estatus, ES.Nombre estatus, E.fk_estatus clave_estatus FROM MU_ETAPA E, MU_ESTATUS ES WHERE E.fk_explotacion = ($1) AND E.fk_estatus = ES.Clave';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -380,6 +380,57 @@ const getAllExplotaciones = (req, res) => {
     })
 }
 
+const getAllExplotacionesConEstatusFinalizado = (req, res) => {
+
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    client.query('SELECT EX.Clave, Y.nombre as Yacimiento, EX.costo_total "Costo", EX.fecha_inicio "Fecha inicio", E.nombre estatus FROM MU_EXPLOTACION EX, MU_ESTATUS E, MU_YACIMIENTO Y WHERE Y.fk_explotacion=EX.clave AND EX.fk_estatus = E.Clave AND E.Clave = 10;')
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
+const getAllExplotacionesConEstatusInactivo = (req, res) => {
+
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    client.query('SELECT EX.Clave, Y.nombre as Yacimiento, EX.costo_total "Costo", EX.fecha_inicio "Fecha inicio", E.nombre estatus FROM MU_EXPLOTACION EX, MU_ESTATUS E, MU_YACIMIENTO Y WHERE Y.fk_explotacion=EX.clave AND EX.fk_estatus = E.Clave AND E.Clave = 2;')
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
+const getAllExplotacionesConEstatusEnProceso = (req, res) => {
+
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    client.query('SELECT EX.Clave, Y.nombre as Yacimiento, EX.costo_total "Costo", EX.fecha_inicio "Fecha inicio", E.nombre estatus FROM MU_EXPLOTACION EX, MU_ESTATUS E, MU_YACIMIENTO Y WHERE Y.fk_explotacion=EX.clave AND EX.fk_estatus = E.Clave AND E.Clave = 8;')
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
 const updateEstatus = (clave, fk_estatus) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
@@ -485,6 +536,9 @@ module.exports = {
     getEmpleadosByIdCargoFase,
     getExplotacionById,
     getAllExplotaciones,
+    getAllExplotacionesConEstatusEnProceso,
+    getAllExplotacionesConEstatusInactivo,
+    getAllExplotacionesConEstatusFinalizado,
     getClaveCargoFaseByCargoClaveYFaseClave,
     getClaveTipoMaquinariaFase,
     insertFechas,

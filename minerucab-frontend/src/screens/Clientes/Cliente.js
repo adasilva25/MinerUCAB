@@ -16,8 +16,35 @@ export default class Cliente extends React.Component {
         infoEliminar: '',
         idEliminar: 0,
         urlEliminar: '',
-        reload: false
+        reload: false,
+        c: false,
+        r: false,
+        u: false,
+        d: false
     };
+    componentWillMount = () => {
+        const userInfoString = localStorage.getItem('user')
+        const userInfo = JSON.parse(userInfoString);
+        console.log(userInfo)
+
+        userInfo.forEach((info) => {
+            if (info.nombre.toLowerCase().includes('cliente')){
+                if (info.tipo_privilegio === 'C') {
+                    this.setState({ c: true });
+                }
+                if (info.tipo_privilegio === 'R') {
+                    this.setState({ r: true });
+                }
+                if (info.tipo_privilegio === 'U') {
+                    this.setState({ u: true });
+                }
+                if (info.tipo_privilegio === 'D') {
+                    this.setState({ d: true });
+                }
+            }
+        })
+        console.log('state', this.state)
+    }
     modalEliminarClienteNaturalOpen = () => {
         this.setState({ modalShowEliminarClienteNatural: false, reload: true });
     }
@@ -156,9 +183,9 @@ export default class Cliente extends React.Component {
                                             urlConsultar={'/registrar_cliente_natural'}
                                             urlEliminar={'/home'}
                                             agregar={false}
-                                            modificar={true}
-                                            consultar={true}
-                                            eliminar={true}
+                                            modificar={this.state.u}
+                                            consultar={this.state.r}
+                                            eliminar={this.state.d}
                                             modalEliminar={this.modalEliminarOpen}
                                             modalCrear={this.modalCrearClienteOpen}
                                             reload={this.state.reload}
@@ -193,10 +220,10 @@ export default class Cliente extends React.Component {
                                             urlModificar={'/registrar_cliente_juridico'}
                                             urlConsultar={'/registrar_cliente_juridico'}
                                             urlEliminar={'/home'}
-                                            agregar={true}
-                                            modificar={true}
-                                            consultar={true}
-                                            eliminar={true}
+                                            agregar={this.state.c}
+                                            modificar={this.state.u}
+                                            consultar={this.state.r}
+                                            eliminar={this.state.d}
                                             modalEliminar={this.modalEliminarOpen}
                                             modalCrear={this.modalCrearClienteOpen}
                                             reload={this.state.reload}

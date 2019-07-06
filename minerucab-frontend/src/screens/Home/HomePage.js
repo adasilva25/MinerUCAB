@@ -10,8 +10,17 @@ import Container from 'react-bootstrap/Container'
 
 export class HomePage extends React.Component {
     state = { 
-        modalShow: false
-    };
+        modalShow: false,
+        yacimiento: null,
+        mineral: null,
+        explotacion: null,
+        venta: null,
+        solicitud: null,
+        empleado: false,
+        cliente: null,
+        inventario: null,
+        rol: null
+    }
     constructor(props){
         super(props);
     }
@@ -26,7 +35,8 @@ export class HomePage extends React.Component {
                 titulo: 'Yacimientos',
                 link:'/yacimiento',
                 image:'/images/Yacimientos.jpg',
-                descripcion:""
+                descripcion:"",
+                show: this.state.yacimiento
             },
 
             /*{
@@ -40,6 +50,14 @@ export class HomePage extends React.Component {
                 titulo: 'Minerales',
                 link:'/mineral',
                 image:'/images/Minerales.jpg',
+                descripcion:"",
+                show: this.state.mineral
+            },
+
+            {
+                titulo: 'Yacimientos',
+                link:'/yacimiento',
+                image:'/images/Yacimientos.jpg',
                 descripcion:""
             },
 
@@ -47,28 +65,8 @@ export class HomePage extends React.Component {
                 titulo: 'Explotaciones',
                 link:'/explotacion',
                 image:'/images/Explotaciones.jpg',
-                descripcion:""
-            },
-
-            {
-                titulo: 'Ventas',
-                link:'/venta',
-                image:'/images/Ventas.png',
-                descripcion:""
-            },
-
-            {
-                titulo: 'Solicitudes de compra',
-                link:'/solicitud_compra',
-                image:'/images/Compras.jpg',
-                descripcion:""
-            },
-
-            {
-                titulo: 'Empleados',
-                link:'/empleado',
-                image:'/images/Empleados.jpg',
-                descripcion:""
+                descripcion:"",
+                show: this.state.explotacion
             },
 
             {
@@ -79,11 +77,58 @@ export class HomePage extends React.Component {
             },
 
             {
+                titulo: 'Ventas',
+                link:'/venta',
+                image:'/images/Ventas.png',
+                descripcion:"",
+                show: this.state.venta
+            },
+
+            {
+                titulo: 'Solicitudes de compra',
+                link:'/solicitud_compra',
+                image:'/images/Compras.jpg',
+                descripcion:"",
+                show: this.state.solicitud
+            },
+
+            {
+                titulo: 'Empleados',
+                link:'/empleado',
+                image:'/images/Empleados.jpg',
+                descripcion:"",
+                show: this.state.empleado
+            },
+
+            {
+                titulo: 'Clientes',
+                link:'/cliente',
+                image:'/images/Clientes.jpg',
+                descripcion:"",
+                show: this.state.cliente
+            },
+
+            {
                 titulo: 'Inventario',
                 link:'/inventario',
                 image:'/images/inventario.jpg',
+                descripcion:"",
+                show: this.state.inventario
+            },
+            {
+                titulo: 'Reportes',
+                link:'/reporte',
+                image:'/images/inventario.jpg',
+                descripcion:"",
+                show: this.state.inventario
+            },
+            {
+                titulo: 'Roles',
+                link:'/rol',
+                image:'/images/Cargos.png',
                 descripcion:""
             },
+            
             /*{
                 titulo: 'Empresas Aliadas',
                 link:'#45',
@@ -109,6 +154,7 @@ export class HomePage extends React.Component {
                 actividad[k].push([""]);
             }
         }
+        
 
         var opciones = "Diego Gutiérrez";
 
