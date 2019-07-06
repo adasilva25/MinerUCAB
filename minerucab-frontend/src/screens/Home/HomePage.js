@@ -24,85 +24,11 @@ export class HomePage extends React.Component {
     constructor(props){
         super(props);
     }
-    componentDidMount = () => {
-        const userInfoString = localStorage.getItem('user')
-        const userInfo = JSON.parse(userInfoString);
-        console.log(userInfo)
-
-        userInfo.forEach((info) => {
-            console.log('info', info.nombre.toLowerCase().includes('empleado'))
-            if (info.nombre.toLowerCase().includes('yacimiento')){
-                this.setState({ yacimiento: true });
-            }
-            if (info.nombre.toLowerCase().includes('mineral')){
-                this.setState({ mineral: true });
-            }
-            if (info.nombre.toLowerCase().includes('explotación')){
-                this.setState({ explotacion: true });
-            }
-            if (info.nombre.toLowerCase().includes('venta')){
-                this.setState({ venta: true });
-            }
-            if (info.nombre.toLowerCase().includes('solicitud')){
-                this.setState({ solicitud: true });
-            }
-            if (info.nombre.toLowerCase().includes('empleado')){
-                console.log('entro en empleado')
-                this.setState({ empleado: true });
-                console.log('empleado', this.state)
-            }
-            if (info.nombre.toLowerCase().includes('cliente')){
-                this.setState({ cliente: true });
-            }
-            if (info.nombre.toLowerCase().includes('inventario')){
-                this.setState({ inventario: true });
-            }
-            if (info.nombre.toLowerCase().includes('rol')){
-                this.setState({ rol: true });
-            }
-        })
-        console.log('state', this.state)
-    }
     modalClose = () => this.setState({ modalShow: false });
     modalOpen = () => {
         this.setState({ modalShow: true });
     }  
     render(){
-
-        const userInfoString = localStorage.getItem('user')
-        const userInfo = JSON.parse(userInfoString);
-        console.log(userInfo)
-
-        userInfo.forEach((info) => {
-            if (info.nombre.toLowerCase().includes('yacimiento') && this.state.yacimiento !== true){
-                this.setState({ yacimiento: true });
-            }
-            if (info.nombre.toLowerCase().includes('mineral') && this.state.mineral !== true){
-                this.setState({ mineral: true });
-            }
-            if (info.nombre.toLowerCase().includes('explotación') && (this.state.explotacion !== true)){
-                this.setState({ explotacion: true });
-            }
-            if (info.nombre.toLowerCase().includes('venta') && this.state.venta !== true){
-                this.setState({ venta: true });
-            }
-            if (info.nombre.toLowerCase().includes('solicitud') && this.state.solicitud !== true){
-                this.setState({ solicitud: true });
-            }
-            if (info.nombre.toLowerCase().includes('empleado') && !this.state.empleado){
-                this.setState({ empleado: true });
-            }
-            if (info.nombre.toLowerCase().includes('cliente') && this.state.cliente !== true){
-                this.setState({ cliente: true });
-            }
-            if (info.nombre.toLowerCase().includes('inventario') && this.state.inventario !== true){
-                this.setState({ inventario: true });
-            }
-            if (info.nombre.toLowerCase().includes('rol') && this.state.rol !== true){
-                this.setState({ rol: true });
-            }
-        })
-        console.log('state', this.state)
 
         let actividades = [
             {
@@ -175,6 +101,13 @@ export class HomePage extends React.Component {
                 descripcion:"",
                 show: this.state.inventario
             },
+            {
+                titulo: 'Reportes',
+                link:'/reporte',
+                image:'/images/inventario.jpg',
+                descripcion:"",
+                show: this.state.inventario
+            }
             /*{
                 titulo: 'Empresas Aliadas',
                 link:'#45',
