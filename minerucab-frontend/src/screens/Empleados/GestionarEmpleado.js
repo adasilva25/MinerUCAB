@@ -16,6 +16,8 @@ import FormLugar from '../../components/FormLugar'
 import FormLugarPred from '../../components/FormLugarPred'
 import axios from 'axios';
 import $ from 'jquery'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
 
 export default class GestionarEmpleado extends React.Component {  
 	state = {
@@ -941,7 +943,7 @@ export default class GestionarEmpleado extends React.Component {
                                                                             onChange={this.onInputChange}
 							                                                placeholder="Contraseña"
 							                                                autoFocus
-							                                            />
+                                                                        />
 							                                        </Form.Group>
 							                                    </Col>
 							                                    <Col md={1}></Col>

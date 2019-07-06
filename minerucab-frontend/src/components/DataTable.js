@@ -239,10 +239,10 @@ export default class DataTable extends React.Component {
                                             data += `${iconoEliminar}`
                                         }
                                         if (explotar === true){
-                                            const iconoExplotar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon id={row[0]} className="icons iconedit iconexp" icon={Icons.faEyeDropper}/>)
+                                            const iconoExplotar = ReactDOMServer.renderToStaticMarkup(<FontAwesomeIcon id={row[0]} className="icons iconexp" icon={Icons.faTractor}/>)
                                             data += `${iconoExplotar}`
                                         }
-                                        if ((eliminar === false) && (modificar === false) && (consultar === false) && (registros === true)){
+                                        if ((eliminar === false) && (modificar === false) && (consultar === false) && (explotar !== true) && (registros === true)){
                                             data = 'No posee acciones disponibles'
                                         }
                                         if (registros === false){

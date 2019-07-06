@@ -38,8 +38,8 @@ getReporte1 = (req, response) => {
                     throw err;
                 }
                 else{
-                    response.status(200).json({link: link})
                     console.log('The file has been saved!');
+                    response.status(200).json({link: res.data})
                 }
                 logout()
             });
@@ -49,6 +49,7 @@ getReporte1 = (req, response) => {
             // console.log(res)
         }).catch((e) => {
             console.log('Error')
+            response.status(500)
         })
 }
 

@@ -196,7 +196,7 @@ export default class Explotacion extends React.Component {
                           </Col>
                       </Row>
                 </Container>
-                <Container className="pagecontent">
+                <Container>
                     <Row>
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
@@ -209,9 +209,9 @@ export default class Explotacion extends React.Component {
                                 urlCrear={'/registrar_explotacion'}
                                 modalExplotar={this.modalExplotarOpen}
                                 agregar={false}
-                                modificar={this.state.u}
-                                consultar={this.state.r}
-                                eliminar={this.state.d}
+                                modificar={false}
+                                consultar={false}
+                                eliminar={false}
                                 explotar={this.state.c}
                                 modalEliminar={this.modalEliminarOpen}
                                 reload={this.state.reload}
@@ -237,7 +237,7 @@ export default class Explotacion extends React.Component {
                           </Col>
                       </Row>
                 </Container>
-                <Container className="pagecontent">
+                <Container>
                     <Row>
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
@@ -253,7 +253,7 @@ export default class Explotacion extends React.Component {
                                 modificar={this.state.u}
                                 consultar={this.state.r}
                                 eliminar={this.state.d}
-                                explotar={this.state.c}
+                                explotar={false}
                                 modalEliminar={this.modalEliminarOpen}
                                 reload={this.state.reload}
                                 checktable={false}
@@ -278,7 +278,7 @@ export default class Explotacion extends React.Component {
                           </Col>
                       </Row>
                 </Container>
-                <Container className="pagecontent">
+                <Container>
                     <Row>
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
@@ -291,10 +291,10 @@ export default class Explotacion extends React.Component {
                                 urlCrear={'/registrar_explotacion'}
                                 modalExplotar={this.modalExplotarOpen}
                                 agregar={false}
-                                modificar={this.state.u}
+                                modificar={false}
                                 consultar={this.state.r}
                                 eliminar={this.state.d}
-                                explotar={this.state.c}
+                                explotar={false}
                                 modalEliminar={this.modalEliminarOpen}
                                 reload={this.state.reload}
                                 checktable={false}

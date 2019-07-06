@@ -97,27 +97,77 @@ export class Venta extends React.Component {
                         <Col md={10}>
                             <Row>
                                 <Col md={12}>
-                                    <h6 className="horizontal-line-title-ventas-form cliente-title">Ventas de Clientes Naturales</h6>
+                                    <h5 className="horizontal-line-title-ventas-form cliente-title">Ventas de Clientes Naturales</h5>
                                 </Col>
                             </Row>
                         </Col>
                         <Col md={1}></Col>
                     </Row>
                   </Container>
-
+                  <Container>
+                    <Row>
+                        <Col md={1}></Col>
+                        <Col md={10}>
+                            <Row>
+                                <Col md={12}>
+                                    <h6 className="horizontal-line-title-ventas-form cliente-title">Ventas En Proceso</h6>
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col md={1}></Col>
+                    </Row>
+                  </Container>
                       <Container>
                           <Row>
                               <Col sm={0} md={1}></Col>
                               <Col sm={12} md={10}>
                                   <DataTable
-                                      data={'http://localhost:3000/getAllVentasClientesNaturales'}
+                                      data={'http://localhost:3000/getAllVentasClientesNaturalesConEstatusEnProceso'}
                                       urlModificar={'/modificar_ventas'}
                                       urlConsultar={'/consultar_ventas'}
                                       urlEliminar={'/home'}
                                       agregar={false}
-                                      modificar={true}
-                                      consultar={true}
-                                      eliminar={true}
+                                      modificar={this.state.u}
+                                      consultar={this.state.r}
+                                      eliminar={this.state.d}
+                                      modalEliminar={this.modalEliminarOpen}
+                                      modalCrear={this.modalOpen}
+                                      reload={this.state.reload}
+                                      checktable={false}
+                                      textoSingular={'cliente'}
+                                      textoPlural={'clientes'}
+                                      size={200}
+                                  />
+                              </Col>
+                              <Col sm={0} md={1}></Col>
+                          </Row>
+                      </Container>
+                      <Container>
+                    <Row>
+                        <Col md={1}></Col>
+                        <Col md={10}>
+                            <Row>
+                                <Col md={12}>
+                                    <h6 className="horizontal-line-title-ventas-form cliente-title">Ventas Procesadas</h6>
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col md={1}></Col>
+                    </Row>
+                  </Container>
+                      <Container>
+                          <Row>
+                              <Col sm={0} md={1}></Col>
+                              <Col sm={12} md={10}>
+                                  <DataTable
+                                      data={'http://localhost:3000/getAllVentasClientesNaturalesConEstatusProcesada'}
+                                      urlModificar={'/modificar_ventas'}
+                                      urlConsultar={'/consultar_ventas'}
+                                      urlEliminar={'/home'}
+                                      agregar={false}
+                                      modificar={false}
+                                      consultar={this.state.r}
+                                      eliminar={this.state.d}
                                       modalEliminar={this.modalEliminarOpen}
                                       modalCrear={this.modalOpen}
                                       reload={this.state.reload}
@@ -137,29 +187,77 @@ export class Venta extends React.Component {
                                 <Col md={10}>
                                     <Row>
                                         <Col md={12}>
-                                            <h6 className="horizontal-line-title-ventas-form cliente-title">Ventas de Clientes Juridicos</h6>
+                                            <h5 className="horizontal-line-title-ventas-form cliente-title">Ventas de Clientes Juridicos</h5>
                                         </Col>
                                     </Row>
                                 </Col>
                                 <Col md={1}></Col>
                             </Row>
                         </Container>
-{
-    console.log(this.props.user)
-}
+                        <Container>
+                            <Row>
+                                <Col md={1}></Col>
+                                <Col md={10}>
+                                    <Row>
+                                        <Col md={12}>
+                                            <h6 className="horizontal-line-title-ventas-form cliente-title">Ventas En Proceso</h6>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                                <Col md={1}></Col>
+                            </Row>
+                        </Container>
+                        <Container>
+                          <Row>
+                              <Col sm={0} md={1}></Col>
+                              <Col sm={12} md={10}>
+                                  <DataTable
+                                      data={'http://localhost:3000/getAllVentasClientesJuridicosConEstatusEnProceso'}
+                                      urlModificar={'/modificar_ventas'}
+                                      urlConsultar={'/consultar_ventas'}
+                                      urlEliminar={'/home'}
+                                      agregar={false}
+                                      modificar={this.state.u}
+                                      consultar={this.state.r}
+                                      eliminar={this.state.d}
+                                      modalEliminar={this.modalEliminarOpen}
+                                      modalCrear={this.modalOpen}
+                                      reload={this.state.reload}
+                                      checktable={false}
+                                      textoSingular={'cliente'}
+                                      textoPlural={'clientes'}
+                                      size={200}
+                                  />
+                              </Col>
+                              <Col sm={0} md={1}></Col>
+                          </Row>
+                        </Container>
+                        <Container className="container-datatable-juridico">
+                            <Row>
+                                <Col md={1}></Col>
+                                <Col md={10}>
+                                    <Row>
+                                        <Col md={12}>
+                                            <h6 className="horizontal-line-title-ventas-form cliente-title">Ventas Procesadas</h6>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                                <Col md={1}></Col>
+                            </Row>
+                        </Container>
                       <Container>
                           <Row>
                               <Col sm={0} md={1}></Col>
                               <Col sm={12} md={10}>
                                   <DataTable
-                                      data={'http://localhost:3000/getAllVentasClientesJuridicos'}
+                                      data={'http://localhost:3000/getAllVentasClientesJuridicosConEstatusProcesada'}
                                       urlModificar={'/modificar_ventas'}
                                       urlConsultar={'/consultar_ventas'}
                                       urlEliminar={'/home'}
-                                      agregar={true}
-                                      modificar={true}
-                                      consultar={true}
-                                      eliminar={true}
+                                      agregar={this.state.c}
+                                      modificar={false}
+                                      consultar={this.state.r}
+                                      eliminar={this.state.d}
                                       modalEliminar={this.modalEliminarOpen}
                                       modalCrear={this.modalOpen}
                                       reload={this.state.reload}
@@ -172,26 +270,8 @@ export class Venta extends React.Component {
                               <Col sm={0} md={1}></Col>
                           </Row>
                       </Container>
-
-                      <Container>
-                        <Row>
-                            <Col md={2}></Col>
-                            <Col md={10}>
-                                <FontAwesomeIcon 
-                                    className="icons icongoback" 
-                                    icon={Icons.faArrowAltCircleLeft}
-                                    onClick={this.goBack}
-                                />
-                            </Col>
-                        </Row>
-                      </Container>
                   </div>
               </Container>
-              <div className="container-datatable-juridico">
-                <Row>
-                    
-                </Row>
-            </div>
             </div>                 
         )
     }

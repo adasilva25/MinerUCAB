@@ -6,7 +6,7 @@ const getInventario = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    client.query('SELECT I.clave as " ", I.fecha, I.cantidad_actual as "Cantidad actual", Cantidad_transaccion as "Cantidad transaccion", MM.nombre as Mineral, P.nombre as Presentación\n\
+    client.query('SELECT I.clave as " ", I.fecha, I.cantidad_actual as "Cantidad actual", Cantidad_transaccion as "Cantidad Transacción", MM.nombre as Mineral, P.nombre as Presentación\n\
                     FROM MU_INVENTARIO I, MU_PRESENTACION_MINERAL PM, MU_PRESENTACION P, MU_MINERAL_METALICO MM\n\
                     WHERE I.fk_presentacion_mineral=PM.clave AND PM.fk_mineral_metalico=MM.clave AND PM.fk_presentacion=P.clave\n\
                     UNION\n\

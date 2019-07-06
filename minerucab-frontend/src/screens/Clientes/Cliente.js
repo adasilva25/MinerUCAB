@@ -192,7 +192,7 @@ export default class Cliente extends React.Component {
                                             checktable={false}
                                             textoSingular={'cliente'}
                                             textoPlural={'clientes naturales'}
-                                            size={270}
+                                            size={400}
                                         />
                                     </Col>
                                     <Col sm={0} md={1}></Col>
@@ -230,7 +230,7 @@ export default class Cliente extends React.Component {
                                             checktable={false}
                                             textoSingular={'cliente'}
                                             textoPlural={'clientes jurídicos'}
-                                            size={270}
+                                            size={400}
                                             selectCheck={this.selectCheck}
                                         />
                                     </Col>

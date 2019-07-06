@@ -13,8 +13,35 @@ export default class Cliente extends React.Component {
         modalShowEliminar: false,
         infoEliminar: '',
         idEliminar: 0,
-        reload: false
+        reload: false,
+        c: false,
+        r: false,
+        u: false,
+        d: false
     };
+    componentWillMount = () => {
+        const userInfoString = localStorage.getItem('user')
+        const userInfo = JSON.parse(userInfoString);
+        console.log(userInfo)
+
+        userInfo.forEach((info) => {
+            if (info.nombre.toLowerCase().includes('rol')){
+                if (info.tipo_privilegio === 'C') {
+                    this.setState({ c: true });
+                }
+                if (info.tipo_privilegio === 'R') {
+                    this.setState({ r: true });
+                }
+                if (info.tipo_privilegio === 'U') {
+                    this.setState({ u: true });
+                }
+                if (info.tipo_privilegio === 'D') {
+                    this.setState({ d: true });
+                }
+            }
+        })
+        console.log('state', this.state)
+    }
     modalEliminarClose = () => {
         this.setState({ modalShowEliminar: false, reload: true });
     }
@@ -78,10 +105,10 @@ export default class Cliente extends React.Component {
                                             urlCrear={'/gestionar_rol/CR'}
                                             urlModificar={'/gestionar_rol'}
                                             urlConsultar={'/gestionar_rol'}
-                                            agregar={true}
-                                            modificar={true}
-                                            consultar={true}
-                                            eliminar={true}
+                                            agregar={this.state.c}
+                                            modificar={this.state.u}
+                                            consultar={this.state.r}
+                                            eliminar={this.state.d}
                                             modalEliminar={this.modalEliminarOpen}
                                             reload={this.state.reload}
                                             checktable={false}

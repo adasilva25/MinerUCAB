@@ -31,21 +31,7 @@ export class HomePage extends React.Component {
     render(){
 
         let actividades = [
-            {
-                titulo: 'Yacimientos',
-                link:'/yacimiento',
-                image:'/images/Yacimientos.jpg',
-                descripcion:"",
-                show: this.state.yacimiento
-            },
-
-            /*{
-                titulo: 'Cargos',
-                link:'/cargo',
-                image:'/images/Cargos.png',
-                descripcion:" 
-            },*/
-
+            
             {
                 titulo: 'Minerales',
                 link:'/mineral',
@@ -58,7 +44,8 @@ export class HomePage extends React.Component {
                 titulo: 'Yacimientos',
                 link:'/yacimiento',
                 image:'/images/Yacimientos.jpg',
-                descripcion:""
+                descripcion:"",
+                show: this.state.yacimiento
             },
 
             {
@@ -92,6 +79,7 @@ export class HomePage extends React.Component {
                 show: this.state.solicitud
             },
 
+
             {
                 titulo: 'Empleados',
                 link:'/empleado',
@@ -101,11 +89,10 @@ export class HomePage extends React.Component {
             },
 
             {
-                titulo: 'Clientes',
-                link:'/cliente',
-                image:'/images/Clientes.jpg',
-                descripcion:"",
-                show: this.state.cliente
+                titulo: 'Roles',
+                link:'/rol',
+                image:'/images/Cargos.png',
+                descripcion:""
             },
 
             {
@@ -115,20 +102,22 @@ export class HomePage extends React.Component {
                 descripcion:"",
                 show: this.state.inventario
             },
+
             {
                 titulo: 'Reportes',
                 link:'/reporte',
-                image:'/images/inventario.jpg',
+                image:'/images/Reportes.png',
                 descripcion:"",
                 show: this.state.inventario
-            },
-            {
-                titulo: 'Roles',
-                link:'/rol',
-                image:'/images/Cargos.png',
-                descripcion:""
-            },
+            }
             
+            /*{
+                titulo: 'Cargos',
+                link:'/cargo',
+                image:'/images/Cargos.png',
+                descripcion:" 
+            },*/
+        
             /*{
                 titulo: 'Empresas Aliadas',
                 link:'#45',

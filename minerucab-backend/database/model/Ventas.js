@@ -65,12 +65,12 @@ const getVentaById = (req, res) => {
     })
 }
 
-const getAllVentasClientesNaturales = (req, res) => {
+const getAllVentasClientesNaturalesConEstatusEnProceso = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
-    client.query('SELECT V.Clave as Clave, C.p_nombre as Nombre, C.p_apellido as Apellido, V.Total as "Total", V.Fecha as Fecha, E.Nombre "Estatus" FROM MU_VENTA V, MU_CLIENTE_NATURAL C, MU_ESTATUS E WHERE V.fk_cliente_natural IS NOT NULL AND V.fk_cliente_natural = C.Clave AND V.fk_estatus = E.Clave;')
+    client.query('SELECT V.Clave as Clave, C.p_nombre as Nombre, C.p_apellido as Apellido, V.Total as "Total", V.Fecha as Fecha, E.Nombre "Estatus" FROM MU_VENTA V, MU_CLIENTE_NATURAL C, MU_ESTATUS E WHERE V.fk_cliente_natural IS NOT NULL AND V.fk_cliente_natural = C.Clave AND V.fk_estatus = E.Clave AND E.Clave = 8;')
     .then((response) => {
         client.end();
         // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
@@ -83,15 +83,49 @@ const getAllVentasClientesNaturales = (req, res) => {
     })
 }
 
-const getAllVentasClientesJuridicos = (req, res) => {
+const getAllVentasClientesNaturalesConEstatusProcesada = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
-    client.query('SELECT V.Clave as Clave, C.nombre as Nombre, V.Total as "Total", V.Fecha as Fecha, E.Nombre "Estatus" FROM MU_VENTA V, MU_CLIENTE_JURIDICO C, MU_ESTATUS E WHERE V.fk_cliente_juridico IS NOT NULL AND V.fk_cliente_juridico = C.Clave AND E.Clave = V.fk_estatus;')
+    client.query('SELECT V.Clave as Clave, C.p_nombre as Nombre, C.p_apellido as Apellido, V.Total as "Total", V.Fecha as Fecha, E.Nombre "Estatus" FROM MU_VENTA V, MU_CLIENTE_NATURAL C, MU_ESTATUS E WHERE V.fk_cliente_natural IS NOT NULL AND V.fk_cliente_natural = C.Clave AND V.fk_estatus = E.Clave AND E.Clave = 7;')
     .then((response) => {
         client.end();
         // res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
+const getAllVentasClientesJuridicosConEstatusProcesada = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
+    });
+    client.connect();
+    client.query('SELECT V.Clave as Clave, C.nombre as Nombre, V.Total as "Total", V.Fecha as Fecha, E.Nombre "Estatus" FROM MU_VENTA V, MU_CLIENTE_JURIDICO C, MU_ESTATUS E WHERE V.fk_cliente_juridico IS NOT NULL AND V.fk_cliente_juridico = C.Clave AND E.Clave = V.fk_estatus AND E.Clave = 7;')
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
+const getAllVentasClientesJuridicosConEstatusEnProceso = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
+    });
+    client.connect();
+    client.query('SELECT V.Clave as Clave, C.nombre as Nombre, V.Total as "Total", V.Fecha as Fecha, E.Nombre "Estatus" FROM MU_VENTA V, MU_CLIENTE_JURIDICO C, MU_ESTATUS E WHERE V.fk_cliente_juridico IS NOT NULL AND V.fk_cliente_juridico = C.Clave AND E.Clave = V.fk_estatus AND E.Clave = 8;')
+    .then((response) => {
+        client.end();
         res.status(200).json(response.rows)
     })
     .catch((error) => {
@@ -165,8 +199,10 @@ const deleteVentaById = (req, res) => {
 module.exports = {
     createVentaClienteNatural,
     createVentaClienteJuridico,
-    getAllVentasClientesNaturales,
-    getAllVentasClientesJuridicos,
+    getAllVentasClientesNaturalesConEstatusEnProceso,
+    getAllVentasClientesNaturalesConEstatusProcesada,
+    getAllVentasClientesJuridicosConEstatusProcesada,
+    getAllVentasClientesJuridicosConEstatusEnProceso,
     getFkClienteJuridicoEnVentaById,
     getFkClienteNaturalEnVentaById,
     getVentaById,

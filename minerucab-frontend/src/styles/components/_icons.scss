@@ -9,6 +9,11 @@
 	color: white;
 }
 
+.iconpassword{
+	color: gray;
+	font-size: 1rem;
+}
+
 .icondelete{
 	color: Tomato;
 	border: 1px solid tomato;
@@ -17,6 +22,10 @@
 }
 .icondelete:hover{
 	background-color: tomato;
+}
+
+.iconreport:hover{
+	color: gray;
 }
 
 .iconsearch{
@@ -52,6 +61,16 @@
 .icongoback{
 	font-size: 3.3rem;
 	color: #000000;
+}
+
+.iconexp{
+	border: 1px solid black;
+	border-radius: 25%;
+}
+
+.iconexp:hover{
+	background-color: #000000;
+	color: white;
 }
 
 .icongoback:hover{

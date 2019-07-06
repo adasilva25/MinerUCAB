@@ -1521,7 +1521,7 @@ INSERT INTO MU_HORARIO (dia, hora_entrada, hora_salida) VALUES
 -------------------------------------    ROL     -------------------------------------
 INSERT INTO MU_ROL (nombre) VALUES
     ('Administrador'), ('Vendedor'), ('R. H.'),
-    ('Contador'), ('Relaciones públicas');
+    ('Contador'), ('Relaciones públicas'), ('Super Usuario');
 
 -------------------------------------    PRIVILEGIO     -------------------------------------
 INSERT INTO MU_PRIVILEGIO (nombre, tipo) VALUES
@@ -1799,7 +1799,11 @@ INSERT INTO MU_ROL_PRIVILEGIO(fk_rol, fk_privilegio) VALUES
     (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10),
     (1, 11), (1, 12), (1, 13), (1, 14), (1, 15), (1, 16), (1, 17), (1, 18), (1, 19),
     (1, 20), (2, 9), (2, 10), (2, 11), (2, 12), (3, 13), (3, 14), (3, 15), (3, 16),
-    (3, 17), (3, 18), (3, 19), (3, 20), (4, 9), (5, 17), (5, 18), (5, 19), (5, 20);
+    (3, 17), (3, 18), (3, 19), (3, 20), (4, 9), (5, 17), (5, 18), (5, 19), (5, 20), 
+    (6, 1), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6), (6, 7), (6, 8), (6, 9), (6, 10),
+    (6, 11), (6, 12), (6, 13), (6, 14), (6, 15), (6, 16), (6, 17), (6, 18), (6, 19),
+    (6, 20), (6, 21), (6, 22), (6, 23), (6, 24), (6, 25), (6, 26), (6, 27), (6, 28),
+    (6, 29), (6, 30), (6, 31), (6, 32);
 
 -------------------------------------    MINERAL_MINERAL     -------------------------------------
 INSERT INTO MU_MINERAL_MINERAL (porcentaje, fk_mineral_metalico_compuesto, fk_mineral_metalico_compone, fk_mineral_no_metalico_compuesto, fk_mineral_no_metalico_compone) VALUES
@@ -3050,9 +3054,9 @@ INSERT INTO MU_EMPLEADO (CI, P_nombre, S_nombre, P_apellido, S_apellido, Fecha_n
 -------------------------------------    USUARIO     -------------------------------------
 --Los 200 primeros empleados--
 INSERT INTO MU_USUARIO (usuario, contraseña, fk_empleado, fk_rol, fk_estatus) VALUES
-    ('adasilva', 'andreita123', 1, 3, 1),
-    ('asanchez', 'albita123', 3, 3, 1),
-    ('ygutierrez', 'yeyito123', 2, 2, 1),
+    ('adasilva', 'andreita123', 1, 6, 1),
+    ('asanchez', 'albita123', 3, 6, 1),
+    ('ygutierrez', 'yeyito123', 2, 6, 1),
     ('agoldston3', 'ryHs7X2KjUX', 4, 5, 1),
     ('ccrudginton4', 'NAvQfnY', 5, 3, 1),
     ('nlundie5', '156yXf6CJ75', 6, 2, 1),

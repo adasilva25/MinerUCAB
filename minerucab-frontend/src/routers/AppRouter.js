@@ -100,9 +100,6 @@ const AppRouter = () => (
         <Route path="/registrar_yacimiento" component={RegistrarYacimiento} />
         <Route path="/modificar_yacimiento/:accion/:id" component={ModificarYacimiento} />
         <Route path="/consultar_yacimiento/:accion/:id" component={ConsultarYacimiento} />
-
-
-
       </Switch>
     </div>
   </Router>

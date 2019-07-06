@@ -159,7 +159,7 @@ export default class Mineral extends React.Component {
                                 checktable={false}
                                 textoSingular={'mineral'}
                                 textoPlural={'minerales metalicos'}
-                                size={250}
+                                size={350}
                             />
                              <Row>
                                 <Col md={1}></Col>
@@ -187,7 +187,7 @@ export default class Mineral extends React.Component {
                                 checktable={false}
                                 textoSingular={'mineral'}
                                 textoPlural={'minerales no metalicos'}
-                                size={250}
+                                size={350}
                             />
                         </Col>
                         <Col sm={0} md={1}></Col>

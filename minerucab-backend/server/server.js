@@ -58,6 +58,7 @@ app.get('/', (req, res) => {
 /* ----------------------------------- REPORTES ----------------------------------- */
 app.get('/getReporte1', JasperServer.getReporte1);
 
+
 /* ----------------------------------- POST ----------------------------------- */
 app.post('/crearSolCompra', SolCompraValidations.crearSolCompra);
 /* -------------------- CLIENTES -------------------- */
@@ -180,8 +181,10 @@ app.get('/getTipoYacimientoByIdYacimiento/:id', TiposYacimiento.getTipoYacimient
 app.get('/getUsuarioById/:id', Usuarios.getUsuarioById);
 /* -------------------- VENTAS -------------------- */
 app.get('/getVentaById/:id', Ventas.getVentaById);
-app.get('/getAllVentasClientesNaturales', Ventas.getAllVentasClientesNaturales);
-app.get('/getAllVentasClientesJuridicos', Ventas.getAllVentasClientesJuridicos);
+app.get('/getAllVentasClientesNaturalesConEstatusEnProceso', Ventas.getAllVentasClientesNaturalesConEstatusEnProceso);
+app.get('/getAllVentasClientesNaturalesConEstatusProcesada', Ventas.getAllVentasClientesNaturalesConEstatusProcesada)
+app.get('/getAllVentasClientesJuridicosConEstatusProcesada', Ventas.getAllVentasClientesJuridicosConEstatusProcesada);
+app.get('/getAllVentasClientesJuridicosConEstatusEnProceso', Ventas.getAllVentasClientesJuridicosConEstatusEnProceso)
 app.get('/getVentaInfo/:id', VentasValidations.getVentaInfo);
 /* -------------------- YACIMIENTOS -------------------- */
 app.get('/getAllYacimientos', Yacimientos.getAllYacimientos);
