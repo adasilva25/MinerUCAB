@@ -55,7 +55,7 @@ export default class SolicitudCompra extends React.Component {
                           <Col md={11}>
                               <Row>
                                   <Col md={11}>
-                                      <h4 className="horizontal-line-title-ventas-form cliente-title">Solicitud Compra</h4>
+                                      <h4 className="horizontal-line-title-ventas-form cliente-title">Solicitudes de Compra</h4>
                                   </Col>
                                   <Col md={1}></Col>
                               </Row>
@@ -70,15 +70,64 @@ export default class SolicitudCompra extends React.Component {
                     urleliminar={`http://localhost:3000/FALTAPORDEFINIR/${this.state.idEliminar}`}
                 />
                 <Container className="pagecontent">
+                      <Row>
+                          <Col md={1}></Col>
+                          <Col md={11}>
+                              <Row>
+                                  <Col md={11}>
+                                      <h6 className="horizontal-line-title-ventas-form cliente-title">Solicitudes de Compra En Proceso</h6>
+                                  </Col>
+                                  <Col md={1}></Col>
+                              </Row>
+                          </Col>
+                      </Row>
+                </Container>
+                <Container>
                     <Row>
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
                             <DataTable
-                                data={'http://localhost:3000/getAllSolicitudesDeCompra'}
+                                data={'http://localhost:3000/getAllSolicitudesDeCompraConEstatusEnProceso'}
                                 urlModificar={'/consultar_solicitud_compra'}
                                 urlConsultar={'/consultar_solicitud_compra'}
                                 agregar={false}
                                 modificar={this.state.u}
+                                consultar={this.state.r}
+                                eliminar={this.state.d}
+                                modalEliminar={this.modalEliminarOpen}
+                                reload={this.state.reload}
+                                checktable={false}
+                                textoSingular={'solicitud de compra'}
+                                textoPlural={'solicitudes de compra'}
+                                size={200}
+                            />
+                        </Col>
+                        <Col sm={0} md={1}></Col>
+                    </Row>
+                </Container>
+                <Container className="pagecontent">
+                      <Row>
+                          <Col md={1}></Col>
+                          <Col md={11}>
+                              <Row>
+                                  <Col md={11}>
+                                      <h6 className="horizontal-line-title-ventas-form cliente-title">Solicitudes de Compra Finalizadas</h6>
+                                  </Col>
+                                  <Col md={1}></Col>
+                              </Row>
+                          </Col>
+                      </Row>
+                </Container>
+                <Container>
+                    <Row>
+                        <Col sm={0} md={1}></Col>
+                        <Col sm={12} md={10}>
+                            <DataTable
+                                data={'http://localhost:3000/getAllSolicitudesDeCompraConEstatusEntregado'}
+                                urlModificar={'/consultar_solicitud_compra'}
+                                urlConsultar={'/consultar_solicitud_compra'}
+                                agregar={false}
+                                modificar={false}
                                 consultar={this.state.r}
                                 eliminar={this.state.d}
                                 modalEliminar={this.modalEliminarOpen}

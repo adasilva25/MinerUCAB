@@ -218,7 +218,7 @@ export default class SolicitudCompra extends React.Component {
                                     <h2 className="sc-subtitle">{this.state.empresa.nombre}</h2>
                                     <p className="sc-direccion-cliente">{this.state.empresa.parroquia}</p>
                                     <p className="sc-direccion-cliente">{this.state.empresa.municipio}</p>
-                                    <p className="sc-direccion-cliente">{this.state.empresa.estado}, VENEZUELA</p>
+                                    <p className="sc-direccion-cliente">{this.state.empresa.estado}, Venezuela</p>
                                 </Col>
                                 <Col md={3}>
                                 <Form.Group>

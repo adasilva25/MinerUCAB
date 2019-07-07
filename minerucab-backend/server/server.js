@@ -161,7 +161,8 @@ app.get('/getRolById/:id', Roles.getRolById);
 app.get('/getAllPrivilegios', Privilegios.getAllPrivilegios);
 app.get('/getAllPrivilegiosByIdRol/:id', Privilegios.getAllPrivilegiosByIdRol);
 /* -------------------- SOLICITUDES DE COMPRA -------------------- */
-app.get('/getAllSolicitudesDeCompra', SolicitudesCompra.getAllSolicitudesDeCompra);
+app.get('/getAllSolicitudesDeCompraConEstatusEntregado', SolicitudesCompra.getAllSolicitudesDeCompraConEstatusEntregado);
+app.get('/getAllSolicitudesDeCompraConEstatusEnProceso', SolicitudesCompra.getAllSolicitudesDeCompraConEstatusEnProceso);
 app.get('/getEstatusSolicitudDeCompraByIdExplotacion/:id', SolicitudesCompra.getEstatusSolicitudDeCompraByIdExplotacion);
 app.get('/getSolicitudDeCompraInfoById/:id', SolicitudesCompra.getSolicitudDeCompraInfoById);
 app.get('/getDetalleSolicitudCompraMineralMetalicoById/:id', SolicitudesCompra.getDetalleSolicitudCompraMineralMetalicoById);

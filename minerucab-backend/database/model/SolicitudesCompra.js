@@ -57,12 +57,29 @@ const updateSC = (req, res) => {
     })
 }
 
-const getAllSolicitudesDeCompra = (req, res) => {
+const getAllSolicitudesDeCompraConEstatusEnProceso = (req, res) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
     });
     client.connect();
-    client.query('SELECT SC.Clave "Clave", SC.Fecha "Fecha", SC.Total "Total", E.Nombre as Estatus FROM MU_SOLICITUD_COMPRA SC, MU_ESTATUS E WHERE SC.fk_estatus = E.Clave;')
+    client.query('SELECT SC.Clave "Clave", SC.Fecha "Fecha", SC.Total "Total", E.Nombre as Estatus FROM MU_SOLICITUD_COMPRA SC, MU_ESTATUS E WHERE SC.fk_estatus = E.Clave AND E.Clave = 8;')
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
+const getAllSolicitudesDeCompraConEstatusEntregado = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING 
+    });
+    client.connect();
+    client.query('SELECT SC.Clave "Clave", SC.Fecha "Fecha", SC.Total "Total", E.Nombre as Estatus FROM MU_SOLICITUD_COMPRA SC, MU_ESTATUS E WHERE SC.fk_estatus = E.Clave AND E.Clave = 11;')
     .then((response) => {
         client.end();
         res.status(200).json(response.rows)
@@ -252,7 +269,8 @@ const getEmpresaMinNoMetComponentesSolicitudDeCompra = (req, res) => {
 }
 
 module.exports = {
-    getAllSolicitudesDeCompra,
+    getAllSolicitudesDeCompraConEstatusEntregado,
+    getAllSolicitudesDeCompraConEstatusEnProceso,
     getDetalleSolicitudCompraMineralMetalicoById,
     getDetalleSolicitudCompraMineralNoMetalicoById,
     getEstatusSolicitudDeCompraByIdExplotacion,
