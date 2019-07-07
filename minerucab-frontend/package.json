@@ -7,7 +7,7 @@
   "scripts": {
     "build:dev": "webpack",
     "build:prod": "webpack -p --env production",
-    "dev-server": "set PORT=8081 && PORT=8081 webpack-dev-server", 
+    "dev-server": "set PORT=8081 && webpack-dev-server",
     "heroku-postbuild": "yarn run build:prod"
   },
   "dependencies": {

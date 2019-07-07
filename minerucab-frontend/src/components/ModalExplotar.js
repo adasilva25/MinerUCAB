@@ -20,8 +20,6 @@ export default class ModalExplotar extends React.Component {
             },
             responseType: 'json'
         }
-        console.log(this.props.minNoMet)
-
     for(let i=0; i<this.props.minNoMet.length; i++){
       axios.get(`http://localhost:3000/getEmpresaMinNoMetComponentesSolicitudDeCompra/${this.props.minNoMet[i].clave}`, config)
         .then((res) => {
@@ -104,55 +102,20 @@ export default class ModalExplotar extends React.Component {
             <Container className="modal-rctipo-description">
                 <p className="modal-rctipo-description-text">
                     {
+                      ((this.props.tipoSol==='NA')&&(this.props.minNoMet.length===0)&&(this.props.minMet.length===0))&&
+                      'El yacimiento no requiere una solicitud de compra para iniciar la explotacion.'
+                    }
+                    {
+                      ((this.props.tipoSol!=='NA')||((this.props.minNoMet.length!==0)||(this.props.minMet.length!==0)))&&
                       this.props.infoExplotar
                     }
                 </p>
-                {/*
-                  (this.props.minMet.length>1)&&
-                  this.props.minMet.map((minMet, index) => {
-                    return (
-                        <Form.Row className="div-min-met-presentaciones-form" key={index} id={'formpres'+index}>
-                            <Col md={12}>
-                                <Row>
-                                    <Col md={1}></Col>
-                                    <Col md={5}>
-                                        <Form.Label className="cliente-description-fields-text">Mineral</Form.Label>
-                                        <Form.Control 
-                                            key={index} 
-                                            id={''+index}
-                                            className="form-input form-input-dropdown-mineral-met-presentacion"
-                                            value={minMet.nombre}
-                                            disabled={true}
-                                        />
-                                    </Col>
-                                    <Col md={5}>
-                                        <Form.Label className="cliente-description-fields-text">Empresa</Form.Label>
-                                            <Form.Group>
-                                                <InputGroup className="MyInputGroup">
-                                                    <Form.Control 
-                                                        className="form-input form-input-dropdown-mineral-met-presentacion" 
-                                                        key={index} 
-                                                        id={''+index}
-                                                    >
-                                                    {
-                                                      this.onrender('met', minMet.clave)
-                                                    }
-                                                    </Form.Control>
-                                                </InputGroup>
-                                            </Form.Group>
-                                    </Col>
-                                    <Col md={1}></Col>
-                                </Row>
-                            </Col>
-                        </Form.Row>
-                    )})
-                */}
             </Container>
           </Modal.Body>
           <Modal.Footer className="button">
             <Container>
                 {
-                  ((this.props.tipoSol==='NA')&&(this.state.os === true))&&
+                  ((this.props.tipoSol==='NA')&&(this.state.os === true)&&((this.props.minNoMet.length!==0)||(this.props.minMet.length!==0)))&&
                   <Row>
                   <Col md={2}></Col>
                   <Col md={4}>
@@ -172,6 +135,21 @@ export default class ModalExplotar extends React.Component {
                     </Button>
                   </Col>
                   <Col md={2}></Col>
+                  </Row>
+                }
+                {
+                  ((this.props.tipoSol==='NA')&&(this.props.minNoMet.length===0)&&(this.props.minMet.length===0))&&
+                  <Row>
+                  <Col md={4}></Col>
+                  <Col md={4}>
+                    <Button 
+                        onClick={() => history.push(`/registrar_explotacion/CR/${this.props.exp}`)} 
+                        className="modal-explotar-aviso-button btn-block"
+                    >
+                        Ok
+                    </Button>
+                  </Col>
+                  <Col md={4}></Col>
                   </Row>
                 }
                 {
