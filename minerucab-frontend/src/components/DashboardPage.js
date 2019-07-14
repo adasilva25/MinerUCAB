@@ -16,6 +16,7 @@ import Tab from 'react-bootstrap/Tab';
 // https://react-bootstrap.github.io/components/tabs/
 
 import Accordion from 'react-bootstrap/Accordion'
+import axios from 'axios'
 // https://react-bootstrap.netlify.com/components/accordion/#accordion
 // https://stackoverflow.com/questions/27012800/react-bootstrap-accordion-not-working-properly
 
@@ -91,6 +92,49 @@ export default class DashboardPage extends React.Component {
             this.setState({tabs: this.state.tabs+1})
         }
     }
+    testingReport = () => {
+        const reportNumber = 1;
+       
+        const config = {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            responseType: 'json'
+        }
+
+        const fecha_inicio = '2019-06-01'   // año-mes-dia?
+        const fecha_fin = '2019-06-11'
+        
+        console.log('ddate', new Date(2019, 6, 1).toISOString().slice(0, 19).replace('T', ' '))
+
+        axios.get(`http://localhost:3000/getReporte10/${fecha_inicio}/${fecha_fin}`, config)
+            .then((res) => {
+                console.log('res', res)
+                const link = res.data.link
+                window.location.replace(link);
+                let myWindow = window.open("", "_blank");
+                myWindow.document.write(`<title>Reporte 10</title>`);
+                myWindow.document.write('<img src="/images/MinerUCAB-logo.png" style="width: 25rem; height: 8%; background-color: #707070; margin-left: 18rem; margin-top: 1.5rem;"/>');
+                myWindow.document.write(link);
+                myWindow.focus()
+            })
+            .catch((e) => {
+                console.log(`Error con la ejecución del Reporte 10`);
+            })
+
+        // window.location.replace(link);
+        // console.log('link', link)
+        // let myWindow = window.open("", "_blank");
+        // myWindow.document.write(`<head><title>Reporte ${reportNumber}</title></head>`);
+        // myWindow.document.write('<link rel="icon" type="image/png" href="/images/MinerUCAB-piramide.png" />')
+        // myWindow.document.write('<img src="/images/MinerUCAB-logo.png" style="width: 20rem; height: 10%; background-color: #707070; margin-left: 25rem;"/>')
+        // myWindow.document.write(link);
+        // // let img = link.document.getElementsByTagName('img')
+        // // img.src = '/images/MinerUCAB-logo.png'
+        // myWindow.document.write(link);
+        // // src = "/images/MinerUCAB-logo.png"
+        // myWindow.focus()
+    }
     render(){
         const { open } = this.state;
         const { tabs } = this.state;
@@ -98,7 +142,7 @@ export default class DashboardPage extends React.Component {
         const { openCollapseSecondButtonInsideTab } = this.state;
         return (
             <div>
-                
+                <Button variant="light" onClick={this.testingReport}>Testing Report</Button>
                 <Button variant="primary" onClick={this.onClickLoginPage}>Go to LoginPage</Button>
                 <Button variant="danger" onClick={this.onClickNewWindow}>Open a Window</Button>
 

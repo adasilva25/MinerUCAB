@@ -57,7 +57,12 @@ app.get('/', (req, res) => {
 
 /* ----------------------------------- REPORTES ----------------------------------- */
 app.get('/getReporte1', JasperServer.getReporte1);
-
+app.get('/getReporte2/:fecha_inicio/:fecha_fin', JasperServer.getReporte2);
+app.get('/getReporte4/:fecha_inicio/:fecha_fin', JasperServer.getReporte4);
+app.get('/getReporte5/:fecha_inicio/:fecha_fin', JasperServer.getReporte5);
+app.get('/getReporte7/:fecha_inicio/:fecha_fin/:ci', JasperServer.getReporte7);
+app.get('/getReporte8', JasperServer.getReporte8);
+app.get('/getReporte10/:fecha_inicio/:fecha_fin', JasperServer.getReporte10);
 
 /* ----------------------------------- POST ----------------------------------- */
 app.post('/crearSolCompra', SolCompraValidations.crearSolCompra);
@@ -213,6 +218,8 @@ app.put('/updateClienteJuridicoById', ClientesJuridicos.updateClienteJuridicoByI
 app.put('/updateEmpleadoById', Empleados.updateEmpleadoById)
 app.put('/updateUsuarioById', Usuarios.updateUsuarioById)
 app.put('/updateSC', SolicitudesCompra.updateSC)
+/* -------------------- EXPLOTACIONES -------------------- */
+app.put('/updateExplotacion', ExplotacionesValidations.updateExplotacion);
 /* -------------------- MAQUINARIAS -------------------- */
 app.put('/updateMaquinariaById/:id', Maquinarias.updateMaquinariaById)
 /* -------------------- MINERALES -------------------- */

@@ -87,6 +87,87 @@ const crearExplotacion = (req, res) => {
     res.status(200).json()
 }
 
+const deleteHorarioEmpleado = (claveCargoFase, callback) => {
+    Explotaciones.getClaveEmpleadoCargoFaseByCargoFase(claveCargoFase, function(claveEmpleadoCargoFase){
+        Explotaciones.deleteFromHorarioEmpleado(claveEmpleadoCargoFase, function(){
+            callback()
+        })
+    })
+}
+
+const updateEmpleadosEnEmpleadoCargoFase = (claveCargoFase, empleados) => {
+    console.log('empleados', empleados)
+    deleteHorarioEmpleado(claveCargoFase, function(){
+        Explotaciones.deleteFromEmpleadoCargoFase(claveCargoFase, function(){
+            empleados.forEach((empleado) => {
+                Explotaciones.insertIntoEmpleadoCargoFase(claveCargoFase, empleado.id, empleado.estatus, function(claveEmpleadoCargoFase){
+                    insertIntoHorarioEmpleado(claveEmpleadoCargoFase, empleado.horario)
+                    Empleados.updateEstatusEmpleadoById(empleado.id, empleado.estatus)
+                })
+            })
+        })
+    })
+}
+
+const updateCargoFase = (faseId, cargos) => {
+    console.log('cargos', cargos)
+    cargos.forEach((cargo) => {
+        Explotaciones.getClaveCargoFaseByCargoClaveYFaseClave(faseId, cargo.id, function(claveCargoFase){
+            console.log('ccf', claveCargoFase)
+            updateEmpleadosEnEmpleadoCargoFase(claveCargoFase, cargo.empleados)
+        })
+    })
+}
+
+const deleteMaquinariaTipoMaquinariaFase = (claveTipoMaquinariaFase, callback) => {
+    Explotaciones.deleteFromMaquinariaTipoMaquinariaFase(claveTipoMaquinariaFase, function(){
+        callback()
+    })
+}
+
+const updateTipoMaquinariaFase = (faseId, tipoMaquinarias) => {
+    console.log('tipoMaquinarias', tipoMaquinarias)
+    tipoMaquinarias.forEach((tipoMaquinaria) => {
+        Explotaciones.getClaveTipoMaquinariaFase(faseId, tipoMaquinaria.id, function(claveTipoMaquinariaFase){
+            deleteMaquinariaTipoMaquinariaFase(claveTipoMaquinariaFase, function(){
+                insertMaquinariaTipoMaquinariaFase(claveTipoMaquinariaFase, tipoMaquinaria.maquinarias)
+            })
+        })
+    })
+}
+
+const updateFases = (fases) => {
+    console.log('fases')
+    fases.forEach((fase) => {
+        Explotaciones.updateFechaEstatusFases(fase.fechaI, fase.fechaF, fase.fechaFR, fase.estatus, fase.id)
+        updateCargoFase(fase.id, fase.cargos)
+        updateTipoMaquinariaFase(fase.id, fase.tipoMaquinaria)
+    })
+}
+
+const updateEtapas = (etapas) => {
+    console.log('etapas')
+    etapas.forEach((etapa) => {
+        Explotaciones.updateFechaEstatusEtapas(etapa.fechaI, etapa.fechaF, etapa.fechaFR, etapa.estatus, etapa.id)
+        updateFases(etapa.fases)
+    })
+}
+
+const updateExplotacion = (req, res) => {
+    const yacimiento = req.body.data.yacimiento;
+    const explotacion = req.body.data.explotacion;
+    const etapas = req.body.data.etapas;
+
+    console.log('yacimiento', yacimiento)
+    console.log('explotacion', explotacion)
+    console.log('etapas', etapas)
+
+    Explotaciones.updateEstatusExplotaciones(explotacion.id, explotacion.estatus, explotacion.fechaI, explotacion.fechaF)
+    Explotaciones.updateFechaFinReal(fechaFR, explotacion.id)
+    updateEtapas(etapas)
+}
+
 module.exports = {
-    crearExplotacion
+    crearExplotacion,
+    updateExplotacion
 }

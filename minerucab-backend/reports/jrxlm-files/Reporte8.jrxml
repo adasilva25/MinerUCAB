@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte8" pageWidth="842" pageHeight="1250" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="170499c4-9f33-4635-9f4c-efc34c180da6">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQLMU"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT to_char(V.fecha, 'yyyy') "Año", PM.mineral "Mineral", PM.presentacion "Presentación", COUNT(fk_presentacion_mineral) as "Veces Solicitado"
+FROM (SELECT P.nombre as Presentacion, M.nombre as Mineral, PMin.clave
+		FROM mu_presentacion P, mu_presentacion_mineral PMin, mu_mineral_metalico M
+		WHERE P.clave=PMin.fk_presentacion AND M.clave=PMin.fk_mineral_metalico
+	  UNION
+	  SELECT P.nombre as Presentacion, M.nombre as Mineral, PMin.clave
+		FROM mu_presentacion P, mu_presentacion_mineral PMin, mu_mineral_no_metalico M
+		WHERE P.clave=PMin.fk_presentacion AND M.clave=PMin.fk_mineral_no_metalico
+	  ) as PM,
+	  mu_venta as V, mu_detalle_venta as DV
+WHERE PM.clave=DV.fk_presentacion_mineral AND V.clave=DV.fk_venta
+GROUP BY to_char(V.fecha, 'yyyy'), PM.presentacion, PM.mineral
+HAVING COUNT(fk_presentacion_mineral)=MIN((SELECT COUNT(DVenta.fk_presentacion_mineral)
+											FROM MU_DETALLE_VENTA DVenta, MU_VENTA Venta
+											WHERE Venta.clave=DVenta.fk_venta AND to_char(Venta.fecha, 'yyyy')=to_char(V.fecha, 'yyyy')
+											GROUP BY DVenta.fk_presentacion_mineral
+											ORDER BY COUNT(DVenta.fk_presentacion_mineral) ASC LIMIT 1))
+ORDER BY to_char(V.fecha, 'yyyy');]]>
+	</queryString>
+	<field name="Año" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Año"/>
+	</field>
+	<field name="Mineral" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Mineral"/>
+	</field>
+	<field name="Presentación" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Presentación"/>
+	</field>
+	<field name="Veces Solicitado" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="Veces Solicitado"/>
+	</field>
+	<group name="Año">
+		<groupExpression><![CDATA[$F{Año}]]></groupExpression>
+	</group>
+	<group name="Mineral">
+		<groupExpression><![CDATA[$F{Mineral}]]></groupExpression>
+	</group>
+	<group name="Presentación">
+		<groupExpression><![CDATA[$F{Presentación}]]></groupExpression>
+	</group>
+	<group name="Veces Solicitado">
+		<groupExpression><![CDATA[$F{Veces Solicitado}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="27" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="50" y="2" width="370" height="24" uuid="759f56e7-008c-42ed-9a72-50ebd3adccbc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Corporación Nacional de Desarrollo Mineral]]></text>
+			</staticText>
+			<textField pattern="HH:mm">
+				<reportElement x="674" y="1" width="90" height="23" uuid="99b98cca-d17d-4248-b33e-48bd60eb0623"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="570" y="1" width="112" height="23" uuid="17ea0f59-c6c4-450c-a44b-f260bfb60c51"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="30" y="26" width="723" height="1" uuid="99f2bb16-60ae-4a59-85ee-c9e25b4bcda3"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="77" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="144" y="25" width="513" height="30" uuid="ad4db022-d2b8-4790-b475-4aadc8775cf5">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRESENTACIÓN DEL MINERAL MENOS SOLICITADO POR AÑO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement mode="Opaque" x="134" y="0" width="97" height="31" forecolor="#FFFFFF" backcolor="#454D55" uuid="11ca07bf-077a-4df9-b35d-34629cb06d54">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="37943e0e-bd4e-4cbf-83c7-ad13efde4224"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Año]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="373" y="0" width="141" height="31" forecolor="#FFFFFF" backcolor="#454D55" uuid="704ac666-e5a8-42d4-ac70-20dc480b513f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3b29c9a5-74e8-4bfc-9043-17dc2db9a2af"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Presentación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="514" y="0" width="155" height="31" forecolor="#FFFFFF" backcolor="#454D55" uuid="a3fdfa51-d1c4-45ac-9400-9527be2260bc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3978af87-6698-44d8-a03d-159e16646d8a"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número de Veces Solicitado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="231" y="0" width="142" height="31" forecolor="#FFFFFF" backcolor="#454D55" uuid="10bd258b-a8a6-407a-9297-881728ae2087">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3b29c9a5-74e8-4bfc-9043-17dc2db9a2af"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mineral]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="134" y="0" width="97" height="20" uuid="bc53f43f-9c2a-4dd9-bb51-39696a205a93">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e6a9220f-e85e-400e-9740-9d076325bdea"/>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="1.0" lineColor="#FCFCFC"/>
+					<bottomPen lineWidth="1.0" lineColor="#FFFCFC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Año}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="0" width="142" height="20" uuid="3c4a89b0-a06b-4c76-acab-d422a6551f7e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6549777a-79cf-4ef2-abdc-e152226d9a7e"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Mineral}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="373" y="0" width="141" height="20" uuid="38fe41d7-0ad5-4538-b9a9-d9a45add7d69">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="adff6609-1e6f-4dd4-ba0b-d56d9401fd03"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Presentación}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="514" y="0" width="155" height="20" uuid="0d61bb22-0757-4000-ae6e-e56c03de91f2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0c5dd57f-0b0d-4b56-b6b4-394766adab67"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="1.0" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Veces Solicitado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

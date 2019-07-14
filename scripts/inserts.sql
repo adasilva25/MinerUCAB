@@ -3682,19 +3682,19 @@ INSERT INTO MU_EXPLOTACION (costo_total, duracion, fecha_inicio, fecha_fin, fech
     (90000, 30*9, '1998-01-01', '1998-10-01', '1998-10-01', 37, 10), (90000, 30*9, '1998-03-01', '1998-12-01', '1998-12-01', 38, 10), 
     (90000, 30*9, '1999-01-01', '1999-10-01', '1999-10-01', 39, 10), (90000, 30*9, '1999-03-01', '1999-12-01', '1999-12-01', 40, 10), 
     (90000, 30*9, '2000-01-01', '2000-10-01', '2000-10-01', 41, 10), (90000, 30*9, '2000-03-01', '2000-12-01', '2000-12-01', 42, 10), 
-    (90000, 30*9, '2001-01-01', '2001-10-01', '2001-10-01', 43, 10), (90000, 30*9, '2001-03-01', '2001-12-01', '2001-12-01', 44, 10), 
+    (90000, 30*9, '2001-01-01', '2001-10-01', '2001-08-01', 43, 10), (90000, 30*9, '2001-03-01', '2001-12-01', '2001-12-01', 44, 10), 
     (90000, 30*9, '2002-01-01', '2002-10-01', '2002-10-01', 45, 10), (90000, 30*9, '2002-03-01', '2002-12-01', '2002-12-01', 46, 10), 
     (90000, 30*9, '2003-01-01', '2003-10-01', '2003-10-01', 47, 10), (90000, 30*9, '2003-03-01', '2003-12-01', '2003-12-01', 48, 10), 
     (90000, 30*9, '2004-01-01', '2004-10-01', '2004-10-01', 49, 10), (90000, 30*9, '2004-03-01', '2004-12-01', '2004-12-01', 50, 10), 
     (90000, 30*9, '2005-01-01', '2005-10-01', '2005-10-01', 51, 10), (90000, 30*9, '2005-03-01', '2005-12-01', '2005-12-01', 52, 10), 
-    (90000, 30*9, '2006-01-01', '2006-10-01', '2006-10-01', 53, 10), (90000, 30*9, '2006-03-01', '2006-12-01', '2006-12-01', 54, 10), 
+    (90000, 30*9, '2006-01-01', '2006-10-01', '2008-09-01', 53, 10), (90000, 30*9, '2006-03-01', '2006-12-01', '2006-12-09', 54, 10), 
     
-    (90000, 30*9, '2007-01-01', '2007-10-01', '2007-10-01', 55, 10), (90000, 30*9, '2007-03-01', '2007-12-01', '2007-12-01', 56, 10), 
+    (90000, 30*9, '2007-01-01', '2007-10-01', '2009-10-01', 55, 10), (90000, 30*9, '2007-03-01', '2007-12-01', '2007-12-01', 56, 10), 
     (90000, 30*9, '2008-01-01', '2008-10-01', '2008-10-01', 57, 10), (90000, 30*9, '2008-03-01', '2008-12-01', '2008-12-01', 58, 10), 
     (90000, 30*9, '2009-01-01', '2009-10-01', '2009-10-01', 59, 10), (90000, 30*9, '2009-03-01', '2009-12-01', '2009-12-01', 60, 10), 
     (90000, 30*9, '2010-01-01', '2010-10-01', '2010-10-01', 61, 10), (90000, 30*9, '2010-03-01', '2010-12-01', '2010-12-01', 62, 10), 
     (90000, 30*9, '2011-01-01', '2011-10-01', '2011-10-01', 63, 10), (90000, 30*9, '2011-03-01', '2011-12-01', '2011-12-01', 64, 10), 
-    (90000, 30*9, '2012-01-01', '2012-10-01', '2012-10-01', 65, 10), (90000, 30*9, '2012-03-01', '2012-12-01', '2012-12-01', 66, 10), 
+    (90000, 30*9, '2012-01-01', '2012-10-01', '2013-10-01', 65, 10), (90000, 30*9, '2012-03-01', '2012-12-01', '2012-12-01', 66, 10), 
     (90000, 30*9, '2013-01-01', '2013-10-01', '2013-10-01', 67, 10), (90000, 30*9, '2013-03-01', '2013-12-01', '2013-12-01', 68, 10), 
     (90000, 30*9, '2014-01-01', '2014-10-01', '2014-10-01', 69, 10), (90000, 30*9, '2014-03-01', '2014-12-01', '2014-12-01', 70, 10), 
     (90000, 30*9, '2015-01-01', '2015-10-01', '2015-10-01', 71, 10), (90000, 30*9, '2015-03-01', '2015-12-01', '2015-12-01', 72, 10), 
@@ -3704,14 +3704,14 @@ INSERT INTO MU_EXPLOTACION (costo_total, duracion, fecha_inicio, fecha_fin, fech
     --Del 2018
     (90000, 30*9, '2018-01-01', '2018-10-01', '2018-10-01', 77, 10), (90000, 30*9, '2018-01-01', '2018-10-01', '2018-10-01', 77, 10),
     (90000, 30*9, '2018-02-01', '2018-11-01', '2018-11-01', 79, 10), (90000, 30*9, '2018-02-01', '2018-11-01', '2018-11-01', 80, 10),
-    (90000, 30*9, '2018-03-01', '2018-12-01', '2018-12-01', 81, 10), (90000, 30*9, '2018-03-01', '2018-12-01', '2018-12-01', 82, 10),
+    (90000, 30*9, '2018-03-01', '2018-12-01', '2018-12-13', 81, 10), (90000, 30*9, '2018-03-01', '2018-12-01', '2019-02-01', 82, 10),
     --Del 2018/2019
     (90000, 30*9, '2018-04-01', '2019-01-01', '2019-01-01', 83, 10), (90000, 30*9, '2018-04-01', '2019-01-01', '2019-01-01', 84, 10), 
     (90000, 30*9, '2018-05-01', '2019-02-01', '2019-02-01', 85, 10), (90000, 30*9, '2018-05-01', '2019-02-01', '2019-02-01', 86, 10), 
     (90000, 30*9, '2018-06-01', '2019-03-01', '2019-03-01', 87, 10), (90000, 30*9, '2018-06-01', '2019-03-01', '2019-03-01', 88, 10), 
-    (90000, 30*9, '2018-07-01', '2019-04-01', '2019-04-01', 89, 10), (90000, 30*9, '2018-07-01', '2019-04-01', '2019-04-01', 90, 10), 
+    (90000, 30*9, '2018-07-01', '2019-04-01', '2019-05-01', 89, 10), (90000, 30*9, '2018-07-01', '2019-04-01', '2019-05-01', 90, 10), 
     
-    (90000, 30*9, '2018-08-01', '2019-05-01', '2019-05-01', 91, 10), (90000, 30*9, '2018-08-01', '2019-05-01', '2019-05-01', 92, 10), 
+    (90000, 30*9, '2018-08-01', '2019-05-01', '2019-05-02', 91, 10), (90000, 30*9, '2018-08-01', '2019-05-01', '2019-05-01', 92, 10), 
     (90000, 30*9, '2018-09-01', '2019-06-01', '2019-06-01', 93, 10), (90000, 30*9, '2018-09-01', '2019-06-01', '2019-06-01', 94, 10), 
     (90000, 30*9, '2018-10-01', '2019-07-01', null, 95, 8), (90000, 30*9, '2018-10-01', '2019-07-01', null, 96, 8);
 
@@ -4270,22 +4270,22 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Recopilación y análisis de la información existente', 6000, 30, '1982-03-01', '1982-04-01', '1982-04-01', 10, 11), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '1982-04-01', '1982-05-01', '1982-05-01', 10, 11), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '1982-05-01', '1982-06-01', '1982-06-01', 10, 12), 
+        ('1.Restitución topográfica 1', 6000, 30, '1982-05-01', '1982-06-01', '1982-07-01', 10, 12), 
         ('2.Fotointerpretación', 16000, 30, '1982-06-01', '1982-07-01', '1982-07-01', 10, 12), 
         ('3.Cartografía geológica 1', 16000, 30, '1982-07-01', '1982-08-01', '1982-08-01', 10, 12), 
-        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1982-08-01', '1982-09-01', '1982-09-01', 10, 12), 
+        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1982-08-01', '1982-09-01', '1982-10-01', 10, 12), 
         ('5.Perforaciones exploratorias', 6000, 30, '1982-09-01', '1982-10-01', '1982-10-01', 10, 12), 
         ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1982-10-01', '1982-11-01', '1982-11-01', 10, 12), 
         ('7.Preparación informe Etapa II', 9000, 30, '1982-11-01', '1982-12-01', '1982-12-01', 10, 12),
     --EXPLOTACION7
         --ETAPAI
-        ('1.Recopilación y análisis de la información existente', 6000, 30, '1983-01-01', '1983-02-01', '1983-02-01', 10, 13), 
+        ('1.Recopilación y análisis de la información existente', 6000, 30, '1983-01-01', '1983-03-01', '1983-02-01', 10, 13), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '1983-02-01', '1983-03-01', '1983-03-01', 10, 13), 
         --ETAPAII
         ('1.Restitución topográfica 1', 6000, 30, '1983-03-01', '1983-04-01', '1983-04-01', 10, 14), 
         ('2.Fotointerpretación', 16000, 30, '1983-04-01', '1983-05-01', '1983-05-01', 10, 14), 
         ('3.Cartografía geológica 1', 16000, 30, '1983-05-01', '1983-06-01', '1983-06-01', 10, 14), 
-        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1983-06-01', '1983-07-01', '1983-07-01', 10, 14), 
+        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1983-06-01', '1983-07-01', '1983-08-01', 10, 14), 
         ('5.Perforaciones exploratorias', 6000, 30, '1983-07-01', '1983-08-01', '1983-08-01', 10, 14), 
         ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1983-08-01', '1983-09-01', '1983-09-01', 10, 14), 
         ('7.Preparación informe Etapa II', 9000, 30, '1983-09-01', '1983-10-01', '1983-10-01', 10, 14),
@@ -4294,10 +4294,10 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Recopilación y análisis de la información existente', 6000, 30, '1983-03-01', '1983-04-01', '1983-04-01', 10, 15), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '1983-04-01', '1983-05-01', '1983-05-01', 10, 15), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '1983-05-01', '1983-06-01', '1983-06-01', 10, 16), 
+        ('1.Restitución topográfica 1', 6000, 30, '1983-05-01', '1983-06-01', '1983-06-03', 10, 16), 
         ('2.Fotointerpretación', 16000, 30, '1983-06-01', '1983-07-01', '1983-07-01', 10, 16), 
         ('3.Cartografía geológica 1', 16000, 30, '1983-07-01', '1983-08-01', '1983-08-01', 10, 16), 
-        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1983-08-01', '1983-09-01', '1983-09-01', 10, 16), 
+        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1983-08-01', '1983-09-10', '1983-09-01', 10, 16), 
         ('5.Perforaciones exploratorias', 6000, 30, '1983-09-01', '1983-10-01', '1983-10-01', 10, 16), 
         ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1983-10-01', '1983-11-01', '1983-11-01', 10, 16), 
         ('7.Preparación informe Etapa II', 9000, 30, '1983-11-01', '1983-12-01', '1983-12-01', 10, 16),
@@ -4306,9 +4306,9 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Recopilación y análisis de la información existente', 6000, 30, '1984-01-01', '1984-02-01', '1984-02-01', 10, 17), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '1984-02-01', '1984-03-01', '1984-03-01', 10, 17), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '1984-03-01', '1984-04-01', '1984-04-01', 10, 18), 
+        ('1.Restitución topográfica 1', 6000, 30, '1984-03-01', '1984-04-01', '1984-04-09', 10, 18), 
         ('2.Fotointerpretación', 16000, 30, '1984-04-01', '1984-05-01', '1984-05-01', 10, 18), 
-        ('3.Cartografía geológica 1', 16000, 30, '1984-05-01', '1984-06-01', '1984-06-01', 10, 18), 
+        ('3.Cartografía geológica 1', 16000, 30, '1984-05-01', '1984-06-01', '1984-07-01', 10, 18), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1984-06-01', '1984-07-01', '1984-07-01', 10, 18), 
         ('5.Perforaciones exploratorias', 6000, 30, '1984-07-01', '1984-08-01', '1984-08-01', 10, 18), 
         ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1984-08-01', '1984-09-01', '1984-09-01', 10, 18), 
@@ -4318,13 +4318,13 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Recopilación y análisis de la información existente', 6000, 30, '1984-03-01', '1984-04-01', '1984-04-01', 10, 19), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '1984-04-01', '1984-05-01', '1984-05-01', 10, 19), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '1984-05-01', '1984-06-01', '1984-06-01', 10, 20), 
+        ('1.Restitución topográfica 1', 6000, 30, '1984-05-01', '1984-06-01', '1984-08-01', 10, 20), 
         ('2.Fotointerpretación', 16000, 30, '1984-06-01', '1984-07-01', '1984-07-01', 10, 20), 
-        ('3.Cartografía geológica 1', 16000, 30, '1984-07-01', '1984-08-01', '1984-08-01', 10, 20), 
+        ('3.Cartografía geológica 1', 16000, 30, '1984-07-01', '1984-08-01', '1984-09-01', 10, 20), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1984-08-01', '1984-09-01', '1984-09-01', 10, 20), 
         ('5.Perforaciones exploratorias', 6000, 30, '1984-09-01', '1984-10-01', '1984-10-01', 10, 20), 
         ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1984-10-01', '1984-11-01', '1984-11-01', 10, 20), 
-        ('7.Preparación informe Etapa II', 9000, 30, '1984-11-01', '1984-12-01', '1984-12-01', 10, 20),
+        ('7.Preparación informe Etapa II', 9000, 30, '1984-11-01', '1984-12-01', '1984-12-09', 10, 20),
     --EXPLOTACION11
         --ETAPAI
         ('1.Recopilación y análisis de la información existente', 6000, 30, '1985-01-01', '1985-02-01', '1985-02-01', 10, 21), 
@@ -4335,7 +4335,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('3.Cartografía geológica 1', 16000, 30, '1985-05-01', '1985-06-01', '1985-06-01', 10, 22), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1985-06-01', '1985-07-01', '1985-07-01', 10, 22), 
         ('5.Perforaciones exploratorias', 6000, 30, '1985-07-01', '1985-08-01', '1985-08-01', 10, 22), 
-        ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1985-08-01', '1985-09-01', '1985-09-01', 10, 22), 
+        ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1985-08-01', '1985-09-01', '1985-09-08', 10, 22), 
         ('7.Preparación informe Etapa II', 9000, 30, '1985-09-01', '1985-10-01', '1985-10-01', 10, 22),
     --EXPLOTACION12
         --ETAPAI
@@ -4363,15 +4363,15 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('7.Preparación informe Etapa II', 9000, 30, '1986-09-01', '1986-10-01', '1986-10-01', 10, 26),
     --EXPLOTACION14
         --ETAPAI
-        ('1.Recopilación y análisis de la información existente', 6000, 30, '1986-03-01', '1986-04-01', '1986-04-01', 10, 27), 
+        ('1.Recopilación y análisis de la información existente', 6000, 30, '1986-03-01', '1986-04-01', '1986-04-10', 10, 27), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '1986-04-01', '1986-05-01', '1986-05-01', 10, 27), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '1986-05-01', '1986-06-01', '1986-06-01', 10, 28), 
+        ('1.Restitución topográfica 1', 6000, 30, '1986-05-01', '1986-06-01', '1986-06-11', 10, 28), 
         ('2.Fotointerpretación', 16000, 30, '1986-06-01', '1986-07-01', '1986-07-01', 10, 28), 
         ('3.Cartografía geológica 1', 16000, 30, '1986-07-01', '1986-08-01', '1986-08-01', 10, 28), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1986-08-01', '1986-09-01', '1986-09-01', 10, 28), 
         ('5.Perforaciones exploratorias', 6000, 30, '1986-09-01', '1986-10-01', '1986-10-01', 10, 28), 
-        ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1986-10-01', '1986-11-01', '1986-11-01', 10, 28), 
+        ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1986-10-01', '1986-11-01', '1986-11-12', 10, 28), 
         ('7.Preparación informe Etapa II', 9000, 30, '1986-11-01', '1986-12-01', '1986-12-01', 10, 28),
     --EXPLOTACION15
         --ETAPAI
@@ -4381,7 +4381,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Restitución topográfica 1', 6000, 30, '1987-03-01', '1987-04-01', '1987-04-01', 10, 30), 
         ('2.Fotointerpretación', 16000, 30, '1987-04-01', '1987-05-01', '1987-05-01', 10, 30), 
         ('3.Cartografía geológica 1', 16000, 30, '1987-05-01', '1987-06-01', '1987-06-01', 10, 30), 
-        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1987-06-01', '1987-07-01', '1987-07-01', 10, 30), 
+        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1987-06-01', '1987-07-01', '1987-07-03', 10, 30), 
         ('5.Perforaciones exploratorias', 6000, 30, '1987-07-01', '1987-08-01', '1987-08-01', 10, 30), 
         ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1987-08-01', '1987-09-01', '1987-09-01', 10, 30), 
         ('7.Preparación informe Etapa II', 9000, 30, '1987-09-01', '1987-10-01', '1987-10-01', 10, 30),
@@ -5051,7 +5051,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Recopilación y análisis de la información existente', 6000, 30, '2015-01-01', '2015-02-01', '2015-02-01', 10, 141), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2015-02-01', '2015-03-01', '2015-03-01', 10, 141), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '2015-03-01', '2015-04-01', '2015-04-01', 10, 142), 
+        ('1.Restitución topográfica 1', 6000, 30, '2015-03-01', '2015-04-01', '2015-04-04', 10, 142), 
         ('2.Fotointerpretación', 16000, 30, '2015-04-01', '2015-05-01', '2015-05-01', 10, 142), 
         ('3.Cartografía geológica 1', 16000, 30, '2015-05-01', '2015-06-01', '2015-06-01', 10, 142), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2015-06-01', '2015-07-01', '2015-07-01', 10, 142), 
@@ -5066,7 +5066,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Restitución topográfica 1', 6000, 30, '2015-05-01', '2015-06-01', '2015-06-01', 10, 144), 
         ('2.Fotointerpretación', 16000, 30, '2015-06-01', '2015-07-01', '2015-07-01', 10, 144), 
         ('3.Cartografía geológica 1', 16000, 30, '2015-07-01', '2015-08-01', '2015-08-01', 10, 144), 
-        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2015-08-01', '2015-09-01', '2015-09-01', 10, 144), 
+        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2015-08-01', '2015-09-01', '2015-09-09', 10, 144), 
         ('5.Perforaciones exploratorias', 6000, 30, '2015-09-01', '2015-10-01', '2015-10-01', 10, 144), 
         ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '2015-10-01', '2015-11-01', '2015-11-01', 10, 144), 
         ('7.Preparación informe Etapa II', 9000, 30, '2015-11-01', '2015-12-01', '2015-12-01', 10, 144),
@@ -5075,7 +5075,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Recopilación y análisis de la información existente', 6000, 30, '2016-01-01', '2016-02-01', '2016-02-01', 10, 145), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2016-02-01', '2016-03-01', '2016-03-01', 10, 145), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '2016-03-01', '2016-04-01', '2016-04-01', 10, 146), 
+        ('1.Restitución topográfica 1', 6000, 30, '2016-03-01', '2016-04-01', '2016-04-08', 10, 146), 
         ('2.Fotointerpretación', 16000, 30, '2016-04-01', '2016-05-01', '2016-05-01', 10, 146), 
         ('3.Cartografía geológica 1', 16000, 30, '2016-05-01', '2016-06-01', '2016-06-01', 10, 146), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2016-06-01', '2016-07-01', '2016-07-01', 10, 146), 
@@ -5099,7 +5099,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Recopilación y análisis de la información existente', 6000, 30, '2017-01-01', '2017-02-01', '2017-02-01', 10, 149), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2017-02-01', '2017-03-01', '2017-03-01', 10, 149), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '2017-03-01', '2017-04-01', '2017-04-01', 10, 150), 
+        ('1.Restitución topográfica 1', 6000, 30, '2017-03-01', '2017-04-01', '2017-04-07', 10, 150), 
         ('2.Fotointerpretación', 16000, 30, '2017-04-01', '2017-05-01', '2017-05-01', 10, 150), 
         ('3.Cartografía geológica 1', 16000, 30, '2017-05-01', '2017-06-01', '2017-06-01', 10, 150), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2017-06-01', '2017-07-01', '2017-07-01', 10, 150), 
@@ -5111,7 +5111,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Recopilación y análisis de la información existente', 6000, 30, '2017-03-01', '2017-04-01', '2017-04-01', 10, 151), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2017-04-01', '2017-05-01', '2017-05-01', 10, 151), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '2017-05-01', '2017-06-01', '2017-06-01', 10, 152), 
+        ('1.Restitución topográfica 1', 6000, 30, '2017-05-01', '2017-06-01', '2017-06-03', 10, 152), 
         ('2.Fotointerpretación', 16000, 30, '2017-06-01', '2017-07-01', '2017-07-01', 10, 152), 
         ('3.Cartografía geológica 1', 16000, 30, '2017-07-01', '2017-08-01', '2017-08-01', 10, 152), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2017-08-01', '2017-09-01', '2017-09-01', 10, 152), 
@@ -5123,7 +5123,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Recopilación y análisis de la información existente', 6000, 30, '2018-01-01', '2018-02-01', '2018-02-01', 10, 153), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2018-02-01', '2018-03-01', '2018-03-01', 10, 153), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '2018-03-01', '2018-04-01', '2018-04-01', 10, 154), 
+        ('1.Restitución topográfica 1', 6000, 30, '2018-03-01', '2018-04-01', '2018-04-02', 10, 154), 
         ('2.Fotointerpretación', 16000, 30, '2018-04-01', '2018-05-01', '2018-05-01', 10, 154), 
         ('3.Cartografía geológica 1', 16000, 30, '2018-05-01', '2018-06-01', '2018-06-01', 10, 154), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2018-06-01', '2018-07-01', '2018-07-01', 10, 154), 
@@ -5138,7 +5138,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Restitución topográfica 1', 6000, 30, '2018-03-01', '2018-04-01', '2018-04-01', 10, 156), 
         ('2.Fotointerpretación', 16000, 30, '2018-04-01', '2018-05-01', '2018-05-01', 10, 156), 
         ('3.Cartografía geológica 1', 16000, 30, '2018-05-01', '2018-06-01', '2018-06-01', 10, 156), 
-        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2018-06-01', '2018-07-01', '2018-07-01', 10, 156), 
+        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2018-06-01', '2018-08-01', '2018-07-01', 10, 156), 
         ('5.Perforaciones exploratorias', 6000, 30, '2018-07-01', '2018-08-01', '2018-08-01', 10, 156), 
         ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '2018-08-01', '2018-09-01', '2018-09-01', 10, 156), 
         ('7.Preparación informe Etapa II', 9000, 30, '2018-09-01', '2018-10-01', '2018-10-01', 10, 156),
@@ -5339,7 +5339,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Recopilación y análisis de la información existente', 6000, 30, '2018-10-01', '2018-11-01', '2018-11-01', 10, 189), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2018-11-01', '2018-12-01', '2018-12-01', 10, 189), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '2018-12-01', '2019-01-01', '2019-01-01', 10, 190), 
+        ('1.Restitución topográfica 1', 6000, 30, '2018-12-01', '2019-01-01', '2019-01-05', 10, 190), 
         ('2.Fotointerpretación', 16000, 30, '2019-01-01', '2019-02-01', '2019-02-01', 10, 190), 
         ('3.Cartografía geológica 1', 16000, 30, '2019-02-01', '2019-03-01', '2019-03-01', 10, 190), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2019-03-01', '2019-04-01', '2019-04-01', 10, 190), 
@@ -5351,7 +5351,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Recopilación y análisis de la información existente', 6000, 30, '2018-10-01', '2018-11-01', '2018-11-01', 10, 191), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2018-11-01', '2018-12-01', '2018-12-01', 10, 191), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '2018-12-01', '2019-01-01', '2019-01-01', 10, 192), 
+        ('1.Restitución topográfica 1', 6000, 30, '2018-12-01', '2019-01-01', '2019-01-04', 10, 192), 
         ('2.Fotointerpretación', 16000, 30, '2019-01-01', '2019-02-01', '2019-02-01', 10, 192), 
         ('3.Cartografía geológica 1', 16000, 30, '2019-02-01', '2019-03-01', '2019-03-01', 10, 192), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2019-03-01', '2019-04-01', '2019-04-01', 10, 192), 

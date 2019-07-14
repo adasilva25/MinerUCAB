@@ -218,6 +218,7 @@ const getClaveTipoMaquinariaFase = (faseId, tipoMaquinariaId, callback) => {
 
     })
 }
+
 const getClaveCargoFaseByCargoClaveYFaseClave = (faseId, cargoId, callback) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
@@ -415,7 +416,6 @@ const getAllExplotacionesConEstatusInactivo = (req, res) => {
 }
 
 const getAllExplotacionesConEstatusEnProceso = (req, res) => {
-
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
@@ -424,6 +424,41 @@ const getAllExplotacionesConEstatusEnProceso = (req, res) => {
     .then((response) => {
         client.end();
         res.status(200).json(response.rows)
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
+const getClaveEmpleadoCargoFaseByCargoFase = (claveCargoFase, callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'SELECT ECF.Clave FROM MU_EMPLEADO_CARGO_FASE ECF WHERE ECF.fk_cargo_fase = ($1);';
+    const values = [claveCargoFase];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        callback(response.rows[0].clave);
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
+const updateFechaFinReal = (fecha_fin_real, clave) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'UPDATE MU_EXPLOTACION SET fecha_fin_real = ($1) WHERE Clave = ($2);';
+    const values = [fecha_fin_real, clave];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
     })
     .catch((e) => {
         client.end();
@@ -464,6 +499,40 @@ const updateFaseEstatus = (clave, estatus) => {
         client.end();
         console.error(e.stack);
 
+    })
+}
+
+const updateFechaEstatusFases = (fechaI, fechaF, fechaFR, estatus, clave) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'UPDATE MU_FASE SET fecha_inicio = ($1), fecha_fin = ($2), fecha_fin_real = ($3), fk_estatus = ($4) WHERE Clave = ($5);';
+    const values = [fechaI, fechaF, fechaFR, estatus, clave];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
+const updateFechaEstatusEtapas = (fechaI, fechaF, fechaFR, estatus, clave) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'UPDATE MU_ETAPA SET fecha_inicio = ($1), fecha_fin = ($2), fecha_fin_real = ($3), fk_estatus = ($4) WHERE Clave = ($5);';
+    const values = [fechaI, fechaF, fechaFR, estatus, clave];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
     })
 }
 
@@ -522,6 +591,63 @@ const deleteExplotacionById = (req, res) => {
     })
 }
 
+const deleteFromMaquinariaTipoMaquinariaFase = (claveMaquinariaTipoMaquinariaFase, callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'DELETE FROM MU_MAQUINARIA_TIPO_MAQUINARIA_FASE WHERE fk_tipo_maquinaria_fase = ($1);';
+    const values = [claveMaquinariaTipoMaquinariaFase];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        callback()
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
+const deleteFromEmpleadoCargoFase = (claveCargoFase, callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'DELETE FROM MU_EMPLEADO_CARGO_FASE WHERE fk_cargo_fase = ($1);';
+    const values = [claveCargoFase];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        callback()
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
+const deleteFromHorarioEmpleado = (claveEmpleadoCargoFase, callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'DELETE FROM MU_HORARIO_EMPLEADO WHERE fk_empleado_cargo_fase = ($1);';
+    const values = [claveEmpleadoCargoFase];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        callback()
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
 module.exports = {
     createExplotacion,
     createEtapa,
@@ -529,6 +655,9 @@ module.exports = {
     createCargoFase,
     createTipoMaquinariaFase,
     deleteExplotacionById,
+    deleteFromEmpleadoCargoFase,
+    deleteFromHorarioEmpleado,
+    deleteFromMaquinariaTipoMaquinariaFase,
     getAllExplotacionesFkVentaConEstatusDiferenteAInactivo,
     getEtapasByIdExplotacion,
     getFasesByIdEtapa,
@@ -541,6 +670,7 @@ module.exports = {
     getAllExplotacionesConEstatusFinalizado,
     getClaveCargoFaseByCargoClaveYFaseClave,
     getClaveTipoMaquinariaFase,
+    getClaveEmpleadoCargoFaseByCargoFase,
     insertFechas,
     insertFechasEtapas,
     insertFechasFases,
@@ -549,7 +679,10 @@ module.exports = {
     insertIntoMaquinariaTipoMaquinariaFase,
     updateEstatus,
     updateFaseEstatus,
+    updateFechaEstatusEtapas,
+    updateFechaEstatusFases,
     updateEtapaEstatus,
-    updateEstatusExplotaciones
+    updateEstatusExplotaciones,
+    updateFechaFinReal
     // ,[siguientes funciones]
 }

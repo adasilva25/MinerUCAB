@@ -1,5 +1,6 @@
 import React from 'react';
-import DataTable from '../../components/DataTable';
+import axios from 'axios';
+import ModalFecha from '../../components/ModalFecha';
 import OpcionesLocales from '../../components/OpcionesLocales';
 import OpcionesGlobales from '../../components/OpcionesGlobales';
 import Container from 'react-bootstrap/Container';
@@ -8,15 +9,17 @@ import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
 
 export default class Cliente extends React.Component {
     state = { 
-        modalShowEliminar: false,
-        infoEliminar: '',
-        idEliminar: 0,
+        modalFecha: false,
+        idReporte: 0,
         reload: false
     };
+    modalFechaClose = () => this.setState({ modalFecha: false });
+    modalFechaOpen = (i) => {
+        this.setState({ idReporte: i, modalFecha: true });
+    }
     executeReport = (reportNumber) => {
         const config = {
             headers: {
@@ -25,19 +28,22 @@ export default class Cliente extends React.Component {
             responseType: 'json'
         }
 
-        axios.get(`http://localhost:3000/getReporte${reportNumber}`, config)
+        if ((reportNumber === 1) || (reportNumber === 8)){
+            axios.get(`http://localhost:3000/getReporte${reportNumber}`, config)
             .then((res) => {
                 console.log('res', res)
                 const link = res.data.link
                 window.location.replace(link);
                 let myWindow = window.open("", "_blank");
                 myWindow.document.write(`<title>Reporte${reportNumber}</title>`);
+                myWindow.document.write('<img src="/images/MinerUCAB-logo.png" style="width: 25rem; height: 8%; background-color: #707070; margin-left: 18rem; margin-top: 1.5rem;"/>');
                 myWindow.document.write(link);
                 myWindow.focus()
             })
             .catch((e) => {
                 console.log(`Error con la ejecución del Reporte ${reportNumber}`);
             })
+        }
     }   
     render(){
         let data = {
@@ -58,6 +64,12 @@ export default class Cliente extends React.Component {
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario='Andrea Da Silva'/>
                 <Container className="pagecontent">
+                <ModalFecha
+                    show={this.state.modalFecha}
+                    onHide={this.modalFechaClose}
+                    idReporte={this.state.idReporte}
+                    executeReport={this.executeReport}
+                />
                         <Container>
                             <Row>
                                 <Col md={1}></Col>
@@ -89,32 +101,32 @@ export default class Cliente extends React.Component {
                                 <tr>
                                     <td>{2}</td>
                                     <td>{data.reporte2}</td>
-                                    <td><FontAwesomeIcon onClick={(e) => this.executeReport(2)} className="icons iconreport" icon={Icons.faFile}/></td>
+                                    <td><FontAwesomeIcon onClick={(e) => this.modalFechaOpen(2)} className="icons iconreport" icon={Icons.faFile}/></td>
                                 </tr>
                                 <tr>
                                     <td>{3}</td>
                                     <td>{data.reporte3}</td>
-                                    <td><FontAwesomeIcon onClick={(e) => this.executeReport(3)} className="icons iconreport" icon={Icons.faFile}/></td>
+                                    <td><FontAwesomeIcon onClick={(e) => this.modalFechaOpen(3)} className="icons iconreport" icon={Icons.faFile}/></td>
                                 </tr>
                                 <tr>
                                     <td>{4}</td>
                                     <td>{data.reporte4}</td>
-                                    <td><FontAwesomeIcon onClick={(e) => this.executeReport(4)} className="icons iconreport" icon={Icons.faFile}/></td>
+                                    <td><FontAwesomeIcon onClick={(e) => this.modalFechaOpen(4)} className="icons iconreport" icon={Icons.faFile}/></td>
                                 </tr>
                                 <tr>
                                     <td>{5}</td>
                                     <td>{data.reporte5}</td>
-                                    <td><FontAwesomeIcon onClick={(e) => this.executeReport(5)} className="icons iconreport" icon={Icons.faFile}/></td>
+                                    <td><FontAwesomeIcon onClick={(e) => this.modalFechaOpen(5)} className="icons iconreport" icon={Icons.faFile}/></td>
                                 </tr>
                                 <tr>
                                     <td>{6}</td>
                                     <td>{data.reporte6}</td>
-                                    <td><FontAwesomeIcon onClick={(e) => this.executeReport(6)} className="icons iconreport" icon={Icons.faFile}/></td>
+                                    <td><FontAwesomeIcon onClick={(e) => this.modalFechaOpen(6)} className="icons iconreport" icon={Icons.faFile}/></td>
                                 </tr>
                                 <tr>
                                     <td>{7}</td>
                                     <td>{data.reporte7}</td>
-                                    <td><FontAwesomeIcon onClick={(e) => this.executeReport(7)} className="icons iconreport" icon={Icons.faFile}/></td>
+                                    <td><FontAwesomeIcon onClick={(e) => this.modalFechaOpen(7)} className="icons iconreport" icon={Icons.faFile}/></td>
                                 </tr>
                                 <tr>
                                     <td>{8}</td>
@@ -124,12 +136,12 @@ export default class Cliente extends React.Component {
                                 <tr>
                                     <td>{9}</td>
                                     <td>{data.reporte9}</td>
-                                    <td><FontAwesomeIcon onClick={(e) => this.executeReport(9)} className="icons iconreport" icon={Icons.faFile}/></td>
+                                    <td><FontAwesomeIcon onClick={(e) => this.modalFechaOpen(9)} className="icons iconreport" icon={Icons.faFile}/></td>
                                 </tr>
                                 <tr>
                                     <td>{10}</td>
                                     <td>{data.reporte10}</td>
-                                    <td><FontAwesomeIcon onClick={(e) => this.executeReport(10)} className="icons iconreport" icon={Icons.faFile}/></td>
+                                    <td><FontAwesomeIcon onClick={(e) => this.modalFechaOpen(10)} className="icons iconreport" icon={Icons.faFile}/></td>
                                 </tr>
                             </tbody>
                         </Table>
