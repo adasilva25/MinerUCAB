@@ -99,6 +99,52 @@ getReporte2 = (req, response) => {
         })
 }
 
+getReporte3 = (req, response) => {
+    const fecha_inicio = req.params.fecha_inicio
+    const fecha_fin = req.params.fecha_fin
+    
+    const config = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        auth: {
+            'username': 'jasperadmin',
+            'password': 'jasperadmin'
+        },
+        responseType: 'document',
+        withCredentials: true
+    }
+    
+
+    axios.get(`http://localhost:8080/jasperserver/rest_v2/reports/reports/MinerUCAB/Reporte3.html?fecha_inicio=${fecha_inicio}&fecha_fin=${fecha_fin}`, config)
+        .then((res) => {
+            cookie = res.headers["set-cookie"][0].split(' ').splice(0, 2);
+            console.log(cookie);
+            cookie = `$Version=0; ${cookie.join(' ')}`;
+            console.log(cookie);
+            const link = path.join(__dirname, '../outputs/Reporte3.html')
+
+            fs.writeFile(path.join(__dirname, '../outputs/Reporte3.html'), (res.data), (err) => {
+                if (err){
+                    logout()
+                    throw err;
+                }
+                else{
+                    console.log('The file has been saved!');
+                    response.status(200).json({link: res.data})
+                }
+                logout()
+            });
+            
+            logout()
+
+            // console.log(res)
+        }).catch((e) => {
+            console.log('Error', e)
+            response.status(500)
+        })
+}
+
 getReporte4 = (req, response) => {
     const fecha_inicio = req.params.fecha_inicio
     const fecha_fin = req.params.fecha_fin
@@ -171,6 +217,52 @@ getReporte5 = (req, response) => {
             const link = path.join(__dirname, '../outputs/Reporte5.html')
 
             fs.writeFile(path.join(__dirname, '../outputs/Reporte5.html'), (res.data), (err) => {
+                if (err){
+                    logout()
+                    throw err;
+                }
+                else{
+                    console.log('The file has been saved!');
+                    response.status(200).json({link: res.data})
+                }
+                logout()
+            });
+            
+            logout()
+
+            // console.log(res)
+        }).catch((e) => {
+            console.log('Error', e)
+            response.status(500)
+        })
+}
+
+getReporte6 = (req, response) => {
+    const fecha_inicio = req.params.fecha_inicio
+    const fecha_fin = req.params.fecha_fin
+    
+    const config = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        auth: {
+            'username': 'jasperadmin',
+            'password': 'jasperadmin'
+        },
+        responseType: 'document',
+        withCredentials: true
+    }
+    
+
+    axios.get(`http://localhost:8080/jasperserver/rest_v2/reports/reports/MinerUCAB/Reporte6.html?fecha_inicio=${fecha_inicio}&fecha_fin=${fecha_fin}`, config)
+        .then((res) => {
+            cookie = res.headers["set-cookie"][0].split(' ').splice(0, 2);
+            console.log(cookie);
+            cookie = `$Version=0; ${cookie.join(' ')}`;
+            console.log(cookie);
+            const link = path.join(__dirname, '../outputs/Reporte6.html')
+
+            fs.writeFile(path.join(__dirname, '../outputs/Reporte6.html'), (res.data), (err) => {
                 if (err){
                     logout()
                     throw err;
@@ -277,6 +369,52 @@ getReporte8 = (req, response) => {
             // console.log(res)
         }).catch((e) => {
             console.log('Error')
+            response.status(500)
+        })
+}
+
+getReporte9 = (req, response) => {
+    const fecha_inicio = req.params.fecha_inicio
+    const fecha_fin = req.params.fecha_fin
+    
+    const config = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        auth: {
+            'username': 'jasperadmin',
+            'password': 'jasperadmin'
+        },
+        responseType: 'document',
+        withCredentials: true
+    }
+    
+
+    axios.get(`http://localhost:8080/jasperserver/rest_v2/reports/reports/MinerUCAB/Reporte9.html?fecha_inicio=${fecha_inicio}&fecha_fin=${fecha_fin}`, config)
+        .then((res) => {
+            cookie = res.headers["set-cookie"][0].split(' ').splice(0, 2);
+            console.log(cookie);
+            cookie = `$Version=0; ${cookie.join(' ')}`;
+            console.log(cookie);
+            const link = path.join(__dirname, '../outputs/Reporte9.html')
+
+            fs.writeFile(path.join(__dirname, '../outputs/Reporte9.html'), (res.data), (err) => {
+                if (err){
+                    logout()
+                    throw err;
+                }
+                else{
+                    console.log('The file has been saved!');
+                    response.status(200).json({link: res.data})
+                }
+                logout()
+            });
+            
+            logout()
+
+            // console.log(res)
+        }).catch((e) => {
+            console.log('Error', e)
             response.status(500)
         })
 }
@@ -528,10 +666,13 @@ const logout = () => {
 module.exports = {
     getReporte1,
     getReporte2,
+    getReporte3,
     getReporte4,
     getReporte5,
+    getReporte6,
     getReporte7,
     getReporte8,
+    getReporte9,
     getReporte10,
     reportePrueba
 }

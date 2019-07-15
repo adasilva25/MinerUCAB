@@ -294,7 +294,7 @@ export default class Explotacion extends React.Component {
                                 modificar={this.state.u}
                                 consultar={this.state.r}
                                 eliminar={this.state.d}
-                                explotar={this.state.c}
+                                explotar={false}
                                 modalEliminar={this.modalEliminarOpen}
                                 reload={this.state.reload}
                                 checktable={false}

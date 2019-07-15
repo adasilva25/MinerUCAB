@@ -58,10 +58,13 @@ app.get('/', (req, res) => {
 /* ----------------------------------- REPORTES ----------------------------------- */
 app.get('/getReporte1', JasperServer.getReporte1);
 app.get('/getReporte2/:fecha_inicio/:fecha_fin', JasperServer.getReporte2);
+app.get('/getReporte3/:fecha_inicio/:fecha_fin', JasperServer.getReporte3);
 app.get('/getReporte4/:fecha_inicio/:fecha_fin', JasperServer.getReporte4);
 app.get('/getReporte5/:fecha_inicio/:fecha_fin', JasperServer.getReporte5);
+app.get('/getReporte6/:fecha_inicio/:fecha_fin', JasperServer.getReporte6);
 app.get('/getReporte7/:fecha_inicio/:fecha_fin/:ci', JasperServer.getReporte7);
 app.get('/getReporte8', JasperServer.getReporte8);
+app.get('/getReporte9/:fecha_inicio/:fecha_fin', JasperServer.getReporte9);
 app.get('/getReporte10/:fecha_inicio/:fecha_fin', JasperServer.getReporte10);
 
 /* ----------------------------------- POST ----------------------------------- */

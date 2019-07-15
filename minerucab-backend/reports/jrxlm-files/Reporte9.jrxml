@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte9" pageWidth="842" pageHeight="1450" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f6330380-4752-4001-a709-2f0b2437e5cc">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="237"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="755"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQLMU"/>
+	<parameter name="fecha_inicio" class="java.lang.String"/>
+	<parameter name="fecha_fin" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT distinct M.Clave AS "Clave", M.identificador AS "Serial", M.fecha_adquisicion AS "Fecha de Adquisición", TM.nombre AS "Tipo de Maquinaria"
+	FROM mu_maquinaria M, mu_tipo_maquinaria TM, mu_maquinaria_tipo_maquinaria_fase MTMF, mu_tipo_maquinaria_fase TMF,
+	mu_fase F, mu_etapa E, mu_explotacion EX, (SELECT COUNT(MTMF.*) N_V, M.clave M_clave
+											  FROM mu_maquinaria M, mu_tipo_maquinaria TM, mu_maquinaria_tipo_maquinaria_fase MTMF, mu_tipo_maquinaria_fase TMF,
+											  mu_fase F, mu_etapa E, mu_explotacion EX
+												  WHERE M.clave = MTMF.fk_maquinaria
+													AND TM.clave = M.fk_tipo_maquinaria
+														AND TMF.clave = MTMF.fk_tipo_maquinaria_fase
+															AND F.clave = TMF.fk_fase
+																AND E.clave = F.fk_etapa
+																	AND EX.clave = E.fk_explotacion
+																		AND EX.fecha_fin_real BETWEEN '$P!{fecha_inicio}' AND '$P!{fecha_fin}'
+																			GROUP BY M.clave
+																				Order by M.clave
+											  ) veces
+		WHERE M.clave = MTMF.fk_maquinaria
+			AND TM.clave = M.fk_tipo_maquinaria
+				AND TMF.clave = MTMF.fk_tipo_maquinaria_fase
+					AND F.clave = TMF.fk_fase
+						AND E.clave = F.fk_etapa
+							AND EX.clave = E.fk_explotacion
+								AND EX.fecha_fin_real BETWEEN '$P!{fecha_inicio}' AND '$P!{fecha_fin}'
+									GROUP BY  M.Clave, M.identificador, M.fecha_adquisicion, TM.nombre,EX.fecha_fin_real,TM.clave, M.fk_tipo_maquinaria, 
+									TMF.clave, MTMF.fk_tipo_maquinaria_fase, F.clave,TMF.fk_fase,E.clave,F.fk_etapa,EX.clave,E.fk_explotacion
+											HAVING  (SELECT COUNT(MTMF.*) 
+														FROM mu_tipo_maquinaria TM, mu_maquinaria_tipo_maquinaria_fase MTMF, mu_tipo_maquinaria_fase TMF,
+														mu_fase F, mu_etapa E, mu_explotacion EX
+															WHERE M.clave = MTMF.fk_maquinaria
+													 			AND TM.clave = M.fk_tipo_maquinaria
+																	AND TMF.clave = MTMF.fk_tipo_maquinaria_fase
+																		AND F.clave = TMF.fk_fase
+																			AND E.clave = F.fk_etapa
+																				AND EX.clave = E.fk_explotacion
+																					AND EX.fecha_fin_real BETWEEN '$P!{fecha_inicio}' AND '$P!{fecha_fin}'
+															  							GROUP BY M.clave
+													) = (MIN(veces.N_V ));]]>
+	</queryString>
+	<field name="Clave" class="java.lang.Integer"/>
+	<field name="Serial" class="java.lang.String"/>
+	<field name="Fecha de Adquisición" class="java.lang.String"/>
+	<field name="Tipo de Maquinaria" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="27" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="50" y="2" width="370" height="24" uuid="1fa1c9ca-ec1d-47e3-9c67-ef62032e209b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Corporación Nacional de Desarrollo Mineral]]></text>
+			</staticText>
+			<textField pattern="HH:mm">
+				<reportElement x="674" y="1" width="90" height="23" uuid="bfeeaa43-4bc2-4e8d-b96f-578f82d070f9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="570" y="1" width="112" height="23" uuid="9b5c739e-6294-47a5-90d0-06f1104ed509"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="30" y="26" width="723" height="1" uuid="40359d70-07f4-49f5-a0da-e11fc0019ac1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="62" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="17" y="18" width="780" height="30" uuid="456aba09-fd98-4e54-9399-90889d965b5f">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAQUINARIA MENOS UTILIZADA EN LOS PROYECTOS POR PERIODO DE TIEMPO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement mode="Opaque" x="150" y="0" width="100" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="08b5f487-cc09-42bd-a6f8-7eb9160d5869">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="20b8b2fe-9633-4cb4-b40f-e40a79500b36"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clave]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="249" y="0" width="131" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="f3fadcdf-48af-424b-abb6-ea6416e12304">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c0767fc-82e5-42f3-8657-ae9181bad8e2"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Serial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="380" y="0" width="160" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="137a1927-a899-4171-a559-9db64d3c6f47">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9aa16919-d780-4280-8f48-56999e03865d"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Adquisición]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="540" y="0" width="140" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="6a4b730c-cb5c-45f1-bed0-8e2a86f639b7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="059cca49-6e62-484f-bbca-20580e07898b"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#FFFFFF"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de Maquinaria]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="150" y="-1" width="100" height="21" uuid="8b0d3803-7dfa-4fcb-a8d5-8daad62beef8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a7165991-57e9-45dd-a5a6-ab20d621efbc"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Clave}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="0" width="130" height="20" uuid="ae066ff2-fd4e-4cf0-8051-aadab3b0db8e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e84035a7-419d-427c-be52-3eaf234f5a77"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Serial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="160" height="20" uuid="054e7b4c-9cc7-4b01-b1c4-de2cea7d27c2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="162105ab-02f1-4116-aef3-e9a790e9e1fe"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Fecha de Adquisición}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="540" y="0" width="140" height="20" uuid="8754b21b-d618-4e92-a2b6-31c251a35ad5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d925e8c9-f974-45db-94ff-42eaf3c9ac21"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tipo de Maquinaria}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
