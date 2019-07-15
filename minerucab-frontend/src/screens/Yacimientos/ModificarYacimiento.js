@@ -19,6 +19,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Accordion from 'react-bootstrap/Accordion'
 import FormLugarPred from '../../components/FormLugarPred'
 
+import ModalAdvertencia from '../../components/ModalAdvertencia';
+
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 
@@ -36,6 +38,8 @@ export default class ModificarYacimiento extends React.Component {
             eliminadosFases: [],
             actualizar:true,
             fechaInsertada: false,
+            modalShowEliminar: false,
+            mensajeError:'',
             eliminar:true,
             insertCargos:false,
             insertTM:false,
@@ -53,6 +57,7 @@ export default class ModificarYacimiento extends React.Component {
                 id:null,
                 nombre:null,
             },
+            tipoYac:[],
             yacimiento:{
                 id:null,
                 nombre:null,
@@ -365,6 +370,24 @@ export default class ModificarYacimiento extends React.Component {
             },
             responseType: 'json'
         }
+
+        axios.get('http://localhost:3000/getAllTiposYacimiento', config)
+            .then((res) => {
+                res.data.forEach(element => {
+                    let tipoYacInfo = {
+                        clave: '',
+                        nombre: ''
+                    }
+                    tipoYacInfo.nombre = element.nombre;
+                    tipoYacInfo.clave = element.clave;
+                    this.setState((prevState) => ({
+                        tipoYac: prevState.tipoYac.concat(tipoYacInfo)
+                    }));
+                })
+                console.log(this.state.tipoYac)
+            }).catch((e) => {
+                console.log('Error en axios')
+            })
 
         axios.get(`http://localhost:3000/getAllYacimientoInfoById/${this.props.match.params.id}`, config)
             .then((res) => {
@@ -2565,13 +2588,22 @@ export default class ModificarYacimiento extends React.Component {
     }
 
 
+    modalErrorClose = () => {
+        this.setState({ modalShowEliminar: false, reload: true });
+    }
+    modalErrorOpen = () => {
+        this.setState({ modalShowEliminar: true })
+    };
 
     handleOnClickSubmittData=()=>{
 
         const info = {
             yacimiento:{
                 id:null,
-                estatus:null,
+                estatus:{
+                    id:null,
+                    nombre:null,
+                },
                 nombre:null,
                 descripcion:null,
                 area:null,
@@ -2637,20 +2669,27 @@ export default class ModificarYacimiento extends React.Component {
         this.state.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value;
         this.state.yacimiento.descripcion*/
         //console.log('NOMBRE YACIMEITNO',incompleto);
-        info.yacimiento.id = this.state.yacimiento.id;
+        info.yacimiento.id = Number(this.state.yacimiento.id);
         info.yacimiento.nombre = document.getElementById("YacimientosNombreYacimiento").value.trim();
-        info.yacimiento.descripcion = document.getElementById("YacimientosDescripcionYacimiento").value.trim();
+        if(document.getElementById("YacimientosDescripcionYacimiento").value.trim().length===0){
+            info.yacimiento.descripcion=null
+        }else{
+            info.yacimiento.descripcion = document.getElementById("YacimientosDescripcionYacimiento").value.trim();
+        }
         info.yacimiento.area = Number(document.getElementById("YacimientosTamañoYacimiento").value.trim());
-        info.yacimiento.tipo = document.getElementById("YacimientosTipoYacimiento").value.trim();
-        info.yacimiento.tipoId = this.state.yacimiento.tipoId;
+        //info.yacimiento.tipo = document.getElementById("YacimientosTipoYacimiento").value.trim();
+        info.yacimiento.tipoId = parseInt(document.getElementById("YacimientosTipoYacimiento").value);
+        //info.yacimiento.tipoId = this.state.yacimiento.tipoId;
         info.yacimiento.ubicacion.estado = Number(document.getElementById("LugarEstado").value.trim());
         info.yacimiento.ubicacion.municipio = Number(document.getElementById("LugarMunicipio").value.trim());
         info.yacimiento.ubicacion.parroquia = Number(document.getElementById("LugarParroquia").value.trim());
-        info.yacimiento.fecha.dia = Number(document.getElementById("FechaDia").value.trim());
-        info.yacimiento.fecha.mes = Number(document.getElementById("FechaMes").value.trim());
-        info.yacimiento.fecha.ano = Number(document.getElementById("FechaAno").value.trim());
+        info.yacimiento.fecha = Number(document.getElementById("FechaAno").value.trim()).toString()+'-'+Number(document.getElementById("FechaMes").value.trim()).toString()+'-'+Number(document.getElementById("FechaDia").value.trim()).toString();
 
-        info.yacimiento.estatus.id = this.state.estatus.id;
+        /*info.yacimiento.fecha.dia = Number(document.getElementById("FechaDia").value.trim());
+        info.yacimiento.fecha.mes = Number(document.getElementById("FechaMes").value.trim());
+        info.yacimiento.fecha.ano = Number(document.getElementById("FechaAno").value.trim());*/
+
+        info.yacimiento.estatus.id = Number(this.state.estatus.id);
 
         info.minerales.shift();
         for(let i=0; i<this.state.Minerales.length; i++){
@@ -2695,9 +2734,9 @@ export default class ModificarYacimiento extends React.Component {
         }
 
 
-        info.explotacion.id = this.state.explotacion.id;
-        info.explotacion.duracion = this.state.explotacion.duracion;
-        info.explotacion.costo = this.state.explotacion.costo;
+        info.explotacion.id = Number(this.state.explotacion.id);
+        info.explotacion.duracion = Number(this.state.explotacion.duracion);
+        info.explotacion.costo = Number(this.state.explotacion.costo);
 
         info.etapas.shift();
         
@@ -2726,10 +2765,10 @@ export default class ModificarYacimiento extends React.Component {
                     }]
                 }
                 
-                etapa.id = etapaR.id;
+                etapa.id = Number(etapaR.id);
                 etapa.nombre = document.getElementById('YacimientosNombreEtapa'+etapaR.numeroV).value.trim();
-                etapa.duracion = etapaR.duracion;
-                etapa.costo = etapaR.costo;
+                etapa.duracion = Number(etapaR.duracion);
+                etapa.costo = Number(etapaR.costo);
 
                 etapa.fases.shift();
                 etapaR.fases.forEach((faseR)=>{
@@ -2751,10 +2790,10 @@ export default class ModificarYacimiento extends React.Component {
                             }]
                         }
 
-                        fase.id = faseR.id;
+                        fase.id = Number(faseR.id);
                         fase.nombre = document.getElementById('YacimientosNombreEtapaFase'+etapaR.numeroV+faseR.numeroV).value.trim();
-                        fase.duracion = faseR.duracion;
-                        fase.costo = faseR.costo;
+                        fase.duracion = Number(faseR.duracion);
+                        fase.costo = Number(faseR.costo);
                         
                         fase.cargos.shift();
                         fase.tipoMaquinaria.shift();
@@ -2765,8 +2804,8 @@ export default class ModificarYacimiento extends React.Component {
                                 cantidad:0,
                             }
                             cargo.id = Number(cargoR.id);
-                            cargo.sueldo = cargoR.sueldo;
-                            cargo.cantidad = cargoR.cantidad;
+                            cargo.sueldo = Number(cargoR.sueldo);
+                            cargo.cantidad = Number(cargoR.cantidad);
 
                             
                             if(cargo.id!=0){
@@ -2785,8 +2824,8 @@ export default class ModificarYacimiento extends React.Component {
                                 cantidad:0,
                             }
                             tipoMaquinaria.id = Number(tipoMaquinariaR.id);
-                            tipoMaquinaria.costo = tipoMaquinariaR.costo;
-                            tipoMaquinaria.cantidad = tipoMaquinariaR.cantidad;
+                            tipoMaquinaria.costo = Number(tipoMaquinariaR.costo);
+                            tipoMaquinaria.cantidad = Number(tipoMaquinariaR.cantidad);
 
                             
 
@@ -2821,6 +2860,129 @@ export default class ModificarYacimiento extends React.Component {
         });
 
         console.log(info);
+        var verifMineral = 0
+        for(let i=0; i<info.minerales.length; i++){
+            if((isNaN(info.minerales[i].total))||(info.minerales[i].total<=0)){
+                verifMineral=1
+            }
+        }
+        for(let i=0; i<info.mineralesNoMetalicos.length; i++){
+            if((isNaN(info.mineralesNoMetalicos[i].total))||(info.mineralesNoMetalicos[i].total<=0)){
+                verifMineral=1
+            }
+        }
+        var verifFase = 0
+        for(let i=0; i<info.etapas.length; i++){
+            if(info.etapas[i].fases.length===0){
+                verifFase=1
+            }
+        }
+        var verifFaseDuracion = 0
+        for(let i=0; i<info.etapas.length; i++){
+            for(let k=0; k<info.etapas[i].fases.length; k++){
+                if((isNaN(info.etapas[i].fases[k].duracion))||(info.etapas[i].fases[k].duracion<=0)){
+                    verifFaseDuracion=1
+                }
+            }
+        }
+        var verifNombre = 0
+        for(let i=0; i<info.etapas.length; i++){
+            for(let k=0; k<info.etapas.length; k++){
+                if(i!=k){
+                    if((info.etapas[i].nombre===info.etapas[k].nombre)){
+                        verifNombre = 1
+                    }
+                }
+            }
+        }
+        for(let i=0; i<info.etapas.length; i++){
+            for(let j=0; j<info.etapas[i].fases.length; j++){
+                for(let k=0; k<info.etapas[i].fases.length; k++){
+                    if(j!=k){
+                        if(info.etapas[i].fases[j].nombre===info.etapas[i].fases[k].nombre){
+                            verifNombre = 1
+                        }
+                    }
+                }
+            }
+        }
+        var verifCargoFase = 0;
+        var verifCantidadCargo = 0;
+        var verifMaquinaria = 0;
+        for(let i=0; i<info.etapas.length; i++){
+            for(let j=0; j<info.etapas[i].fases.length; j++){
+                for(let k=0; k<info.etapas[i].fases[j].cargos.length; k++){
+                    if(info.etapas[i].fases[j].cargos[k].id<0){
+                        verifCargoFase = 1
+                    }else{
+                        if((info.etapas[i].fases[j].cargos[k].cantidad==0)||(info.etapas[i].fases[j].cargos[k].sueldo==0)){
+                            verifCantidadCargo = 1
+                        }
+                    }
+                }
+                for(let m=0; m<info.etapas[i].fases[j].tipoMaquinaria.length; m++){
+                    if(info.etapas[i].fases[j].tipoMaquinaria[m].id>0){
+                        if((info.etapas[i].fases[j].tipoMaquinaria[m].cantidad==0)||(info.etapas[i].fases[j].tipoMaquinaria[m].costo==0)){
+                                verifMaquinaria = 1
+                        }
+                    }
+                }
+            }
+        }
+            //Yacimientos
+        if(info.yacimiento.nombre.length===0){
+            this.setState({ mensajeError: ("Introduzca el nombre del yacimiento") });
+            this.modalErrorOpen();
+        }else if((isNaN(info.yacimiento.area))||(info.yacimiento.area<=0)){
+            this.setState({ mensajeError: ("Introduzca el tamaño del yacimiento") });
+            this.modalErrorOpen();
+            //Minerales
+        }else if((info.minerales.length===0)&&(info.mineralesNoMetalicos.length===0)){
+            this.setState({ mensajeError: ("El yacimiento debe tener al menos un mineral") });
+            this.modalErrorOpen();
+        }else if(verifMineral===1){
+            this.setState({ mensajeError: ("Introduzca la cantidad de los minerales") });
+            this.modalErrorOpen();
+            //Etapas
+        }else if(info.etapas.length===0){
+            this.setState({ mensajeError: ("Cada etapa debe tener un nombre asociado") });
+            this.modalErrorOpen();
+            //Fases
+        }else if(verifFase===1){
+            this.setState({ mensajeError: ("Cada fase debe tener un nombre asociado") });
+            this.modalErrorOpen();
+        }else if(verifFaseDuracion===1){
+            this.setState({ mensajeError: ("Introduzca la duración de cada una de las fases") });
+            this.modalErrorOpen();
+        }else if(verifNombre===1){
+            this.setState({ mensajeError: ("Las etapas y las fases de una misma etapa no pueden tener el mismo nombre") });
+            this.modalErrorOpen();
+            //Cargos
+        }else if(verifCargoFase===1){
+            this.setState({ mensajeError: ("Todas las fases deben tener al menos un cargo asociado") });
+            this.modalErrorOpen();
+        }else if(verifCantidadCargo===1){
+            this.setState({ mensajeError: ("Debe indicar la cantidad de los cargos escogidos con su respectivo sueldo") });
+            this.modalErrorOpen();
+        }else if(verifMaquinaria===1){
+            this.setState({ mensajeError: ("Debe indicar la cantidad de los tipos de maquinaria escogidos con su respectivo costo") });
+            this.modalErrorOpen();
+        }else{
+            /*const config = {
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                responseType: 'json',
+                data: info
+            }
+            
+            axios.post('http://localhost:3000/crearConfiguracionYacimiento', config)
+                .then((res) => {
+                }).catch((e) => {
+                    console.log('Error en axios')
+                })
+            history.push('/home');*/
+        }
 
     }
 
@@ -3237,7 +3399,7 @@ export default class ModificarYacimiento extends React.Component {
         }
     }
 
-     handleOnChangeValidarTexto=(event,Texto,Mensaje)=>{
+    handleOnChangeValidarTexto=(event,Texto,Mensaje)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
 
@@ -3269,11 +3431,30 @@ export default class ModificarYacimiento extends React.Component {
     handleOnClickEstatus=(event)=>{
         console.log("estado anterior", this.state.estatus);
         this.state.estatus.nombre = event.target.value;
-        this.state.estatus.id = null;
+        this.state.estatus.id = event.target.value;
         console.log("estado posterior", this.state.estatus);
 
     }
 
+    renderOptions = (tipo, indexF) => {
+        if(tipo === 'tipoYacimiento'){
+            let tipoYacimiento = [];
+            return (this.state.tipoYac.map((optionPre, index) => {
+                let existe = 0;
+                //TODOS console.log("this.state.presentaciones",this.state.presentaciones)
+                tipoYacimiento.forEach(element => {
+                    //console.log(element, index)
+                    if (optionPre.nombre === element){
+                        existe = 1;
+                    }
+                })
+                if (existe === 0){
+                    tipoYacimiento.push(optionPre.nombre);
+                    return(<option value={optionPre.clave} id={optionPre.nombre}>{optionPre.nombre}</option>)
+                }
+            }));
+        }
+    }
 
     render(){
         
@@ -3282,7 +3463,12 @@ export default class ModificarYacimiento extends React.Component {
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
                 <OpcionesLocales Usuario="Diego Gutiérrez"/>
-  
+                <ModalAdvertencia
+                    show={this.state.modalShowEliminar}
+                    onHide={this.modalErrorClose}
+                    infoeliminar={this.state.mensajeError}
+                    mensaje={''}
+                />
                 <Container className="FormContainer">
                    
 
@@ -3304,15 +3490,17 @@ export default class ModificarYacimiento extends React.Component {
                                         <Form.Group as={Col} md="6" controlId="YacimientosEstatusYacimiento"  className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Estatus</Form.Label>
                                             <Form.Control 
-                                            as="select" 
-                                            className="form-input"
+                                                as="select" 
+                                                className="form-input"
 
-                                            defaultValue={this.state.estatus.nombre}
+                                                defaultValue={this.state.estatus.id}
 
-                                            onClick={(evt)=>this.handleOnClickEstatus(evt)}
+                                                onClick={(evt)=>this.handleOnClickEstatus(evt)}
                                             >
-                                                <option value="Activo">Activo</option>
-                                                <option value="En Explotación">En Explotación</option>
+                                                
+                                                <option value={2}>Inactivo</option>
+                                                <option value={5}>En Explotación</option>
+                                                <option value={6}>Explotado</option>
                                             </Form.Control>
                                             <Form.Text className="text-muted">
                                                 Obligatorio
@@ -3371,13 +3559,15 @@ export default class ModificarYacimiento extends React.Component {
                                         <Form.Group as={Col} md="6" controlId="YacimientosTipoYacimiento"  className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Tipo de Yacimiento</Form.Label>
                                             <Form.Control 
-
-                                            type="text" 
+                                            as="select" 
                                             className="form-input"
-                                            defaultValue={this.state.yacimiento.tipo}
+                                            value={this.state.yacimiento.tipoId}
                                             >
-
+                                                {
+                                                    this.renderOptions('tipoYacimiento')
+                                                }
                                             </Form.Control>
+                                            
                                             <Form.Text className="text-muted">
                                                 Obligatorio
                                             </Form.Text>    
