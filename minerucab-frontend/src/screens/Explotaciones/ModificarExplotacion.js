@@ -4181,6 +4181,9 @@ export default class ModificarExplotacion extends React.Component {
 
                                                                                                         <br/>
                                                                                                         <div> {'Agregar '+ cargo.nombre + ' :'} </div>
+                                                                                                        {
+                                                                                                            // console.log('en cargo', cargo)
+                                                                                                        }
                                                                                                         <br/>
                                                                                                         <Row style={{display: ((fase.finalizar==true)?'none':'inline')}}>
                                                                                                             <Col sm={0} md={1}></Col>
@@ -4199,7 +4202,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                                                                     eliminar={false}
                                                                                                                     columns={'http://localhost:3000/column_names/mu_empleado'} 
 
-                                                                                                                    data={`http://localhost:3000/getEmpleadosByIdCargo/${cargo.id}`}
+                                                                                                                    data={`http://localhost:3000/getEmpleadosDeExplotacion/${cargo.id}/${cargo.id_cargo_fase}`}
 
                                                                                                                     size={200}
 

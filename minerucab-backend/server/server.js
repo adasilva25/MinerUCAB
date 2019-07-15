@@ -118,6 +118,7 @@ app.get('/getCriticInfoEmpleados', Empleados.getCriticInfoEmpleados)
 app.get('/getEmpleadoByCedula/:cedula', Empleados.getEmpleadoByCedula);
 app.get('/getEmpleadoById/:id', Empleados.getEmpleadoById);
 app.get('/getEmpleadosByIdCargo/:id', Empleados.getEmpleadosByIdCargo);
+app.get('/getEmpleadosDeExplotacion/:id/:id_cargo_fase', Empleados.getEmpleadosDeExplotacion)
 app.get('/getEmpleadosByIdCargoFase/:id', Empleados.getEmpleadosByIdCargoFase);
 app.get('/getHorarioEmpleadoByIdEmpleadoCargoFase/:id', Empleados.getHorarioEmpleadoByIdEmpleadoCargoFase);
 /* -------------------- EXPLOTACIONES -------------------- */

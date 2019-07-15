@@ -101,6 +101,28 @@ const getEmpleadoById = (req, res) => {
     })
 }
 
+const getEmpleadosDeExplotacion = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
+    });
+    client.connect();
+    const text = 'SELECT E.Clave "Clave", E.p_nombre "Nombre", E.p_apellido "Apellido", E.ci "Cédula", E.sexo "Sexo" FROM mu_empleado E, MU_CARGO C WHERE C.clave = ($1) AND C.Clave = E.fk_cargo AND E.fk_estatus = 1\n\
+                    UNION\n\
+                    SELECT E.Clave "Clave", E.p_nombre "Nombre", E.p_apellido "Apellido", E.ci "Cédula", E.sexo "Sexo" FROM mu_empleado E, MU_CARGO_FASE CF, MU_EMPLEADO_CARGO_FASE ECF WHERE CF.Clave = ($2) AND CF.Clave = ECF.fk_cargo_fase\n\
+                        AND ECF.fk_empleado = E.Clave;';
+    const values = [req.params.id, req.params.id_cargo_fase];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
 const getEmpleadosByIdCargo = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
@@ -225,6 +247,7 @@ module.exports = {
     getEmpleadoById,
     getEmpleadosByIdCargo,
     getEmpleadosByIdCargoFase,
+    getEmpleadosDeExplotacion,
     getHorarioEmpleadoByIdEmpleadoCargoFase,
     updateEmpleadoById,
     updateEstatusEmpleadoById,

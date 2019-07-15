@@ -72,11 +72,9 @@ export default class Explotacion extends React.Component {
                             .then((res) => {
                                 console.log("MinExp", res)
                                 res.data.forEach(element => {
-                                    if((element.claveminnomet !== null)||(element.claveminnomet !== undefined)){
-                                        console.log(element)
-                                        const min = element.claveminnomet
-                                        console.log(typeof min)
+                                    if((element.claveminmet === null)||(element.claveminmet === undefined)){
                                         var mineralesnomet = []
+                                        console.log("es no metalico")
                                         axios.get(`http://localhost:3000/getMinNoMetComponentesSolicitudDeCompra/${element.claveminnomet}`, config)
                                             .then((res) => {
                                                 console.log("resminnomet",res)
@@ -100,10 +98,12 @@ export default class Explotacion extends React.Component {
                                             .catch((e) => {
                                                 console.log('Error con el modal explotar');
                                             })
-                                    }else if((element.claveminmet !== null)||(element.claveminmet !== undefined)){
+                                    }else if((element.claveminnomet === null)||(element.claveminnomet === undefined)){
                                         var mineralesmet = []
+                                        console.log("es metalico")
                                         axios.get(`http://localhost:3000/getMinMetComponentesSolicitudDeCompra/${element.claveminmet}`, config)
                                             .then((res) => {
+                                                console.log("resminmet",res)
                                                 res.data.forEach(element => {
                                                     let minmet = {
                                                         clave: 1,
@@ -196,7 +196,7 @@ export default class Explotacion extends React.Component {
                           </Col>
                       </Row>
                 </Container>
-                <Container>
+                <Container className="pagecontent">
                     <Row>
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
@@ -209,9 +209,9 @@ export default class Explotacion extends React.Component {
                                 urlCrear={'/registrar_explotacion'}
                                 modalExplotar={this.modalExplotarOpen}
                                 agregar={false}
-                                modificar={false}
-                                consultar={false}
-                                eliminar={false}
+                                modificar={this.state.u}
+                                consultar={this.state.r}
+                                eliminar={this.state.d}
                                 explotar={this.state.c}
                                 modalEliminar={this.modalEliminarOpen}
                                 reload={this.state.reload}
@@ -237,7 +237,7 @@ export default class Explotacion extends React.Component {
                           </Col>
                       </Row>
                 </Container>
-                <Container>
+                <Container className="pagecontent">
                     <Row>
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
@@ -278,7 +278,7 @@ export default class Explotacion extends React.Component {
                           </Col>
                       </Row>
                 </Container>
-                <Container>
+                <Container className="pagecontent">
                     <Row>
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
@@ -291,10 +291,10 @@ export default class Explotacion extends React.Component {
                                 urlCrear={'/registrar_explotacion'}
                                 modalExplotar={this.modalExplotarOpen}
                                 agregar={false}
-                                modificar={false}
+                                modificar={this.state.u}
                                 consultar={this.state.r}
                                 eliminar={this.state.d}
-                                explotar={false}
+                                explotar={this.state.c}
                                 modalEliminar={this.modalEliminarOpen}
                                 reload={this.state.reload}
                                 checktable={false}

@@ -78,7 +78,7 @@ export default class DataTable extends React.Component {
                 })*/
                 axios.get(`${this.props.data}`, config)
                 .then((res) => {
-                    // console.log('res', res)
+                    // console.log('res DATATABLE', res)
                     res.data.forEach(item => {
                         let values = [];
                         const keys = Object.keys(item);

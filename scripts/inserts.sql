@@ -3260,8 +3260,8 @@ INSERT INTO MU_USUARIO (usuario, contraseña, fk_empleado, fk_rol, fk_estatus) V
 INSERT INTO MU_VENTA (total, fecha, fk_cliente_natural, fk_cliente_juridico, fk_estatus) VALUES
     (66871.33, '1980-10-01', 10, null, 7),
     (98195.08, '1980-12-01', 49, null, 7),
-    (74550.87, '1981-10-01', 17, null, 7),
-    (48845.74, '1981-12-01', 9, null, 7),
+    (74550.87, '1980-10-01', 17, null, 7),
+    (48845.74, '1980-12-01', 9, null, 7),
     (68876.19, '1982-10-01', 20, null, 7),
     (20451.77, '1982-12-01', 6, null, 7),
     (12513.51, '1983-10-01', 54, null, 7),
@@ -3274,12 +3274,14 @@ INSERT INTO MU_VENTA (total, fecha, fk_cliente_natural, fk_cliente_juridico, fk_
     (71188.29, '1986-12-01', 9, null, 7),
     (34079.1, '1987-10-01', 56, null, 7),
     (25257.42, '1987-12-01', 33, null, 7),
+
     (87886.97, '1988-10-01', 19, null, 7),
     (95325.89, '1988-12-01', 32, null, 7),
-    (32739.23, '1989-10-01', 25, null, 7),
-    (49295.55, '1989-12-01', 17, null, 7),
-    (85565.11, '1990-10-01', 54, null, 7),
-    (81432.91, '1990-12-01', 43, null, 7),
+    (32739.23, '1988-10-01', 25, null, 7),
+    (49295.55, '1988-12-01', 17, null, 7),
+    (85565.11, '1988-10-01', 54, null, 7),
+    (81432.91, '1988-12-01', 43, null, 7),
+
     (60356.19, '1991-10-01', 54, null, 7),
     (57209.36, '1991-12-01', 15, null, 7),
     (67263.85, '1992-10-01', 32, null, 7),
@@ -3298,10 +3300,10 @@ INSERT INTO MU_VENTA (total, fecha, fk_cliente_natural, fk_cliente_juridico, fk_
     (99635.72, '1998-12-01', 18, null, 7),
     (89375.03, '1999-10-01', 29, null, 7),
     (97795.39, '1999-12-01', 10, null, 7),
-    (85154.69, '2000-10-01', null, 26, 7),
-    (9269.24, '2000-12-01', null, 17, 7),
-    (99040.19, '2001-10-01', null, 19, 7),
-    (99494.92, '2001-12-01', null, 53, 7),
+    (85154.69, '1999-10-01', null, 26, 7),
+    (9269.24, '1999-12-01', null, 17, 7),
+    (99040.19, '1999-10-01', null, 19, 7),
+    (99494.92, '1999-12-01', null, 53, 7),
     (70678.64, '2002-10-01', null, 4, 7),
     (66899.76, '2002-12-01', null, 7, 7),
     (47209.55, '2003-10-01', null, 43, 7),
@@ -3324,8 +3326,8 @@ INSERT INTO MU_VENTA (total, fecha, fk_cliente_natural, fk_cliente_juridico, fk_
     (6063.13, '2011-12-01', null, 4, 7),
     (9289.79, '2012-10-01', null, 1, 7),
     (64573.92, '2012-12-01', null, 35, 7),
-    (97404.92, '2013-10-01', null, 13, 7),
-    (79468.28, '2013-12-01', null, 35, 7),
+    (97404.92, '2012-10-01', null, 13, 7),
+    (79468.28, '2012-12-01', null, 35, 7),
     (95545.82, '2014-10-01', null, 12, 7),
     (35287.47, '2014-12-01', null, 52, 7),
     (42219.71, '2015-10-01', null, 48, 7),
@@ -3358,102 +3360,136 @@ INSERT INTO MU_VENTA (total, fecha, fk_cliente_natural, fk_cliente_juridico, fk_
 -------------------------------------    DETALLE_VENTA     -------------------------------------
 --1 por venta
 INSERT INTO MU_DETALLE_VENTA (cantidad, precio, fk_venta, fk_estatus, fk_presentacion_mineral) VALUES
+    --1980
     (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 1), 1, 7, 27),
     (2700, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 2), 2, 7, 27),
-    (5000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 3), 3, 7, 27),
+    (5000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 3), 3, 7, 4),
     (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 4), 4, 7, 27),
+    --1982
     (5000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 5), 5, 7, 27),
     (5000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 6), 6, 7, 27),
+    --1983
     (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 7), 7, 7, 27),
     (8000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 8), 8, 7, 27),
+    --1984
     (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 9), 9, 7, 27),
     (3400, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 10), 10, 7, 27),
-    (8500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 11), 11, 7, 27),
-    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 12), 12, 7, 27),
-    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 13), 13, 7, 27),
-    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 14), 14, 7, 27),
-    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 15), 15, 7, 27),
-    (3500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 16), 16, 7, 27),
-    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 17), 17, 7, 27),
-    (2500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 18), 18, 7, 27),
-    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 19), 19, 7, 27),
-    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 20), 20, 7, 27),
-    (3500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 21), 21, 7, 27),
-    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 22), 22, 7, 27),
-    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 23), 23, 7, 27),
-    (2500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 24), 24, 7, 27),
-    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 25), 25, 7, 27),
-    (1500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 26), 26, 7, 27),
-    (9500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 27), 27, 7, 27),
-    (7500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 28), 28, 7, 27),
-    (7500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 29), 29, 7, 27),
-    (6500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 30), 30, 7, 27),
-    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 31), 31, 7, 27),
-    (7000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 32), 32, 7, 27),
-    (7000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 33), 33, 7, 27),
-    (2500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 34), 34, 7, 27),
-    (3500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 35), 35, 7, 27),
-    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 36), 36, 7, 27),
-    (6300, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 37), 37, 7, 27),
-    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 38), 38, 7, 27),
-    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 39), 39, 7, 27),
-    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 40), 40, 7, 27),
-    (5800, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 41), 41, 7, 27),
-    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 42), 42, 7, 27),
-    (10000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 43), 43, 7, 27),
-    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 44), 44, 7, 27),
-    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 45), 45, 7, 27),
-    (5000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 46), 46, 7, 27),
-    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 47), 47, 7, 27),
-    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 48), 48, 7, 27),
-    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 49), 49, 7, 27),
-    (8000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 50), 50, 7, 27),
-    (10000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 51), 51, 7, 27),
-    (4500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 52), 52, 7, 27),
-    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 53), 53, 7, 27),
-    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 54), 54, 7, 27),
-    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 55), 55, 7, 27),
-    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 56), 56, 7, 27),
-    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 57), 57, 7, 27),
-    (2500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 58), 58, 7, 27),
-    (5900, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 59), 59, 7, 27),
-    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 60), 60, 7, 27),
-    (7000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 61), 61, 7, 27),
-    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 62), 62, 7, 27),
-    (8000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 63), 63, 7, 27),
-    (1000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 64), 64, 7, 27),
-    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 65), 65, 7, 27),
-    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 66), 66, 7, 27),
-    (10000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 67), 67, 7, 27),
-    (5000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 68), 68, 7, 27),
-    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 69), 69, 7, 27),
-    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 70), 70, 7, 27),
-    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 71), 71, 7, 27),
-    (8000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 72), 72, 7, 27),
-    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 73), 73, 7, 27),
-    (7000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 74), 74, 7, 27),
-    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 75), 75, 7, 27),
-    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 76), 76, 7, 27),
-    (8000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 77), 77, 7, 27),
-    (8000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 78), 78, 7, 27),
-    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 79), 79, 7, 27),
-    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 80), 80, 7, 27),
-    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 81), 81, 7, 27),
-    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 82), 82, 7, 27),
-    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 83), 83, 7, 27),
-    (7000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 84), 84, 7, 27),
-    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 85), 85, 7, 27),
-    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 86), 86, 7, 27),
-    (8000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 87), 87, 7, 27),
-    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 88), 88, 7, 27),
-    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 89), 89, 7, 27),
-    (7000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 90), 90, 7, 27),
-    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 91), 91, 7, 27),
-    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 92), 92, 7, 27),
-    (5000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 93), 93, 7, 27),
-    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 94), 94, 7, 27),
-    (5000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 95), 95, 8, 27),
-    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 96), 96, 8, 27);
+    --1985
+    (8500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 11), 11, 7, 1),
+    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 12), 12, 7, 1),
+    --1986
+    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 13), 13, 7, 1),
+    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 14), 14, 7, 1),
+    --1987
+    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 15), 15, 7, 1),
+    (3500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 16), 16, 7, 2),
+    --1988
+    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 17), 17, 7, 2),
+    (2500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 18), 18, 7, 2),
+    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 19), 19, 7, 3),
+    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 20), 20, 7, 4),
+    (3500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 21), 21, 7, 4),
+    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 22), 22, 7, 4),
+    --1991
+    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 23), 23, 7, 5),
+    (2500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 24), 24, 7, 5),
+    --1992
+    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 25), 25, 7, 6),
+    (1500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 26), 26, 7, 7),
+    --1993
+    (9500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 27), 27, 7, 7),
+    (7500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 28), 28, 7, 7),
+    --1994
+    (7500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 29), 29, 7, 7),
+    (6500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 30), 30, 7, 8),
+    --1995
+    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 31), 31, 7, 9),
+    (7000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 32), 32, 7, 9),
+    --1996
+    (7000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 33), 33, 7, 10),
+    (2500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 34), 34, 7, 10),
+    --1997
+    (3500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 35), 35, 7, 10),
+    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 36), 36, 7, 11),
+    --1998
+    (6300, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 37), 37, 7, 11),
+    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 38), 38, 7, 12),
+    --1999
+    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 39), 39, 7, 13),
+    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 40), 40, 7, 13),
+    (5800, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 41), 41, 7, 13),
+    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 42), 42, 7, 13),
+    (10000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 43), 43, 7, 14),
+    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 44), 44, 7, 14),
+    --2002
+    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 45), 45, 7, 15),
+    (5000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 46), 46, 7, 16),
+    --2003
+    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 47), 47, 7, 16),
+    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 48), 48, 7, 17),
+    --2004
+    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 49), 49, 7, 17),
+    (8000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 50), 50, 7, 17),
+    --2005
+    (10000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 51), 51, 7, 18),
+    (4500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 52), 52, 7, 19),
+    --2006
+    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 53), 53, 7, 20),
+    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 54), 54, 7, 20),
+    --2007
+    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 55), 55, 7, 21),
+    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 56), 56, 7, 21),
+    --2008
+    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 57), 57, 7, 21),
+    (2500, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 58), 58, 7, 22),
+    --2009
+    (5900, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 59), 59, 7, 22),
+    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 60), 60, 7, 22),
+    --2010
+    (7000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 61), 61, 7, 22),
+    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 62), 62, 7, 23),
+    --2011
+    (8000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 63), 63, 7, 23),
+    (1000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 64), 64, 7, 23),
+    --2012
+    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 65), 65, 7, 24),
+    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 66), 66, 7, 24),
+    (10000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 67), 67, 7, 25),
+    (5000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 68), 68, 7, 26),
+    --2014
+    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 69), 69, 7, 26),
+    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 70), 70, 7, 26),
+    --2015
+    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 71), 71, 7, 26),
+    (8000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 72), 72, 7, 26),
+    --2016
+    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 73), 73, 7, 28),
+    (7000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 74), 74, 7, 28),
+    --2017
+    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 75), 75, 7, 28),
+    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 76), 76, 7, 28),
+    --2018
+    (8000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 77), 77, 7, 28),
+    (8000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 78), 78, 7, 1),
+    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 79), 79, 7, 28),
+    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 80), 80, 7, 28),
+    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 81), 81, 7, 29),
+    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 82), 82, 7, 29),
+    --2019
+    (4000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 83), 83, 7, 29),
+    (7000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 84), 84, 7, 29),
+    (9000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 85), 85, 7, 29),
+    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 86), 86, 7, 29),
+    (8000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 87), 87, 7, 29),
+    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 88), 88, 7, 29),
+    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 89), 89, 7, 30),
+    (7000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 90), 90, 7, 30),
+    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 91), 91, 7, 30),
+    (2000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 92), 92, 7, 30),
+    (5000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 93), 93, 7, 30),
+    (6000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 94), 94, 7, 30),
+    (5000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 95), 95, 8, 30),
+    (3000, (SELECT TOTAL FROM MU_VENTA WHERE CLAVE = 96), 96, 8, 30);
 
 -------------------------------------    PAGO     -------------------------------------
 --1 por venta
@@ -3708,11 +3744,11 @@ INSERT INTO MU_EXPLOTACION (costo_total, duracion, fecha_inicio, fecha_fin, fech
     --Del 2018/2019
     (90000, 30*9, '2018-04-01', '2019-01-01', '2019-01-01', 83, 10), (90000, 30*9, '2018-04-01', '2019-01-01', '2019-01-01', 84, 10), 
     (90000, 30*9, '2018-05-01', '2019-02-01', '2019-02-01', 85, 10), (90000, 30*9, '2018-05-01', '2019-02-01', '2019-02-01', 86, 10), 
-    (90000, 30*9, '2018-06-01', '2019-03-01', '2019-03-01', 87, 10), (90000, 30*9, '2018-06-01', '2019-03-01', '2019-03-01', 88, 10), 
-    (90000, 30*9, '2018-07-01', '2019-04-01', '2019-05-01', 89, 10), (90000, 30*9, '2018-07-01', '2019-04-01', '2019-05-01', 90, 10), 
+    (90000, 30*9, '2018-06-01', '2019-03-01', '2019-03-01', 87, 10), (90000, 30*9, '2018-06-01', '2019-03-01', '2019-03-01', 88, 2), 
+    (90000, 30*9, '2018-07-01', '2019-04-01', '2019-04-01', 89, 10), (90000, 30*9, '2018-07-01', '2019-04-01', '2019-04-01', 90, 10), 
     
-    (90000, 30*9, '2018-08-01', '2019-05-01', '2019-05-02', 91, 10), (90000, 30*9, '2018-08-01', '2019-05-01', '2019-05-01', 92, 10), 
-    (90000, 30*9, '2018-09-01', '2019-06-01', '2019-06-01', 93, 10), (90000, 30*9, '2018-09-01', '2019-06-01', '2019-06-01', 94, 10), 
+    (90000, 30*9, '2018-08-01', '2019-05-01', '2019-05-01', 91, 10), (90000, 30*9, '2018-08-01', '2019-05-01', '2019-05-01', 92, 2), 
+    (90000, 30*9, '2018-09-01', '2019-06-01', '2019-06-01', 93, 10), (90000, 30*9, '2018-09-01', '2019-06-01', '2019-06-01', 94, 2), 
     (90000, 30*9, '2018-10-01', '2019-07-01', null, 95, 8), (90000, 30*9, '2018-10-01', '2019-07-01', null, 96, 8);
 
 -------------------------------------    YACIMIENTO     -------------------------------------
@@ -4174,8 +4210,8 @@ INSERT INTO MU_ETAPA (nombre, costo_total, duracion, fecha_inicio, fecha_fin, fe
     ('ETAPA 1: Inventario de Información', 12000, 2*30, '2018-06-01', '2018-08-01', '2018-08-01', 10, 87),
     ('ETAPA 2: Geología de Superficie', 78000, 6*30, '2018-08-01', '2019-03-01', '2019-03-01', 10, 87),
     -- Explotacion88 --
-    ('ETAPA 1: Inventario de Información', 12000, 2*30, '2018-06-01', '2018-08-01', '2018-08-01', 10, 88),
-    ('ETAPA 2: Geología de Superficie', 78000, 6*30, '2018-08-01', '2019-03-01', '2019-03-01', 10, 88),
+    ('ETAPA 1: Inventario de Información', 12000, 2*30, '2018-06-01', '2018-08-01', '2018-08-01', 2, 88),
+    ('ETAPA 2: Geología de Superficie', 78000, 6*30, '2018-08-01', '2019-03-01', '2019-03-01', 2, 88),
     -- Explotacion89 --
     ('ETAPA 1: Inventario de Información', 12000, 2*30, '2018-07-01', '2018-09-01', '2018-09-01', 10, 89),
     ('ETAPA 2: Geología de Superficie', 78000, 6*30, '2018-09-01', '2019-04-01', '2019-04-01', 10, 89),
@@ -4186,14 +4222,14 @@ INSERT INTO MU_ETAPA (nombre, costo_total, duracion, fecha_inicio, fecha_fin, fe
     ('ETAPA 1: Inventario de Información', 12000, 2*30, '2018-08-01', '2018-10-01', '2018-10-01', 10, 91),
     ('ETAPA 2: Geología de Superficie', 78000, 6*30, '2018-10-01', '2019-05-01', '2019-05-01', 10, 91),
     -- Explotacion92 --
-    ('ETAPA 1: Inventario de Información', 12000, 2*30, '2018-08-01', '2018-10-01', '2018-10-01', 10, 92),
-    ('ETAPA 2: Geología de Superficie', 78000, 6*30, '2018-10-01', '2019-05-01', '2019-05-01', 10, 92),
+    ('ETAPA 1: Inventario de Información', 12000, 2*30, '2018-08-01', '2018-10-01', '2018-10-01', 2, 92),
+    ('ETAPA 2: Geología de Superficie', 78000, 6*30, '2018-10-01', '2019-05-01', '2019-05-01', 2, 92),
     -- Explotacion93 --
     ('ETAPA 1: Inventario de Información', 12000, 2*30, '2018-09-01', '2018-11-01', '2018-11-01', 10, 93),
     ('ETAPA 2: Geología de Superficie', 78000, 6*30, '2018-11-01', '2019-06-01', '2019-06-01', 10, 93),
     -- Explotacion94 --
-    ('ETAPA 1: Inventario de Información', 12000, 2*30, '2018-09-01', '2018-11-01', '2018-11-01', 10, 94),
-    ('ETAPA 2: Geología de Superficie', 78000, 6*30, '2018-11-01', '2019-06-01', '2019-06-01', 10, 94),
+    ('ETAPA 1: Inventario de Información', 12000, 2*30, '2018-09-01', '2018-11-01', '2018-11-01', 2, 94),
+    ('ETAPA 2: Geología de Superficie', 78000, 6*30, '2018-11-01', '2019-06-01', '2019-06-01', 2, 94),
 
     --------------------------------EN PROCESO---------------------------------------
     -- Explotacion95 --
@@ -4207,20 +4243,20 @@ INSERT INTO MU_ETAPA (nombre, costo_total, duracion, fecha_inicio, fecha_fin, fe
 INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin_real, fk_estatus, fk_etapa) VALUES
     --EXPLOTACION1
         --ETAPAI
-        ('1.Recopilación y análisis de la información existente', 6000, 30, '1980-01-01', '1980-02-01', '1980-02-01', 10, 1), 
+        ('1.Recopilación y análisis de la información existente', 6000, 30, '1980-01-01', '1980-02-01', '1980-02-03', 10, 1), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '1980-02-01', '1980-03-01', '1980-03-01', 10, 1), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '1980-03-01', '1980-04-01', '1980-04-01', 10, 2), 
+        ('1.Restitución topográfica 1', 6000, 30, '1980-03-01', '1980-04-01', '1980-04-04', 10, 2), 
         ('2.Fotointerpretación', 16000, 30, '1980-04-01', '1980-05-01', '1980-05-01', 10, 2), 
         ('3.Cartografía geológica 1', 16000, 30, '1980-05-01', '1980-06-01', '1980-06-01', 10, 2), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1980-06-01', '1980-07-01', '1980-07-01', 10, 2), 
-        ('5.Perforaciones exploratorias', 6000, 30, '1980-07-01', '1980-08-01', '1980-08-01', 10, 2), 
+        ('5.Perforaciones exploratorias', 6000, 30, '1980-07-01', '1980-08-01', '1980-08-02', 10, 2), 
         ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1980-08-01', '1980-09-01', '1980-09-01', 10, 2), 
         ('7.Preparación informe Etapa II', 9000, 30, '1980-09-01', '1980-10-01', '1980-10-01', 10, 2),
     --EXPLOTACION2
         --ETAPAI
         ('1.Recopilación y análisis de la información existente', 6000, 30, '1980-03-01', '1980-04-01', '1980-04-01', 10, 3), 
-        ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '1980-04-01', '1980-05-01', '1980-05-01', 10, 3), 
+        ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '1980-04-01', '1980-05-01', '1980-06-01', 10, 3), 
         --ETAPAII
         ('1.Restitución topográfica 1', 6000, 30, '1980-05-01', '1980-06-01', '1980-06-01', 10, 4), 
         ('2.Fotointerpretación', 16000, 30, '1980-06-01', '1980-07-01', '1980-07-01', 10, 4), 
@@ -4236,7 +4272,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         --ETAPAII
         ('1.Restitución topográfica 1', 6000, 30, '1981-03-01', '1981-04-01', '1981-04-01', 10, 6), 
         ('2.Fotointerpretación', 16000, 30, '1981-04-01', '1981-05-01', '1981-05-01', 10, 6), 
-        ('3.Cartografía geológica 1', 16000, 30, '1981-05-01', '1981-06-01', '1981-06-01', 10, 6), 
+        ('3.Cartografía geológica 1', 16000, 30, '1981-05-01', '1981-06-01', '1981-06-03', 10, 6), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1981-06-01', '1981-07-01', '1981-07-01', 10, 6), 
         ('5.Perforaciones exploratorias', 6000, 30, '1981-07-01', '1981-08-01', '1981-08-01', 10, 6), 
         ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1981-08-01', '1981-09-01', '1981-09-01', 10, 6), 
@@ -4262,8 +4298,8 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('2.Fotointerpretación', 16000, 30, '1982-04-01', '1982-05-01', '1982-05-01', 10, 10), 
         ('3.Cartografía geológica 1', 16000, 30, '1982-05-01', '1982-06-01', '1982-06-01', 10, 10), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1982-06-01', '1982-07-01', '1982-07-01', 10, 10), 
-        ('5.Perforaciones exploratorias', 6000, 30, '1982-07-01', '1982-08-01', '1982-08-01', 10, 10), 
-        ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1982-08-01', '1982-09-01', '1982-09-01', 10, 10), 
+        ('5.Perforaciones exploratorias', 6000, 30, '1982-07-01', '1982-08-01', '1982-09-20', 10, 10), 
+        ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1982-08-01', '1982-09-01', '1982-09-20', 10, 10), 
         ('7.Preparación informe Etapa II', 9000, 30, '1982-09-01', '1982-10-01', '1982-10-01', 10, 10),
     --EXPLOTACION6
         --ETAPAI
@@ -4447,7 +4483,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('7.Preparación informe Etapa II', 9000, 30, '1989-11-01', '1989-12-01', '1989-12-01', 10, 40),
     --EXPLOTACION21
         --ETAPAI
-        ('1.Recopilación y análisis de la información existente', 6000, 30, '1990-01-01', '1990-02-01', '1990-02-01', 10, 41), 
+        ('1.Recopilación y análisis de la información existente', 6000, 30, '1990-01-01', '1990-02-01', '1990-02-10', 10, 41), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '1990-02-01', '1990-03-01', '1990-03-01', 10, 41), 
         --ETAPAII
         ('1.Restitución topográfica 1', 6000, 30, '1990-03-01', '1990-04-01', '1990-04-01', 10, 42), 
@@ -4660,7 +4696,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '1998-08-01', '1998-09-01', '1998-09-01', 10, 76), 
         ('5.Perforaciones exploratorias', 6000, 30, '1998-09-01', '1998-10-01', '1998-10-01', 10, 76), 
         ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '1998-10-01', '1998-11-01', '1998-11-01', 10, 76), 
-        ('7.Preparación informe Etapa II', 9000, 30, '1998-11-01', '1998-12-01', '1998-12-01', 10, 76),
+        ('7.Preparación informe Etapa II', 9000, 30, '1998-11-01', '1998-12-01', '1999-01-31', 10, 76),
     --EXPLOTACION39
         --ETAPAI
         ('1.Recopilación y análisis de la información existente', 6000, 30, '1999-01-01', '1999-02-01', '1999-02-01', 10, 77), 
@@ -4858,7 +4894,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('1.Recopilación y análisis de la información existente', 6000, 30, '2007-01-01', '2007-02-01', '2007-02-01', 10, 109), 
         ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2007-02-01', '2007-03-01', '2007-03-01', 10, 109), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '2007-03-01', '2007-04-01', '2007-04-01', 10, 110), 
+        ('1.Restitución topográfica 1', 6000, 30, '2007-03-01', '2007-04-01', '2007-05-01', 10, 110), 
         ('2.Fotointerpretación', 16000, 30, '2007-04-01', '2007-05-01', '2007-05-01', 10, 110), 
         ('3.Cartografía geológica 1', 16000, 30, '2007-05-01', '2007-06-01', '2007-06-01', 10, 110), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2007-06-01', '2007-07-01', '2007-07-01', 10, 110), 
@@ -4996,7 +5032,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2012-08-01', '2012-09-01', '2012-09-01', 10, 132), 
         ('5.Perforaciones exploratorias', 6000, 30, '2012-09-01', '2012-10-01', '2012-10-01', 10, 132), 
         ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '2012-10-01', '2012-11-01', '2012-11-01', 10, 132), 
-        ('7.Preparación informe Etapa II', 9000, 30, '2012-11-01', '2012-12-01', '2012-12-01', 10, 132),
+        ('7.Preparación informe Etapa II', 9000, 30, '2012-11-01', '2012-12-01', '2013-01-01', 10, 132),
     --EXPLOTACION67
         --ETAPAI
         ('1.Recopilación y análisis de la información existente', 6000, 30, '2013-01-01', '2013-02-01', '2013-02-01', 10, 133), 
@@ -5252,16 +5288,16 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('7.Preparación informe Etapa II', 9000, 30, '2019-02-01', '2019-03-01', '2019-03-01', 10, 174),
     --EXPLOTACION88
         --ETAPAI
-        ('1.Recopilación y análisis de la información existente', 6000, 30, '2018-06-01', '2018-07-01', '2018-07-01', 10, 175), 
-        ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2018-07-01', '2018-08-01', '2018-08-01', 10, 175), 
+        ('1.Recopilación y análisis de la información existente', 6000, 30, '2018-06-01', '2018-07-01', '2018-07-01', 2, 175), 
+        ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2018-07-01', '2018-08-01', '2018-08-01', 2, 175), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '2018-08-01', '2018-09-01', '2018-09-01', 10, 176), 
-        ('2.Fotointerpretación', 16000, 30, '2018-09-01', '2018-10-01', '2018-10-01', 10, 176), 
-        ('3.Cartografía geológica 1', 16000, 30, '2018-10-01', '2018-11-01', '2018-11-01', 10, 176), 
-        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2018-11-01', '2018-12-01', '2018-12-01', 10, 176), 
-        ('5.Perforaciones exploratorias', 6000, 30, '2018-12-01', '2019-01-01', '2019-01-01', 10, 176), 
-        ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '2019-01-01', '2019-02-01', '2019-02-01', 10, 176), 
-        ('7.Preparación informe Etapa II', 9000, 30, '2019-02-01', '2019-03-01', '2019-03-01', 10, 176),
+        ('1.Restitución topográfica 1', 6000, 30, '2018-08-01', '2018-09-01', '2018-09-01', 2, 176), 
+        ('2.Fotointerpretación', 16000, 30, '2018-09-01', '2018-10-01', '2018-10-01', 2, 176), 
+        ('3.Cartografía geológica 1', 16000, 30, '2018-10-01', '2018-11-01', '2018-11-01', 2, 176), 
+        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2018-11-01', '2018-12-01', '2018-12-01', 2, 176), 
+        ('5.Perforaciones exploratorias', 6000, 30, '2018-12-01', '2019-01-01', '2019-01-01', 2, 176), 
+        ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '2019-01-01', '2019-02-01', '2019-02-01', 2, 176), 
+        ('7.Preparación informe Etapa II', 9000, 30, '2019-02-01', '2019-03-01', '2019-03-01', 2, 176),
     --EXPLOTACION89
         --ETAPAI
         ('1.Recopilación y análisis de la información existente', 6000, 30, '2018-07-01', '2018-08-01', '2018-08-01', 10, 177), 
@@ -5300,16 +5336,16 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('7.Preparación informe Etapa II', 9000, 30, '2019-04-01', '2019-05-01', '2019-05-01', 10, 182),
     --EXPLOTACION92
         --ETAPAI
-        ('1.Recopilación y análisis de la información existente', 6000, 30, '2018-08-01', '2018-09-01', '2018-09-01', 10, 183), 
-        ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2018-09-01', '2018-10-01', '2018-10-01', 10, 183), 
+        ('1.Recopilación y análisis de la información existente', 6000, 30, '2018-08-01', '2018-09-01', '2018-09-01', 2, 183), 
+        ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2018-09-01', '2018-10-01', '2018-10-01', 2, 183), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '2018-10-01', '2018-11-01', '2018-11-01', 10, 184), 
-        ('2.Fotointerpretación', 16000, 30, '2018-11-01', '2018-12-01', '2018-12-01', 10, 184), 
-        ('3.Cartografía geológica 1', 16000, 30, '2018-12-01', '2019-01-01', '2019-01-01', 10, 184), 
-        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2019-01-01', '2019-02-01', '2019-02-01', 10, 184), 
-        ('5.Perforaciones exploratorias', 6000, 30, '2019-02-01', '2019-03-01', '2019-03-01', 10, 184), 
-        ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '2019-03-01', '2019-04-01', '2019-04-01', 10, 184), 
-        ('7.Preparación informe Etapa II', 9000, 30, '2019-04-01', '2019-05-01', '2019-05-01', 10, 184),
+        ('1.Restitución topográfica 1', 6000, 30, '2018-10-01', '2018-11-01', '2018-11-01', 2, 184), 
+        ('2.Fotointerpretación', 16000, 30, '2018-11-01', '2018-12-01', '2018-12-01', 2, 184), 
+        ('3.Cartografía geológica 1', 16000, 30, '2018-12-01', '2019-01-01', '2019-01-01', 2, 184), 
+        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2019-01-01', '2019-02-01', '2019-02-01', 2, 184), 
+        ('5.Perforaciones exploratorias', 6000, 30, '2019-02-01', '2019-03-01', '2019-03-01', 2, 184), 
+        ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '2019-03-01', '2019-04-01', '2019-04-01', 2, 184), 
+        ('7.Preparación informe Etapa II', 9000, 30, '2019-04-01', '2019-05-01', '2019-05-01', 2, 184),
     --EXPLOTACION93
         --ETAPAI
         ('1.Recopilación y análisis de la información existente', 6000, 30, '2018-09-01', '2018-10-01', '2018-10-01', 10, 185), 
@@ -5324,16 +5360,16 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('7.Preparación informe Etapa II', 9000, 30, '2019-05-01', '2019-06-01', '2019-06-01', 10, 186),
     --EXPLOTACION94
         --ETAPAI
-        ('1.Recopilación y análisis de la información existente', 6000, 30, '2018-09-01', '2018-10-01', '2018-10-01', 10, 187), 
-        ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2018-10-01', '2018-11-01', '2018-11-01', 10, 187), 
+        ('1.Recopilación y análisis de la información existente', 6000, 30, '2018-09-01', '2018-10-01', '2018-10-01', 2, 187), 
+        ('2.Reconocimiento de campo preliminar, verificación-información geológica, trincheras, etc. evaluación y preparación del informe etapa I', 6000, 30, '2018-10-01', '2018-11-01', '2018-11-01', 2, 187), 
         --ETAPAII
-        ('1.Restitución topográfica 1', 6000, 30, '2018-11-01', '2018-12-01', '2018-12-01', 10, 188), 
-        ('2.Fotointerpretación', 16000, 30, '2018-12-01', '2019-01-01', '2019-01-01', 10, 188), 
-        ('3.Cartografía geológica 1', 16000, 30, '2019-01-01', '2019-02-01', '2019-02-01', 10, 188), 
-        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2019-02-01', '2019-03-01', '2019-03-01', 10, 188), 
-        ('5.Perforaciones exploratorias', 6000, 30, '2019-03-01', '2019-04-01', '2019-04-01', 10, 188), 
-        ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '2019-04-01', '2019-05-01', '2019-05-01', 10, 188), 
-        ('7.Preparación informe Etapa II', 9000, 30, '2019-05-01', '2019-06-01', '2019-06-01', 10, 188),
+        ('1.Restitución topográfica 1', 6000, 30, '2018-11-01', '2018-12-01', '2018-12-01', 2, 188), 
+        ('2.Fotointerpretación', 16000, 30, '2018-12-01', '2019-01-01', '2019-01-01', 2, 188), 
+        ('3.Cartografía geológica 1', 16000, 30, '2019-01-01', '2019-02-01', '2019-02-01', 2, 188), 
+        ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2019-02-01', '2019-03-01', '2019-03-01', 2, 188), 
+        ('5.Perforaciones exploratorias', 6000, 30, '2019-03-01', '2019-04-01', '2019-04-01', 2, 188), 
+        ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '2019-04-01', '2019-05-01', '2019-05-01', 2, 188), 
+        ('7.Preparación informe Etapa II', 9000, 30, '2019-05-01', '2019-06-01', '2019-06-01', 2, 188),
     --EXPLOTACION95
         --ETAPAI
         ('1.Recopilación y análisis de la información existente', 6000, 30, '2018-10-01', '2018-11-01', '2018-11-01', 10, 189), 
@@ -5355,7 +5391,7 @@ INSERT INTO MU_FASE (nombre, costo, duracion, fecha_inicio, fecha_fin, fecha_fin
         ('2.Fotointerpretación', 16000, 30, '2019-01-01', '2019-02-01', '2019-02-01', 10, 192), 
         ('3.Cartografía geológica 1', 16000, 30, '2019-02-01', '2019-03-01', '2019-03-01', 10, 192), 
         ('4.Ejecución de trincheras, túneles y apiques', 16000, 30, '2019-03-01', '2019-04-01', '2019-04-01', 10, 192), 
-        ('5.Perforaciones exploratorias', 6000, 30, '2019-04-01', '2019-05-01', '2019-05-01', 10, 192), 
+        ('5.Perforaciones exploratorias', 6000, 30, '2019-04-01', '2019-05-01', '2019-07-16', 10, 192), 
         ('6.Análisis físicos, químicos y petrográficos', 9000, 30, '2019-05-01', '2019-06-01', '2019-06-01', 10, 192), 
         ('7.Preparación informe Etapa II', 9000, 30, '2019-06-01', '2019-07-01', null, 8, 192);
 
