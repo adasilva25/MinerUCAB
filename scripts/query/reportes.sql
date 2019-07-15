@@ -200,7 +200,7 @@ FROM (SELECT P.nombre as Presentacion, M.nombre as Mineral, PMin.clave
 		WHERE P.clave=PMin.fk_presentacion AND M.clave=PMin.fk_mineral_no_metalico
 	  ) as PM,
 	  mu_venta as V, mu_detalle_venta as DV
-WHERE PM.clave=DV.fk_presentacion_mineral AND V.clave=DV.fk_venta
+WHERE PM.clave=DV.fk_presentacion_mineral AND V.clave=DV.fk_venta AND V.fecha BETWEEN '' AND ''
 GROUP BY to_char(V.fecha, 'yyyy'), PM.presentacion, PM.mineral
 HAVING COUNT(fk_presentacion_mineral)=MIN((SELECT COUNT(DVenta.fk_presentacion_mineral)
 											FROM MU_DETALLE_VENTA DVenta, MU_VENTA Venta
@@ -221,7 +221,7 @@ FROM (SELECT P.nombre as Presentacion, M.nombre as Mineral, PMin.clave
 		WHERE P.clave=PMin.fk_presentacion AND M.clave=PMin.fk_mineral_no_metalico
 	  ) as PM,
 	  mu_venta as V, mu_detalle_venta as DV
-WHERE PM.clave=DV.fk_presentacion_mineral AND V.clave=DV.fk_venta
+WHERE PM.clave=DV.fk_presentacion_mineral AND V.clave=DV.fk_venta AND V.fecha BETWEEN '$P!{fecha_inicio}' AND '$P!{fecha_fin}'
 GROUP BY to_char(V.fecha, 'yyyy'), PM.presentacion, PM.mineral
 HAVING COUNT(fk_presentacion_mineral)=MIN((SELECT COUNT(DVenta.fk_presentacion_mineral)
 											FROM MU_DETALLE_VENTA DVenta, MU_VENTA Venta
