@@ -593,7 +593,7 @@ const deleteExplotacionById = (req, res) => {
 
 const deleteFromMaquinariaTipoMaquinariaFase = (claveMaquinariaTipoMaquinariaFase, callback) => {
     const client = new Client({
-        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
     });
     client.connect();
     const text = 'DELETE FROM MU_MAQUINARIA_TIPO_MAQUINARIA_FASE WHERE fk_tipo_maquinaria_fase = ($1);';

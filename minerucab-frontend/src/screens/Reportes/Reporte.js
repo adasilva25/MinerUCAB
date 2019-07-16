@@ -96,7 +96,7 @@ export default class Cliente extends React.Component {
                                 <tr>
                                     <td>{1}</td>
                                     <td>{data.reporte1}</td>
-                                    <td><FontAwesomeIcon onClick={(e) => this.executeReport(1)} className="icons iconreport" icon={Icons.faFile}/></td>
+                                    <td><FontAwesomeIcon onClick={(e) => this.modalFechaOpen(1)} className="icons iconreport" icon={Icons.faFile}/></td>
                                 </tr>
                                 <tr>
                                     <td>{2}</td>
@@ -131,7 +131,7 @@ export default class Cliente extends React.Component {
                                 <tr>
                                     <td>{8}</td>
                                     <td>{data.reporte8}</td>
-                                    <td><FontAwesomeIcon onClick={(e) => this.executeReport(8)} className="icons iconreport" icon={Icons.faFile}/></td>
+                                    <td><FontAwesomeIcon onClick={(e) => this.modalFechaOpen(8)} className="icons iconreport" icon={Icons.faFile}/></td>
                                 </tr>
                                 <tr>
                                     <td>{9}</td>

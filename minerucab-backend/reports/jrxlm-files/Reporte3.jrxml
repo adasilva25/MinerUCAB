@@ -17,7 +17,7 @@
 	<parameter name="fecha_inicio" class="java.lang.String"/>
 	<parameter name="fecha_fin" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT E.clave AS "Clave",to_char(E.fecha_fin_real,'yyyy') AS "Año", to_char(E.fecha_fin_real,'mm') AS "Mes", Y.nombre AS "Yacimiento",E.costo_total AS "Costo Total", E.duracion AS "Duración", E.fecha_inicio AS "Fecha Inicio", E.fecha_fin AS "Fecha Fin", E.fecha_fin_real AS "Fecha Fin Real"
+		<![CDATA[SELECT E.clave AS "Clave",to_char(E.fecha_fin_real,'yyyy') AS "Año", to_char(E.fecha_fin_real,'Month') AS "Mes", Y.nombre AS "Yacimiento",E.costo_total AS "Costo Total", E.duracion AS "Duración", E.fecha_inicio AS "Fecha Inicio", E.fecha_fin AS "Fecha Fin", E.fecha_fin_real AS "Fecha Fin Real"
 	FROM mu_yacimiento Y, mu_explotacion E
 		WHERE Y.clave = E.clave
 			AND E.fecha_fin_real BETWEEN '$P!{fecha_inicio}' AND '$P!{fecha_fin}'
@@ -102,7 +102,7 @@
 				<text><![CDATA[Clave]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="170" y="1" width="80" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="95113bc0-d42d-431b-98c2-57719c26ed6c">
+				<reportElement mode="Opaque" x="160" y="1" width="90" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="95113bc0-d42d-431b-98c2-57719c26ed6c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3b29c9a5-74e8-4bfc-9043-17dc2db9a2af"/>
 				</reportElement>
 				<box>
@@ -138,7 +138,7 @@
 				<text><![CDATA[Duración]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="90" y="1" width="80" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="046b7149-41c2-4368-b4aa-5b3365d2cf95">
+				<reportElement mode="Opaque" x="90" y="1" width="70" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="046b7149-41c2-4368-b4aa-5b3365d2cf95">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3b29c9a5-74e8-4bfc-9043-17dc2db9a2af"/>
 				</reportElement>
 				<box>
@@ -212,7 +212,7 @@
 				<textFieldExpression><![CDATA[$F{Clave}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="90" y="0" width="80" height="30" uuid="45327e5f-2402-41c8-8521-a732146fbae6">
+				<reportElement x="90" y="0" width="70" height="30" uuid="45327e5f-2402-41c8-8521-a732146fbae6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c85bfb69-3d22-40d8-8208-86f716d2d4d5"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -221,7 +221,7 @@
 				<textFieldExpression><![CDATA[$F{Año}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="170" y="0" width="80" height="30" uuid="a5d4d389-560e-4b69-abe2-085f6d43f3b7">
+				<reportElement x="160" y="0" width="90" height="30" uuid="a5d4d389-560e-4b69-abe2-085f6d43f3b7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fc78a8a6-e95b-428b-83a5-17ad3d889f84"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">

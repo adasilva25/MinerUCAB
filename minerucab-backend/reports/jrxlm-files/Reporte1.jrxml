@@ -12,11 +12,14 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="fecha_inicio" class="java.lang.String"/>
+	<parameter name="fecha_fin" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT E.Nombre "Nombre", E.RIF "RIF", E.Descripcion "Descripcion", COUNT(SP.fk_empresa) "Total Ventas"
+		<![CDATA[SELECT E.Clave "Clave", E.Nombre "Nombre", E.RIF "RIF", E.Descripcion "Descripcion", COUNT(SP.fk_empresa) "Total Ventas"
 FROM MU_EMPRESA E, MU_SOLICITUD_COMPRA SP
 WHERE E.Clave = SP.fk_empresa
-GROUP BY E.Nombre, E.RIF, E.Descripcion
+	AND SP.Fecha BETWEEN '$P!{fecha_inicio}' AND '$P!{fecha_fin}'
+GROUP BY E.Clave, E.Nombre, E.RIF, E.Descripcion
 ORDER BY COUNT(SP.fk_empresa) DESC LIMIT 1;]]>
 	</queryString>
 	<field name="Nombre" class="java.lang.String">
@@ -34,6 +37,7 @@ ORDER BY COUNT(SP.fk_empresa) DESC LIMIT 1;]]>
 	<field name="Total Ventas" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.label" value="Total Ventas"/>
 	</field>
+	<field name="Clave" class="java.lang.Integer"/>
 	<group name="Nombre">
 		<groupExpression><![CDATA[$F{Nombre}]]></groupExpression>
 	</group>
@@ -91,7 +95,7 @@ ORDER BY COUNT(SP.fk_empresa) DESC LIMIT 1;]]>
 	<columnHeader>
 		<band height="31" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="30" y="1" width="193" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="fa467547-e281-4dfe-83d2-e8b66b796af5">
+				<reportElement mode="Opaque" x="111" y="1" width="163" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="fa467547-e281-4dfe-83d2-e8b66b796af5">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="37943e0e-bd4e-4cbf-83c7-ad13efde4224"/>
 				</reportElement>
 				<box>
@@ -103,7 +107,7 @@ ORDER BY COUNT(SP.fk_empresa) DESC LIMIT 1;]]>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="223" y="1" width="156" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="5644b59c-6e00-4b2d-8c2c-378e5bcea8f9">
+				<reportElement mode="Opaque" x="274" y="1" width="138" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="5644b59c-6e00-4b2d-8c2c-378e5bcea8f9">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3b29c9a5-74e8-4bfc-9043-17dc2db9a2af"/>
 				</reportElement>
 				<box>
@@ -115,7 +119,7 @@ ORDER BY COUNT(SP.fk_empresa) DESC LIMIT 1;]]>
 				<text><![CDATA[RIF]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="379" y="1" width="223" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="2d565e8c-d3ab-4b6e-9942-fdbc27b7b742">
+				<reportElement mode="Opaque" x="412" y="1" width="223" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="2d565e8c-d3ab-4b6e-9942-fdbc27b7b742">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3978af87-6698-44d8-a03d-159e16646d8a"/>
 				</reportElement>
 				<box>
@@ -127,7 +131,7 @@ ORDER BY COUNT(SP.fk_empresa) DESC LIMIT 1;]]>
 				<text><![CDATA[Descripción]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="602" y="1" width="151" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="dffe5be7-8c47-4e70-9a2a-ba46c5cb4d11">
+				<reportElement mode="Opaque" x="635" y="1" width="129" height="30" forecolor="#FFFFFF" backcolor="#454D55" uuid="dffe5be7-8c47-4e70-9a2a-ba46c5cb4d11">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="73a180ba-5829-4d3d-b2ad-49ad0dd4d1d7"/>
 				</reportElement>
 				<box>
@@ -138,12 +142,21 @@ ORDER BY COUNT(SP.fk_empresa) DESC LIMIT 1;]]>
 				</textElement>
 				<text><![CDATA[Total Compras]]></text>
 			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="39" y="2" width="72" height="28" forecolor="#FFFFFF" backcolor="#454D55" uuid="8ad48d41-efad-4fbf-a25c-faffa91de771">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="20b8b2fe-9633-4cb4-b40f-e40a79500b36"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clave]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="50" splitType="Stretch">
 			<textField>
-				<reportElement x="30" y="-1" width="193" height="41" uuid="ed93a700-6b05-4a16-a1b3-66c3f80b32f6">
+				<reportElement x="111" y="-1" width="163" height="41" uuid="ed93a700-6b05-4a16-a1b3-66c3f80b32f6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="37943e0e-bd4e-4cbf-83c7-ad13efde4224"/>
 				</reportElement>
 				<box>
@@ -159,7 +172,7 @@ ORDER BY COUNT(SP.fk_empresa) DESC LIMIT 1;]]>
 				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="224" y="-1" width="154" height="41" uuid="1fe83f7c-8988-4111-b5a1-5ebc1623eda2">
+				<reportElement x="275" y="-1" width="136" height="41" uuid="1fe83f7c-8988-4111-b5a1-5ebc1623eda2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3b29c9a5-74e8-4bfc-9043-17dc2db9a2af"/>
 				</reportElement>
 				<box>
@@ -175,7 +188,7 @@ ORDER BY COUNT(SP.fk_empresa) DESC LIMIT 1;]]>
 				<textFieldExpression><![CDATA[$F{RIF}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="381" y="-1" width="221" height="41" uuid="5bf1931f-26b6-4cd8-9fcb-832a24ecb4c7">
+				<reportElement x="414" y="-1" width="221" height="41" uuid="5bf1931f-26b6-4cd8-9fcb-832a24ecb4c7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3978af87-6698-44d8-a03d-159e16646d8a"/>
 				</reportElement>
 				<box>
@@ -191,7 +204,7 @@ ORDER BY COUNT(SP.fk_empresa) DESC LIMIT 1;]]>
 				<textFieldExpression><![CDATA[$F{Descripcion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="602" y="-1" width="151" height="41" uuid="ff9b899d-8a0a-4bf8-b3ac-d374d3d826a2">
+				<reportElement x="635" y="-1" width="129" height="41" uuid="ff9b899d-8a0a-4bf8-b3ac-d374d3d826a2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="73a180ba-5829-4d3d-b2ad-49ad0dd4d1d7"/>
 				</reportElement>
 				<box>
@@ -205,6 +218,15 @@ ORDER BY COUNT(SP.fk_empresa) DESC LIMIT 1;]]>
 					<font size="14" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{Total Ventas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="39" y="0" width="72" height="40" uuid="7a5451ae-8e3d-4ebd-ae3b-8ed3ba724bf5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="03f44818-3e71-42c1-8a44-1eb49da7e91d"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Clave}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
