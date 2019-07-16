@@ -1061,7 +1061,7 @@ export default class ModificarYacimiento extends React.Component {
         
                         this.setState(() => ({
                             mineralId: state.mineralId,
-                            minerales: mineralesMetalicos,
+                            Minerales: mineralesMetalicos,
                         }));
                         console.log('state mm', this.state)
                     }
@@ -1077,7 +1077,7 @@ export default class ModificarYacimiento extends React.Component {
                             
                             state.Minerales.push(mineral);
                             this.setState(() => ({
-                                minerales: state.Minerales,
+                                Minerales: state.Minerales,
                                 mineralShow: state.mineralShow
                             }));
                     }
@@ -3642,7 +3642,7 @@ export default class ModificarYacimiento extends React.Component {
                                         <Col sm={0} md={1}></Col>
                                     </Row>
                                     <Container>
-                                        {(this.state.mineralId.length>0) && this.state.minerales.map((mineral,indexMin)=>{             
+                                        {(this.state.mineralId.length>0) && this.state.Minerales.map((mineral,indexMin)=>{             
                                             return(
                                                 <div style={{display: this.state.mineralShow}}>
                                                     <Accordion defaultActiveKey={1} >
