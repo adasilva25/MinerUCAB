@@ -1037,7 +1037,6 @@ export default class ModificarYacimiento extends React.Component {
         
                         for(let i=0; i<mineralesMetalicos.length; i++){
         
-                            
                             state.mineralId.push(mineralesMetalicos[i].id);
         
                             let mineral = {
@@ -1058,7 +1057,7 @@ export default class ModificarYacimiento extends React.Component {
                             mineralId: state.mineralId,
                             minerales: mineralesMetalicos,
                         }));
-                        console.log('state mm', this.state.minerales)
+                        console.log('state mm', this.state)
                     }
                     else{
                         let mineral={
@@ -3640,7 +3639,7 @@ export default class ModificarYacimiento extends React.Component {
                                         <Col sm={0} md={1}></Col>
                                     </Row>
                                     <Container>
-                                        {this.state.Minerales.map((mineral,indexMin)=>{             
+                                        {(this.state.mineralId.length>0) && this.state.minerales.map((mineral,indexMin)=>{             
                                             return(
                                                 <div style={{display: this.state.mineralShow}}>
                                                     <Accordion defaultActiveKey={1} >
@@ -3700,7 +3699,7 @@ export default class ModificarYacimiento extends React.Component {
                                    <Row>
                                         <Col sm={0} md={1}></Col>
                                         <Col sm={12} md={10}>
-                                           { ((this.state.mineralNoMetalicoId.length>0)||(this.state.mineralId.length>0)) && <DataTable
+                                           { (this.state.mineralNoMetalicoId.length>0) && <DataTable
                                                 selectCheck={this.selectFunctionCheckbox}
                                                 modificarCheck={true}
                                                 listaModificarCheck={this.state.mineralNoMetalicoId}

@@ -209,9 +209,9 @@ export default class Explotacion extends React.Component {
                                 urlCrear={'/registrar_explotacion'}
                                 modalExplotar={this.modalExplotarOpen}
                                 agregar={false}
-                                modificar={this.state.u}
-                                consultar={this.state.r}
-                                eliminar={this.state.d}
+                                modificar={false}
+                                consultar={false}
+                                eliminar={false}
                                 explotar={this.state.c}
                                 modalEliminar={this.modalEliminarOpen}
                                 reload={this.state.reload}
@@ -291,7 +291,7 @@ export default class Explotacion extends React.Component {
                                 urlCrear={'/registrar_explotacion'}
                                 modalExplotar={this.modalExplotarOpen}
                                 agregar={false}
-                                modificar={this.state.u}
+                                modificar={false}
                                 consultar={this.state.r}
                                 eliminar={this.state.d}
                                 explotar={false}

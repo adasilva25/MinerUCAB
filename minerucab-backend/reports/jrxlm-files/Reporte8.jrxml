@@ -3,6 +3,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte8" pageWidth="842" pageHeight="1250" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="170499c4-9f33-4635-9f4c-efc34c180da6">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQLMU"/>
+	<parameter name="fecha_inicio" class="java.lang.String"/>
+	<parameter name="fecha_fin" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT to_char(V.fecha, 'yyyy') "Año", PM.mineral "Mineral", PM.presentacion "Presentación", COUNT(fk_presentacion_mineral) as "Veces Solicitado"
 FROM (SELECT P.nombre as Presentacion, M.nombre as Mineral, PMin.clave
@@ -14,7 +16,7 @@ FROM (SELECT P.nombre as Presentacion, M.nombre as Mineral, PMin.clave
 		WHERE P.clave=PMin.fk_presentacion AND M.clave=PMin.fk_mineral_no_metalico
 	  ) as PM,
 	  mu_venta as V, mu_detalle_venta as DV
-WHERE PM.clave=DV.fk_presentacion_mineral AND V.clave=DV.fk_venta
+WHERE PM.clave=DV.fk_presentacion_mineral AND V.clave=DV.fk_venta AND V.fecha BETWEEN '$P!{fecha_inicio}' AND '$P!{fecha_fin}'
 GROUP BY to_char(V.fecha, 'yyyy'), PM.presentacion, PM.mineral
 HAVING COUNT(fk_presentacion_mineral)=MIN((SELECT COUNT(DVenta.fk_presentacion_mineral)
 											FROM MU_DETALLE_VENTA DVenta, MU_VENTA Venta

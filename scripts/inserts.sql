@@ -12606,7 +12606,6 @@ INSERT INTO MU_EMPLEADO_CARGO_FASE (fk_cargo_fase, fk_empleado, fk_estatus) VALU
     (1762,994,(SELECT clave FROM MU_ESTATUS WHERE nombre='Finalizada')),
     (1762,995,(SELECT clave FROM MU_ESTATUS WHERE nombre='Finalizada')),
     (1762,996,(SELECT clave FROM MU_ESTATUS WHERE nombre='Finalizada')),
-    (1762,991,(SELECT clave FROM MU_ESTATUS WHERE nombre='Finalizada')),
     (1763,997,(SELECT clave FROM MU_ESTATUS WHERE nombre='Finalizada')),
     (1763,998,(SELECT clave FROM MU_ESTATUS WHERE nombre='Finalizada')),
     (1763,999,(SELECT clave FROM MU_ESTATUS WHERE nombre='Finalizada')),
