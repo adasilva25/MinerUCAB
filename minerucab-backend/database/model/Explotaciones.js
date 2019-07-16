@@ -415,6 +415,22 @@ const getAllExplotacionesConEstatusInactivo = (req, res) => {
     })
 }
 
+const getAllYacimientosConEstatusInactivoEnExplotacion = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    client.query('SELECT EX.Clave, Y.nombre as Yacimiento, EX.costo_total "Costo", E.nombre estatus FROM MU_EXPLOTACION EX, MU_ESTATUS E, MU_YACIMIENTO Y WHERE Y.fk_explotacion=EX.clave AND EX.fk_estatus = E.Clave AND E.Clave = 2;')
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
 const getAllExplotacionesConEstatusEnProceso = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
@@ -572,6 +588,24 @@ const updateEstatusExplotaciones = (clave, estatus, fechaI, fechaF) => {
     })
 }
 
+const updateMaquinariaEstatusByTipoMaquinariaFase = (claveTipoMaquinariaFase, estatus, callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'UPDATE MU_MAQUINARIA SET fk_estatus = ($2) WHERE Clave IN (SELECT M.Clave FROM MU_MAQUINARIA M, MU_MAQUINARIA_TIPO_MAQUINARIA_FASE MA WHERE MA.fk_tipo_maquinaria_fase = ($1) AND MA.fk_maquinaria = M.Clave)';
+    const values = [claveTipoMaquinariaFase, estatus];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        callback()
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
 const deleteExplotacionById = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
@@ -648,6 +682,26 @@ const deleteFromHorarioEmpleado = (claveEmpleadoCargoFase, callback) => {
     })
 }
 
+const updateExplotacionConfig = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    console.log(req.body.data)
+    client.connect();
+    const text = 'UPDATE MU_EXPLOTACION SET costo_total=($1), duracion=($2) WHERE Clave = ($3);';
+    const values = [req.body.data.explotacion.costo, req.body.data.explotacion.duracion, parseInt(req.body.data.explotacion.id)];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error: error.toString() });
+        client.end();
+    })
+}
+
 module.exports = {
     createExplotacion,
     createEtapa,
@@ -667,6 +721,7 @@ module.exports = {
     getAllExplotaciones,
     getAllExplotacionesConEstatusEnProceso,
     getAllExplotacionesConEstatusInactivo,
+    getAllYacimientosConEstatusInactivoEnExplotacion,
     getAllExplotacionesConEstatusFinalizado,
     getClaveCargoFaseByCargoClaveYFaseClave,
     getClaveTipoMaquinariaFase,
@@ -683,6 +738,8 @@ module.exports = {
     updateFechaEstatusFases,
     updateEtapaEstatus,
     updateEstatusExplotaciones,
-    updateFechaFinReal
+    updateFechaFinReal,
+    updateMaquinariaEstatusByTipoMaquinariaFase,
+    updateExplotacionConfig
     // ,[siguientes funciones]
 }
