@@ -338,6 +338,8 @@ export default class ModificarYacimiento extends React.Component {
                     numeroV:1,
                     cargosId:[],
                     tipoMaquinariaId:[],
+                    cargospred: [],
+                    tipomaqpred: [],
                     cargos:[{
                         nombre:null,
                         id:-1,
@@ -795,7 +797,6 @@ export default class ModificarYacimiento extends React.Component {
                                                     tipoMaquinaria.costo = item.costo;
                                                     tipoMaquinaria.cantidad = item.cantidad;
                                                     fase.tipoMaquinariaId.push(tipoMaquinaria.id)
-
                                                    /* axios.get(`http://localhost:3000/getNumeroMaquinariasTiposMaquinariaByIdFaseIdTipoMaquinaria/${fase.id}/${tipoMaquinaria.id}`)
                                                         .then((res) => {
                                                             tipoMaquinaria.asignados = res.data[0].asignaciones;
@@ -811,6 +812,23 @@ export default class ModificarYacimiento extends React.Component {
                                                                 return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
                                                                     if (faseMap.id === fase.id){
                                                                         return {...faseMap, tipoMaquinaria: faseMap.tipoMaquinaria.concat(tipoMaquinaria)}
+                                                                    }
+                                                                    else {
+                                                                        return faseMap
+                                                                    }
+                                                                })}
+                                                            }
+                                                            else{
+                                                                return etapaMap
+                                                            }
+                                                        })
+                                                    }));
+                                                    this.setState((prevState) => ({
+                                                        etapas: prevState.etapas.map((etapaMap) => {
+                                                            if (etapaMap.id === etapa.id){
+                                                                return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
+                                                                    if (faseMap.id === fase.id){
+                                                                        return {...faseMap, tipomaqpred: faseMap.tipoMaquinaria.concat(tipoMaquinaria)}
                                                                     }
                                                                     else {
                                                                         return faseMap
@@ -956,6 +974,23 @@ export default class ModificarYacimiento extends React.Component {
                                                                         return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
                                                                             if (faseMap.id === fase.id){
                                                                                 return {...faseMap, cargos: faseMap.cargos.concat(cargo)}
+                                                                            }
+                                                                            else {
+                                                                                return faseMap
+                                                                            }
+                                                                        })}
+                                                                    }
+                                                                    else{
+                                                                        return etapaMap
+                                                                    }
+                                                                })
+                                                            }));
+                                                            this.setState((prevState) => ({
+                                                                etapas: prevState.etapas.map((etapaMap) => {
+                                                                    if (etapaMap.id === etapa.id){
+                                                                        return {...etapaMap, fases: etapaMap.fases.map((faseMap) => {
+                                                                            if (faseMap.id === fase.id){
+                                                                                return {...faseMap, cargospred: faseMap.cargos.concat(cargo)}
                                                                             }
                                                                             else {
                                                                                 return faseMap
@@ -2961,74 +2996,150 @@ export default class ModificarYacimiento extends React.Component {
                                 newfase.tipoMaquinaria.insert.shift();
                             }
                         });
+                        if((newfase.nombre!=null) && (newfase.nombre != '')){
+                           newetapa.fases.insert.push(newfase);
+                        }
                     }else if(!(faseR.id===null) && (faseR.faseShow===false)){
-                        etapaR.fases.delete.push(newfase);
-                    }else if(!(faseR.id===null) && (faseR.etapaShow===true)){
-                        etapaR.fases.update.push(newfase);
+                        newetapa.fases.delete.push(newfase);
+                    }else if(!(faseR.id===null) && (faseR.faseShow===true)){
+                        newfase.cargos.insert.shift();
+                        newfase.cargos.update.shift();
+                        newfase.cargos.delete.shift();
+                        newfase.tipoMaquinaria.insert.shift();
+                        newfase.tipoMaquinaria.update.shift();
+                        newfase.tipoMaquinaria.delete.shift();
+                        // console.log("CARGOOOS", faseR.cargos)
+                        // console.log("CARGOPRED", faseR.cargospred)
+                        // console.log("MAQUINAAA", faseR.tipoMaquinaria)
+                        // console.log("MAQUINAPRED", faseR.tipomaqpred)
+                        
+                            let existe=0;
+                            for(let i=0; i<faseR.cargos.length;i++){
+                                for(let k=0; k<faseR.cargospred.length; k++){
+                                    console.log("update", )
+                                    if(faseR.cargos[i].id===faseR.cargospred[k].id){
+                                        //if(existe!==1){
+                                            let cargo={
+                                                id:0,
+                                                sueldo:0,
+                                                cantidad:0,
+                                            }
+                                            cargo.id = Number(faseR.cargospred[k].id);
+                                            cargo.sueldo = Number(faseR.cargospred[k].sueldo);
+                                            cargo.cantidad = Number(faseR.cargospred[k].cantidad);
+                                            newfase.cargos.update.push(cargo)
+                                        //}
+                                        //existe=1;
+                                    }
+                                }
+                            }
+            
+                            for(let k=0; k<faseR.cargospred.length; k++){
+                                let existe2=0;
+                                for(let i=0; i<faseR.cargos.length; i++){
+                                    
+                                    if(faseR.cargos[i].id===faseR.cargospred[k].id){
+                                        existe2=1;
+                                    }
+                                }
+                                if(existe2==0){
+                                    let cargo={
+                                        id:0,
+                                    }
+                                    cargo.id = Number(faseR.cargospred[k].id);
+                                    newfase.cargos.delete.push(cargo)
+                                }
+                            }
+                            for(let i=0; i<faseR.cargos.length; i++){
+                                let existe3=0;
+                                for(let k=0; k<faseR.cargospred.length; k++){
+                                    
+                                    if(faseR.cargos[i].id===faseR.cargospred[k].id){
+                                        existe3=1;
+                                    }
+                                }
+                                if(existe3==0){
+                                    let cargo={
+                                        id:0,
+                                        sueldo:0,
+                                        cantidad:0,
+                                    }
+                                    cargo.id = Number(faseR.cargos[i].id);
+                                    cargo.sueldo = Number(faseR.cargos[i].sueldo);
+                                    cargo.cantidad = Number(faseR.cargos[i].cantidad);
+                                    newfase.cargos.insert.push(cargo)
+                                }
+                            }
+////////////////////////////////////
+                            let lnt=0
+                            if(faseR.tipomaqpred===undefined){
+                                lnt=0;
+                            }else{
+                                lnt=faseR.tipomaqpred.length
+                            }
+                            let existem=0;
+                            for(let i=0; i<faseR.tipoMaquinaria.length;i++){
+                                for(let k=0; k<lnt; k++){
+                                    if(faseR.tipoMaquinaria[i].id===faseR.tipomaqpred[k].id){
+                                        //if(existe!==1){
+                                            let tipoMaquinaria={
+                                                id:0,
+                                                costo:0,
+                                                cantidad:0,
+                                            }
+                                            tipoMaquinaria.id = Number(faseR.tipomaqpred[k].id);
+                                            tipoMaquinaria.costo = Number(faseR.tipomaqpred[k].costo);
+                                            tipoMaquinaria.cantidad = Number(faseR.tipomaqpred[k].cantidad);
+                                            newfase.tipoMaquinaria.update.push(tipoMaquinaria)
+                                        //}
+                                        //existe=1;
+                                    }
+                                }
+                            }
+                            for(let k=0; k<lnt; k++){
+                                let existe2m=0;
+                                for(let i=0; i<faseR.tipoMaquinaria.length;i++){
+                                    
+                                    if(faseR.tipoMaquinaria[i].id===faseR.tipomaqpred[k].id){
+                                        existe2m=1;
+                                    }
+                                }
+                                if(existe2m==0){
+                                    let tipoMaquinaria={
+                                        id:0,
+                                    }
+                                    tipoMaquinaria.id = Number(faseR.tipomaqpred[k].id);
+                                    newfase.tipoMaquinaria.delete.push(tipoMaquinaria)
+                                }
+                            }
+                            for(let i=0; i<faseR.tipoMaquinaria.length;i++){
+                                let existe3m=0;
+                                for(let k=0; k<lnt; k++){
+                                    
+                                    if(faseR.tipoMaquinaria[i].id===faseR.tipomaqpred[k].id){
+                                        existe3m=1;
+                                    }
+                                }
+                                if(existe3m==0){
+                                    console.log("ENTRONINS")
+                                    let tipoMaquinaria={
+                                        id:0,
+                                        costo:0,
+                                        cantidad:0,
+                                    }
+                                    tipoMaquinaria.id = Number(faseR.tipoMaquinaria[i].id);
+                                    tipoMaquinaria.costo = Number(faseR.tipoMaquinaria[i].costo);
+                                    tipoMaquinaria.cantidad = Number(faseR.tipoMaquinaria[i].cantidad);
+                                    newfase.tipoMaquinaria.insert.push(tipoMaquinaria)
+                                }
+                            }
+                        newetapa.fases.update.push(newfase);
                     }
                 })
                 info.etapas.update.push(newetapa);
             }
         });
         console.log("INFO",info)
-        //this.state.etapas.forEach((etapaR)=>{
-               /* etapa.fases.shift();
-                etapaR.fases.forEach((faseR)=>{
-                    if(faseR.numero != 0){
-
-                        fase.cargos.shift();
-                        fase.tipoMaquinaria.shift();
-                        faseR.cargos.forEach((cargoR)=>{
-                            let cargo={
-                                id:0,
-                                sueldo:0,
-                                cantidad:0,
-                            }
-                            cargo.id = Number(cargoR.id);
-                            cargo.sueldo = Number(cargoR.sueldo);
-                            cargo.cantidad = Number(cargoR.cantidad);
-
-                            
-                            if(cargo.id!=0){
-                               fase.cargos.push(cargo);
-                            }
-                            else{
-                                fase.cargos.shift();
-                            }
-                        });
-
-
-                        faseR.tipoMaquinaria.forEach((tipoMaquinariaR)=>{
-                            let tipoMaquinaria={
-                                id:0,
-                                costo:0,
-                                cantidad:0,
-                            }
-                            tipoMaquinaria.id = Number(tipoMaquinariaR.id);
-                            tipoMaquinaria.costo = Number(tipoMaquinariaR.costo);
-                            tipoMaquinaria.cantidad = Number(tipoMaquinariaR.cantidad);
-
-                            
-
-                            if(tipoMaquinaria.id!=0){
-                               fase.tipoMaquinaria.push(tipoMaquinaria);
-                            }
-                            else{
-                                fase.tipoMaquinaria.shift();
-                            }
-                        });
-
-                        
-                        if((fase.nombre!=null) && (fase.nombre != '')){
-                           etapa.fases.push(fase);
-                        }
-                        else{
-                            etapa.fases.shift();
-                        }
-                    }
-                });
-            }*/
-        //});
 
         console.log(info);
         var verifMineral = 0
