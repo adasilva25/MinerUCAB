@@ -291,6 +291,25 @@ const modifTipoYacimiento = (info) => {
     })
 }
 
+const updateEtapa = (nombre, duracion, costo, clave, callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'UPDATE MU_ETAPA SET Nombre = ($1), Duracion = ($2), Costo = ($3) WHERE Clave = ($4) ';
+    const values = [nombre, duracion, costo, clave];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        callback()
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+
+    })
+}
+
 module.exports = {
     createYacimiento,
     deleteYacimientoById,
@@ -308,5 +327,6 @@ module.exports = {
     createYacMineralNoMet,
     modifYacimiento,
     modifTipoYacimiento,
+    updateEtapa
     // ,[siguientes funciones]
 }
