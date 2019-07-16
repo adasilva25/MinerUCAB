@@ -291,17 +291,16 @@ const modifTipoYacimiento = (info) => {
     })
 }
 
-const updateEtapa = (nombre, duracion, costo, clave, callback) => {
+const updateEtapa = (info) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'UPDATE MU_ETAPA SET Nombre = ($1), Duracion = ($2), Costo = ($3) WHERE Clave = ($4) ';
-    const values = [nombre, duracion, costo, clave];
+    const text = 'UPDATE MU_ETAPA SET Nombre = ($1), Duracion = ($2), Costo_total = ($3) WHERE Clave = ($4) ';
+    const values = [info.nombre, info.duracion, info.costo, info.id];
     client.query(text, values)
     .then((response) => {
         client.end();
-        callback()
     })
     .catch((e) => {
         client.end();
@@ -327,6 +326,24 @@ const deleteEtapa = (clave) => {
     })
 }
 
+const insertEtapa = (info, explotacion, callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'INSERT INTO mu_etapa (nombre, costo_total, duracion, fk_estatus, fk_explotacion) VALUES ($1, $2, $3, 2, $4) RETURNING Clave';
+    const values = [info.nombre, info.costo, info.duracion, explotacion];
+    client.query(text, values)
+    .then((res) => {
+        client.end();
+        callback(res.rows[0].clave)
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    })
+}
+
 module.exports = {
     createYacimiento,
     deleteYacimientoById,
@@ -345,6 +362,7 @@ module.exports = {
     modifYacimiento,
     modifTipoYacimiento,
     updateEtapa,
-    deleteEtapa
+    deleteEtapa,
+    insertEtapa
     // ,[siguientes funciones]
 }

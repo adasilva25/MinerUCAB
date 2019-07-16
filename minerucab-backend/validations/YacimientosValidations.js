@@ -96,15 +96,85 @@ const insertTipoMaquinariaFase = (claveFase, info, numE, numF) => {
     Explotaciones.createTipoMaquinariaFase(values)
 }
 
-const updateEtapas = (etapas) => {
+const updateEtapas = (etapas, info) => {
     etapas.update.forEach((etapaUpdate) => {
-        Yacimientos.updateEtapa(etapa)
+        Yacimientos.updateEtapa(etapaUpdate)
+        for(let i=0; i<etapaUpdate.fases.insert.length;i++){
+            insertFases(etapaUpdate.id, etapaUpdate.fases.insert[i], function(claveFase){
+                console.log("MAQUINARIAS", etapaUpdate.fases.insert[i].tipoMaquinaria.insert)
+                insertCargos(claveFase, etapaUpdate.fases.insert[i].cargos.insert);
+                insertTipoMaquinaria(claveFase, etapaUpdate.fases.insert[i].tipoMaquinaria.insert);
+            })
+        }
     })
 
     etapas.delete.forEach((etapaDelete) => {
         Yacimientos.deleteEtapa(etapaDelete.id)
     })
+
+    etapas.insert.forEach((etapaInsert) => {
+        Yacimientos.insertEtapa(etapaInsert, info.explotacion.id, function(claveEtapa){
+            for(let i=0; i<etapaInsert.fases.insert.length;i++){
+                insertFases(claveEtapa, etapaInsert.fases.insert[i], function(claveFase){
+                    console.log("CARGOOS", etapaInsert.fases.insert[i].cargos)
+                    console.log("MAQUINARIAS", etapaInsert.fases.insert[i])
+                    insertCargos(claveFase, etapaInsert.fases.insert[i].cargos);
+                    insertTipoMaquinaria(claveFase, etapaInsert.fases.insert[i].tipoMaquinaria.tipoMaquinaria);
+                })
+            }
+        })
+    })
 }
+
+const insertFases = (claveEtapa, info, callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'INSERT INTO mu_fase (nombre, costo, duracion, fk_estatus, fk_etapa) VALUES ($1, $2, $3, 2, $4) RETURNING Clave';
+    const values = [info.nombre, info.costo, info.duracion, claveEtapa];
+    client.query(text, values)
+    .then((res) => {
+        client.end();
+        callback(res.rows[0].clave)
+    })
+    .catch((e) => {
+        console.error(e.stack);
+        client.end();
+    })
+}
+
+const insertCargos = (claveFase, info) => {
+    let values = [];
+    info.forEach(item => {
+        let value = []
+        value.push(item.cantidad);
+        value.push(item.sueldo);
+        value.push(item.id);
+        value.push(claveFase);
+        // console.log(value)
+        values.push(value);
+    });
+    // console.log(values)
+    Explotaciones.createCargoFase(values)
+}
+
+const insertTipoMaquinaria = (claveFase, info) => {
+    let values = [];
+    info.forEach(item => {
+        let value = []
+        value.push(item.cantidad);
+        value.push(item.costo);
+        value.push(claveFase);
+        value.push(item.id);
+        // console.log(value)
+        values.push(value);
+    });
+    // console.log(values)
+    Explotaciones.createTipoMaquinariaFase(values)
+}
+
+
 
 const updateYacimiento = (req, res) => {
     console.log("ENTRO YACIMIENTO UPDATE")
@@ -131,7 +201,7 @@ const updateYacimiento = (req, res) => {
         YacimientosMinerales.deleteYacMinNoMet(info.yacimiento.id, info.mineralesNoMetalicos.delete[i])
     }
 
-    updateEtapas(info.etapas)
+    updateEtapas(info.etapas, info)
 
     res.status(200).json({ operacion: 'exito' })
 }
