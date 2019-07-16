@@ -62,6 +62,7 @@ export default class FormLugarPred extends React.Component {
                     parroquiaSel: this.props.idParroquia
                 }))
                     $('.dd-e').trigger('click')
+                    console.log("WEPA", this.state)
                 }).catch((e) => {
                     console.log('Error en axios')
                 })
@@ -279,6 +280,7 @@ export default class FormLugarPred extends React.Component {
                 },300);
             }
             test(this.state.predet,this.state.parroquiaSel,this);
+            $(".dd-p").val(this.state.parroquiaSel).change()
             /*console.log($(".dd-p")[0][3])
             $(".dd-p").val(this.state.parroquiaSel).change()*/
             //this.forceUpdate()

@@ -237,7 +237,8 @@ app.put('/updateCompMinNoMet', Minerales.updateCompMinNoMet)
 app.put('/modificarRol', RolesValidations.modificarRol);
 /* -------------------- VENTAS -------------------- */
 app.put('/updateVenta', VentasValidations.updateVenta);
-
+/* -------------------- YACIMIENTOS -------------------- */
+app.put('/updateYacimiento', YacimientosValidations.updateYacimiento);
 
 
 /* ----------------------------------- DELETE ----------------------------------- */

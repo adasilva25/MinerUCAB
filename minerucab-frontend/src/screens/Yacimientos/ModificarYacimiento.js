@@ -35,6 +35,9 @@ export default class ModificarYacimiento extends React.Component {
         super(props);
 
         this.state = {
+            MinMetModifPred: [],
+            MinNoMetModifPred: [],
+            tipoyacval: false,
             eliminadosFases: [],
             actualizar:true,
             fechaInsertada: false,
@@ -46,9 +49,7 @@ export default class ModificarYacimiento extends React.Component {
             prueba: true,
             key:"Etapa 1",
             explotacion:{
-
                 id:null,
-
                 duracion:0,
                 costo:0,
                 estatus:null,
@@ -88,20 +89,15 @@ export default class ModificarYacimiento extends React.Component {
             }],
             mineralNoMetalicoId:[],
             mineralNoMetalicoShow:'inline',
-
             MineralesNoMetalicos:[],
             etapas: []
-            
-
         }
-
         this.handleOnClickAEtapa = this.handleOnClickAEtapa.bind(this);
        // this.eliminarActivoEtapa = this.eliminarActivoEtapa.bind(this);
         //this.eliminarActivoFase = this.eliminarActivoFase.bind(this);
     }
 
-
-     componentWillMount = () => {
+    componentWillMount = () => {
 
         const info = {
             yacimiento:{
@@ -381,7 +377,7 @@ export default class ModificarYacimiento extends React.Component {
                     tipoYacInfo.nombre = element.nombre;
                     tipoYacInfo.clave = element.clave;
                     this.setState((prevState) => ({
-                        tipoYac: prevState.tipoYac.concat(tipoYacInfo)
+                        tipoYac: prevState.tipoYac.concat(tipoYacInfo),
                     }));
                 })
                 console.log(this.state.tipoYac)
@@ -473,6 +469,7 @@ export default class ModificarYacimiento extends React.Component {
                     this.setState(() => ({
                         yacimiento: state.yacimiento,
                         fechaInsertada:true,
+                        tipoyacval: true
                     }));
 
                 }).catch((e) => {
@@ -1037,6 +1034,9 @@ export default class ModificarYacimiento extends React.Component {
                             mineral.total = item.cantidad_mineral_metalico;
                             mineral.nombre = item.nombre_mineral_metalico;
                             mineralesMetalicos.push(mineral)
+                            this.setState((prevState) => ({
+                                MinMetModifPred: prevState.MinMetModifPred.concat(mineral)
+                            }));
                         })
         
                         state.Minerales.shift();
@@ -1097,7 +1097,9 @@ export default class ModificarYacimiento extends React.Component {
                         mineral.total = item.cantidad_mineral_metalico;
                         mineral.nombre = item.nombre_mineral_metalico;
                         mineralesNoMetalicos.push(mineral)
-    
+                        this.setState((prevState) => ({
+                            MinNoMetModifPred: prevState.MinNoMetModifPred.concat(mineral)
+                        }));
                         // console.log('mu nom', mineral.nombre)
                     })
     
@@ -1113,7 +1115,8 @@ export default class ModificarYacimiento extends React.Component {
                             nombre:null,
                             id:-1,
                             total: 0,
-                            accordionKey:0
+                            accordionKey:0,
+                            predet: true,
                         }
     
                         mineral.nombre=info.mineralesNoMetalicos[i].nombre;
@@ -1125,7 +1128,7 @@ export default class ModificarYacimiento extends React.Component {
     
                     this.setState(() => ({
                         mineralNoMetalicoId: state.mineralNoMetalicoId,
-                        MineralesNoMetalicos: state.MineralesNoMetalicos
+                        MineralesNoMetalicos: state.MineralesNoMetalicos,
                     }));
     
                     console.log('state nm', this.state)
@@ -1534,7 +1537,6 @@ export default class ModificarYacimiento extends React.Component {
         //     etapas: state.etapas,
         //     estatus: state.estatus,
         // }));
-
     }
 
     /*inicializarInputs=()=>{
@@ -1602,8 +1604,6 @@ export default class ModificarYacimiento extends React.Component {
         }
     }*/
 
-
-
     prueba = (e) => {
         this.setState((prevState) => ({
             prueba: !this.state.prueba
@@ -1656,7 +1656,6 @@ export default class ModificarYacimiento extends React.Component {
         }*/
     }
 
-
     accordionM(i){
        // console.log(this.state.Minerales[i].accordionKey,i);
      //   console.log(this.state.Minerales[i].accordionKey, "holoooA");
@@ -1691,8 +1690,6 @@ export default class ModificarYacimiento extends React.Component {
         }*/
     }
 
-
-
     accordionMNM(i){
        // console.log(this.state.Minerales[i].accordionKey,i);
      //   console.log(this.state.Minerales[i].accordionKey, "holoooA");
@@ -1726,8 +1723,6 @@ export default class ModificarYacimiento extends React.Component {
             this.setState({accordionKey: 1});
         }*/
     }
-
-
 
     accordionC(i,etapaNum,faseNum){
        // console.log(this.state.Cargos[i].accordionKey,i);
@@ -1800,12 +1795,12 @@ export default class ModificarYacimiento extends React.Component {
         }*/
     }
 
-
     onSelectFase(etapa_num, Key){
         var etapa1= this.state.etapas.findIndex(x => x.numero === etapa_num );
         var Etapa= this.state.etapas[etapa1];
         Etapa.key= key;
     }
+
     handleOnClickAEtapa(){
         var etapa= this.state.etapas;
         var Etapa={
@@ -1867,8 +1862,6 @@ export default class ModificarYacimiento extends React.Component {
         }));
         //this.eliminarActivoEtapa();
     }
-
-    
 
     handleOnClickAFase(etapa_num){
         var Etapa= this.state.etapas;
@@ -1932,7 +1925,6 @@ export default class ModificarYacimiento extends React.Component {
         console.log(this.state.etapas);
         this.eliminarActivoFase(etapa_num,1);
     }
-
 
     handleOnClickEFase(etapaNum,faseNum){
 
@@ -2121,7 +2113,6 @@ export default class ModificarYacimiento extends React.Component {
         // classList.remove('cool', 'make', 'me')
 
         // checkboxesDT[k].classList.add(textoPlural.replace(/\s/g,'')+etapa+fase);
-
     }
 
     handleOnClickEEtapa(etapaNum){
@@ -2155,8 +2146,6 @@ export default class ModificarYacimiento extends React.Component {
         this.actualizarDuracion();
     }
 
-
-
     eliminarActivoEtapa=()=>{
 
         let i=0;
@@ -2176,9 +2165,7 @@ export default class ModificarYacimiento extends React.Component {
             eliminar:activar
         }));
         console.log('Eliminar Etapa',activar,i);
-       
     }
-
 
     eliminarActivoFase=(etapaNum,e)=>{
 
@@ -2204,9 +2191,7 @@ export default class ModificarYacimiento extends React.Component {
             etapas: etapas
         }));
          console.log('Eliminar Fase',activar,i);
-        
     }
-
 
     selectMinerales = (id,name,et,fa) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         console.log('entroMinerales', id)
@@ -2303,8 +2288,6 @@ export default class ModificarYacimiento extends React.Component {
        // console.log(minerales[0].componentes[1]);
     };
 
-
-
     selectMineralesNoMetalicos = (id,name,et,fa) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         console.log('entroMineralesNoMetalicos', id)
 
@@ -2400,7 +2383,6 @@ export default class ModificarYacimiento extends React.Component {
        // console.log(minerales[0].componentes[1]);
     };
 
-
     selectCargos = (id,name,etapaNum,faseNum) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         // console.log('entroCargos', id,etapaNum,faseNum);
         var etapas1 = this.state.etapas;
@@ -2470,16 +2452,9 @@ export default class ModificarYacimiento extends React.Component {
         this.setState(() => ({
             etapas:etapas1
         }));
-
-
-
         this.actualizarCostos();
-
         console.log(cargos);
-        
     };
-
-
 
     selectTipoMaquinaria = (id,name,etapaNum,faseNum) => {  // EL VALOR DE id EN BASES DE DATOS ====> IGUAL HAY QUE VALIDAR MIL VECES ESO
         console.log('entroTipoMaquinaria', id)
@@ -2560,14 +2535,12 @@ export default class ModificarYacimiento extends React.Component {
         this.actualizarCostos();
 
        console.log(tiposMaquinaria);
-        
     };
 
-
     nombreDT = (nombre) => {
-     console.log('fino')
-    }
 
+           console.log('fino')
+    }
 
     selectFunctionCheckbox = (classN,id, name,etapaNum,faseNum) => {
         // console.log('selectFunctionCheckbox', boton.alt)
@@ -2592,16 +2565,17 @@ export default class ModificarYacimiento extends React.Component {
         }
     }
 
-
     modalErrorClose = () => {
+
         this.setState({ modalShowEliminar: false, reload: true });
     }
+
     modalErrorOpen = () => {
+
         this.setState({ modalShowEliminar: true })
     };
-
+///////////////////////////////////////////////////////////////////////////////////////////////
     handleOnClickSubmittData=()=>{
-
         const info = {
             yacimiento:{
                 id:null,
@@ -2621,16 +2595,16 @@ export default class ModificarYacimiento extends React.Component {
                     parroquiaId:null,
                 }
             },
-            minerales:[{
-                id:0,
-                total: 0,
-               
-            }],
-            mineralesNoMetalicos:[{
-                id:0,
-                total: 0,
-               
-            }],
+            minerales:{
+                insert: [],
+                update: [],
+                delete: [] 
+            },
+            mineralesNoMetalicos:{
+                insert: [],
+                update: [],
+                delete: [] 
+            },
             explotacion:{
                 id:null,
                 duracion:0,
@@ -2659,10 +2633,6 @@ export default class ModificarYacimiento extends React.Component {
                 }]
             }]
         }
-
-
-        
-        
 
        /* let incompleto = document.getElementById("YacimientosNombreYacimiento").value.trim(); 
         if(!incompleto){
@@ -2696,49 +2666,112 @@ export default class ModificarYacimiento extends React.Component {
 
         info.yacimiento.estatus.id = Number(this.state.estatus.id);
 
-        info.minerales.shift();
-        for(let i=0; i<this.state.Minerales.length; i++){
+        for(let i=0; i<this.state.minerales.length; i++){
             let mineral={
                 id:0,
                 total: 0,
-              
             }
-           
-            mineral.id=Number(this.state.Minerales[i].id);
-            mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
-           
-
-            if(mineral.id != -1){
-                info.minerales.push(mineral);
+            let existe=0;
+            for(let k=0; k<this.state.MinMetModifPred.length; k++){
+                if(parseInt(this.state.minerales[i].id)===parseInt(this.state.MinMetModifPred[k].id)){
+                    existe=1;
+                    mineral.id=Number(this.state.minerales[i].id);
+                    mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
+                    if(mineral.id != -1){
+                        info.minerales.update.push(mineral);
+                    }
+                    else{
+                        info.minerales.update.shift();
+                    }
+                }
             }
-            else{
-                info.minerales.shift();
+            if(existe===0){
+                mineral.id=Number(this.state.minerales[i].id);
+                mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
+                if(mineral.id != -1){
+                    info.minerales.insert.push(mineral);
+                }
+                else{
+                    info.minerales.insert.shift();
+                }
             }
-            
         }
-        
-        info.mineralesNoMetalicos.shift();
+        for(let i=0; i<this.state.MinMetModifPred.length; i++){
+            let mineral={
+                id:0,
+                total: 0,
+            }
+            let existe=0;
+            for(let k=0; k<this.state.minerales.length; k++){
+                if(parseInt(this.state.minerales[k].id)===parseInt(this.state.MinMetModifPred[i].id)){
+                    existe=1;
+                }
+            }
+            if(existe===0){
+                mineral.id=Number(this.state.MinMetModifPred[i].id);
+                if(mineral.id != -1){
+                    info.minerales.delete.push(mineral);
+                }
+                else{
+                    info.minerales.delete.shift();
+                }
+            }
+        }
+        console.log("arreglosminmet", info.minerales)
         for(let i=0; i<this.state.MineralesNoMetalicos.length; i++){
             let mineral={
                 id:0,
                 total: 0,
-              
             }
-           
-            mineral.id=Number(this.state.MineralesNoMetalicos[i].id);
-            mineral.total=Number(document.getElementById("YacimientosTotalMineralNoMetalico"+mineral.id).value.trim());
-           
-
-            if(mineral.id != -1){
-                info.mineralesNoMetalicos.push(mineral);
+            let existe=0;
+            for(let k=0; k<this.state.MinNoMetModifPred.length; k++){
+                if(parseInt(this.state.MineralesNoMetalicos[i].id)===parseInt(this.state.MinNoMetModifPred[k].id)){
+                    existe=1;
+                    mineral.id=Number(this.state.MineralesNoMetalicos[i].id);
+                    mineral.total=Number(document.getElementById("YacimientosTotalMineralNoMetalico"+mineral.id).value.trim());
+                    if(mineral.id != -1){
+                        info.mineralesNoMetalicos.update.push(mineral);
+                    }
+                    else{
+                        info.mineralesNoMetalicos.update.shift();
+                    }
+                }
             }
-            else{
-                info.mineralesNoMetalicos.shift();
+            if(existe===0){
+                mineral.id=Number(this.state.MineralesNoMetalicos[i].id);
+                mineral.total=Number(document.getElementById("YacimientosTotalMineralNoMetalico"+mineral.id).value.trim());
+                if(mineral.id != -1){
+                    info.mineralesNoMetalicos.insert.push(mineral);
+                }
+                else{
+                    info.mineralesNoMetalicos.insert.shift();
+                }
             }
-            
         }
+        for(let i=0; i<this.state.MinNoMetModifPred.length; i++){
+            let mineral={
+                id:0,
+                total: 0,
+            }
+            let existe=0;
+            for(let k=0; k<this.state.MineralesNoMetalicos.length; k++){
+                if(parseInt(this.state.MineralesNoMetalicos[k].id)===parseInt(this.state.MinNoMetModifPred[i].id)){
+                    existe=1;
+                }
+            }
+            if(existe===0){
+                mineral.id=Number(this.state.MinNoMetModifPred[i].id);
+                if(mineral.id != -1){
+                    info.mineralesNoMetalicos.delete.push(mineral);
+                }
+                else{
+                    info.mineralesNoMetalicos.delete.shift();
+                }
+            }
+        }
+        console.log("arreglosminnomet", info.mineralesNoMetalicos)
 
-
+//////////////////////////////////////////////////////////////////////////////////////////
         info.explotacion.id = Number(this.state.explotacion.id);
         info.explotacion.duracion = Number(this.state.explotacion.duracion);
         info.explotacion.costo = Number(this.state.explotacion.costo);
@@ -2858,21 +2891,28 @@ export default class ModificarYacimiento extends React.Component {
                 else{
                     info.etapas.shift();
                 }
-                
-
-
             }
         });
 
         console.log(info);
         var verifMineral = 0
-        for(let i=0; i<info.minerales.length; i++){
-            if((isNaN(info.minerales[i].total))||(info.minerales[i].total<=0)){
+        for(let i=0; i<info.minerales.insert.length; i++){
+            if((isNaN(info.minerales.insert[i].total))||(info.minerales.insert[i].total<=0)){
                 verifMineral=1
             }
         }
-        for(let i=0; i<info.mineralesNoMetalicos.length; i++){
-            if((isNaN(info.mineralesNoMetalicos[i].total))||(info.mineralesNoMetalicos[i].total<=0)){
+        for(let i=0; i<info.minerales.update.length; i++){
+            if((isNaN(info.minerales.update[i].total))||(info.minerales.update[i].total<=0)){
+                verifMineral=1
+            }
+        }
+        for(let i=0; i<info.mineralesNoMetalicos.insert.length; i++){
+            if((isNaN(info.mineralesNoMetalicos.insert[i].total))||(info.mineralesNoMetalicos.insert[i].total<=0)||(info.mineralesNoMetalicos.insert[i].total===undefined)){
+                verifMineral=1
+            }
+        }
+        for(let i=0; i<info.mineralesNoMetalicos.update.length; i++){
+            if((isNaN(info.mineralesNoMetalicos.update[i].total))||(info.mineralesNoMetalicos.update[i].total<=0)){
                 verifMineral=1
             }
         }
@@ -2942,7 +2982,7 @@ export default class ModificarYacimiento extends React.Component {
             this.setState({ mensajeError: ("Introduzca el tamaño del yacimiento") });
             this.modalErrorOpen();
             //Minerales
-        }else if((info.minerales.length===0)&&(info.mineralesNoMetalicos.length===0)){
+        }else if(((info.minerales.insert.length===0)&&(info.minerales.update.length===0))&&((info.mineralesNoMetalicos.insert.length===0)&&(info.mineralesNoMetalicos.update.length===0))){
             this.setState({ mensajeError: ("El yacimiento debe tener al menos un mineral") });
             this.modalErrorOpen();
         }else if(verifMineral===1){
@@ -2973,7 +3013,7 @@ export default class ModificarYacimiento extends React.Component {
             this.setState({ mensajeError: ("Debe indicar la cantidad de los tipos de maquinaria escogidos con su respectivo costo") });
             this.modalErrorOpen();
         }else{
-            /*const config = {
+            const config = {
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },
@@ -2981,19 +3021,16 @@ export default class ModificarYacimiento extends React.Component {
                 data: info
             }
             
-            axios.post('http://localhost:3000/crearConfiguracionYacimiento', config)
+            axios.put('http://localhost:3000/updateYacimiento', config)
                 .then((res) => {
+                    console.log("resp updateY", res)
                 }).catch((e) => {
                     console.log('Error en axios')
                 })
-            history.push('/home');*/
+            //history.push('/home');
         }
-
     }
-
-
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////
     handleOnChangeCostoTipoMaq=(event,etapaNum,faseNum,tipoMaqNum)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
@@ -3036,9 +3073,6 @@ export default class ModificarYacimiento extends React.Component {
             etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].costo=0;
             this.actualizarCostos();
         }
-        
-         
-
     }
 
     handleOnChangeCantidadTipoMaq=(event,etapaNum,faseNum,tipoMaqNum)=>{
@@ -3082,12 +3116,7 @@ export default class ModificarYacimiento extends React.Component {
             etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].cantidad=0;
             this.actualizarCostos();
         }
-        
-
     }
-
-
-
 
     handleOnChangeSueldoCargo=(event,etapaNum,faseNum,cargoNum)=>{
         const value = event.target.value;
@@ -3133,10 +3162,6 @@ export default class ModificarYacimiento extends React.Component {
         }
     }
 
-
-
-
-
     handleOnChangeCantidadCargo=(event,etapaNum,faseNum,cargoNum)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
@@ -3178,8 +3203,6 @@ export default class ModificarYacimiento extends React.Component {
             etapas1[etapaNum-1].fases[faseNum-1].cargos[cargoNum].cantidad=0;
             this.actualizarCostos();
         }
-        
-
     }
 
     actualizarCostos=()=>{
@@ -3218,10 +3241,6 @@ export default class ModificarYacimiento extends React.Component {
         }));
         console.log('CostoTotal', this.state.explotacion.costo);
     }
-
-
-
-
 
     handleOnChangeDuracionFase=(event,etapaNum,faseNum)=>{
         const value = event.target.value;
@@ -3264,12 +3283,7 @@ export default class ModificarYacimiento extends React.Component {
             etapas1[etapaNum-1].fases[faseNum-1].duracion=0;
             this.actualizarDuracion();
         }
-        
-
     }
-
-
-
 
     actualizarDuracion=()=>{
         let etapas1 = this.state.etapas;
@@ -3294,12 +3308,8 @@ export default class ModificarYacimiento extends React.Component {
                     
         }));
         console.log('Duracion Total', this.state.explotacion.duracion);
-
     }
 
-
-
-    
     handleOnChangeMineral=(event,minNUm)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
@@ -3333,8 +3343,6 @@ export default class ModificarYacimiento extends React.Component {
         }
     }
 
-
-
     handleOnChangeMineralNoMetalico=(event,minNUm)=>{
         const value = event.target.value;
         const valueTrimmed = value.trim();
@@ -3367,10 +3375,6 @@ export default class ModificarYacimiento extends React.Component {
            
         }
     }
-
-
-    
-
 
     handleOnChangeValidarNumeros=(event,Texto)=>{
         const value = event.target.value;
@@ -3438,7 +3442,6 @@ export default class ModificarYacimiento extends React.Component {
         this.state.estatus.nombre = event.target.value;
         this.state.estatus.id = event.target.value;
         console.log("estado posterior", this.state.estatus);
-
     }
 
     renderOptions = (tipo, indexF) => {
@@ -3461,9 +3464,7 @@ export default class ModificarYacimiento extends React.Component {
         }
     }
 
-    render(){
-        
-       
+    render(){ 
         return ( 
             <div className="contain pagecontent" id="Content">
                 <OpcionesGlobales active="Home"/>
@@ -3563,16 +3564,18 @@ export default class ModificarYacimiento extends React.Component {
                                     <Form.Row className="formMargins">
                                         <Form.Group as={Col} md="6" controlId="YacimientosTipoYacimiento"  className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Tipo de Yacimiento</Form.Label>
-                                            <Form.Control 
-                                            as="select" 
-                                            className="form-input"
-                                            value={this.state.yacimiento.tipoId}
-                                            >
-                                                {
-                                                    this.renderOptions('tipoYacimiento')
-                                                }
-                                            </Form.Control>
-                                            
+                                            {
+                                                (this.state.tipoyacval===true)&&
+                                                <Form.Control 
+                                                as="select" 
+                                                className="form-input"
+                                                defaultValue={this.state.yacimiento.tipoId}
+                                                >
+                                                    {
+                                                        this.renderOptions('tipoYacimiento')
+                                                    }
+                                                </Form.Control>
+                                            }
                                             <Form.Text className="text-muted">
                                                 Obligatorio
                                             </Form.Text>    
@@ -4091,7 +4094,5 @@ export default class ModificarYacimiento extends React.Component {
             </div>
         ) 
     }
-
-
 }
 
