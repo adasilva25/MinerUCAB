@@ -2322,6 +2322,7 @@ export default class ModificarExplotacion extends React.Component {
        const info = {
             yacimiento:{
                 id:null,
+                estatus: null
             },
             explotacion:{
                 id:null,
@@ -2382,7 +2383,20 @@ export default class ModificarExplotacion extends React.Component {
 
         
         info.explotacion.id = this.state.explotacion.id;
-        info.explotacion.estatus = 8;
+        info.explotacion.estatus = this.state.explotacion.estatus;
+
+
+        switch(info.explotacion.estatus){
+            case 2:
+                info.yacimiento.estatus = 2;
+                break;
+            case 8:
+                info.yacimiento.estatus = 5;
+                break;
+            case 10:
+                info.yacimiento.estatus = 6;
+                break;
+        }
 
         let dia = (this.state.explotacion.fechaI.dia<10)? "0"+this.state.explotacion.fechaI.dia: this.state.explotacion.fechaI.dia;
         let mes = (this.state.explotacion.fechaI.mes<10)? "0"+this.state.explotacion.fechaI.mes: this.state.explotacion.fechaI.mes;
@@ -2717,7 +2731,7 @@ export default class ModificarExplotacion extends React.Component {
         // }
         // -------------------------------          AQUI TERMINAN LAS VALIDACIONES
 
-        if (error === false){
+       /* if (error === false){
             const config = {
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded'
@@ -2736,7 +2750,7 @@ export default class ModificarExplotacion extends React.Component {
                     this.setState({ mensajeError: 'Error creando la explotacion' })
                     this.modalErrorOpen()
                 })
-        }
+        }*/
 
     }
 
