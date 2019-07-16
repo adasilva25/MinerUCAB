@@ -37,6 +37,8 @@ export default class ModificarYacimiento extends React.Component {
         this.state = {
             MinMetModifPred: [],
             MinNoMetModifPred: [],
+            asignadosCargos: false,
+            asignadosTipoMaquinaria: false,
             tipoyacval: false,
             eliminadosFases: [],
             actualizar:true,
@@ -317,6 +319,7 @@ export default class ModificarYacimiento extends React.Component {
                 nombreV:null,
                 id:null,
                 duracion:0,
+                estatus: null,
                 costo:0,
                 etapaShow:true,
                 estatus:null,
@@ -329,6 +332,7 @@ export default class ModificarYacimiento extends React.Component {
                     nombreV:null,
                     id:null,
                     duracion:0,
+                    estatus: null,
                     costo:0,
                     faseShow:true,
                     cargoShow:'inline',
@@ -489,6 +493,7 @@ export default class ModificarYacimiento extends React.Component {
                             duracion:0,
                             costo:0,
                             etapaShow:true,
+                            estatus: null,
                             numero: 1,
                             numeroV:1,
                             eliminar:true,
@@ -508,6 +513,7 @@ export default class ModificarYacimiento extends React.Component {
                                 nombreV:null,
                                 id:null,
                                 duracion:0,
+                                estatus: null,
                                 costo:0,
                                 faseShow:true,
                                 cargoShow:'inline',
@@ -601,6 +607,7 @@ export default class ModificarYacimiento extends React.Component {
                                 eliminar:true,
                                 costo:0,
                                 etapaShow:true,
+                                estatus: null,
                                 numero: 1,
                                 numeroV:1,
                                 eliminar:true,
@@ -621,6 +628,7 @@ export default class ModificarYacimiento extends React.Component {
                                     id:null,
                                     duracion:0,
                                     costo:0,
+                                    estatus: null,
                                     faseShow:true,
                                     cargoShow:'inline',
                                     tipoMaquinariaShow:'inline',
@@ -706,6 +714,7 @@ export default class ModificarYacimiento extends React.Component {
                             }
 
                             etapa.id = item.clave;
+                            etapa.estatus = item.clave_estatus;
                             etapa.nombreV = item.nombre;
                             etapa.costo = item.costo_total;
                             etapa.duracion = item.duracion;
@@ -726,6 +735,7 @@ export default class ModificarYacimiento extends React.Component {
                             axios.get(`http://localhost:3000/getFasesByIdEtapa/${etapa.id}`, config)
                                 .then((res) => {
                                     let fases = [];
+                                    console.log('res fas', res)
                                     res.data.forEach((element, j) => {
 
                                         let fase = {
@@ -733,6 +743,7 @@ export default class ModificarYacimiento extends React.Component {
                                             nombreV:null,
                                             duracion:0,
                                             costo:0,
+                                            estatus: null,
                                             faseShow:true,
                                             cargoShow:'inline',
                                             tipoMaquinariaShow:'inline',
@@ -757,6 +768,7 @@ export default class ModificarYacimiento extends React.Component {
                                         }
 
                                         fase.id=element.clave;
+                                        fase.estatus = element.fk_estatus;
                                         fase.numero=j+1;
                                         fase.numeroV=j+1;
                                         fase.nombre= 'Fase '+ (j+1);
@@ -781,6 +793,7 @@ export default class ModificarYacimiento extends React.Component {
                                         axios.get(`http://localhost:3000/getTiposMaquinariaByIdFase/${fase.id}`, config)
                                             .then((res) => {
                                                 let longitud1=0;
+                                                console.log("Maquinaria",res);
                                                 res.data.forEach((item) => {
                                                     let tipoMaquinaria = {
                                                         nombre:null,
@@ -796,15 +809,19 @@ export default class ModificarYacimiento extends React.Component {
                                                     tipoMaquinaria.nombre = item.nombre;
                                                     tipoMaquinaria.costo = item.costo;
                                                     tipoMaquinaria.cantidad = item.cantidad;
-                                                    fase.tipoMaquinariaId.push(tipoMaquinaria.id)
-                                                   /* axios.get(`http://localhost:3000/getNumeroMaquinariasTiposMaquinariaByIdFaseIdTipoMaquinaria/${fase.id}/${tipoMaquinaria.id}`)
+
+                                                    fase.tipoMaquinariaId.push(tipoMaquinaria.id);
+                                                    console.log('TMTMTMTTMTTMTMTMTMTM');
+
+                                                    axios.get(`http://localhost:3000/getNumeroMaquinariasTiposMaquinariaByIdFaseIdTipoMaquinaria/${fase.id}/${tipoMaquinaria.id}`)
+
                                                         .then((res) => {
                                                             tipoMaquinaria.asignados = res.data[0].asignaciones;
-                                                            console.log('TMTMTMTTMTTMTMTMTMTM',cargo.id,fase.id,res.data[0].asignaciones);
+                                                            console.log('TMTMTMTTMTTMTMTMTMTM',tipoMaquinaria.id,fase.id, res.data[0].asignaciones);
                                                         })
                                                         .catch((e) => {
                                                             console.log('Error en axios')
-                                                        })*/
+                                                        })
 
                                                     this.setState((prevState) => ({
                                                         etapas: prevState.etapas.map((etapaMap) => {
@@ -1078,6 +1095,7 @@ export default class ModificarYacimiento extends React.Component {
 
             axios.get(`http://localhost:3000/getAllMineralesMetalicosByIdYacimiento/${this.props.match.params.id}`, config)
                 .then((res) => {
+                    console.log("MINERALES METALICOS",res);
                     if (res.data.length > 0){
                         console.log('res mm', res.data)
                         let mineralesMetalicos = []
@@ -1125,14 +1143,16 @@ export default class ModificarYacimiento extends React.Component {
                                 total: 0,
                                 accordionKey:0,
                                 
-                            }
+                        }
                         state.mineralShow='none',
                             
-                            state.Minerales.push(mineral);
-                            this.setState(() => ({
-                                Minerales: state.Minerales,
-                                mineralShow: state.mineralShow
-                            }));
+                        state.Minerales.push(mineral);
+                        this.setState(() => ({
+                            Minerales: state.Minerales,
+                            mineralShow: state.mineralShow
+                        }));
+                        console.log("Mineral metalico no hay");
+
                     }
                 }).catch((e) => {
                     console.log('Error en axios')
@@ -1202,8 +1222,10 @@ export default class ModificarYacimiento extends React.Component {
                         MineralesNoMetalicos: state.MineralesNoMetalicos,
                         mineralNoMetalicoShow: state.mineralNoMetalicoShow
                     }));
+
                 
                 }
+
                 
             }).catch((e) => {
                 console.log('Error en axios')
@@ -2691,7 +2713,7 @@ export default class ModificarYacimiento extends React.Component {
                 }]
             }]*/
         }
-
+        console.log("SUBMIT", this.state);
        /* let incompleto = document.getElementById("YacimientosNombreYacimiento").value.trim(); 
         if(!incompleto){
             console.log('COMPLETO');
@@ -2725,36 +2747,40 @@ export default class ModificarYacimiento extends React.Component {
         info.yacimiento.estatus.id = Number(this.state.estatus.id);
 
         for(let i=0; i<this.state.Minerales.length; i++){
-            let mineral={
+            if(this.state.Minerales[i].id != -1){
+                let mineral={
                 id:0,
                 total: 0,
-            }
-            let existe=0;
-            for(let k=0; k<this.state.MinMetModifPred.length; k++){
-                if(parseInt(this.state.Minerales[i].id)===parseInt(this.state.MinMetModifPred[k].id)){
-                    existe=1;
+                }
+                let existe=0;
+                for(let k=0; k<this.state.MinMetModifPred.length; k++){
+                    if(parseInt(this.state.Minerales[i].id)===parseInt(this.state.MinMetModifPred[k].id)){
+                        existe=1;
+                        mineral.id=Number(this.state.Minerales[i].id);
+                        mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
+                        if(mineral.id != -1){
+                            info.minerales.update.push(mineral);
+                        }
+                        else{
+                            info.minerales.update.shift();
+                        }
+                    }
+                }
+                if(existe===0){
                     mineral.id=Number(this.state.Minerales[i].id);
                     mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
                     if(mineral.id != -1){
-                        info.minerales.update.push(mineral);
+                        info.minerales.insert.push(mineral);
                     }
                     else{
-                        info.minerales.update.shift();
+                        info.minerales.insert.shift();
                     }
                 }
             }
-            if(existe===0){
-                mineral.id=Number(this.state.Minerales[i].id);
-                mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
-                if(mineral.id != -1){
-                    info.minerales.insert.push(mineral);
-                }
-                else{
-                    info.minerales.insert.shift();
-                }
-            }
+            
         }
         for(let i=0; i<this.state.MinMetModifPred.length; i++){
+
             let mineral={
                 id:0,
                 total: 0,
@@ -2777,32 +2803,34 @@ export default class ModificarYacimiento extends React.Component {
         }
         console.log("arreglosminmet", info.minerales)
         for(let i=0; i<this.state.MineralesNoMetalicos.length; i++){
-            let mineral={
-                id:0,
-                total: 0,
-            }
-            let existe=0;
-            for(let k=0; k<this.state.MinNoMetModifPred.length; k++){
-                if(parseInt(this.state.MineralesNoMetalicos[i].id)===parseInt(this.state.MinNoMetModifPred[k].id)){
-                    existe=1;
+            if(this.state.MineralesNoMetalicos[i].id != -1){
+                let mineral={
+                    id:0,
+                    total: 0,
+                }
+                let existe=0;
+                for(let k=0; k<this.state.MinNoMetModifPred.length; k++){
+                    if(parseInt(this.state.MineralesNoMetalicos[i].id)===parseInt(this.state.MinNoMetModifPred[k].id)){
+                        existe=1;
+                        mineral.id=Number(this.state.MineralesNoMetalicos[i].id);
+                        mineral.total=Number(document.getElementById("YacimientosTotalMineralNoMetalico"+mineral.id).value.trim());
+                        if(mineral.id != -1){
+                            info.mineralesNoMetalicos.update.push(mineral);
+                        }
+                        else{
+                            info.mineralesNoMetalicos.update.shift();
+                        }
+                    }
+                }
+                if(existe===0){
                     mineral.id=Number(this.state.MineralesNoMetalicos[i].id);
                     mineral.total=Number(document.getElementById("YacimientosTotalMineralNoMetalico"+mineral.id).value.trim());
                     if(mineral.id != -1){
-                        info.mineralesNoMetalicos.update.push(mineral);
+                        info.mineralesNoMetalicos.insert.push(mineral);
                     }
                     else{
-                        info.mineralesNoMetalicos.update.shift();
+                        info.mineralesNoMetalicos.insert.shift();
                     }
-                }
-            }
-            if(existe===0){
-                mineral.id=Number(this.state.MineralesNoMetalicos[i].id);
-                mineral.total=Number(document.getElementById("YacimientosTotalMineralNoMetalico"+mineral.id).value.trim());
-                if(mineral.id != -1){
-                    info.mineralesNoMetalicos.insert.push(mineral);
-                }
-                else{
-                    info.mineralesNoMetalicos.insert.shift();
                 }
             }
         }
@@ -3207,15 +3235,21 @@ export default class ModificarYacimiento extends React.Component {
                     if(info.etapas[i].fases[j].cargos[k].id<0){
                         verifCargoFase = 1
                     }else{
-                        if((info.etapas[i].fases[j].cargos[k].cantidad==0)||(info.etapas[i].fases[j].cargos[k].sueldo==0)){
+                        if(((info.etapas[i].fases[j].cargos[k].cantidad==0)||(info.etapas[i].fases[j].cargos[k].sueldo==0))&& !this.state.asignadosCargos){
                             verifCantidadCargo = 1
+                        }
+                        else if(this.state.asignadosCargos){
+                            verifCantidadCargo = 2
                         }
                     }
                 }
                 for(let m=0; m<info.etapas[i].fases[j].tipoMaquinaria.length; m++){
                     if(info.etapas[i].fases[j].tipoMaquinaria[m].id>0){
-                        if((info.etapas[i].fases[j].tipoMaquinaria[m].cantidad==0)||(info.etapas[i].fases[j].tipoMaquinaria[m].costo==0)){
+                        if(((info.etapas[i].fases[j].tipoMaquinaria[m].cantidad==0)||(info.etapas[i].fases[j].tipoMaquinaria[m].costo==0)) && !this.state.asignadosTipoMaquinaria){
                                 verifMaquinaria = 1
+                        }
+                        else if(this.state.asignadosTipoMaquinaria){
+                            verifMaquinaria = 2
                         }
                     }
                 }
@@ -3256,8 +3290,14 @@ export default class ModificarYacimiento extends React.Component {
         }else if(verifCantidadCargo===1){
             this.setState({ mensajeError: ("Debe indicar la cantidad de los cargos escogidos con su respectivo sueldo") });
             this.modalErrorOpen();
+        }if(verifCantidadCargo===2){
+            this.setState({ mensajeError: ("La cantidad de empleados indicada es menor a los empleados actualmente asignados") });
+            this.modalErrorOpen();
         }else if(verifMaquinaria===1){
             this.setState({ mensajeError: ("Debe indicar la cantidad de los tipos de maquinaria escogidos con su respectivo costo") });
+            this.modalErrorOpen();
+        }else if(verifMaquinaria===2){
+            this.setState({ mensajeError: ("La cantidad de maquinarias indicada es menor a las maquinarias actualmente asignadas") });
             this.modalErrorOpen();
         }else{
             const config = {
@@ -3326,14 +3366,15 @@ export default class ModificarYacimiento extends React.Component {
         const value = event.target.value;
         const valueTrimmed = value.trim();
         const etapas1= this.state.etapas;
+        var asignaciones = this.state.etapas[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].asignados;
 
-        
+        this.state.asignadosTipoMaquinaria = false;
 
         if(valueTrimmed){
             event.target.state='valid';
              console.log("valido",document.getElementById('YacimientosCantidadTextTipoMaquinaria'+etapaNum+faseNum+tipoMaqNum).innerHTML);
 
-            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0) && (Number.isInteger(Number(valueTrimmed))) ){
+            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0) && (Number.isInteger(Number(valueTrimmed)) && (Number(valueTrimmed)>=asignaciones) ) ){
                 document.getElementById('YacimientosCantidadTextTipoMaquinaria'+etapaNum+faseNum+tipoMaqNum).innerHTML = "Obligatorio";
                 etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].cantidad=Number(valueTrimmed);
                 
@@ -3345,6 +3386,10 @@ export default class ModificarYacimiento extends React.Component {
             }
             else{
                 
+                if((Number(valueTrimmed)>0) && (Number(valueTrimmed)<asignaciones))
+                {
+                    this.state.asignadosTipoMaquinaria = true;
+                }
                 document.getElementById('YacimientosCantidadTextTipoMaquinaria'+etapaNum+faseNum+tipoMaqNum).innerHTML = "Introduzca un número válido";
                 etapas1[etapaNum-1].fases[faseNum-1].tipoMaquinaria[tipoMaqNum].cantidad=0;
                 this.actualizarCostos();
@@ -3413,14 +3458,16 @@ export default class ModificarYacimiento extends React.Component {
         const value = event.target.value;
         const valueTrimmed = value.trim();
         const etapas1= this.state.etapas;
+        var asignaciones = this.state.etapas[etapaNum-1].fases[faseNum-1].cargos[cargoNum].asignados;
 
+        this.state.asignadosCargos = false;
         
 
         if(valueTrimmed){
             event.target.state='valid';
              console.log("valido",document.getElementById('YacimientosCantidadTextCargo'+etapaNum+faseNum+cargoNum).innerHTML);
 
-            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0) && (Number.isInteger(Number(valueTrimmed))) ){
+            if(!isNaN(valueTrimmed) && (Number(valueTrimmed)>0) && (Number.isInteger(Number(valueTrimmed)) && (Number(valueTrimmed)>=asignaciones) ) ){
                 document.getElementById('YacimientosCantidadTextCargo'+etapaNum+faseNum+cargoNum).innerHTML = "Obligatorio";
                 etapas1[etapaNum-1].fases[faseNum-1].cargos[cargoNum].cantidad=Number(valueTrimmed);
                 
@@ -3432,6 +3479,10 @@ export default class ModificarYacimiento extends React.Component {
             }
             else{
                 
+                if((Number(valueTrimmed)>0) && (Number(valueTrimmed)<asignaciones))
+                {
+                    this.state.asignadosCargos= true;
+                }
                 document.getElementById('YacimientosCantidadTextCargo'+etapaNum+faseNum+cargoNum).innerHTML = "Introduzca un número válido";
                 etapas1[etapaNum-1].fases[faseNum-1].cargos[cargoNum].cantidad=0;
                 this.actualizarCostos();
@@ -3745,7 +3796,7 @@ export default class ModificarYacimiento extends React.Component {
                                             <Form.Control 
                                                 as="select" 
                                                 className="form-input"
-
+                                                disabled={true}
                                                 defaultValue={this.state.estatus.id}
 
                                                 onClick={(evt)=>this.handleOnClickEstatus(evt)}
@@ -3770,7 +3821,7 @@ export default class ModificarYacimiento extends React.Component {
                                         <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,"YacimientosNombreYacimientoText","Introduzca un nombre válido")} controlId="YacimientosNombreYacimiento" className="inputsPaddingRight">
                                             <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
 
-                                            <Form.Control type="text" className="form-input" defaultValue={this.state.yacimiento.nombre} placeholder="Introduzca nombre del yacimiento" />
+                                            <Form.Control disabled={this.state.estatus.id==6?true:false} type="text" className="form-input" defaultValue={this.state.yacimiento.nombre} placeholder="Introduzca nombre del yacimiento" />
 
                                             <Form.Text className="text-muted" id="YacimientosNombreYacimientoText">
                                                 Obligatorio
@@ -3779,7 +3830,7 @@ export default class ModificarYacimiento extends React.Component {
                                         <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,"YacimientosDescripcionYacimientoText","Introduzca una descripción válida")} controlId="YacimientosDescripcionYacimiento" className="inputsPaddingLeft">
                                             <Form.Label className="cliente-description-fields-text">Descripción</Form.Label>
 
-                                            <Form.Control as="textarea" rows="1" className="form-input-juridico-textarea" defaultValue={this.state.yacimiento.descripcion} placeholder="Introduzca una descripción"/>
+                                            <Form.Control as="textarea" disabled={this.state.estatus.id==6?true:false} rows="1" className="form-input-juridico-textarea" defaultValue={this.state.yacimiento.descripcion} placeholder="Introduzca una descripción"/>
 
                                             <Form.Text className="text-muted" id="YacimientosDescripcionYacimientoText">
                                                 Obligatorio
@@ -3793,7 +3844,7 @@ export default class ModificarYacimiento extends React.Component {
                                             <Form.Label className="cliente-description-fields-text">Área</Form.Label>
                                             <InputGroup className="MyInputGroup">
 
-                                                <Form.Control type="text" className="form-input" defaultValue={this.state.yacimiento.area} placeholder="Introduzca tamaño del yacimiento" /> 
+                                                <Form.Control disabled={this.state.estatus.id==6?true:false} type="text" className="form-input" defaultValue={this.state.yacimiento.area} placeholder="Introduzca tamaño del yacimiento" /> 
 
                                                 <InputGroup.Append>
                                                     <InputGroup.Text  className="input-append-ventas-form" >Km<sup>2</sup></InputGroup.Text>
@@ -3816,6 +3867,7 @@ export default class ModificarYacimiento extends React.Component {
                                                 <Form.Control 
                                                 as="select" 
                                                 className="form-input"
+                                                disabled={this.state.estatus.id==6?true:false}
                                                 defaultValue={this.state.yacimiento.tipoId}
                                                 >
                                                     {
@@ -3862,7 +3914,7 @@ export default class ModificarYacimiento extends React.Component {
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
                     
-                                    <Row>
+                                    <Row style={{display: this.state.estatus.id==6?'none':'inline'}}>
                                         <Col sm={0} md={1}></Col>
                                         <Col sm={12} md={10}>
                                             { ((this.state.mineralNoMetalicoId.length>0)||(this.state.mineralId.length>0)) && <DataTable
@@ -3910,7 +3962,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
 
-                                                                                <Form.Control type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
+                                                                                <Form.Control type="text" disabled={this.state.estatus.id==6?true:false} className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
 
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
@@ -3949,7 +4001,7 @@ export default class ModificarYacimiento extends React.Component {
                             <Accordion.Collapse eventKey={1} >
                                 <Card.Body className="BodyAcc">
                     
-                                   <Row>
+                                   <Row style={{display: this.state.estatus.id==6?'none':'inline'}}>
                                         <Col sm={0} md={1}></Col>
                                         <Col sm={12} md={10}>
                                            { (this.state.mineralNoMetalicoId.length>0) && <DataTable
@@ -3996,7 +4048,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                         <Form.Group as={Col} md="12" onChange={(evt)=>this.handleOnChangeMineralNoMetalico(evt,mineral.id)} controlId={'YacimientosTotalMineralNoMetalico'+mineral.id}  className="inputsPaddingRight">
                                                                             <Form.Label className="cliente-description-fields-text">Total</Form.Label>
                                                                             <InputGroup className="MyInputGroup">
-                                                                                <Form.Control type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
+                                                                                <Form.Control disabled={this.state.estatus.id==6?true:false} type="text" className="form-input" defaultValue={mineral.total} placeholder="Introduzca cantidad" /> 
 
                                                                                 <InputGroup.Append>
                                                                                     <InputGroup.Text  className="input-append-ventas-form" >Kg</InputGroup.Text>
@@ -4067,14 +4119,14 @@ export default class ModificarYacimiento extends React.Component {
                                             return(
 
                                                 <Tab eventKey={etapa.nombre} title={etapa.nombre} key={indexe}>
-                                                    <Button variant="outline-danger" className="btn-eliminar" onClick={() => this.handleOnClickEEtapa(etapa.numeroV)} disabled={this.state.eliminar}>Eliminar</Button>
+                                                    <Button variant="outline-danger" className="btn-eliminar" onClick={() => this.handleOnClickEEtapa(etapa.numeroV)} disabled={( (etapa.estatus==10)||(etapa.estatus==8) )?true:this.state.eliminar}>Eliminar</Button>
                                                     <Container>
                                                    
                                                         <FormTitulo titulo={"Información General de la Etapa "+etapa.numero}/>
                                                         <Form.Row className="formMargins">
                                                             <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,'YacimientosNombreTextEtapa'+etapa.numeroV,"Introduzca un nombre válido")} controlId={'YacimientosNombreEtapa'+etapa.numeroV} className="inputsPaddingRight">
                                                                 <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
-                                                                <Form.Control type="text" defaultValue={etapa.nombreV} className="form-input" placeholder="Introduzca nombre de la etapa" />
+                                                                <Form.Control disabled={etapa.estatus==10?true:false} type="text" defaultValue={etapa.nombreV} className="form-input" placeholder="Introduzca nombre de la etapa" />
                                                                 <Form.Text className="text-muted" id={'YacimientosNombreTextEtapa'+etapa.numeroV}>
                                                                     Obligatorio
                                                                 </Form.Text>
@@ -4121,13 +4173,13 @@ export default class ModificarYacimiento extends React.Component {
 
                                                                     return(    
                                                                     <Tab eventKey={fase.nombre}  title={fase.nombre} key={indexf}>
-                                                                        <Button variant="outline-danger" onClick={() => this.handleOnClickEFase(etapa.numeroV,fase.numeroV)} className="btn-eliminar" disabled={etapa.eliminar}>Eliminar</Button>
+                                                                        <Button variant="outline-danger" onClick={() => this.handleOnClickEFase(etapa.numeroV,fase.numeroV)} className="btn-eliminar" disabled={( (fase.estatus==10)||(fase.estatus==8) )?true:etapa.eliminar}>Eliminar</Button>
                                                                         <Container>
                                                                             <FormTitulo titulo={"Información General de la Fase "+fase.numero}/>
                                                                             <Form.Row className="formMargins">
                                                                                 <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeValidarTexto(evt,'YacimientosNombreTextEtapaFase'+etapa.numeroV+fase.numeroV,"Introduzca un nombre válido")} controlId={'YacimientosNombreEtapaFase'+etapa.numeroV+fase.numeroV} className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">Nombre</Form.Label>
-                                                                                    <Form.Control type="text" defaultValue={fase.nombreV} className="form-input" placeholder="Introduzca nombre de la fase" />
+                                                                                    <Form.Control disabled={fase.estatus==10?true:false} type="text" defaultValue={fase.nombreV} className="form-input" placeholder="Introduzca nombre de la fase" />
                                                                                     <Form.Text className="text-muted" id={'YacimientosNombreTextEtapaFase'+etapa.numeroV+fase.numeroV}>
                                                                                         Obligatorio
                                                                                     </Form.Text>
@@ -4138,7 +4190,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                 <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeDuracionFase(evt,etapa.numeroV,fase.numeroV)} controlId={'YacimientosDuracionEtapaFase'+etapa.numeroV+fase.numeroV} className="inputsPaddingRight">
                                                                                     <Form.Label className="cliente-description-fields-text">Duración de la Fase</Form.Label>
                                                                                     <InputGroup className="MyInputGroup">
-                                                                                        <Form.Control type="text" className="form-input" defaultValue={fase.duracion} placeholder="Introduzca la duración de la fase"/> 
+                                                                                        <Form.Control disabled={fase.estatus==10?true:false} type="text" className="form-input" defaultValue={fase.duracion} placeholder="Introduzca la duración de la fase"/> 
                                                                                         <InputGroup.Append>
                                                                                             <InputGroup.Text  className="input-append-ventas-form" placeholder="Introduzca la duración de la fase" >días</InputGroup.Text>
                                                                                         </InputGroup.Append>
@@ -4161,7 +4213,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                 </Form.Group>  
                                                                             </Form.Row>
                                                                             <FormTitulo titulo="Cargos"/>
-                                                                            <Row>
+                                                                            <Row style={{display: fase.estatus ==10?'none':'inline'}}>
 
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
@@ -4210,7 +4262,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                                             <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeCantidadCargo(evt,etapa.numeroV,fase.numeroV,indexcar)} controlId={'YacimientosCantidadCargo'+etapa.numeroV+fase.numeroV+indexcar} className="inputsPaddingRight">
                                                                                                                 <Form.Label className="cliente-description-fields-text">Cantidad de empleados</Form.Label>
 
-                                                                                                                <Form.Control type="text" className="form-input" value={cargo.cantidad} placeholder="Introduzca cantidad de empleados" />
+                                                                                                                <Form.Control disabled={fase.estatus==10?true:false} type="text" className="form-input" defaultValue={cargo.cantidad} placeholder="Introduzca cantidad de empleados" />
 
                                                                                                                 <Form.Text className="text-muted" id={'YacimientosCantidadTextCargo'+etapa.numeroV+fase.numeroV+indexcar}>
                                                                                                                     Obligatorio
@@ -4220,7 +4272,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                                                  <Form.Label className="cliente-description-fields-text">Sueldo</Form.Label>
                                                                                                                 <InputGroup className="MyInputGroup">
 
-                                                                                                                    <Form.Control type="text" className="form-input" value={cargo.sueldo}  placeholder="Introduzca sueldo por empleado" /> 
+                                                                                                                    <Form.Control disabled={fase.estatus==10?true:false} type="text" className="form-input" value={cargo.sueldo}  placeholder="Introduzca sueldo por empleado" /> 
 
                                                                                                                     <InputGroup.Append>
                                                                                                                         <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
@@ -4241,7 +4293,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                             })}
                                                                             </Container>
                                                                             <FormTitulo titulo="Tipo de Maquinarias"/>
-                                                                            <Row>
+                                                                            <Row style={{display: fase.estatus ==10?'none':'inline'}}>
                                                                                     <Col sm={0} md={1}></Col>
                                                                                     <Col sm={12} md={10}>
                                                                                        {(this.state.insertTM==true)&& <DataTable
@@ -4287,7 +4339,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                                         <Form.Row className="formMargins">
                                                                                                             <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeCantidadTipoMaq(evt,etapa.numeroV,fase.numeroV,indexTM)} controlId={'YacimientosCantidadTipoMaquinaria'+etapa.numeroV+fase.numeroV+indexTM} className="inputsPaddingRight">
                                                                                                                 <Form.Label className="cliente-description-fields-text">Cantidad de unidades</Form.Label>
-                                                                                                                <Form.Control type="text" className="form-input" defaultValue={tipoMaquinaria.cantidad} placeholder="Introduzca cantidad de unidades" />
+                                                                                                                <Form.Control disabled={fase.estatus==10?true:false} type="text" className="form-input" defaultValue={tipoMaquinaria.cantidad} placeholder="Introduzca cantidad de unidades" />
                                                                                                                 <Form.Text id={'YacimientosCantidadTextTipoMaquinaria'+etapa.numeroV+fase.numeroV+indexTM} className="text-muted">
                                                                                                                     Obligatorio
                                                                                                                 </Form.Text>
@@ -4295,7 +4347,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                                                             <Form.Group as={Col} md="6" onChange={(evt)=>this.handleOnChangeCostoTipoMaq(evt,etapa.numeroV,fase.numeroV,indexTM)} controlId={'YacimientosCostoTipoMaquinaria'+etapa.numeroV+fase.numeroV+indexTM} className="inputsPaddingLeft">
                                                                                                                  <Form.Label className="cliente-description-fields-text">Costo</Form.Label>
                                                                                                                 <InputGroup className="MyInputGroup">
-                                                                                                                    <Form.Control type="text" className="form-input" defaultValue={tipoMaquinaria.costo} placeholder="Introduzca costo por unidad" /> 
+                                                                                                                    <Form.Control disabled={fase.estatus==10?true:false} type="text" className="form-input" defaultValue={tipoMaquinaria.costo} placeholder="Introduzca costo por unidad" /> 
                                                                                                                     <InputGroup.Append>
                                                                                                                         <InputGroup.Text  className="input-append-ventas-form">$</InputGroup.Text>
                                                                                                                     </InputGroup.Append>
