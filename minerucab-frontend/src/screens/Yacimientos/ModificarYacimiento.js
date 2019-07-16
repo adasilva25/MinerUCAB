@@ -2660,16 +2660,16 @@ export default class ModificarYacimiento extends React.Component {
 
         info.yacimiento.estatus.id = Number(this.state.estatus.id);
 
-        for(let i=0; i<this.state.Minerales.length; i++){
+        for(let i=0; i<this.state.minerales.length; i++){
             let mineral={
                 id:0,
                 total: 0,
             }
             let existe=0;
             for(let k=0; k<this.state.MinMetModifPred.length; k++){
-                if(parseInt(this.state.Minerales[i].id)===parseInt(this.state.MinMetModifPred[k].id)){
+                if(parseInt(this.state.minerales[i].id)===parseInt(this.state.MinMetModifPred[k].id)){
                     existe=1;
-                    mineral.id=Number(this.state.Minerales[i].id);
+                    mineral.id=Number(this.state.minerales[i].id);
                     mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
                     if(mineral.id != -1){
                         info.minerales.update.push(mineral);
@@ -2680,7 +2680,7 @@ export default class ModificarYacimiento extends React.Component {
                 }
             }
             if(existe===0){
-                mineral.id=Number(this.state.Minerales[i].id);
+                mineral.id=Number(this.state.minerales[i].id);
                 mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
                 if(mineral.id != -1){
                     info.minerales.insert.push(mineral);
@@ -2696,8 +2696,8 @@ export default class ModificarYacimiento extends React.Component {
                 total: 0,
             }
             let existe=0;
-            for(let k=0; k<this.state.Minerales.length; k++){
-                if(parseInt(this.state.Minerales[k].id)===parseInt(this.state.MinMetModifPred[i].id)){
+            for(let k=0; k<this.state.minerales.length; k++){
+                if(parseInt(this.state.minerales[k].id)===parseInt(this.state.MinMetModifPred[i].id)){
                     existe=1;
                 }
             }
