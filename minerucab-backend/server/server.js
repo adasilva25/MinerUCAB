@@ -255,6 +255,7 @@ app.delete('/deleteEmpleadoById/:id', Empleados.deleteEmpleadoById)
 app.delete('/deleteUsuarioById/:id', Usuarios.deleteUsuarioById)
 /* -------------------- EXPLOTACIONES -------------------- */
 app.delete('/deleteExplotacionById/:id', Explotaciones.deleteExplotacionById);
+app.delete('/deleteFaseById/:id', Explotaciones.deleteFaseById)
 /* -------------------- MAQUINARIAS -------------------- */
 app.delete('/deleteMaquinariaById/:id', Maquinarias.deleteMaquinariaById)
 /* -------------------- MINERALES -------------------- */
@@ -268,6 +269,7 @@ app.delete('/deleteRolById/:id', Roles.deleteRolById)
 app.delete('/deleteVentaById/:id', Ventas.deleteVentaById);
 /* -------------------- YACIMIENTOS -------------------- */
 app.delete('/deleteYacimientoById/:id', Yacimientos.deleteYacimientoById)
+
 
 
 /* ------------------------------ DELETE ------------------------------ */
