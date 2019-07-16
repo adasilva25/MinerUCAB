@@ -1247,7 +1247,7 @@ export default class ModificarExplotacion extends React.Component {
                                                         costo:0,
                                                         cantidad:0,
                                                         accordionKey:0,
-                                                        maquinariasShow:'none',
+                                                        maquinariasShow:'inline',
                                                         maquinariasId: [],
                                                         maquinarias:[]
                                                     }
@@ -1555,6 +1555,7 @@ export default class ModificarExplotacion extends React.Component {
   
         axios.get(`http://localhost:3000/getAllMineralesMetalicosByIdYacimiento/${idYacimiento}`, config)
             .then((res) => {
+                console.log("MINERALES METALICOS",res, idYacimiento);
                 if (res.data.length > 0){
                     let mineralesMetalicos = []
                     res.data.forEach((item) => {
@@ -1588,24 +1589,26 @@ export default class ModificarExplotacion extends React.Component {
     
                     this.setState(() => ({
                         mineralId: state.mineralId,
-                        minerales: mineralesMetalicos,
+                        Minerales: mineralesMetalicos,
                     }));
                 }
                 else{
-                let mineral={
-                        nombre:null,
-                        id:-1,
-                        total: 0,
-                        accordionKey:0,
+                    let mineral={
+                            nombre:null,
+                            id:-1,
+                            total: 0,
+                            accordionKey:0,
+                            
+                        }
+                    state.mineralShow='none',
                         
-                    }
-                state.mineralShow='none',
-                    
-                    state.Minerales.push(mineral);
-                    this.setState(() => ({
-                        minerales: state.Minerales,
-                        mineralShow: state.mineralShow
-                    }));
+                        state.Minerales.push(mineral);
+                        this.setState(() => ({
+                            Minerales: state.Minerales,
+                            mineralShow: state.mineralShow
+                        }));
+                        console.log("Mineral metalico no hay");
+
             }
             }).catch((e) => {
                 console.log('Error en axios')
