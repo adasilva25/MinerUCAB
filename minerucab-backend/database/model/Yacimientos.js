@@ -310,6 +310,23 @@ const updateEtapa = (nombre, duracion, costo, clave, callback) => {
     })
 }
 
+const deleteEtapa = (clave) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'DELETE FROM MU_ETAPA WHERE Clave = ($1)';
+    const values = [clave];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+    })
+}
+
 module.exports = {
     createYacimiento,
     deleteYacimientoById,
@@ -327,6 +344,7 @@ module.exports = {
     createYacMineralNoMet,
     modifYacimiento,
     modifTipoYacimiento,
-    updateEtapa
+    updateEtapa,
+    deleteEtapa
     // ,[siguientes funciones]
 }

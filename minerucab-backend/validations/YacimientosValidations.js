@@ -97,8 +97,12 @@ const insertTipoMaquinariaFase = (claveFase, info, numE, numF) => {
 }
 
 const updateEtapas = (etapas) => {
-    etapas.update.forEach((etapa) => {
+    etapas.update.forEach((etapaUpdate) => {
         Yacimientos.updateEtapa(etapa)
+    })
+
+    etapas.delete.forEach((etapaDelete) => {
+        Yacimientos.deleteEtapa(etapaDelete.id)
     })
 }
 
