@@ -796,6 +796,15 @@ export default class ModificarYacimiento extends React.Component {
                                                     tipoMaquinaria.cantidad = item.cantidad;
                                                     fase.tipoMaquinariaId.push(tipoMaquinaria.id)
 
+                                                   /* axios.get(`http://localhost:3000/getNumeroMaquinariasTiposMaquinariaByIdFaseIdTipoMaquinaria/${fase.id}/${tipoMaquinaria.id}`)
+                                                        .then((res) => {
+                                                            tipoMaquinaria.asignados = res.data[0].asignaciones;
+                                                            console.log('TMTMTMTTMTTMTMTMTMTM',cargo.id,fase.id,res.data[0].asignaciones);
+                                                        })
+                                                        .catch((e) => {
+                                                            console.log('Error en axios')
+                                                        })*/
+
                                                     this.setState((prevState) => ({
                                                         etapas: prevState.etapas.map((etapaMap) => {
                                                             if (etapaMap.id === etapa.id){
@@ -931,6 +940,15 @@ export default class ModificarYacimiento extends React.Component {
                                                             cargo.cantidad=item.cantidad;
                                                             cargo.nombre=item.nombre;
                                                             fase.cargosId.push(cargo.id);
+
+                                                            axios.get(`http://localhost:3000/getNumeroEmpleadosCargoByIdFaseIdCargo/${fase.id}/${cargo.id}`)
+                                                                .then((res) => {
+                                                                    cargo.asignados = res.data[0].asignaciones;
+                                                                     console.log('wherehhhhhhhhhhhhhhhhhh',cargo.id,fase.id,res.data[0].asignaciones);
+                                                                })
+                                                                .catch((e) => {
+                                                                    console.log('Error en axios')
+                                                                })
 
                                                             this.setState((prevState) => ({
                                                                 etapas: prevState.etapas.map((etapaMap) => {
@@ -1151,7 +1169,7 @@ export default class ModificarYacimiento extends React.Component {
                     }));
                 
                 }
-    
+                
             }).catch((e) => {
                 console.log('Error en axios')
             })
