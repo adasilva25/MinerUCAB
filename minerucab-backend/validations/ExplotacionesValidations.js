@@ -163,8 +163,10 @@ const updateExplotacion = (req, res) => {
     console.log('etapas', etapas)
 
     Explotaciones.updateEstatusExplotaciones(explotacion.id, explotacion.estatus, explotacion.fechaI, explotacion.fechaF)
-    Explotaciones.updateFechaFinReal(fechaFR, explotacion.id)
+    Explotaciones.updateFechaFinReal(explotacion.fechaFR, explotacion.id)
+    Explotaciones.updateEstatus(yacimiento.id, yacimiento.estatus)
     updateEtapas(etapas)
+    res.status(200).json();
 }
 
 module.exports = {

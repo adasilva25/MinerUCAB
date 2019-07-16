@@ -245,7 +245,7 @@ const getEtapasByIdExplotacion = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'SELECT E.Clave clave, E.nombre nombre, E.costo_total costo_total, E.Fecha_inicio fecha_inicio, E.fecha_fin fecha_fin, E.fecha_fin_real fecha_fin_real, E.duracion duracion, ES.Clave clave_estatus, ES.Nombre estatus, E.fk_estatus clave_estatus FROM MU_ETAPA E, MU_ESTATUS ES WHERE E.fk_explotacion = ($1) AND E.fk_estatus = ES.Clave';
+    const text = 'SELECT E.Clave clave, E.nombre nombre, E.costo_total costo_total, E.Fecha_inicio fecha_inicio, E.fecha_fin fecha_fin, E.fecha_fin_real fecha_fin_real, E.duracion duracion, ES.Clave clave_estatus, ES.Nombre estatus, E.fk_estatus clave_estatus FROM MU_ETAPA E, MU_ESTATUS ES WHERE E.fk_explotacion = ($1) AND E.fk_estatus = ES.Clave ORDER BY (E.Clave)';
     const values = [req.params.id];
     client.query(text, values)
     .then((response) => {
@@ -265,7 +265,7 @@ const getFasesByIdEtapa = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING
     });
     client.connect();
-    const text = 'SELECT * FROM MU_FASE WHERE fk_etapa = ($1)';
+    const text = 'SELECT * FROM MU_FASE WHERE fk_etapa = ($1) ORDER BY(Clave)';
 
     const values = [req.params.id];
     client.query(text, values)

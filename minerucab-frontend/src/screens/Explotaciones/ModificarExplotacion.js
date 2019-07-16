@@ -2382,7 +2382,7 @@ export default class ModificarExplotacion extends React.Component {
 
         
         info.explotacion.id = this.state.explotacion.id;
-        info.explotacion.estatus = 8;
+        info.explotacion.estatus = this.state.explotacion.estatus;
 
         let dia = (this.state.explotacion.fechaI.dia<10)? "0"+this.state.explotacion.fechaI.dia: this.state.explotacion.fechaI.dia;
         let mes = (this.state.explotacion.fechaI.mes<10)? "0"+this.state.explotacion.fechaI.mes: this.state.explotacion.fechaI.mes;
