@@ -105,20 +105,20 @@ const updateYacimiento = (req, res) => {
     if(info.minerales.insert.length>0){
         insertMinYac('metalico', info)
     }
-    if(info.minerales.update.length>0){
-        
+    for(let i=0; i<info.minerales.update.length; i++){
+        YacimientosMinerales.updateYacMinMet(info.yacimiento.id, info.minerales.update[i])
     }
-    if(info.minerales.delete.length>0){
-        
+    for(let i=0; i<info.minerales.delete.length; i++){
+        YacimientosMinerales.deleteYacMinMet(info.yacimiento.id, info.minerales.delete[i])
     }
     if(info.mineralesNoMetalicos.insert.length>0){
         insertMinYac('no metalico', info)
     }
-    if(info.mineralesNoMetalicos.update.length>0){
-        
+    for(let i=0; i<info.mineralesNoMetalicos.update.length; i++){
+        YacimientosMinerales.updateYacMinNoMet(info.yacimiento.id, info.mineralesNoMetalicos.update[i])
     }
-    if(info.mineralesNoMetalicos.delete.length>0){
-        
+    for(let i=0; i<info.mineralesNoMetalicos.delete.length; i++){
+        YacimientosMinerales.deleteYacMinNoMet(info.yacimiento.id, info.mineralesNoMetalicos.delete[i])
     }
     res.status(200).json({ operacion: 'exito' })
 }
