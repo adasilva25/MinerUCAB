@@ -81,6 +81,6 @@ module.exports = {
     getAllTiposMaquinaria,
     getTipoMaquinariaById,
     getTiposMaquinariaByIdFase,
-    getNumeroMaquinariasTiposMaquinariaByIdFaseIdTipoMaquinaria
+    getNumeroMaquinariasTiposMaquinariaByIdFaseIdTipoMaquinaria,
     // ,[siguientes funciones]
 }

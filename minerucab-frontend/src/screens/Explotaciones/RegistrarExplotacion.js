@@ -979,7 +979,7 @@ export default class RegistrarExplotacion extends React.Component {
 
                 this.setState(() => ({
                     mineralId: state.mineralId,
-                    minerales: mineralesMetalicos,
+                    Minerales: mineralesMetalicos,
                 }));
                 console.log('state mm', this.state.minerales)
             }
@@ -996,7 +996,7 @@ export default class RegistrarExplotacion extends React.Component {
                     
                     state.Minerales.push(mineral);
                     this.setState(() => ({
-                        minerales: state.Minerales,
+                        Minerales: state.Minerales,
                         mineralShow: state.mineralShow
                     }));
             }
