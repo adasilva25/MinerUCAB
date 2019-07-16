@@ -96,6 +96,16 @@ const insertTipoMaquinariaFase = (claveFase, info, numE, numF) => {
     Explotaciones.createTipoMaquinariaFase(values)
 }
 
+const updateEtapas = (etapas) => {
+    etapas.update.forEach((etapaUpdate) => {
+        Yacimientos.updateEtapa(etapa)
+    })
+
+    etapas.delete.forEach((etapaDelete) => {
+        Yacimientos.deleteEtapa(etapaDelete.id)
+    })
+}
+
 const updateYacimiento = (req, res) => {
     console.log("ENTRO YACIMIENTO UPDATE")
     const info = req.body.data
@@ -120,6 +130,9 @@ const updateYacimiento = (req, res) => {
     for(let i=0; i<info.mineralesNoMetalicos.delete.length; i++){
         YacimientosMinerales.deleteYacMinNoMet(info.yacimiento.id, info.mineralesNoMetalicos.delete[i])
     }
+
+    updateEtapas(info.etapas)
+
     res.status(200).json({ operacion: 'exito' })
 }
 
