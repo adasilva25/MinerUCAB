@@ -3027,6 +3027,13 @@ export default class ModificarYacimiento extends React.Component {
                 }).catch((e) => {
                     console.log('Error en axios')
                 })
+
+            axios.put('http://localhost:3000/updateExplotacionConfig', config)
+                .then((res) => {
+                    console.log("resp updateExp", res)
+                }).catch((e) => {
+                    console.log('Error en axios')
+                })
             //history.push('/home');
         }
     }

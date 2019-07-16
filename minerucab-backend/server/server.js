@@ -224,6 +224,7 @@ app.put('/updateUsuarioById', Usuarios.updateUsuarioById)
 app.put('/updateSC', SolicitudesCompra.updateSC)
 /* -------------------- EXPLOTACIONES -------------------- */
 app.put('/updateExplotacion', ExplotacionesValidations.updateExplotacion);
+app.put('/updateExplotacionConfig', Explotaciones.updateExplotacionConfig);
 /* -------------------- MAQUINARIAS -------------------- */
 app.put('/updateMaquinariaById/:id', Maquinarias.updateMaquinariaById)
 /* -------------------- MINERALES -------------------- */

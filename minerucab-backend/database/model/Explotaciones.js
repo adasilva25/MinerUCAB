@@ -648,6 +648,26 @@ const deleteFromHorarioEmpleado = (claveEmpleadoCargoFase, callback) => {
     })
 }
 
+const updateExplotacionConfig = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    console.log(req.body.data)
+    client.connect();
+    const text = 'UPDATE MU_EXPLOTACION SET costo_total=($1), duracion=($2) WHERE Clave = ($3);';
+    const values = [req.body.data.explotacion.costo, req.body.data.explotacion.duracion, parseInt(req.body.data.explotacion.id)];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error: error.toString() });
+        client.end();
+    })
+}
+
 module.exports = {
     createExplotacion,
     createEtapa,
@@ -683,6 +703,7 @@ module.exports = {
     updateFechaEstatusFases,
     updateEtapaEstatus,
     updateEstatusExplotaciones,
-    updateFechaFinReal
+    updateFechaFinReal,
+    updateExplotacionConfig
     // ,[siguientes funciones]
 }
