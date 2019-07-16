@@ -2610,7 +2610,12 @@ export default class ModificarYacimiento extends React.Component {
                 duracion:0,
                 costo:0,
             },
-            etapas: [{
+            etapas: {
+                insert: [],
+                update: [],
+                delete: []
+            }
+            /*etapas: [{
                 nombre: null,
                 id:null,
                 duracion:0,
@@ -2631,7 +2636,7 @@ export default class ModificarYacimiento extends React.Component {
                         cantidad:0,
                     }]
                 }]
-            }]
+            }]*/
         }
 
        /* let incompleto = document.getElementById("YacimientosNombreYacimiento").value.trim(); 
@@ -2771,44 +2776,115 @@ export default class ModificarYacimiento extends React.Component {
         }
         console.log("arreglosminnomet", info.mineralesNoMetalicos)
 
-//////////////////////////////////////////////////////////////////////////////////////////
         info.explotacion.id = Number(this.state.explotacion.id);
         info.explotacion.duracion = Number(this.state.explotacion.duracion);
         info.explotacion.costo = Number(this.state.explotacion.costo);
 
-        info.etapas.shift();
-        
+//////////////////////////////////////////////////////////////////////////////////////////
+        console.log("STATE ETAPAS", this.state.etapas)
+        info.etapas.insert.shift();
+        info.etapas.update.shift();
+        info.etapas.delete.shift();
         this.state.etapas.forEach((etapaR)=>{
-            if(etapaR.numero != 0){
-                let etapa= {
-                    nombre: null,
-                    duracion:0,
-                    id: null,
-                    costo:0,
-                    fases: [{
-                        nombre: null,
-                        duracion:0,
-                        id: null,
-                        costo:0,
-                        cargos:[{
-                            id:0,
-                            sueldo:0,
-                            cantidad:0,
-                        }],
-                        tipoMaquinaria:[{
-                            id:0,
-                            costo:0,
-                            cantidad:0,
-                        }]
-                    }]
+            let newetapa = {
+                nombre: null,
+                id: 0,
+                duracion:0,
+                costo:0,
+                fases: []
                 }
-                
-                etapa.id = Number(etapaR.id);
-                etapa.nombre = document.getElementById('YacimientosNombreEtapa'+etapaR.numeroV).value.trim();
-                etapa.duracion = Number(etapaR.duracion);
-                etapa.costo = Number(etapaR.costo);
+            newetapa.id = Number(etapaR.id);
+            if((etapaR.etapaShow===true)){
+                newetapa.nombre = document.getElementById('YacimientosNombreEtapa'+etapaR.numeroV).value.trim();
+            }
+            newetapa.duracion = Number(etapaR.duracion);
+            newetapa.costo = Number(etapaR.costo);
+            if((etapaR.id===null) && (etapaR.etapaShow===true)){
+                etapaR.fases.forEach((faseR)=>{
+                    if(faseR.numero != 0){
+                        let fase= {
+                            nombre: null,
+                            duracion:0,
+                            id: null,
+                            costo:0,
+                            cargos:[{
+                                id:0,
+                                sueldo:0,
+                                cantidad:0,
+                            }],
+                            tipoMaquinaria:[{
+                                id:0,
+                                costo:0,
+                                cantidad:0,
+                            }]
+                        }
 
-                etapa.fases.shift();
+                        fase.id = Number(faseR.id);
+                        fase.nombre = document.getElementById('YacimientosNombreEtapaFase'+etapaR.numeroV+faseR.numeroV).value.trim();
+                        fase.duracion = Number(faseR.duracion);
+                        fase.costo = Number(faseR.costo);
+                        
+                        fase.cargos.shift();
+                        fase.tipoMaquinaria.shift();
+                        faseR.cargos.forEach((cargoR)=>{
+                            let cargo={
+                                id:0,
+                                sueldo:0,
+                                cantidad:0,
+                            }
+                            cargo.id = Number(cargoR.id);
+                            cargo.sueldo = Number(cargoR.sueldo);
+                            cargo.cantidad = Number(cargoR.cantidad);
+
+                            
+                            if(cargo.id!=0){
+                               fase.cargos.push(cargo);
+                            }
+                            else{
+                                fase.cargos.shift();
+                            }
+                        });
+
+
+                        faseR.tipoMaquinaria.forEach((tipoMaquinariaR)=>{
+                            let tipoMaquinaria={
+                                id:0,
+                                costo:0,
+                                cantidad:0,
+                            }
+                            tipoMaquinaria.id = Number(tipoMaquinariaR.id);
+                            tipoMaquinaria.costo = Number(tipoMaquinariaR.costo);
+                            tipoMaquinaria.cantidad = Number(tipoMaquinariaR.cantidad);
+
+                            
+
+                            if(tipoMaquinaria.id!=0){
+                               fase.tipoMaquinaria.push(tipoMaquinaria);
+                            }
+                            else{
+                                fase.tipoMaquinaria.shift();
+                            }
+                        });
+                        if((fase.nombre!=null) && (fase.nombre != '')){
+                           newetapa.fases.push(fase);
+                        }
+                    }
+                })
+                info.etapas.insert.push(newetapa);
+            }else{
+            }
+            if(!(etapaR.id===null) && (etapaR.etapaShow===false)){
+                info.etapas.delete.push(newetapa);
+            }else{
+            }
+            if(!(etapaR.id===null) && (etapaR.etapaShow===true)){
+                info.etapas.update.push(newetapa);
+            }else{
+            }
+        });
+        console.log("INFO",info)
+        //this.state.etapas.forEach((etapaR)=>{
+               /* etapa.fases.shift();
                 etapaR.fases.forEach((faseR)=>{
                     if(faseR.numero != 0){
                         let fase= {
@@ -2884,15 +2960,8 @@ export default class ModificarYacimiento extends React.Component {
                         }
                     }
                 });
-                
-                if((etapa.nombre!=null) && (etapa.nombre != '')){
-                    info.etapas.push(etapa);
-                }
-                else{
-                    info.etapas.shift();
-                }
-            }
-        });
+            }*/
+        //});
 
         console.log(info);
         var verifMineral = 0
