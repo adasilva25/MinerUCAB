@@ -402,7 +402,7 @@ export default class ModificarExplotacion extends React.Component {
                                 value:0,
                             },
                             {
-                                dia:"Miercoles",
+                                dia:"Miércoles",
                                 horaEntrada:"753",
                                 horaSalida:"",
                                 value:2,
@@ -443,7 +443,7 @@ export default class ModificarExplotacion extends React.Component {
                                 value:1,
                             },
                             {
-                                dia:"Miercoles",
+                                dia:"Miércoles",
 
                                 horaEntrada:"753",
                                 horaSalida:"",
@@ -632,7 +632,7 @@ export default class ModificarExplotacion extends React.Component {
 
         let state = {
             eliminadosFases: [],
-            dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
+            dias:["Lunes","Martes","Miércoles","Jueves","Viernes"],
             actualizar:true,
             eliminar:true,
             prueba: true,
@@ -938,31 +938,31 @@ export default class ModificarExplotacion extends React.Component {
                                         dia:"Lunes",
                                         horario:[{
                                             dia:"Lunes",
-                                            horaEntrada:null,
+                                            horaEntrada:"",
                                             horaSalida:null,
                                             value:0,
                                         },
                                         {
                                             dia:"Martes",
-                                            horaEntrada:null,
+                                            horaEntrada:"",
                                             horaSalida:null,
                                             value:0,
                                         },
                                         {
-                                            dia:"Miercoles",
-                                            horaEntrada:null,
+                                            dia:"Miércoles",
+                                            horaEntrada:"",
                                             horaSalida:null,
                                             value:0,
                                         },
                                         {
                                             dia:"Jueves",
-                                            horaEntrada:null,
+                                            horaEntrada:"",
                                             horaSalida:null,
                                             value:0,
                                         },
                                         {
                                             dia:"Viernes",
-                                            horaEntrada:null,
+                                            horaEntrada:"",
                                             horaSalida:null,
                                             value:0,
                                         }]
@@ -1392,35 +1392,35 @@ export default class ModificarExplotacion extends React.Component {
                                                                             horario:[{
                                                                                 id: null,
                                                                                 dia:"Lunes",
-                                                                                horaEntrada:null,
+                                                                                horaEntrada:"",
                                                                                 horaSalida:null,
                                                                                 value:0,
                                                                             },
                                                                             {
                                                                                 id: null,
                                                                                 dia:"Martes",
-                                                                                horaEntrada:null,
+                                                                                horaEntrada:"",
                                                                                 horaSalida:null,
                                                                                 value:0,
                                                                             },
                                                                             {
                                                                                 id: null,
                                                                                 dia:"Miércoles",
-                                                                                horaEntrada:null,
+                                                                                horaEntrada:"",
                                                                                 horaSalida:null,
                                                                                 value:0,
                                                                             },
                                                                             {
                                                                                 id: null,
                                                                                 dia:"Jueves",
-                                                                                horaEntrada:null,
+                                                                                horaEntrada:"",
                                                                                 horaSalida:null,
                                                                                 value:0,
                                                                             },
                                                                             {
                                                                                 id: null,
                                                                                 dia:"Viernes",
-                                                                                horaEntrada:null,
+                                                                                horaEntrada:"",
                                                                                 horaSalida:null,
                                                                                 value:0,
                                                                             }]
@@ -2063,7 +2063,7 @@ export default class ModificarExplotacion extends React.Component {
                     value:1,
                 },
                 {
-                    dia:"Miercoles",
+                    dia:"Miércoles",
                     horaEntrada:null,
                     horaSalida:null,
                     value:1,
@@ -2111,7 +2111,7 @@ export default class ModificarExplotacion extends React.Component {
                     value:1,
                 },
                 {
-                    dia:"Miercoles",
+                    dia:"Miércoles",
                     horaEntrada:null,
                     horaSalida:null,
                     value:1,
@@ -2733,7 +2733,7 @@ export default class ModificarExplotacion extends React.Component {
         // }
         // -------------------------------          AQUI TERMINAN LAS VALIDACIONES
 
-        if (error === false){
+       /* if (error === false){
             const config = {
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded'
@@ -2752,7 +2752,7 @@ export default class ModificarExplotacion extends React.Component {
                     this.setState({ mensajeError: 'Error creando la explotacion' })
                     this.modalErrorOpen()
                 })
-        }
+        }*/
 
     }
 
@@ -3238,6 +3238,7 @@ export default class ModificarExplotacion extends React.Component {
                     value:1
                 }
                 horario.dia = this.state.dias[i];
+                console.log("DropdownDia"+this.state.dias[i]+etapaNum+faseNum+cargoNum+empleadoNum);
                 horario.value = document.getElementById("DropdownDia"+this.state.dias[i]+etapaNum+faseNum+cargoNum+empleadoNum).value;
                 if(horario.value==1){
                     horario.horaEntrada="7:00";
@@ -3282,8 +3283,11 @@ export default class ModificarExplotacion extends React.Component {
             if(faltantes!=0){
                 faltante++;
             }
+            console.log(empleado);
         });
+
         return(faltante);
+
     }
 
     validarEmpleadoHorario=(etapaNum,faseNum,cargoNum,empleadoNum)=>{
@@ -4290,6 +4294,7 @@ export default class ModificarExplotacion extends React.Component {
                                                                                                                                                             <Form.Row >
                                                                                                                                                                 <Col sm={1}>
                                                                                                                                                                 </Col>
+
                                                                                                                                                                 <Form.Group as={Col} sm="8"controlId={"DropdownDia"+horario.dia+etapa.numero+fase.numero+indexcar+indexem} diasbled={(fase.finalizar==true)?true:false}>
                                                                                                                                                                     <Form.Label>{horario.dia}</Form.Label>
                                                                                                                                                                     <Form.Control as="select" defaultValue={horario.value} > 
