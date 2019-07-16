@@ -702,6 +702,25 @@ const updateExplotacionConfig = (req, res) => {
     })
 }
 
+const deleteFaseById= (claveEmpleadoCargoFase, callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'DELETE FROM MU_FASE WHERE clave = ($1);';
+    const values = [claveEmpleadoCargoFase];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        callback()
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}
+
 module.exports = {
     createExplotacion,
     createEtapa,
@@ -709,6 +728,7 @@ module.exports = {
     createCargoFase,
     createTipoMaquinariaFase,
     deleteExplotacionById,
+    deleteFaseById,
     deleteFromEmpleadoCargoFase,
     deleteFromHorarioEmpleado,
     deleteFromMaquinariaTipoMaquinariaFase,

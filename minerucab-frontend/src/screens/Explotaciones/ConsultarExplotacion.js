@@ -1178,35 +1178,35 @@ export default class ConsultarExplotacion extends React.Component {
                                                                                 dia:"Lunes",
                                                                                 horaEntrada:null,
                                                                                 horaSalida:null,
-                                                                                value:1,
+                                                                                value:0,
                                                                             },
                                                                             {
                                                                                 id: null,
                                                                                 dia:"Martes",
                                                                                 horaEntrada:null,
                                                                                 horaSalida:null,
-                                                                                value:1,
+                                                                                value:0,
                                                                             },
                                                                             {
                                                                                 id: null,
                                                                                 dia:"Miercoles",
                                                                                 horaEntrada:null,
                                                                                 horaSalida:null,
-                                                                                value:1,
+                                                                                value:0,
                                                                             },
                                                                             {
                                                                                 id: null,
                                                                                 dia:"Jueves",
                                                                                 horaEntrada:null,
                                                                                 horaSalida:null,
-                                                                                value:1,
+                                                                                value:0,
                                                                             },
                                                                             {
                                                                                 id: null,
                                                                                 dia:"Viernes",
                                                                                 horaEntrada:null,
                                                                                 horaSalida:null,
-                                                                                value:1,
+                                                                                value:0,
                                                                             }]
                                                                         }
                                                                         empleado.ci = element.ci;
