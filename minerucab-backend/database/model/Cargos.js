@@ -62,8 +62,8 @@ const getCargosByIdFase = (req, res) => {
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT CF.Clave clave_cargo_fase, CF.Cantidad cantidad, CF.sueldo sueldo, C.Clave clave, C.Nombre nombre FROM MU_CARGO_FASE CF, MU_CARGO C WHERE CF.fk_fase = ($1) AND CF.fk_cargo = C.Clave;';
-    const values = [req.params.id];
+    const text = 'SELECT COUNT(ECF.clave) from mu_fase F, mu_cargo_fase CF, mu_empleado_cargo_fase ECF, mu_empleado E, mu_cargo C where F.clave = CF.fk_fase and CF.clave=ECF.fk_cargo_fase and ECF.fk_empleado = E.clave and C.clave=CF.fk_cargo and F.clave = ($1) and C.clave = ($2);';
+    const values = [req.params.idF,req.params.idC];
     client.query(text, values)
     .then((response) => {
         client.end();
