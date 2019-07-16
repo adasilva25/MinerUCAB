@@ -225,6 +225,7 @@ app.put('/updateUsuarioById', Usuarios.updateUsuarioById)
 app.put('/updateSC', SolicitudesCompra.updateSC)
 /* -------------------- EXPLOTACIONES -------------------- */
 app.put('/updateExplotacion', ExplotacionesValidations.updateExplotacion);
+app.put('/updateExplotacionConfig', Explotaciones.updateExplotacionConfig);
 /* -------------------- MAQUINARIAS -------------------- */
 app.put('/updateMaquinariaById/:id', Maquinarias.updateMaquinariaById)
 /* -------------------- MINERALES -------------------- */
@@ -238,7 +239,8 @@ app.put('/updateCompMinNoMet', Minerales.updateCompMinNoMet)
 app.put('/modificarRol', RolesValidations.modificarRol);
 /* -------------------- VENTAS -------------------- */
 app.put('/updateVenta', VentasValidations.updateVenta);
-
+/* -------------------- YACIMIENTOS -------------------- */
+app.put('/updateYacimiento', YacimientosValidations.updateYacimiento);
 
 
 /* ----------------------------------- DELETE ----------------------------------- */

@@ -1,5 +1,7 @@
 ﻿const Explotaciones = require('../database/model/Explotaciones');
 const Yacimientos = require('../database/model/Yacimientos');
+const YacimientosMinerales = require('../database/model/YacimientoMineral');
+const { Client } = require('pg');
 
 const crearConfiguracionYacimiento = (req, res, next) => {
     const info = req.body.data;
@@ -94,6 +96,63 @@ const insertTipoMaquinariaFase = (claveFase, info, numE, numF) => {
     Explotaciones.createTipoMaquinariaFase(values)
 }
 
+const updateYacimiento = (req, res) => {
+    console.log("ENTRO YACIMIENTO UPDATE")
+    const info = req.body.data
+    console.log('update', req.body.data)
+    Yacimientos.modifYacimiento(info)
+    Yacimientos.modifTipoYacimiento(info)
+    if(info.minerales.insert.length>0){
+        insertMinYac('metalico', info)
+    }
+    for(let i=0; i<info.minerales.update.length; i++){
+        YacimientosMinerales.updateYacMinMet(info.yacimiento.id, info.minerales.update[i])
+    }
+    for(let i=0; i<info.minerales.delete.length; i++){
+        YacimientosMinerales.deleteYacMinMet(info.yacimiento.id, info.minerales.delete[i])
+    }
+    if(info.mineralesNoMetalicos.insert.length>0){
+        insertMinYac('no metalico', info)
+    }
+    for(let i=0; i<info.mineralesNoMetalicos.update.length; i++){
+        YacimientosMinerales.updateYacMinNoMet(info.yacimiento.id, info.mineralesNoMetalicos.update[i])
+    }
+    for(let i=0; i<info.mineralesNoMetalicos.delete.length; i++){
+        YacimientosMinerales.deleteYacMinNoMet(info.yacimiento.id, info.mineralesNoMetalicos.delete[i])
+    }
+    res.status(200).json({ operacion: 'exito' })
+}
+
+const insertMinYac = (tipo, info) => {
+    let values = [];
+    if(tipo==='metalico'){
+        console.log("MET", info.minerales.insert)
+        info.minerales.insert.forEach(item => {
+            let value = []
+            value.push(item.total);
+            value.push(item.id);
+            value.push(null);
+            value.push(info.yacimiento.id);
+            // console.log(value)
+            values.push(value);
+        });
+    }else if(tipo==='no metalico'){
+        console.log("NOMET", info.mineralesNoMetalicos.insert)
+        info.mineralesNoMetalicos.insert.forEach(item => {
+            let value = []
+            value.push(item.total);
+            value.push(null);
+            value.push(item.id);
+            value.push(info.yacimiento.id);
+            // console.log(value)
+            values.push(value);
+        });
+    }
+    // console.log(values)
+    YacimientosMinerales.createMinYac(values)
+}
+
 module.exports = {
-    crearConfiguracionYacimiento
+    crearConfiguracionYacimiento,
+    updateYacimiento
 }

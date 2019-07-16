@@ -56,6 +56,26 @@ const getCargosByIdFase = (req, res) => {
     })
 }
 
+
+/*const getNumeroEmpleadosCargoByIdFaseIdCargo = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'SELECT COUNT(ECF.clave) from mu_fase F, mu_cargo_fase CF, mu_empleado_cargo_fase ECF, mu_empleado E, mu_cargo C where F.clave = CF.fk_fase and CF.clave=ECF.fk_cargo_fase and ECF.fk_empleado = E.clave and C.clave=CF.fk_cargo and F.clave = ($1) and C.clave = ($2);';
+    const values = [req.params.idF,req.params.idC];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}*/
+
 module.exports = {
     getAllCargos,
     getCargoByIdEmpleado,

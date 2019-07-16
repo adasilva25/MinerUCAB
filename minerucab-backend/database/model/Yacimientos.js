@@ -253,6 +253,44 @@ const deleteYacimientoById = (req, res) => {
     })
 }
 
+const modifYacimiento = (info) => {
+    console.log("ENTRO MODIF YACIMIENTO")
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'UPDATE MU_YACIMIENTO SET nombre=($1), descripcion=($2), tamaño=($3), fk_lugar=($4), fk_estatus=($5) WHERE clave=($6);';
+    const values = [info.yacimiento.nombre, info.yacimiento.descripcion, info.yacimiento.area, info.yacimiento.ubicacion.parroquia, info.yacimiento.estatus.id, info.yacimiento.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+
+    })
+}
+
+const modifTipoYacimiento = (info) => {
+    console.log("ENTRO MODIF TIPO YACIMIENTO")
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING
+    });
+    client.connect();
+    const text = 'UPDATE MU_YACIMIENTO_TIPO_YACIMIENTO SET fk_tipo_yacimiento=($1) WHERE fk_yacimiento=($2);';
+    const values = [info.yacimiento.tipoId, info.yacimiento.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+    })
+    .catch((e) => {
+        client.end();
+        console.error(e.stack);
+
+    })
+}
+
 module.exports = {
     createYacimiento,
     deleteYacimientoById,
@@ -267,6 +305,8 @@ module.exports = {
     getYacimientoByIdExplotacion,
     insertTipoYacimiento,
     createYacMineralMet,
-    createYacMineralNoMet
+    createYacMineralNoMet,
+    modifYacimiento,
+    modifTipoYacimiento,
     // ,[siguientes funciones]
 }

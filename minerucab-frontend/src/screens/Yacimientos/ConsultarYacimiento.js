@@ -729,7 +729,7 @@ export default class ConsultarYacimiento extends React.Component {
                     
                     state.Minerales.push(mineral);
                     this.setState(() => ({
-                        minerales: state.Minerales,
+                        Minerales: state.Minerales,
                         mineralShow: state.mineralShow
                     }));
             }
