@@ -702,17 +702,16 @@ const updateExplotacionConfig = (req, res) => {
     })
 }
 
-const deleteFaseById= (claveEmpleadoCargoFase, callback) => {
+const deleteFaseById= (claveFase) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
     const text = 'DELETE FROM MU_FASE WHERE clave = ($1);';
-    const values = [claveEmpleadoCargoFase];
+    const values = [claveFase];
     client.query(text, values)
     .then((response) => {
         client.end();
-        callback()
     })
     .catch((error) => {
         console.log(error);

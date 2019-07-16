@@ -2747,12 +2747,13 @@ export default class ModificarYacimiento extends React.Component {
         info.yacimiento.estatus.id = Number(this.state.estatus.id);
 ///////////////////////////////CUIDADOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
         for(let i=0; i<this.state.Minerales.length; i++){
-            if(this.state.Minerales[i].id != -1){
-                let mineral={
+            let existe=0;
+            let mineral={
                 id:0,
                 total: 0,
                 }
-                let existe=0;
+            if(this.state.Minerales[i].id != -1){
+    
                 for(let k=0; k<this.state.MinMetModifPred.length; k++){
                     if(parseInt(this.state.Minerales[i].id)===parseInt(this.state.MinMetModifPred[k].id)){
                         existe=1;
@@ -2815,12 +2816,13 @@ export default class ModificarYacimiento extends React.Component {
         }
         console.log("arreglosminmet", info.minerales)
         for(let i=0; i<this.state.MineralesNoMetalicos.length; i++){
-            if(this.state.MineralesNoMetalicos[i].id != -1){
-                let mineral={
+            let mineral={
                     id:0,
                     total: 0,
                 }
                 let existe=0;
+            if(this.state.MineralesNoMetalicos[i].id != -1){
+                
                 for(let k=0; k<this.state.MinNoMetModifPred.length; k++){
                     if(parseInt(this.state.MineralesNoMetalicos[i].id)===parseInt(this.state.MinNoMetModifPred[k].id)){
                         existe=1;
