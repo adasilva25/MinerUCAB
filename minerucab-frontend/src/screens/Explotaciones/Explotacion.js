@@ -201,7 +201,7 @@ export default class Explotacion extends React.Component {
                         <Col sm={0} md={1}></Col>
                         <Col sm={12} md={10}>
                             <DataTable
-                                data={'http://localhost:3000/getAllExplotacionesConEstatusInactivo'}
+                                data={'http://localhost:3000/getAllYacimientosConEstatusInactivoEnExplotacion'}
                                 textoSingular={'yacimiento'}
                                 textoPlural={'yacimientos'}
                                 urlModificar={'/modificar_explotacion'}

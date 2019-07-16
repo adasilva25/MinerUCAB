@@ -2606,7 +2606,9 @@ export default class RegistrarExplotacion extends React.Component {
         console.log(info);
 
 
-        Verificaciones
+
+
+        // Verificaciones
          let error = false;
          if(info.explotacion.fechaI=='0-00-00'){
              this.setState({ mensajeError: 'La fecha de inicio ingresada no es una fecha válida' })

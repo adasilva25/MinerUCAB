@@ -103,6 +103,7 @@ app.get('/getAllCargos', Cargos.getAllCargos);
 app.get('/getCargoByIdEmpleado/:id', Cargos.getCargoByIdEmpleado);
 app.get('/getAllRoles', Roles.getAllRoles);
 app.get('/getCargosByIdFase/:id', Cargos.getCargosByIdFase);
+app.get('/getNumeroEmpleadosCargoByIdFaseIdCargo/:id_fase/:id_cargo', Cargos.getNumeroEmpleadosCargoByIdFaseIdCargo);
 /* -------------------- CLIENTES -------------------- */
 app.get('/getClienteNombreApellidoById/:id', ClientesNaturales.getClienteNombreApellidoById);
 app.get('/getAllClientes', ClientesNaturales.getAllClientes);
@@ -129,6 +130,7 @@ app.get('/getAllExplotaciones', Explotaciones.getAllExplotaciones)
 app.get('/getAllExplotacionesConEstatusEnProceso', Explotaciones.getAllExplotacionesConEstatusEnProceso)
 app.get('/getAllExplotacionesConEstatusFinalizado', Explotaciones.getAllExplotacionesConEstatusFinalizado);
 app.get('/getAllExplotacionesConEstatusInactivo', Explotaciones.getAllExplotacionesConEstatusInactivo)
+app.get('/getAllYacimientosConEstatusInactivoEnExplotacion', Explotaciones.getAllYacimientosConEstatusInactivoEnExplotacion);
 app.get('/getEtapasByIdExplotacion/:id', Explotaciones.getEtapasByIdExplotacion);
 app.get('/getFasesByIdEtapa/:id', Explotaciones.getFasesByIdEtapa);
 app.get('/getCargosExpByIdFase/:id', Explotaciones.getCargosExpByIdFase);
@@ -184,6 +186,8 @@ app.get('/getEmpresaMinNoMetComponentesSolicitudDeCompra/:id', SolicitudesCompra
 /* -------------------- TIPOS DE MAQUINARIAS -------------------- */
 app.get('/getAllTiposMaquinaria', TiposMaquinaria.getAllTiposMaquinaria);
 app.get('/getTiposMaquinariaByIdFase/:id', TiposMaquinaria.getTiposMaquinariaByIdFase);
+app.get('/getNumeroMaquinariasTiposMaquinariaByIdFaseIdTipoMaquinaria/:id_fase/:id_tipo_maquinaria', TiposMaquinaria.getNumeroMaquinariasTiposMaquinariaByIdFaseIdTipoMaquinaria);
+
 /* -------------------- TIPOS DE YACIMIENTOS -------------------- */
 app.get('/getAllTiposYacimiento', TiposYacimiento.getAllTiposYacimiento);
 app.get('/getTipoYacimientoByIdYacimiento/:id', TiposYacimiento.getTipoYacimientoByIdYacimiento);

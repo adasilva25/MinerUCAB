@@ -57,13 +57,13 @@ const getCargosByIdFase = (req, res) => {
 }
 
 
-/*const getNumeroEmpleadosCargoByIdFaseIdCargo = (req, res) => {
+const getNumeroEmpleadosCargoByIdFaseIdCargo = (req, res) => {
     const client = new Client({
         connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
     });
     client.connect();
-    const text = 'SELECT COUNT(ECF.clave) from mu_fase F, mu_cargo_fase CF, mu_empleado_cargo_fase ECF, mu_empleado E, mu_cargo C where F.clave = CF.fk_fase and CF.clave=ECF.fk_cargo_fase and ECF.fk_empleado = E.clave and C.clave=CF.fk_cargo and F.clave = ($1) and C.clave = ($2);';
-    const values = [req.params.idF,req.params.idC];
+    const text = 'SELECT COUNT(ECF.clave) asignaciones FROM MU_FASE F, MU_CARGO_FASE CF, MU_EMPLEADO_CARGO_FASE ECF, MU_EMPLEADO E, MU_CARGO C WHERE F.clave = CF.fk_fase AND CF.clave=ECF.fk_cargo_fase AND ECF.fk_empleado = E.clave AND C.clave=CF.fk_cargo AND F.clave = ($1) AND C.clave = ($2);';
+    const values = [req.params.id_fase,req.params.id_cargo];
     client.query(text, values)
     .then((response) => {
         client.end();
@@ -74,11 +74,12 @@ const getCargosByIdFase = (req, res) => {
         client.end();
         res.status(500).json({ error: error.toString() });
     })
-}*/
+}
 
 module.exports = {
     getAllCargos,
     getCargoByIdEmpleado,
-    getCargosByIdFase
+    getCargosByIdFase,
+    getNumeroEmpleadosCargoByIdFaseIdCargo
     // ,[siguientes funciones]
 }

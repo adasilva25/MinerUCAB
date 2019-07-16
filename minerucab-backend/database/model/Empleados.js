@@ -239,6 +239,25 @@ const updateEstatusEmpleadoById = (idEmpleado, estatus) => {
     })
 }
 
+const updateEstatusByIdEmpleadoCargoFase = (claveEmpleadoCargoFase, estatus, callback) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  
+    });
+    client.connect();
+    const text = 'UPDATE MU_EMPLEADO SET fk_estatus = ($2) WHERE Clave IN (SELECT ECF.fk_empleado FROM MU_EMPLEADO_CARGO_FASE ECF WHERE ECF.Clave = ($1));';
+    const values = [claveEmpleadoCargoFase, estatus];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        callback()
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error: error.toString() });
+        client.end();
+    })
+}
+
 module.exports = {
     createEmpleado,
     getAllEmpleados,
@@ -251,6 +270,7 @@ module.exports = {
     getHorarioEmpleadoByIdEmpleadoCargoFase,
     updateEmpleadoById,
     updateEstatusEmpleadoById,
+    updateEstatusByIdEmpleadoCargoFase,
     deleteEmpleadoById
     // ,[siguientes funciones]
 }
