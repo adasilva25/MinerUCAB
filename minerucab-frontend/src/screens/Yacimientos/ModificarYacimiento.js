@@ -533,6 +533,7 @@ export default class ModificarYacimiento extends React.Component {
                                     nombre:null,
                                     id:-1,
                                     sueldo:0,
+                                    asignados:0,
                                     cantidad:0,
                                     accordionKey:0,
                                     empleadosShow:'none',
@@ -582,6 +583,7 @@ export default class ModificarYacimiento extends React.Component {
                                     costo:0,
                                     cantidad:0,
                                     accordionKey:0,
+                                    asignados:0,
                                     maquinariasShow:'none',
                                     maquinarias:[{
                                         id:-1,
@@ -644,6 +646,7 @@ export default class ModificarYacimiento extends React.Component {
                                         id:-1,
                                         sueldo:0,
                                         cantidad:0,
+                                        asignados:0,
                                         accordionKey:0,
                                         empleadosShow:'none',
                                         empleados:[{
@@ -691,6 +694,7 @@ export default class ModificarYacimiento extends React.Component {
                                         id:-1,
                                         costo:0,
                                         cantidad:0,
+                                        asignados:0,
                                         accordionKey:0,
                                         maquinariasShow:'none',
                                         maquinarias:[{
@@ -784,6 +788,7 @@ export default class ModificarYacimiento extends React.Component {
                                                         id:-1,
                                                         costo:0,
                                                         cantidad:0,
+                                                        asignados:0,
                                                         accordionKey:0,
                                                         maquinariasShow:'none',
                                                         maquinarias:[]
@@ -880,6 +885,7 @@ export default class ModificarYacimiento extends React.Component {
                                                                 id:-1,
                                                                 sueldo:0,
                                                                 cantidad:0,
+                                                                asignados:0,
                                                                 accordionKey:0,
                                                                 empleadosShow:'none',
                                                                 empleados:[{
@@ -3637,7 +3643,7 @@ export default class ModificarYacimiento extends React.Component {
                                         <Col sm={0} md={1}></Col>
                                     </Row>
                                     <Container>
-                                        {this.state.Minerales.map((mineral,indexMin)=>{             
+                                        {(this.state.mineralId.length>0) && this.state.minerales.map((mineral,indexMin)=>{             
                                             return(
                                                 <div style={{display: this.state.mineralShow}}>
                                                     <Accordion defaultActiveKey={1} >

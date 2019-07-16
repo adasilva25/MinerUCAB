@@ -3283,7 +3283,7 @@ export default class ModificarExplotacion extends React.Component {
             if(faltantes!=0){
                 faltante++;
             }
-            console.log(empleado);
+            
         });
 
         return(faltante);
