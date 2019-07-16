@@ -678,6 +678,7 @@ export default class ConsultarYacimiento extends React.Component {
 
         axios.get(`http://localhost:3000/getAllMineralesMetalicosByIdYacimiento/${this.props.match.params.id}`, config)
             .then((res) => {
+                console.log("MINERALES METALICOS",res);
                 if (res.data.length > 0){
                     let mineralesMetalicos = []
                     res.data.forEach((item) => {
