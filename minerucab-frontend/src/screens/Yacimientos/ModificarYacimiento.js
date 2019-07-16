@@ -2745,7 +2745,7 @@ export default class ModificarYacimiento extends React.Component {
             }
             if(existe===0){
                 mineral.id=Number(this.state.Minerales[i].id);
-                mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
+                // mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
                 if(mineral.id != -1){
                     info.minerales.insert.push(mineral);
                 }
