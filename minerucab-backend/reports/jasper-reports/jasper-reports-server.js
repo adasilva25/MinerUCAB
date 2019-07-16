@@ -11,6 +11,9 @@ let exportId;
 let requestId;
 
 getReporte1 = (req, response) => {
+    const fecha_inicio = req.params.fecha_inicio
+    const fecha_fin = req.params.fecha_fin
+
     const config = {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -24,7 +27,7 @@ getReporte1 = (req, response) => {
     }
     
 
-    axios.get('http://localhost:8080/jasperserver/rest_v2/reports/reports/MinerUCAB/Reporte1.html', config)
+    axios.get(`http://localhost:8080/jasperserver/rest_v2/reports/reports/MinerUCAB/Reporte1.html?fecha_inicio=${fecha_inicio}&fecha_fin=${fecha_fin}`, config)
         .then((res) => {
             cookie = res.headers["set-cookie"][0].split(' ').splice(0, 2);
             console.log(cookie);
@@ -331,6 +334,9 @@ getReporte7 = (req, response) => {
 }
 
 getReporte8 = (req, response) => {
+    const fecha_inicio = req.params.fecha_inicio
+    const fecha_fin = req.params.fecha_fin
+
     const config = {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -344,7 +350,7 @@ getReporte8 = (req, response) => {
     }
     
 
-    axios.get('http://localhost:8080/jasperserver/rest_v2/reports/reports/MinerUCAB/Reporte8.html', config)
+    axios.get(`http://localhost:8080/jasperserver/rest_v2/reports/reports/MinerUCAB/Reporte8.html?fecha_inicio=${fecha_inicio}&fecha_fin=${fecha_fin}`, config)
         .then((res) => {
             cookie = res.headers["set-cookie"][0].split(' ').splice(0, 2);
             console.log(cookie);
