@@ -2734,8 +2734,8 @@ export default class ModificarYacimiento extends React.Component {
                 if(parseInt(this.state.Minerales[i].id)===parseInt(this.state.MinMetModifPred[k].id)){
                     existe=1;
                     mineral.id=Number(this.state.Minerales[i].id);
-                    mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
                     if(mineral.id != -1){
+                        mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
                         info.minerales.update.push(mineral);
                     }
                     else{
@@ -2745,8 +2745,8 @@ export default class ModificarYacimiento extends React.Component {
             }
             if(existe===0){
                 mineral.id=Number(this.state.Minerales[i].id);
-                mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
                 if(mineral.id != -1){
+                    mineral.total=Number(document.getElementById("YacimientosTotalMineral"+mineral.id).value.trim());
                     info.minerales.insert.push(mineral);
                 }
                 else{
@@ -3012,10 +3012,15 @@ export default class ModificarYacimiento extends React.Component {
                         // console.log("CARGOPRED", faseR.cargospred)
                         // console.log("MAQUINAAA", faseR.tipoMaquinaria)
                         // console.log("MAQUINAPRED", faseR.tipomaqpred)
-                        
+                            let lnta=0
+                            if(faseR.cargospred===undefined){
+                                lnta=0;
+                            }else{
+                                lnta=faseR.cargospred.length
+                            }
                             let existe=0;
                             for(let i=0; i<faseR.cargos.length;i++){
-                                for(let k=0; k<faseR.cargospred.length; k++){
+                                for(let k=0; k<faseR.lnta; k++){
                                     console.log("update", )
                                     if(faseR.cargos[i].id===faseR.cargospred[k].id){
                                         //if(existe!==1){
@@ -3033,8 +3038,8 @@ export default class ModificarYacimiento extends React.Component {
                                     }
                                 }
                             }
-            
-                            for(let k=0; k<faseR.cargospred.length; k++){
+                            
+                            for(let k=0; k<faseR.lnta; k++){
                                 let existe2=0;
                                 for(let i=0; i<faseR.cargos.length; i++){
                                     
@@ -3052,7 +3057,7 @@ export default class ModificarYacimiento extends React.Component {
                             }
                             for(let i=0; i<faseR.cargos.length; i++){
                                 let existe3=0;
-                                for(let k=0; k<faseR.cargospred.length; k++){
+                                for(let k=0; k<faseR.lnta; k++){
                                     
                                     if(faseR.cargos[i].id===faseR.cargospred[k].id){
                                         existe3=1;
@@ -3070,7 +3075,7 @@ export default class ModificarYacimiento extends React.Component {
                                     newfase.cargos.insert.push(cargo)
                                 }
                             }
-////////////////////////////////////
+
                             let lnt=0
                             if(faseR.tipomaqpred===undefined){
                                 lnt=0;
