@@ -56,6 +56,26 @@ const getCargosByIdFase = (req, res) => {
     })
 }
 
+
+/*const getNumeroEmpleadosCargoByIdFaseIdCargo = (req, res) => {
+    const client = new Client({
+        connectionString: process.env.POSTGRESQL_CONNECTION_STRING  // MASTER CONNECTION
+    });
+    client.connect();
+    const text = 'SELECT CF.Clave clave_cargo_fase, CF.Cantidad cantidad, CF.sueldo sueldo, C.Clave clave, C.Nombre nombre FROM MU_CARGO_FASE CF, MU_CARGO C WHERE CF.fk_fase = ($1) AND CF.fk_cargo = C.Clave;';
+    const values = [req.params.id];
+    client.query(text, values)
+    .then((response) => {
+        client.end();
+        res.status(200).json(response.rows)
+    })
+    .catch((error) => {
+        console.log(error);
+        client.end();
+        res.status(500).json({ error: error.toString() });
+    })
+}*/
+
 module.exports = {
     getAllCargos,
     getCargoByIdEmpleado,
