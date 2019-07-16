@@ -129,6 +129,7 @@ app.get('/getAllExplotaciones', Explotaciones.getAllExplotaciones)
 app.get('/getAllExplotacionesConEstatusEnProceso', Explotaciones.getAllExplotacionesConEstatusEnProceso)
 app.get('/getAllExplotacionesConEstatusFinalizado', Explotaciones.getAllExplotacionesConEstatusFinalizado);
 app.get('/getAllExplotacionesConEstatusInactivo', Explotaciones.getAllExplotacionesConEstatusInactivo)
+app.get('/getAllYacimientosConEstatusInactivoEnExplotacion', Explotaciones.getAllYacimientosConEstatusInactivoEnExplotacion);
 app.get('/getEtapasByIdExplotacion/:id', Explotaciones.getEtapasByIdExplotacion);
 app.get('/getFasesByIdEtapa/:id', Explotaciones.getFasesByIdEtapa);
 app.get('/getCargosExpByIdFase/:id', Explotaciones.getCargosExpByIdFase);

@@ -90,7 +90,10 @@ const crearExplotacion = (req, res) => {
 const deleteHorarioEmpleado = (claveCargoFase, callback) => {
     Explotaciones.getClaveEmpleadoCargoFaseByCargoFase(claveCargoFase, function(claveEmpleadoCargoFase){
         Explotaciones.deleteFromHorarioEmpleado(claveEmpleadoCargoFase, function(){
-            callback()
+            Empleados.updateEstatusByIdEmpleadoCargoFase(claveEmpleadoCargoFase, 1, function(){
+                callback()
+            })
+            // callback()
         })
     })
 }
@@ -121,7 +124,9 @@ const updateCargoFase = (faseId, cargos) => {
 
 const deleteMaquinariaTipoMaquinariaFase = (claveTipoMaquinariaFase, callback) => {
     Explotaciones.deleteFromMaquinariaTipoMaquinariaFase(claveTipoMaquinariaFase, function(){
-        callback()
+        Explotaciones.updateMaquinariaEstatusByTipoMaquinariaFase(claveTipoMaquinariaFase, 1, function(){
+            callback()
+        })
     })
 }
 

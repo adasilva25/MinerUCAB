@@ -2733,7 +2733,7 @@ export default class ModificarExplotacion extends React.Component {
         // }
         // -------------------------------          AQUI TERMINAN LAS VALIDACIONES
 
-       /* if (error === false){
+       if (error === false){
             const config = {
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded'
@@ -2752,7 +2752,7 @@ export default class ModificarExplotacion extends React.Component {
                     this.setState({ mensajeError: 'Error creando la explotacion' })
                     this.modalErrorOpen()
                 })
-        }*/
+        }
 
     }
 
@@ -3283,7 +3283,7 @@ export default class ModificarExplotacion extends React.Component {
             if(faltantes!=0){
                 faltante++;
             }
-            console.log(empleado);
+            // console.log(empleado);
         });
 
         return(faltante);
