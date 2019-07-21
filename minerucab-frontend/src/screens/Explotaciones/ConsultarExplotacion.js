@@ -91,7 +91,7 @@ export default class ConsultarExplotacion extends React.Component {
             etapas: [],
 
             eliminadosFases: [],
-            dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
+            dias:["Lunes","Martes","Miércoles","Jueves","Viernes"],
             actualizar:true,
             eliminar:true,
             prueba: true,
@@ -240,7 +240,7 @@ export default class ConsultarExplotacion extends React.Component {
                                 value:0,
                             },
                             {
-                                dia:"Miercoles",
+                                dia:"Miércoles",
                                 horaEntrada:"753",
                                 horaSalida:"",
                                 value:2,
@@ -278,7 +278,7 @@ export default class ConsultarExplotacion extends React.Component {
                                 value:1,
                             },
                             {
-                                dia:"Miercoles",
+                                dia:"Miércoles",
                                 horaEntrada:"753",
                                 horaSalida:"",
                                 value:1,
@@ -452,7 +452,7 @@ export default class ConsultarExplotacion extends React.Component {
 
         let state = {
             eliminadosFases: [],
-            dias:["Lunes","Martes","Miercoles","Jueves","Viernes"],
+            dias:["Lunes","Martes","Miércoles","Jueves","Viernes"],
             actualizar:true,
             eliminar:true,
             prueba: true,
@@ -758,7 +758,7 @@ export default class ConsultarExplotacion extends React.Component {
                                             value:1,
                                         },
                                         {
-                                            dia:"Miercoles",
+                                            dia:"Miércoles",
                                             horaEntrada:null,
                                             horaSalida:null,
                                             value:1,
@@ -1189,7 +1189,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                                             },
                                                                             {
                                                                                 id: null,
-                                                                                dia:"Miercoles",
+                                                                                dia:"Miércoles",
                                                                                 horaEntrada:null,
                                                                                 horaSalida:null,
                                                                                 value:0,
@@ -1255,6 +1255,9 @@ export default class ConsultarExplotacion extends React.Component {
 
                                                                                             if (item.clave_horario % 2 === 0){
                                                                                                 horario.value = 2
+                                                                                            }
+                                                                                            else{
+                                                                                                horario.value = 1
                                                                                             }
                                                                                         }
                                                                                     })
@@ -1918,7 +1921,7 @@ export default class ConsultarExplotacion extends React.Component {
                     value:1,
                 },
                 {
-                    dia:"Miercoles",
+                    dia:"Miércoles",
                     horaEntrada:null,
                     horaSalida:null,
                     value:1,
@@ -1966,7 +1969,7 @@ export default class ConsultarExplotacion extends React.Component {
                     value:1,
                 },
                 {
-                    dia:"Miercoles",
+                    dia:"Miércoles",
                     horaEntrada:null,
                     horaSalida:null,
                     value:1,
@@ -2367,7 +2370,7 @@ export default class ConsultarExplotacion extends React.Component {
                                                 case "Martes":
                                                     empleado.horario.push((horarioR.value==1)?3:4);
                                                     break;
-                                                case "Miercoles":
+                                                case "Miércoles":
                                                     empleado.horario.push((horarioR.value==1)?5:6);
                                                     break;
                                                 case "Jueves":

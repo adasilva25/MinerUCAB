@@ -2293,7 +2293,10 @@ export default class ModificarYacimiento extends React.Component {
             //console.log(minerales[i].id,"id");
             
             console.log("id que viene, id que va",minerales[i].id, id);
-            costo_anterior=document.getElementById('YacimientosTotalMineral'+minerales[i].id).value;
+            if(!document.getElementById('YacimientosTotalMineral'+minerales[i].id)=== undefined){
+                costo_anterior=document.getElementById('YacimientosTotalMineral'+minerales[i].id).value;
+            }
+            
            
             
 
